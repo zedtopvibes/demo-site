@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZedTopVibes</title>
+<style>
+  /* ===============================
+     BASE STYLES
+  =============================== */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f7f7f7; color: #333; }
+  a { text-decoration: none; color: inherit; }
+  
+  /* ===============================
+     HEADER
+  =============================== */
+  header { background: #1e1e2f; color: #fff; padding: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+  header h1 { font-size: 24px; }
+  nav { display: flex; gap: 15px; flex-wrap: wrap; }
+  nav a { color: #fff; padding: 8px 12px; border-radius: 5px; transition: 0.2s; }
+  nav a:hover { background: #4caf50; }
+
+  /* ===============================
+     HERO
+  =============================== */
+  .hero { text-align: center; padding: 40px 20px; background: linear-gradient(to right, #4caf50, #45a049); color: #fff; }
+  .hero h2 { font-size: 32px; margin-bottom: 10px; }
+  .hero p { font-size: 18px; }
+
+  /* ===============================
+     CONTENT AREA (CMS injected)
+  =============================== */
+  .content { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; padding: 20px; }
+
+  /* ===============================
+     FOOTER
+  =============================== */
+  footer { background: #1e1e2f; color: #fff; text-align: center; padding: 20px; margin-top: 40px; font-size: 14px; }
+
+  /* ===============================
+     RESPONSIVE
+  =============================== */
+  @media(max-width:600px) {
+    .hero h2 { font-size: 24px; }
+    .hero p { font-size: 16px; }
+    header { flex-direction: column; align-items: flex-start; gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ZedTopVibes</h1>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Songs</a>
+    <a href="#">Artists</a>
+    <a href="#">Albums</a>
+    <a href="#">Categories</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>Discover Zambian Music</h2>
+  <p>Your music collection starts here.</p>
+</section>
+
+<section class="content" id="cmsContent">
+  <!-- CMS will inject songs/albums/artists here -->
+</section>
+
+<footer>
+  &copy; 2026 ZedTopVibes
+</footer>
+
+<script>
+  // ===== CMS INTEGRATION HOOK =====
+  // Example: fetch content from your CMS API
+  const CMS_API = "https://cms.zedtopvibes.workers.dev/posts"; // update with actual endpoint
+  const contentEl = document.getElementById("cmsContent");
+
+  async function loadCMSContent() {
+    try {
+      const res = await fetch(CMS_API);
+      const data = await res.json();
+
+      // Clear content
+      contentEl.innerHTML = "";
+
+      // Loop through CMS items (example)
+      data.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <img src="${item.cover || ''}" alt="${item.title}">
+          <div class="info">
+            <h3>${item.title}</h3>
+            <p>${item.artist}</p>
+          </div>
+        `;
+        contentEl.appendChild(card);
+      });
+
+    } catch(err) {
+      contentEl.innerHTML = "<p>Failed to load content from CMS.</p>";
+      console.error(err);
+    }
+  }
+
+  // Load on page load
+  loadCMSContent();
+</script>
+
+</body>
+</html> 
