@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>glass route · dynamic content</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Montserrat + Playfair -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ---------- EXACT LAYOUT FRAMEWORK (preserved) ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0b1018;
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            scroll-behavior: smooth;
+            background-image: 
+                radial-gradient(circle at 30% 40%, rgba(180, 200, 240, 0.2) 0%, transparent 45%),
+                radial-gradient(circle at 80% 70%, rgba(140, 170, 220, 0.15) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px);
+            background-attachment: fixed;
+        }
+        
+        .main-content-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 10px;
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .left-sidebar {
+            flex: 3;
+            background: rgba(130, 145, 165, 0.18);
+            backdrop-filter: blur(12px) saturate(160%);
+            -webkit-backdrop-filter: blur(12px) saturate(160%);
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .right-sidebar {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-width: 300px;
+        }
+        
+        .pagination-container {
+            width: 100%;
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            background: transparent;
+            display: none;
+        }
+        
+        .pagination-container.show {
+            display: block;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .pagination-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        
+        .pagination-item:hover {
+            background: rgba(200, 215, 235, 0.25);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+        
+        .pagination-item.active {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .pagination-ellipsis {
+            color: rgba(255,255,255,0.5);
+            font-weight: 600;
+            padding: 0 5px;
+        }
+        
+        .pagination-prev,
+        .pagination-next {
+            width: auto;
+            padding: 0 15px;
+            gap: 6px;
+        }
+        
+        .site-header {
+            width: 100%;
+            background: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .branding-bar {
+            background: rgba(120, 135, 155, 0.2);
+            backdrop-filter: blur(14px) saturate(180%);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 100;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            width: 100%;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .site-logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 26px;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #ffffff, #e0e8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        }
+        
+        .hamburger-menu {
+            width: 24px;
+            height: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        
+        .hamburger-menu span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: rgba(255,255,255,0.8);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger-menu:hover span {
+            background: white;
+        }
+        
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1.3rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .profile-icon:hover {
+            background: rgba(255,255,255,0.25);
+            transform: scale(1.05);
+        }
+        
+        .search-section {
+            background: rgba(110, 125, 145, 0.15);
+            backdrop-filter: blur(6px) saturate(140%);
+            -webkit-backdrop-filter: blur(6px) saturate(140%);
+            padding: 20px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+        }
+        
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .search-bar {
+            display: flex;
+            border-radius: 60px;
+            overflow: hidden;
+            width: 100%;
+            border: 1px solid rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 16px 22px;
+            border: none;
+            font-size: 16px;
+            color: white;
+            background: transparent;
+            outline: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .search-input::placeholder {
+            color: rgba(255,255,255,0.8);
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        .search-button {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: none;
+            border-left: 1px solid rgba(255,255,255,0.25);
+            padding: 0 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            backdrop-filter: blur(4px);
+        }
+        
+        .search-button:hover {
+            background: rgba(255,255,255,0.2);
+            border-left-color: rgba(255,255,255,0.4);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.2s ease;
+            height: 60px;
+        }
+        
+        .section-header:hover {
+            background: rgba(255,255,255,0.12);
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0;
+            margin: 0;
+            line-height: 1;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
+        }
+        
+        .section-title::before {
+            content: "◈";
+            font-size: 1.4rem;
+            opacity: 0.9;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .view-all {
+            color: white;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 6px 15px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px;
+            transition: all 0.2s ease;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(4px);
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        
+        .view-all:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.5);
+        }
+        
+        .section-block {
+            background: rgba(120, 135, 155, 0.18);
+            backdrop-filter: blur(12px) saturate(160%);
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+        
+        .latest-albums-list {
+            padding: 5px 0;
+        }
+        
+        .album-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 16px 18px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .album-item:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateX(6px);
+        }
+        
+        .album-thumbnail {
+            width: 120px;
+            height: 120px;
+            flex-shrink: 0;
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 2.5rem;
+            color: rgba(255,255,255,0.7);
+            backdrop-filter: blur(4px);
+        }
+        
+        .album-item:hover .album-thumbnail {
+            border-color: rgba(255,255,255,0.5);
+            transform: scale(1.03) rotate(0.5deg);
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+        
+        .album-info {
+            flex-grow: 1;
+            min-width: 0;
+            padding-right: 10px;
+        }
+        
+        .album-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+            display: block;
+            white-space: normal;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.4;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .album-date {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .album-date::before {
+            content: "📅";
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+        
+        .album-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+        
+        .album-artist,
+        .album-genre,
+        .album-tracks,
+        .artist-stats,
+        .playlist-songs,
+        .song-stats {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 30px;
+            display: inline-block;
+            line-height: 1.3;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+        }
+        
+        .right-sidebar .album-item {
+            padding: 12px 15px;
+            gap: 15px;
+        }
+        
+        .right-sidebar .album-thumbnail {
+            width: 80px;
+            height: 80px;
+            font-size: 2rem;
+        }
+        
+        .right-sidebar .album-title {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        
+        .site-footer {
+            text-align: center;
+            margin-top: 45px;
+            padding: 25px 20px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            background: rgba(100, 115, 135, 0.2);
+            backdrop-filter: blur(14px) saturate(180%);
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            box-shadow: 0 -8px 25px rgba(0,0,0,0.3);
+            border-radius: 40px 40px 0 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .site-footer p {
+            margin: 8px 0;
+            color: rgba(255,255,255,0.8);
+            font-weight: 500;
+        }
+        
+        .site-footer p:first-child {
+            font-weight: 600;
+            color: white;
+            font-size: 1.1rem;
+        }
+        
+        .nav-drawer {
+            position: fixed;
+            top: 0;
+            width: 85%;
+            max-width: 350px;
+            height: 100%;
+            background: rgba(100, 115, 135, 0.25);
+            backdrop-filter: blur(20px) saturate(180%);
+            z-index: 1000;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            display: none;
+            border-right: 1px solid rgba(255,255,255,0.15);
+        }
+        
+        .nav-drawer.left {
+            left: 0;
+            transform: translateX(-100%);
+        }
+        
+        .nav-drawer.right {
+            right: 0;
+            transform: translateX(100%);
+        }
+        
+        .nav-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            background: rgba(0,0,0,0.2);
+        }
+        
+        .close-nav {
+            font-size: 32px;
+            cursor: pointer;
+            color: white;
+            line-height: 1;
+        }
+        
+        .nav-menu {
+            padding: 20px 0;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .nav-item i {
+            width: 24px;
+            margin-right: 10px;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .nav-item:hover {
+            background: rgba(255,255,255,0.15);
+            border-left-color: white;
+        }
+        
+        .nav-item.active {
+            background: rgba(255,255,255,0.2);
+            border-left-color: white;
+        }
+        
+        .nav-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.15);
+            margin: 10px 0;
+        }
+        
+        .nav-section-title {
+            padding: 15px 25px 5px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.6);
+            font-weight: 600;
+        }
+        
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #a0c0ff, #ffffff);
+            width: 0%;
+            z-index: 1001;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        
+        .skeleton-thumbnail {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        .skeleton-line {
+            height: 16px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            margin-bottom: 8px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            color: white;
+        }
+        
+        .loading-spinner i {
+            font-size: 2rem;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.4; }
+        }
+        
+        .error-message {
+            padding: 40px;
+            text-align: center;
+            color: rgba(255,200,200,0.9);
+            font-weight: 500;
+        }
+        
+        .error-message i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: rgba(255,100,100,0.5);
+        }
+        
+        .no-results {
+            padding: 40px;
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+            font-style: italic;
+        }
+        
+        .search-info {
+            padding: 10px 18px;
+            background: rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .clear-search {
+            color: white;
+            cursor: pointer;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.1);
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+        
+        .clear-search:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .main-content-container {
+                flex-direction: column;
+            }
+            .left-sidebar .album-thumbnail {
+                width: 100px;
+                height: 100px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .album-thumbnail {
+                width: 70px !important;
+                height: 70px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress" id="scrollProgress"></div>
+    
+    <header class="site-header">
+        <div class="branding-bar">
+            <div class="hamburger-menu" id="hamburgerMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <div class="site-logo">GLASS•ROUTE</div>
+            
+            <div class="profile-icon" id="profileIcon">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+        
+        <section class="search-section">
+            <div class="search-container">
+                <div class="search-bar">
+                    <input type="text" class="search-input" id="searchInput" placeholder="search movies, albums... (dynamic loading)" value="inception">
+                    <button class="search-button" id="searchButton">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </header>
+    
+    <div class="main-content-container" id="content">
+        <aside class="left-sidebar">
+            <div class="section-header">
+                <h2 class="section-title" id="mainSectionTitle">latest films</h2>
+                <span class="view-all" id="refreshMain">refresh ↻</span>
+            </div>
+            
+            <div class="search-info" id="searchInfo" style="display: none;">
+                <span id="searchQueryDisplay"></span>
+                <span class="clear-search" id="clearSearch">✕ clear</span>
+            </div>
+            
+            <div class="latest-albums-list" id="latestAlbums">
+                <!-- skeletons will be shown while loading -->
+            </div>
+            
+            <div class="pagination-container" id="paginationContainer">
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </aside>
+        
+        <div class="right-sidebar">
+            <section class="section-block">
+                <div class="section-header">
+                    <h2 class="section-title">new releases</h2>
+                    <span class="view-all" id="refreshReleases">↻</span>
+                </div>
+                <div class="latest-albums-list" id="latestSongs"></div>
+            </section>
+            
+            <section class="section-block">
+                <div class="section-header">
+                    <h2 class="section-title">directors</h2>
+                    <span class="view-all" id="refreshArtists">↻</span>
+                </div>
+                <div class="latest-albums-list" id="featuredArtists"></div>
+            </section>
+            
+            <section class="section-block">
+                <div class="section-header">
+                    <h2 class="section-title">top rated</h2>
+                    <span class="view-all" id="refreshTopRated">↻</span>
+                </div>
+                <div class="latest-albums-list" id="topRated"></div>
+            </section>
+            
+            <section class="section-block">
+                <div class="section-header">
+                    <h2 class="section-title">collections</h2>
+                    <span class="view-all" id="refreshPlaylists">↻</span>
+                </div>
+                <div class="latest-albums-list" id="featuredPlaylists"></div>
+            </section>
+            
+            <section class="section-block">
+                <div class="section-header">
+                    <h2 class="section-title">trending</h2>
+                    <span class="view-all" id="refreshTrending">↻</span>
+                </div>
+                <div class="latest-albums-list" id="trendingAlbums"></div>
+            </section>
+        </div>
+    </div>
+    
+    <footer class="site-footer">
+        <p>© 2025 GLASS ROUTE · dynamic content loading</p>
+        <p>search for movies • albums • music</p>
+    </footer>
+    
+    <div class="nav-drawer left" id="leftDrawer">
+        <div class="nav-header">
+            <div class="site-logo">GLASS•ROUTE</div>
+            <div class="close-nav" id="closeLeftDrawer">✕</div>
+        </div>
+        <nav class="nav-menu">
+            <a href="#" class="nav-item active" data-category="movie"><i class="fas fa-film"></i> Movies</a>
+            <a href="#" class="nav-item" data-category="music"><i class="fas fa-compact-disc"></i> Music</a>
+            <a href="#" class="nav-item" data-category="artist"><i class="fas fa-microphone-alt"></i> Artists</a>
+            <a href="#" class="nav-item" data-category="playlist"><i class="fas fa-list"></i> Playlists</a>
+        </nav>
+    </div>
+    
+    <div class="nav-drawer right" id="rightDrawer">
+        <div class="nav-header">
+            <div class="site-logo">PROFILE</div>
+            <div class="close-nav" id="closeRightDrawer">✕</div>
+        </div>
+        <nav class="nav-menu">
+            <div class="nav-section-title">MY SPACE</div>
+            <a href="#" class="nav-item"><i class="fas fa-user"></i> Profile</a>
+            <a href="#" class="nav-item"><i class="fas fa-heart"></i> Favorites</a>
+            <a href="#" class="nav-item"><i class="fas fa-history"></i> History</a>
+        </nav>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_BASE = 'https://itunes.apple.com'; // Using iTunes API for demo
+        const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes cache
+        
+        // State management
+        let currentState = {
+            searchQuery: 'inception',
+            currentPage: 1,
+            totalPages: 1,
+            currentCategory: 'movie',
+            isLoading: false,
+            searchResults: []
+        };
+        
+        let cache = new Map();
+        
+        // DOM Elements
+        const elements = {
+            latestAlbums: document.getElementById('latestAlbums'),
+            latestSongs: document.getElementById('latestSongs'),
+            featuredArtists: document.getElementById('featuredArtists'),
+            topRated: document.getElementById('topRated'),
+            featuredPlaylists: document.getElementById('featuredPlaylists'),
+            trendingAlbums: document.getElementById('trendingAlbums'),
+            searchInput: document.getElementById('searchInput'),
+            searchButton: document.getElementById('searchButton'),
+            searchInfo: document.getElementById('searchInfo'),
+            searchQueryDisplay: document.getElementById('searchQueryDisplay'),
+            clearSearch: document.getElementById('clearSearch'),
+            mainSectionTitle: document.getElementById('mainSectionTitle'),
+            paginationContainer: document.getElementById('paginationContainer'),
+            pagination: document.getElementById('pagination')
+        };
+        
+        // Utility Functions
+        function showSkeletons(container, count = 3, isLarge = true) {
+            if (!container) return;
+            const width = isLarge ? '120px' : '80px';
+            const height = isLarge ? '120px' : '80px';
+            
+            container.innerHTML = Array(count).fill(0).map(() => `
+                <div class="album-item">
+                    <div class="skeleton-thumbnail" style="width:${width};height:${height};"></div>
+                    <div class="album-info">
+                        <div class="skeleton-line short" style="width:60%"></div>
+                        <div class="skeleton-line medium" style="width:80%"></div>
+                        ${isLarge ? '<div class="skeleton-line long" style="width:100%"></div>' : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function showError(container, message) {
+            if (!container) return;
+            container.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+        
+        function showNoResults(container) {
+            if (!container) return;
+            container.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 10px; opacity: 0.5;"></i>
+                    <p>No results found</p>
+                </div>
+            `;
+        }
+        
+        // Data Fetching with Cache
+        async function fetchFromAPI(endpoint, params = {}) {
+            const queryString = new URLSearchParams(params).toString();
+            const url = `${API_BASE}${endpoint}${queryString ? '?' + queryString : ''}`;
+            const cacheKey = url;
+            
+            // Check cache
+            if (cache.has(cacheKey)) {
+                const { data, timestamp } = cache.get(cacheKey);
+                if (Date.now() - timestamp < CACHE_DURATION) {
+                    return data;
+                }
+            }
+            
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const data = await response.json();
+                
+                // Cache the result
+                cache.set(cacheKey, { data, timestamp: Date.now() });
+                return data;
+            } catch (error) {
+                console.error('API Error:', error);
+                throw error;
+            }
+        }
+        
+        // Data Transformers
+        function transformMovieToAlbum(item) {
+            return {
+                title: item.trackName || item.collectionName || 'Unknown Title',
+                artist: item.artistName || 'Unknown Artist',
+                year: item.releaseDate ? new Date(item.releaseDate).getFullYear() : '2024',
+                genre: item.primaryGenreName || 'Various',
+                artwork: item.artworkUrl100?.replace('100x100', '600x600') || null,
+                trackCount: item.trackCount || 0,
+                price: item.collectionPrice || item.trackPrice,
+                currency: item.currency || 'USD'
+            };
+        }
+        
+        function transformMusicToAlbum(item) {
+            return {
+                title: item.collectionName || item.trackName || 'Unknown Title',
+                artist: item.artistName || 'Unknown Artist',
+                year: item.releaseDate ? new Date(item.releaseDate).getFullYear() : '2024',
+                genre: item.primaryGenreName || 'Various',
+                artwork: item.artworkUrl100?.replace('100x100', '600x600') || null,
+                trackCount: item.trackCount || 0
+            };
+        }
+        
+        // Render Functions
+        function renderAlbumItem(item, isLarge = true) {
+            const thumbnailStyle = isLarge ? 'width:120px;height:120px;' : 'width:80px;height:80px;';
+            const thumbnailContent = item.artwork 
+                ? `<img src="${item.artwork}" alt="${item.title}" style="width:100%;height:100%;object-fit:cover;">`
+                : `<i class="fas fa-${isLarge ? 'film' : 'music'}" style="font-size:${isLarge ? '2.5rem' : '2rem'};"></i>`;
+            
+            return `
+                <div class="album-item">
+                    <div class="album-thumbnail" style="${thumbnailStyle}">
+                        ${thumbnailContent}
+                    </div>
+                    <div class="album-info">
+                        <div class="album-title">${item.title}</div>
+                        <div class="album-date">${item.year} • ${item.artist}</div>
+                        <div class="album-meta">
+                            <span class="album-genre">${item.genre}</span>
+                            ${item.trackCount ? `<span class="album-tracks">${item.trackCount} tracks</span>` : ''}
+                            ${item.price ? `<span class="album-tracks">${item.currency === 'USD' ? '$' : ''}${item.price}</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Main Search Function
+        async function performSearch(query = currentState.searchQuery, page = currentState.currentPage) {
+            if (!query.trim()) {
+                showNoResults(elements.latestAlbums);
+                return;
+            }
+            
+            currentState.isLoading = true;
+            currentState.searchQuery = query;
+            currentState.currentPage = page;
+            
+            // Update UI
+            elements.searchInfo.style.display = 'flex';
+            elements.searchQueryDisplay.textContent = `Searching: "${query}"`;
+            elements.mainSectionTitle.textContent = 'search results';
+            
+            showSkeletons(elements.latestAlbums, 5, true);
+            
+            try {
+                // Search movies (using iTunes movie search)
+                const movieData = await fetchFromAPI('/search', {
+                    term: query,
+                    media: 'movie',
+                    entity: 'movie',
+                    limit: 20,
+                    offset: (page - 1) * 20
+                });
+                
+                // Search music (using iTunes music search)
+                const musicData = await fetchFromAPI('/search', {
+                    term: query,
+                    media: 'music',
+                    entity: 'album',
+                    limit: 20,
+                    offset: (page - 1) * 20
+                });
+                
+                // Combine and transform results
+                const movieResults = (movieData.results || []).map(transformMovieToAlbum);
+                const musicResults = (musicData.results || []).map(transformMusicToAlbum);
+                
+                currentState.searchResults = [...movieResults, ...musicResults];
+                currentState.totalPages = Math.ceil(currentState.searchResults.length / 10) || 1;
+                
+                // Render results
+                if (currentState.searchResults.length === 0) {
+                    showNoResults(elements.latestAlbums);
+                } else {
+                    elements.latestAlbums.innerHTML = currentState.searchResults
+                        .slice(0, 10)
+                        .map(item => renderAlbumItem(item, true))
+                        .join('');
+                }
+                
+                renderPagination();
+                
+            } catch (error) {
+                console.error('Search error:', error);
+                showError(elements.latestAlbums, 'Failed to load results. Please try again.');
+            } finally {
+                currentState.isLoading = false;
+            }
+        }
+        
+        // Section Load Functions
+        async function loadSection(container, mediaType, limit = 5, isLarge = false) {
+            if (!container) return;
+            
+            showSkeletons(container, limit, isLarge);
+            
+            try {
+                // Get popular/recent items
+                const data = await fetchFromAPI('/search', {
+                    term: 'popular',
+                    media: mediaType,
+                    limit: limit,
+                    entity: mediaType === 'movie' ? 'movie' : 
+                           mediaType === 'music' ? 'album' : 
+                           mediaType === 'tvShow' ? 'tvSeason' : 'movie'
+                });
+                
+                const results = (data.results || [])
+                    .slice(0, limit)
+                    .map(mediaType === 'movie' ? transformMovieToAlbum : transformMusicToAlbum);
+                
+                if (results.length === 0) {
+                    showNoResults(container);
+                } else {
+                    container.innerHTML = results
+                        .map(item => renderAlbumItem(item, isLarge))
+                        .join('');
+                }
+                
+            } catch (error) {
+                console.error(`Error loading ${mediaType}:`, error);
+                showError(container, `Failed to load ${mediaType}s`);
+            }
+        }
+        
+        // Load all sections
+        async function loadAllSections() {
+            await Promise.all([
+                loadSection(elements.latestSongs, 'music', 3, false),
+                loadSection(elements.featuredArtists, 'music', 3, false),
+                loadSection(elements.topRated, 'movie', 3, false),
+                loadSection(elements.featuredPlaylists, 'music', 3, false),
+                loadSection(elements.trendingAlbums, 'music', 3, false)
+            ]);
+        }
+        
+        // Pagination
+        function renderPagination() {
+            if (currentState.totalPages <= 1) {
+                elements.paginationContainer.classList.remove('show');
+                return;
+            }
+            
+            elements.paginationContainer.classList.add('show');
+            
+            let paginationHTML = '';
+            
+            // Previous button
+            paginationHTML += `
+                <div class="pagination-item pagination-prev ${currentState.currentPage === 1 ? 'disabled' : ''}" 
+                     ${currentState.currentPage > 1 ? 'onclick="changePage(' + (currentState.currentPage - 1) + ')"' : ''}>
+                    <i class="fas fa-chevron-left"></i> Prev
+                </div>
+            `;
+            
+            // Page numbers
+            for (let i = 1; i <= Math.min(5, currentState.totalPages); i++) {
+                paginationHTML += `
+                    <div class="pagination-item ${currentState.currentPage === i ? 'active' : ''}" 
+                         onclick="changePage(${i})">${i}</div>
+                `;
+            }
+            
+            if (currentState.totalPages > 5) {
+                paginationHTML += `<span class="pagination-ellipsis">...</span>`;
+                paginationHTML += `
+                    <div class="pagination-item" onclick="changePage(${currentState.totalPages})">
+                        ${currentState.totalPages}
+                    </div>
+                `;
+            }
+            
+            // Next button
+            paginationHTML += `
+                <div class="pagination-item pagination-next ${currentState.currentPage === currentState.totalPages ? 'disabled' : ''}"
+                     ${currentState.currentPage < currentState.totalPages ? 'onclick="changePage(' + (currentState.currentPage + 1) + ')"' : ''}>
+                    Next <i class="fas fa-chevron-right"></i>
+                </div>
+            `;
+            
+            elements.pagination.innerHTML = paginationHTML;
+        }
+        
+        // Global function for pagination
+        window.changePage = function(page) {
+            if (page === currentState.currentPage || page < 1 || page > currentState.totalPages) return;
+            performSearch(currentState.searchQuery, page);
+        };
+        
+        // Clear search
+        function clearSearch() {
+            currentState.searchQuery = '';
+            currentState.currentPage = 1;
+            currentState.totalPages = 1;
+            currentState.searchResults = [];
+            
+            elements.searchInfo.style.display = 'none';
+            elements.searchInput.value = '';
+            elements.mainSectionTitle.textContent = 'latest films';
+            
+            // Reload default content
+            loadAllSections();
+            
+            // Reload main content with default
+            performSearch('inception', 1);
+        }
+        
+        // Event Listeners
+        function initializeEventListeners() {
+            // Search
+            elements.searchButton.addEventListener('click', () => {
+                performSearch(elements.searchInput.value, 1);
+            });
+            
+            elements.searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch(elements.searchInput.value, 1);
+                }
+            });
+            
+            elements.clearSearch.addEventListener('click', clearSearch);
+            
+            // Refresh buttons
+            document.getElementById('refreshMain').addEventListener('click', () => {
+                if (currentState.searchQuery) {
+                    performSearch(currentState.searchQuery, currentState.currentPage);
+                }
+            });
+            
+            document.getElementById('refreshReleases').addEventListener('click', () => {
+                loadSection(elements.latestSongs, 'music', 3, false);
+            });
+            
+            document.getElementById('refreshArtists').addEventListener('click', () => {
+                loadSection(elements.featuredArtists, 'music', 3, false);
+            });
+            
+            document.getElementById('refreshTopRated').addEventListener('click', () => {
+                loadSection(elements.topRated, 'movie', 3, false);
+            });
+            
+            document.getElementById('refreshPlaylists').addEventListener('click', () => {
+                loadSection(elements.featuredPlaylists, 'music', 3, false);
+            });
+            
+            document.getElementById('refreshTrending').addEventListener('click', () => {
+                loadSection(elements.trendingAlbums, 'music', 3, false);
+            });
+            
+            // Navigation
+            document.querySelectorAll('.nav-item[data-category]').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const category = e.target.dataset.category;
+                    currentState.currentCategory = category;
+                    
+                    // Update active state
+                    document.querySelectorAll('.nav-item[data-category]').forEach(nav => {
+                        nav.classList.remove('active');
+                    });
+                    e.target.classList.add('active');
+                    
+                    // Perform category search
+                    performSearch(category, 1);
+                    
+                    // Close drawer
+                    document.getElementById('leftDrawer').style.opacity = '0';
+                    document.getElementById('leftDrawer').style.transform = 'translateX(-100%)';
+                    setTimeout(() => {
+                        document.getElementById('leftDrawer').style.display = 'none';
+                    }, 300);
+                });
+            });
+            
+            // Drawers (preserved from original)
+            const hamburger = document.getElementById('hamburgerMenu');
+            const leftDrawer = document.getElementById('leftDrawer');
+            const closeLeft = document.getElementById('closeLeftDrawer');
+            
+            hamburger.addEventListener('click', () => {
+                leftDrawer.style.display = 'block';
+                setTimeout(() => {
+                    leftDrawer.style.opacity = '1';
+                    leftDrawer.style.transform = 'translateX(0)';
+                }, 10);
+            });
+            
+            closeLeft.addEventListener('click', () => {
+                leftDrawer.style.opacity = '0';
+                leftDrawer.style.transform = 'translateX(-100%)';
+                setTimeout(() => {
+                    leftDrawer.style.display = 'none';
+                }, 300);
+            });
+            
+            const profileIcon = document.getElementById('profileIcon');
+            const rightDrawer = document.getElementById('rightDrawer');
+            const closeRight = document.getElementById('closeRightDrawer');
+            
+            profileIcon.addEventListener('click', () => {
+                rightDrawer.style.display = 'block';
+                setTimeout(() => {
+                    rightDrawer.style.opacity = '1';
+                    rightDrawer.style.transform = 'translateX(0)';
+                }, 10);
+            });
+            
+            closeRight.addEventListener('click', () => {
+                rightDrawer.style.opacity = '0';
+                rightDrawer.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    rightDrawer.style.display = 'none';
+                }, 300);
+            });
+            
+            // Scroll progress
+            window.addEventListener('scroll', function() {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('scrollProgress').style.width = scrolled + '%';
+            });
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            initializeEventListeners();
+            
+            // Initial load
+            await loadAllSections();
+            await performSearch('inception', 1);
+        });
+    </script>
+</body>
+</html>
