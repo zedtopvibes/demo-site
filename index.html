@@ -158,14 +158,15 @@
         .site-header {
             width: 100%;
             background: transparent;
-            margin-bottom: 10px;
+            margin-bottom: 5px; /* REDUCED from 10px */
         }
         
+        /* REDUCED MAIN HEADER */
         .branding-bar {
             background: rgba(120, 135, 155, 0.2);
             backdrop-filter: blur(14px) saturate(180%);
             -webkit-backdrop-filter: blur(14px) saturate(180%);
-            padding: 16px 20px;
+            padding: 10px 20px; /* REDUCED from 16px 20px */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -179,36 +180,48 @@
         
         .site-logo {
             font-weight: 900;
-            font-size: 26px;
-            letter-spacing: 2px;
+            font-size: 22px; /* REDUCED from 26px */
+            letter-spacing: 1.5px; /* SLIGHTLY REDUCED */
             background: linear-gradient(135deg, #ffffff, #e0e8ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
         }
         
+        /* REDESIGNED HAMBURGER MENU - matching profile icon */
         .hamburger-menu {
-            width: 24px;
-            height: 20px;
+            width: 40px; /* MATCH profile-icon width */
+            height: 40px; /* MATCH profile-icon height */
+            border-radius: 50%; /* MATCH profile-icon */
+            background: rgba(255,255,255,0.15); /* MATCH profile-icon */
+            backdrop-filter: blur(8px); /* MATCH profile-icon */
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.2); /* MATCH profile-icon */
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            padding: 10px;
-            margin: -10px;
+            transition: all 0.3s ease;
+            gap: 5px;
         }
         
         .hamburger-menu span {
             display: block;
-            height: 3px;
-            width: 100%;
+            height: 2px;
+            width: 18px; /* Slightly smaller than full width */
             background: rgba(255,255,255,0.8);
             border-radius: 3px;
             transition: all 0.3s ease;
         }
         
+        .hamburger-menu:hover {
+            background: rgba(255,255,255,0.25); /* MATCH profile-icon hover */
+            transform: scale(1.05); /* MATCH profile-icon hover */
+        }
+        
         .hamburger-menu:hover span {
-            background: white;
+            background: white; /* MATCH profile-icon hover */
         }
         
         .profile-icon {
@@ -225,8 +238,8 @@
             color: white;
             font-size: 1.3rem;
             border: 1px solid rgba(255,255,255,0.2);
-            min-width: 44px;
-            min-height: 44px;
+            min-width: 40px;
+            min-height: 40px;
         }
         
         .profile-icon:hover {
@@ -234,12 +247,12 @@
             transform: scale(1.05);
         }
         
-        /* ===== RESIZED SEARCH SECTION (more compact) ===== */
+        /* RESIZED SEARCH SECTION */
         .search-section {
             background: rgba(110, 125, 145, 0.15);
             backdrop-filter: blur(6px) saturate(140%);
             -webkit-backdrop-filter: blur(6px) saturate(140%);
-            padding: 12px 20px;  /* REDUCED from 20px 20px */
+            padding: 12px 20px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -267,9 +280,9 @@
         
         .search-input {
             flex: 1;
-            padding: 12px 18px;  /* REDUCED from 16px 22px */
+            padding: 12px 18px;
             border: none;
-            font-size: 15px;  /* SLIGHTLY REDUCED */
+            font-size: 15px;
             color: white;
             background: transparent;
             outline: none;
@@ -288,16 +301,16 @@
             color: white;
             border: none;
             border-left: 1px solid rgba(255,255,255,0.25);
-            padding: 0 20px;  /* REDUCED from 0 28px */
+            padding: 0 20px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            font-size: 1.1rem;  /* SLIGHTLY REDUCED */
+            font-size: 1.1rem;
             backdrop-filter: blur(4px);
             min-width: 50px;
-            min-height: 42px;  /* Match new height */
+            min-height: 42px;
         }
         
         .search-button:hover {
@@ -959,6 +972,7 @@
     <div class="app-container">
         <header class="site-header">
             <div class="branding-bar">
+                <!-- REDESIGNED HAMBURGER MENU - now matches profile icon -->
                 <div class="hamburger-menu" id="hamburgerMenu">
                     <span></span>
                     <span></span>
