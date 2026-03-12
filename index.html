@@ -414,77 +414,124 @@
             font-size: 2.5rem;
             color: rgba(255,255,255,0.7);
             backdrop-filter: blur(4px);
-            position: relative; /* For number overlay */
+            position: relative;
         }
         
-        /* NEW: Number Overlay Styles */
+        /* ===== BOLD NUMBER OVERLAYS ===== */
         .number-overlay {
             position: absolute;
-            top: -8px;
-            left: -8px;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #ffd700, #ffa500);
-            border-radius: 50%;
+            top: -12px;
+            left: -12px;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            color: #0b1018;
+            font-weight: 900;
+            font-size: 1.6rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 900;
-            font-size: 1.4rem;
-            color: #0b1018;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            border: 2px solid rgba(255,255,255,0.5);
+            border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.9);
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.5),
+                0 0 30px rgba(255,255,255,0.3);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
             z-index: 10;
-            animation: popIn 0.3s ease-out;
+            transform: rotate(-3deg);
+            transition: all 0.3s ease;
         }
         
-        /* Different colors for top spots */
+        /* Rank 1 - Champion Gold */
         .number-overlay.rank-1 {
-            background: linear-gradient(135deg, #ffd700, #ffa500);
-            width: 45px;
-            height: 45px;
-            font-size: 1.6rem;
-            box-shadow: 0 0 20px #ffd700;
+            background: linear-gradient(145deg, #ffd700, #ffa500);
+            border-color: #fff5b0;
+            box-shadow: 
+                0 4px 20px rgba(0,0,0,0.6),
+                0 0 40px #ffd700,
+                0 0 80px rgba(255,215,0,0.4);
+            transform: rotate(-5deg) scale(1.1);
+            animation: numberPulse 2s infinite;
         }
         
+        /* Rank 2 - Silver */
         .number-overlay.rank-2 {
-            background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
+            background: linear-gradient(145deg, #e0e0e0, #b0b0b0);
+            border-color: #ffffff;
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.5),
+                0 0 30px #c0c0c0;
         }
         
+        /* Rank 3 - Bronze */
         .number-overlay.rank-3 {
-            background: linear-gradient(135deg, #cd7f32, #b06d28);
+            background: linear-gradient(145deg, #cd7f32, #b06d28);
+            border-color: #ffb347;
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.5),
+                0 0 30px #cd7f32;
         }
         
+        /* Rank 4 - Blue */
         .number-overlay.rank-4 {
-            background: linear-gradient(135deg, #4a90e2, #3570b2);
+            background: linear-gradient(145deg, #4a90e2, #2a5c9a);
+            border-color: #a0c0ff;
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.5),
+                0 0 30px #4a90e2;
         }
         
+        /* Rank 5 - Green */
         .number-overlay.rank-5 {
-            background: linear-gradient(135deg, #50c878, #3aa35b);
+            background: linear-gradient(145deg, #50c878, #2a8c4a);
+            border-color: #a0ffb0;
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.5),
+                0 0 30px #50c878;
         }
         
-        /* Small number overlay for right sidebar */
+        /* Right sidebar - smaller numbers */
         .right-sidebar .number-overlay {
-            width: 30px;
-            height: 30px;
-            font-size: 1rem;
-            top: -5px;
-            left: -5px;
+            width: 36px;
+            height: 36px;
+            font-size: 1.2rem;
+            top: -8px;
+            left: -8px;
         }
         
         .right-sidebar .number-overlay.rank-1 {
-            width: 35px;
-            height: 35px;
-            font-size: 1.2rem;
+            width: 42px;
+            height: 42px;
+            font-size: 1.4rem;
         }
         
-        @keyframes popIn {
-            0% { transform: scale(0); opacity: 0; }
-            80% { transform: scale(1.1); }
-            100% { transform: scale(1); opacity: 1; }
+        /* Hover effects */
+        .album-item:hover .number-overlay {
+            transform: scale(1.2) rotate(0deg);
+            box-shadow: 0 0 50px currentColor;
         }
         
-        /* Trending icon */
+        .album-item:hover .number-overlay.rank-1 {
+            transform: scale(1.3) rotate(5deg);
+        }
+        
+        /* Animations */
+        @keyframes numberPulse {
+            0% { 
+                box-shadow: 0 4px 20px rgba(0,0,0,0.6), 0 0 40px #ffd700, 0 0 80px rgba(255,215,0,0.4);
+                transform: rotate(-5deg) scale(1.1);
+            }
+            50% { 
+                box-shadow: 0 4px 30px rgba(0,0,0,0.8), 0 0 60px #ffd700, 0 0 100px rgba(255,215,0,0.6);
+                transform: rotate(-5deg) scale(1.15);
+            }
+            100% { 
+                box-shadow: 0 4px 20px rgba(0,0,0,0.6), 0 0 40px #ffd700, 0 0 80px rgba(255,215,0,0.4);
+                transform: rotate(-5deg) scale(1.1);
+            }
+        }
+        
+        /* Trending badge */
         .trending-badge {
             display: inline-flex;
             align-items: center;
@@ -501,11 +548,7 @@
         
         .trending-badge i {
             font-size: 0.8rem;
-        }
-        
-        .album-item:hover .number-overlay {
-            transform: scale(1.1);
-            transition: transform 0.2s;
+            color: #ffd700;
         }
         
         .album-item:hover .album-thumbnail {
@@ -918,12 +961,6 @@
                 height: 70px !important;
             }
         }
-        
-        /* Disable text selection for app-like feel */
-        .no-select {
-            user-select: none;
-            -webkit-user-select: none;
-        }
     </style>
 </head>
 <body>
@@ -1201,7 +1238,7 @@
             };
         }
         
-        // NEW: Render with Number Overlay
+        // Render with Number Overlay
         function renderAlbumItemWithRank(item, rank, isLarge = true) {
             const thumbnailStyle = isLarge ? 'width:120px;height:120px;' : 'width:80px;height:80px;';
             const thumbnailContent = item.artwork 
@@ -1246,7 +1283,7 @@
                 
                 // Get random 5 from results to simulate top 5
                 const results = (data.results || [])
-                    .sort(() => 0.5 - Math.random()) // Shuffle
+                    .sort(() => 0.5 - Math.random())
                     .slice(0, 5)
                     .map(mediaType === 'movie' ? transformMovieToAlbum : transformMusicToAlbum);
                 
@@ -1290,7 +1327,6 @@
                     elements.searchInfo.style.display = 'flex';
                     elements.searchQueryDisplay.textContent = `Searching: "${elements.searchInput.value}"`;
                     elements.mainSectionTitle.textContent = 'search results';
-                    // For demo, just reload top 5
                     loadAllTop5();
                 }
             });
@@ -1329,7 +1365,6 @@
                     });
                     e.target.classList.add('active');
                     
-                    // Close drawer
                     document.getElementById('leftDrawer').style.opacity = '0';
                     document.getElementById('leftDrawer').style.transform = 'translateX(-100%)';
                     setTimeout(() => {
