@@ -161,9 +161,9 @@
             margin-bottom: 5px;
         }
         
-        /* SOLID HEADER - NO FLASHY EFFECT */
+        /* MAIN HEADER - ORIGINAL COLORS, NO FLASHY EFFECTS */
         .branding-bar {
-            background: #0b1018;  /* SOLID dark background */
+            background: rgba(120, 135, 155, 0.2);  /* ORIGINAL color */
             padding: 10px 20px;
             display: flex;
             justify-content: space-between;
@@ -174,6 +174,7 @@
             width: 100%;
             border-bottom: 1px solid rgba(255,255,255,0.15);
             border-top: 1px solid rgba(255,255,255,0.1);
+            /* REMOVED backdrop-filter, blur, saturate */
         }
         
         .site-logo {
@@ -186,12 +187,12 @@
             text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
         }
         
-        /* HAMBURGER MENU - solid version */
+        /* HAMBURGER MENU - ORIGINAL COLORS, NO FLASHY EFFECTS */
         .hamburger-menu {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: #1a1f2a;  /* SOLID dark background */
+            background: rgba(255,255,255,0.15);  /* ORIGINAL color */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -200,6 +201,7 @@
             transition: all 0.3s ease;
             gap: 5px;
             border: 1px solid rgba(255,255,255,0.2);
+            /* REMOVED backdrop-filter, blur */
         }
         
         .hamburger-menu span {
@@ -212,7 +214,7 @@
         }
         
         .hamburger-menu:hover {
-            background: #2a2f3a;  /* lighter solid on hover */
+            background: rgba(255,255,255,0.25);  /* ORIGINAL hover */
             transform: scale(1.05);
         }
         
@@ -220,12 +222,12 @@
             background: white;
         }
         
-        /* PROFILE ICON - solid version */
+        /* PROFILE ICON - ORIGINAL COLORS, NO FLASHY EFFECTS */
         .profile-icon {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: #1a1f2a;  /* SOLID dark background */
+            background: rgba(255,255,255,0.15);  /* ORIGINAL color */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -236,18 +238,17 @@
             border: 1px solid rgba(255,255,255,0.2);
             min-width: 40px;
             min-height: 40px;
+            /* REMOVED backdrop-filter, blur */
         }
         
         .profile-icon:hover {
-            background: #2a2f3a;  /* lighter solid on hover */
+            background: rgba(255,255,255,0.25);  /* ORIGINAL hover */
             transform: scale(1.05);
         }
         
-        /* SEARCH SECTION - keeping glass here is fine */
+        /* SEARCH HEADER - ORIGINAL COLORS, NO FLASHY EFFECTS */
         .search-section {
-            background: rgba(110, 125, 145, 0.15);
-            backdrop-filter: blur(6px) saturate(140%);
-            -webkit-backdrop-filter: blur(6px) saturate(140%);
+            background: rgba(110, 125, 145, 0.15);  /* ORIGINAL color */
             padding: 12px 20px;
             display: flex;
             align-items: center;
@@ -255,6 +256,7 @@
             border-bottom: 1px solid rgba(255,255,255,0.1);
             border-top: 1px solid rgba(255,255,255,0.1);
             box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+            /* REMOVED backdrop-filter, blur, saturate */
         }
         
         .search-container {
@@ -270,7 +272,7 @@
             width: 100%;
             border: 1px solid rgba(255,255,255,0.25);
             background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(4px);
+            /* REMOVED backdrop-filter, blur */
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         
@@ -304,7 +306,7 @@
             justify-content: center;
             transition: all 0.3s ease;
             font-size: 1.1rem;
-            backdrop-filter: blur(4px);
+            /* REMOVED backdrop-filter, blur */
             min-width: 50px;
             min-height: 42px;
         }
@@ -967,7 +969,7 @@
     
     <div class="app-container">
         <header class="site-header">
-            <!-- SOLID HEADER - NO FLASHY EFFECT -->
+            <!-- MAIN HEADER - ORIGINAL COLORS, NO FLASHY EFFECTS -->
             <div class="branding-bar">
                 <div class="hamburger-menu" id="hamburgerMenu">
                     <span></span>
@@ -982,7 +984,7 @@
                 </div>
             </div>
             
-            <!-- Search section still has glass (looks good) -->
+            <!-- SEARCH HEADER - ORIGINAL COLORS, NO FLASHY EFFECTS -->
             <section class="search-section">
                 <div class="search-container">
                     <div class="search-bar">
