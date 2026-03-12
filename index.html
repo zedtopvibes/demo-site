@@ -16,10 +16,10 @@
     <!-- App Icons -->
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%230b1018' stroke='%23ffffff' stroke-width='2'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='%23ffffff' font-family='Arial'%3E🎬%3C/text%3E%3C/svg%3E">
     
-    <!-- Montserrat + Playfair -->
+    <!-- Montserrat ONLY -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -31,10 +31,11 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+            /* Montserrat on everything */
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }
         
         body {
-            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
             background: #0b1018;
             color: #ffffff;
             line-height: 1.6;
@@ -81,7 +82,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
             z-index: 2;
-            /* Regular scrolling - no max-height constraint */
         }
         
         .right-sidebar {
@@ -90,7 +90,6 @@
             flex-direction: column;
             gap: 20px;
             min-width: 300px;
-            /* Regular scrolling - no max-height constraint */
         }
         
         .pagination-container {
@@ -163,7 +162,6 @@
             width: 100%;
             background: transparent;
             margin-bottom: 10px;
-            /* No sticky positioning */
         }
         
         .branding-bar {
@@ -183,7 +181,6 @@
         }
         
         .site-logo {
-            font-family: 'Playfair Display', serif;
             font-weight: 900;
             font-size: 26px;
             letter-spacing: 2px;
@@ -251,7 +248,6 @@
             border-bottom: 1px solid rgba(255,255,255,0.1);
             border-top: 1px solid rgba(255,255,255,0.1);
             box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
-            /* No sticky positioning */
         }
         
         .search-container {
@@ -279,7 +275,6 @@
             color: white;
             background: transparent;
             outline: none;
-            font-family: 'Montserrat', sans-serif;
             font-size: 16px;
         }
         
@@ -321,7 +316,6 @@
             border-bottom: 1px solid rgba(255,255,255,0.15);
             transition: all 0.2s ease;
             height: 60px;
-            /* No sticky positioning */
         }
         
         .section-header:hover {
@@ -338,7 +332,6 @@
             padding: 0;
             margin: 0;
             line-height: 1;
-            font-family: 'Playfair Display', serif;
             letter-spacing: 1px;
         }
         
@@ -448,7 +441,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
             line-height: 1.4;
-            font-family: 'Playfair Display', serif;
         }
         
         .album-date {
