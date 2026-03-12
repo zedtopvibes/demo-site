@@ -158,15 +158,13 @@
         .site-header {
             width: 100%;
             background: transparent;
-            margin-bottom: 5px; /* REDUCED from 10px */
+            margin-bottom: 5px;
         }
         
-        /* REDUCED MAIN HEADER */
+        /* SOLID HEADER - NO FLASHY EFFECT */
         .branding-bar {
-            background: rgba(120, 135, 155, 0.2);
-            backdrop-filter: blur(14px) saturate(180%);
-            -webkit-backdrop-filter: blur(14px) saturate(180%);
-            padding: 10px 20px; /* REDUCED from 16px 20px */
+            background: #0b1018;  /* SOLID dark background */
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -180,23 +178,20 @@
         
         .site-logo {
             font-weight: 900;
-            font-size: 22px; /* REDUCED from 26px */
-            letter-spacing: 1.5px; /* SLIGHTLY REDUCED */
+            font-size: 22px;
+            letter-spacing: 1.5px;
             background: linear-gradient(135deg, #ffffff, #e0e8ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
         }
         
-        /* REDESIGNED HAMBURGER MENU - matching profile icon */
+        /* HAMBURGER MENU - solid version */
         .hamburger-menu {
-            width: 40px; /* MATCH profile-icon width */
-            height: 40px; /* MATCH profile-icon height */
-            border-radius: 50%; /* MATCH profile-icon */
-            background: rgba(255,255,255,0.15); /* MATCH profile-icon */
-            backdrop-filter: blur(8px); /* MATCH profile-icon */
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.2); /* MATCH profile-icon */
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #1a1f2a;  /* SOLID dark background */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -204,32 +199,33 @@
             cursor: pointer;
             transition: all 0.3s ease;
             gap: 5px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
         
         .hamburger-menu span {
             display: block;
             height: 2px;
-            width: 18px; /* Slightly smaller than full width */
+            width: 18px;
             background: rgba(255,255,255,0.8);
             border-radius: 3px;
             transition: all 0.3s ease;
         }
         
         .hamburger-menu:hover {
-            background: rgba(255,255,255,0.25); /* MATCH profile-icon hover */
-            transform: scale(1.05); /* MATCH profile-icon hover */
+            background: #2a2f3a;  /* lighter solid on hover */
+            transform: scale(1.05);
         }
         
         .hamburger-menu:hover span {
-            background: white; /* MATCH profile-icon hover */
+            background: white;
         }
         
+        /* PROFILE ICON - solid version */
         .profile-icon {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(8px);
+            background: #1a1f2a;  /* SOLID dark background */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -243,11 +239,11 @@
         }
         
         .profile-icon:hover {
-            background: rgba(255,255,255,0.25);
+            background: #2a2f3a;  /* lighter solid on hover */
             transform: scale(1.05);
         }
         
-        /* RESIZED SEARCH SECTION */
+        /* SEARCH SECTION - keeping glass here is fine */
         .search-section {
             background: rgba(110, 125, 145, 0.15);
             backdrop-filter: blur(6px) saturate(140%);
@@ -971,8 +967,8 @@
     
     <div class="app-container">
         <header class="site-header">
+            <!-- SOLID HEADER - NO FLASHY EFFECT -->
             <div class="branding-bar">
-                <!-- REDESIGNED HAMBURGER MENU - now matches profile icon -->
                 <div class="hamburger-menu" id="hamburgerMenu">
                     <span></span>
                     <span></span>
@@ -986,7 +982,7 @@
                 </div>
             </div>
             
-            <!-- RESIZED SEARCH SECTION -->
+            <!-- Search section still has glass (looks good) -->
             <section class="search-section">
                 <div class="search-container">
                     <div class="search-bar">
