@@ -3,7 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>glass route · dynamic content</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Glass Route">
+    <meta name="application-name" content="Glass Route">
+    <meta name="theme-color" content="#0b1018">
+    <meta name="msapplication-TileColor" content="#0b1018">
+    
+    <!-- App Icons (using Font Awesome as fallback) -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%230b1018' stroke='%23ffffff' stroke-width='2'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='%23ffffff' font-family='Arial'%3E🎬%3C/text%3E%3C/svg%3E">
     
     <!-- Montserrat + Playfair -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +30,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
         }
         
         body {
@@ -27,6 +39,7 @@
             color: #ffffff;
             line-height: 1.6;
             min-height: 100vh;
+            min-height: -webkit-fill-available; /* Better mobile height */
             display: flex;
             flex-direction: column;
             scroll-behavior: smooth;
@@ -35,6 +48,17 @@
                 radial-gradient(circle at 80% 70%, rgba(140, 170, 220, 0.15) 0%, transparent 50%),
                 repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px);
             background-attachment: fixed;
+            /* App-like scrolling */
+            overscroll-behavior-y: none;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* App Container */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
         }
         
         .main-content-container {
@@ -46,6 +70,7 @@
             width: 100%;
             position: relative;
             z-index: 1;
+            flex: 1;
         }
         
         .left-sidebar {
@@ -59,6 +84,10 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
             z-index: 2;
+            /* App-like smooth scrolling inside */
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            max-height: calc(100vh - 200px);
         }
         
         .right-sidebar {
@@ -67,8 +96,14 @@
             flex-direction: column;
             gap: 20px;
             min-width: 300px;
+            /* App-like smooth scrolling inside */
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            max-height: calc(100vh - 200px);
+            padding-right: 2px;
         }
         
+        /* Rest of your existing CSS remains exactly the same */
         .pagination-container {
             width: 100%;
             padding: 20px;
@@ -106,6 +141,9 @@
             cursor: pointer;
             transition: all 0.2s ease;
             text-decoration: none;
+            /* Better touch target */
+            min-width: 44px;
+            min-height: 44px;
         }
         
         .pagination-item:hover {
@@ -137,11 +175,15 @@
             width: 100%;
             background: transparent;
             margin-bottom: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
         .branding-bar {
             background: rgba(120, 135, 155, 0.2);
             backdrop-filter: blur(14px) saturate(180%);
+            -webkit-backdrop-filter: blur(14px) saturate(180%);
             padding: 16px 20px;
             display: flex;
             justify-content: space-between;
@@ -172,6 +214,9 @@
             flex-direction: column;
             justify-content: space-between;
             cursor: pointer;
+            /* Better touch target */
+            padding: 10px;
+            margin: -10px;
         }
         
         .hamburger-menu span {
@@ -201,6 +246,9 @@
             color: white;
             font-size: 1.3rem;
             border: 1px solid rgba(255,255,255,0.2);
+            /* Better touch target */
+            min-width: 44px;
+            min-height: 44px;
         }
         
         .profile-icon:hover {
@@ -219,6 +267,9 @@
             border-bottom: 1px solid rgba(255,255,255,0.1);
             border-top: 1px solid rgba(255,255,255,0.1);
             box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+            position: sticky;
+            top: 80px;
+            z-index: 90;
         }
         
         .search-container {
@@ -247,6 +298,8 @@
             background: transparent;
             outline: none;
             font-family: 'Montserrat', sans-serif;
+            /* Prevent zoom on focus for iOS */
+            font-size: 16px;
         }
         
         .search-input::placeholder {
@@ -269,6 +322,9 @@
             transition: all 0.3s ease;
             font-size: 1.2rem;
             backdrop-filter: blur(4px);
+            /* Better touch target */
+            min-width: 60px;
+            min-height: 60px;
         }
         
         .search-button:hover {
@@ -285,6 +341,10 @@
             border-bottom: 1px solid rgba(255,255,255,0.15);
             transition: all 0.2s ease;
             height: 60px;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            backdrop-filter: blur(12px);
         }
         
         .section-header:hover {
@@ -326,6 +386,10 @@
             letter-spacing: 0.5px;
             white-space: nowrap;
             cursor: pointer;
+            /* Better touch target */
+            min-height: 44px;
+            display: flex;
+            align-items: center;
         }
         
         .view-all:hover {
@@ -356,11 +420,18 @@
             cursor: pointer;
             position: relative;
             border-bottom: 1px solid rgba(255,255,255,0.05);
+            /* Better touch feedback */
+            -webkit-touch-callout: none;
         }
         
         .album-item:hover {
             background: rgba(255,255,255,0.08);
             transform: translateX(6px);
+        }
+        
+        .album-item:active {
+            background: rgba(255,255,255,0.15);
+            transform: scale(0.99);
         }
         
         .album-thumbnail {
@@ -498,6 +569,7 @@
             height: 100%;
             background: rgba(100, 115, 135, 0.25);
             backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             z-index: 1000;
             box-shadow: 0 0 30px rgba(0,0,0,0.5);
             transition: transform 0.3s ease, opacity 0.3s ease;
@@ -523,6 +595,7 @@
             align-items: center;
             border-bottom: 1px solid rgba(255,255,255,0.15);
             background: rgba(0,0,0,0.2);
+            padding-top: env(safe-area-inset-top, 20px);
         }
         
         .close-nav {
@@ -530,10 +603,16 @@
             cursor: pointer;
             color: white;
             line-height: 1;
+            /* Better touch target */
+            padding: 10px;
+            margin: -10px;
         }
         
         .nav-menu {
             padding: 20px 0;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            height: calc(100% - 80px);
         }
         
         .nav-item {
@@ -545,6 +624,10 @@
             font-weight: 500;
             transition: all 0.3s ease;
             border-left: 4px solid transparent;
+            /* Better touch target */
+            min-height: 55px;
+            display: flex;
+            align-items: center;
         }
         
         .nav-item i {
@@ -666,19 +749,119 @@
             background: rgba(255,255,255,0.1);
             font-size: 0.8rem;
             transition: all 0.2s ease;
+            /* Better touch target */
+            min-height: 44px;
+            display: flex;
+            align-items: center;
         }
         
         .clear-search:hover {
             background: rgba(255,255,255,0.2);
         }
         
+        /* App Install Prompt */
+        .install-prompt {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 16px;
+            display: none;
+            align-items: center;
+            gap: 16px;
+            z-index: 2000;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .install-prompt.show {
+            display: flex;
+        }
+        
+        .install-icon {
+            width: 50px;
+            height: 50px;
+            background: #0b1018;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .install-text {
+            flex: 1;
+        }
+        
+        .install-text h4 {
+            margin-bottom: 4px;
+        }
+        
+        .install-text p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        .install-button {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 44px;
+        }
+        
+        .install-button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .close-install {
+            color: rgba(255,255,255,0.6);
+            cursor: pointer;
+            padding: 10px;
+            margin: -10px;
+        }
+        
+        /* Safe area for notched phones */
+        @supports (padding: max(0px)) {
+            .branding-bar {
+                padding-left: max(20px, env(safe-area-inset-left));
+                padding-right: max(20px, env(safe-area-inset-right));
+            }
+            
+            .site-footer {
+                padding-bottom: max(25px, env(safe-area-inset-bottom));
+            }
+            
+            .nav-header {
+                padding-top: max(20px, env(safe-area-inset-top));
+            }
+        }
+        
         @media (max-width: 768px) {
             .main-content-container {
                 flex-direction: column;
+                padding: 10px 5px;
             }
             .left-sidebar .album-thumbnail {
                 width: 100px;
                 height: 100px;
+            }
+            .left-sidebar, .right-sidebar {
+                max-height: none;
+            }
+            .search-section {
+                top: 70px;
             }
         }
         
@@ -688,106 +871,125 @@
                 height: 70px !important;
             }
         }
+        
+        /* Disable text selection for app-like feel */
+        .no-select {
+            user-select: none;
+            -webkit-user-select: none;
+        }
     </style>
 </head>
 <body>
     <div class="scroll-progress" id="scrollProgress"></div>
     
-    <header class="site-header">
-        <div class="branding-bar">
-            <div class="hamburger-menu" id="hamburgerMenu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            
-            <div class="site-logo">GLASS•ROUTE</div>
-            
-            <div class="profile-icon" id="profileIcon">
-                <i class="fas fa-user"></i>
-            </div>
+    <!-- App Install Prompt -->
+    <div class="install-prompt" id="installPrompt">
+        <div class="install-icon">🎬</div>
+        <div class="install-text">
+            <h4>Install Glass Route</h4>
+            <p>Add to home screen for app-like experience</p>
         </div>
-        
-        <section class="search-section">
-            <div class="search-container">
-                <div class="search-bar">
-                    <input type="text" class="search-input" id="searchInput" placeholder="search movies, albums... (dynamic loading)" value="inception">
-                    <button class="search-button" id="searchButton">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </div>
-        </section>
-    </header>
-    
-    <div class="main-content-container" id="content">
-        <aside class="left-sidebar">
-            <div class="section-header">
-                <h2 class="section-title" id="mainSectionTitle">latest films</h2>
-                <span class="view-all" id="refreshMain">refresh ↻</span>
-            </div>
-            
-            <div class="search-info" id="searchInfo" style="display: none;">
-                <span id="searchQueryDisplay"></span>
-                <span class="clear-search" id="clearSearch">✕ clear</span>
-            </div>
-            
-            <div class="latest-albums-list" id="latestAlbums">
-                <!-- skeletons will be shown while loading -->
-            </div>
-            
-            <div class="pagination-container" id="paginationContainer">
-                <div class="pagination" id="pagination"></div>
-            </div>
-        </aside>
-        
-        <div class="right-sidebar">
-            <section class="section-block">
-                <div class="section-header">
-                    <h2 class="section-title">new releases</h2>
-                    <span class="view-all" id="refreshReleases">↻</span>
-                </div>
-                <div class="latest-albums-list" id="latestSongs"></div>
-            </section>
-            
-            <section class="section-block">
-                <div class="section-header">
-                    <h2 class="section-title">directors</h2>
-                    <span class="view-all" id="refreshArtists">↻</span>
-                </div>
-                <div class="latest-albums-list" id="featuredArtists"></div>
-            </section>
-            
-            <section class="section-block">
-                <div class="section-header">
-                    <h2 class="section-title">top rated</h2>
-                    <span class="view-all" id="refreshTopRated">↻</span>
-                </div>
-                <div class="latest-albums-list" id="topRated"></div>
-            </section>
-            
-            <section class="section-block">
-                <div class="section-header">
-                    <h2 class="section-title">collections</h2>
-                    <span class="view-all" id="refreshPlaylists">↻</span>
-                </div>
-                <div class="latest-albums-list" id="featuredPlaylists"></div>
-            </section>
-            
-            <section class="section-block">
-                <div class="section-header">
-                    <h2 class="section-title">trending</h2>
-                    <span class="view-all" id="refreshTrending">↻</span>
-                </div>
-                <div class="latest-albums-list" id="trendingAlbums"></div>
-            </section>
-        </div>
+        <button class="install-button" id="installButton">Install</button>
+        <span class="close-install" id="closeInstall">✕</span>
     </div>
     
-    <footer class="site-footer">
-        <p>© 2025 GLASS ROUTE · dynamic content loading</p>
-        <p>search for movies • albums • music</p>
-    </footer>
+    <div class="app-container">
+        <header class="site-header">
+            <div class="branding-bar">
+                <div class="hamburger-menu" id="hamburgerMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
+                <div class="site-logo">GLASS•ROUTE</div>
+                
+                <div class="profile-icon" id="profileIcon">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+            
+            <section class="search-section">
+                <div class="search-container">
+                    <div class="search-bar">
+                        <input type="text" class="search-input" id="searchInput" placeholder="search movies, albums... (dynamic loading)" value="inception">
+                        <button class="search-button" id="searchButton">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </header>
+        
+        <div class="main-content-container" id="content">
+            <aside class="left-sidebar">
+                <div class="section-header">
+                    <h2 class="section-title" id="mainSectionTitle">latest films</h2>
+                    <span class="view-all" id="refreshMain">refresh ↻</span>
+                </div>
+                
+                <div class="search-info" id="searchInfo" style="display: none;">
+                    <span id="searchQueryDisplay"></span>
+                    <span class="clear-search" id="clearSearch">✕ clear</span>
+                </div>
+                
+                <div class="latest-albums-list" id="latestAlbums">
+                    <!-- skeletons will be shown while loading -->
+                </div>
+                
+                <div class="pagination-container" id="paginationContainer">
+                    <div class="pagination" id="pagination"></div>
+                </div>
+            </aside>
+            
+            <div class="right-sidebar">
+                <section class="section-block">
+                    <div class="section-header">
+                        <h2 class="section-title">new releases</h2>
+                        <span class="view-all" id="refreshReleases">↻</span>
+                    </div>
+                    <div class="latest-albums-list" id="latestSongs"></div>
+                </section>
+                
+                <section class="section-block">
+                    <div class="section-header">
+                        <h2 class="section-title">directors</h2>
+                        <span class="view-all" id="refreshArtists">↻</span>
+                    </div>
+                    <div class="latest-albums-list" id="featuredArtists"></div>
+                </section>
+                
+                <section class="section-block">
+                    <div class="section-header">
+                        <h2 class="section-title">top rated</h2>
+                        <span class="view-all" id="refreshTopRated">↻</span>
+                    </div>
+                    <div class="latest-albums-list" id="topRated"></div>
+                </section>
+                
+                <section class="section-block">
+                    <div class="section-header">
+                        <h2 class="section-title">collections</h2>
+                        <span class="view-all" id="refreshPlaylists">↻</span>
+                    </div>
+                    <div class="latest-albums-list" id="featuredPlaylists"></div>
+                </section>
+                
+                <section class="section-block">
+                    <div class="section-header">
+                        <h2 class="section-title">trending</h2>
+                        <span class="view-all" id="refreshTrending">↻</span>
+                    </div>
+                    <div class="latest-albums-list" id="trendingAlbums"></div>
+                </section>
+            </div>
+        </div>
+        
+        <footer class="site-footer">
+            <p>© 2025 GLASS ROUTE · dynamic content loading</p>
+            <p>search for movies • albums • music</p>
+        </footer>
+    </div>
     
     <div class="nav-drawer left" id="leftDrawer">
         <div class="nav-header">
@@ -816,9 +1018,45 @@
     </div>
 
     <script>
+        // PWA Installation
+        let deferredPrompt;
+        const installPrompt = document.getElementById('installPrompt');
+        const installButton = document.getElementById('installButton');
+        const closeInstall = document.getElementById('closeInstall');
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installPrompt.classList.add('show');
+        });
+        
+        installButton.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            
+            if (outcome === 'accepted') {
+                console.log('App installed');
+            }
+            
+            deferredPrompt = null;
+            installPrompt.classList.remove('show');
+        });
+        
+        closeInstall.addEventListener('click', () => {
+            installPrompt.classList.remove('show');
+        });
+        
+        // Check if already installed
+        window.addEventListener('appinstalled', () => {
+            installPrompt.classList.remove('show');
+            console.log('App was installed');
+        });
+        
         // API Configuration
-        const API_BASE = 'https://itunes.apple.com'; // Using iTunes API for demo
-        const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes cache
+        const API_BASE = 'https://itunes.apple.com';
+        const CACHE_DURATION = 5 * 60 * 1000;
         
         // State management
         let currentState = {
@@ -894,7 +1132,6 @@
             const url = `${API_BASE}${endpoint}${queryString ? '?' + queryString : ''}`;
             const cacheKey = url;
             
-            // Check cache
             if (cache.has(cacheKey)) {
                 const { data, timestamp } = cache.get(cacheKey);
                 if (Date.now() - timestamp < CACHE_DURATION) {
@@ -907,7 +1144,6 @@
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const data = await response.json();
                 
-                // Cache the result
                 cache.set(cacheKey, { data, timestamp: Date.now() });
                 return data;
             } catch (error) {
@@ -945,7 +1181,7 @@
         function renderAlbumItem(item, isLarge = true) {
             const thumbnailStyle = isLarge ? 'width:120px;height:120px;' : 'width:80px;height:80px;';
             const thumbnailContent = item.artwork 
-                ? `<img src="${item.artwork}" alt="${item.title}" style="width:100%;height:100%;object-fit:cover;">`
+                ? `<img src="${item.artwork}" alt="${item.title}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">`
                 : `<i class="fas fa-${isLarge ? 'film' : 'music'}" style="font-size:${isLarge ? '2.5rem' : '2rem'};"></i>`;
             
             return `
@@ -977,7 +1213,6 @@
             currentState.searchQuery = query;
             currentState.currentPage = page;
             
-            // Update UI
             elements.searchInfo.style.display = 'flex';
             elements.searchQueryDisplay.textContent = `Searching: "${query}"`;
             elements.mainSectionTitle.textContent = 'search results';
@@ -985,7 +1220,6 @@
             showSkeletons(elements.latestAlbums, 5, true);
             
             try {
-                // Search movies (using iTunes movie search)
                 const movieData = await fetchFromAPI('/search', {
                     term: query,
                     media: 'movie',
@@ -994,7 +1228,6 @@
                     offset: (page - 1) * 20
                 });
                 
-                // Search music (using iTunes music search)
                 const musicData = await fetchFromAPI('/search', {
                     term: query,
                     media: 'music',
@@ -1003,14 +1236,12 @@
                     offset: (page - 1) * 20
                 });
                 
-                // Combine and transform results
                 const movieResults = (movieData.results || []).map(transformMovieToAlbum);
                 const musicResults = (musicData.results || []).map(transformMusicToAlbum);
                 
                 currentState.searchResults = [...movieResults, ...musicResults];
                 currentState.totalPages = Math.ceil(currentState.searchResults.length / 10) || 1;
                 
-                // Render results
                 if (currentState.searchResults.length === 0) {
                     showNoResults(elements.latestAlbums);
                 } else {
@@ -1037,7 +1268,6 @@
             showSkeletons(container, limit, isLarge);
             
             try {
-                // Get popular/recent items
                 const data = await fetchFromAPI('/search', {
                     term: 'popular',
                     media: mediaType,
@@ -1087,7 +1317,6 @@
             
             let paginationHTML = '';
             
-            // Previous button
             paginationHTML += `
                 <div class="pagination-item pagination-prev ${currentState.currentPage === 1 ? 'disabled' : ''}" 
                      ${currentState.currentPage > 1 ? 'onclick="changePage(' + (currentState.currentPage - 1) + ')"' : ''}>
@@ -1095,7 +1324,6 @@
                 </div>
             `;
             
-            // Page numbers
             for (let i = 1; i <= Math.min(5, currentState.totalPages); i++) {
                 paginationHTML += `
                     <div class="pagination-item ${currentState.currentPage === i ? 'active' : ''}" 
@@ -1112,7 +1340,6 @@
                 `;
             }
             
-            // Next button
             paginationHTML += `
                 <div class="pagination-item pagination-next ${currentState.currentPage === currentState.totalPages ? 'disabled' : ''}"
                      ${currentState.currentPage < currentState.totalPages ? 'onclick="changePage(' + (currentState.currentPage + 1) + ')"' : ''}>
@@ -1123,13 +1350,11 @@
             elements.pagination.innerHTML = paginationHTML;
         }
         
-        // Global function for pagination
         window.changePage = function(page) {
             if (page === currentState.currentPage || page < 1 || page > currentState.totalPages) return;
             performSearch(currentState.searchQuery, page);
         };
         
-        // Clear search
         function clearSearch() {
             currentState.searchQuery = '';
             currentState.currentPage = 1;
@@ -1140,16 +1365,11 @@
             elements.searchInput.value = '';
             elements.mainSectionTitle.textContent = 'latest films';
             
-            // Reload default content
             loadAllSections();
-            
-            // Reload main content with default
             performSearch('inception', 1);
         }
         
-        // Event Listeners
         function initializeEventListeners() {
-            // Search
             elements.searchButton.addEventListener('click', () => {
                 performSearch(elements.searchInput.value, 1);
             });
@@ -1162,7 +1382,6 @@
             
             elements.clearSearch.addEventListener('click', clearSearch);
             
-            // Refresh buttons
             document.getElementById('refreshMain').addEventListener('click', () => {
                 if (currentState.searchQuery) {
                     performSearch(currentState.searchQuery, currentState.currentPage);
@@ -1189,23 +1408,19 @@
                 loadSection(elements.trendingAlbums, 'music', 3, false);
             });
             
-            // Navigation
             document.querySelectorAll('.nav-item[data-category]').forEach(item => {
                 item.addEventListener('click', (e) => {
                     e.preventDefault();
                     const category = e.target.dataset.category;
                     currentState.currentCategory = category;
                     
-                    // Update active state
                     document.querySelectorAll('.nav-item[data-category]').forEach(nav => {
                         nav.classList.remove('active');
                     });
                     e.target.classList.add('active');
                     
-                    // Perform category search
                     performSearch(category, 1);
                     
-                    // Close drawer
                     document.getElementById('leftDrawer').style.opacity = '0';
                     document.getElementById('leftDrawer').style.transform = 'translateX(-100%)';
                     setTimeout(() => {
@@ -1214,7 +1429,6 @@
                 });
             });
             
-            // Drawers (preserved from original)
             const hamburger = document.getElementById('hamburgerMenu');
             const leftDrawer = document.getElementById('leftDrawer');
             const closeLeft = document.getElementById('closeLeftDrawer');
@@ -1255,7 +1469,6 @@
                 }, 300);
             });
             
-            // Scroll progress
             window.addEventListener('scroll', function() {
                 const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
                 const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -1264,11 +1477,8 @@
             });
         }
         
-        // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
             initializeEventListeners();
-            
-            // Initial load
             await loadAllSections();
             await performSearch('inception', 1);
         });
