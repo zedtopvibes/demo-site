@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>glass route · dynamic content</title>
+    <title>glass route · top 5 now</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
     <!-- PWA Meta Tags -->
@@ -11,7 +11,6 @@
     <meta name="apple-mobile-web-app-title" content="Glass Route">
     <meta name="application-name" content="Glass Route">
     <meta name="theme-color" content="#0b1018">
-    <meta name="msapplication-TileColor" content="#0b1018">
     
     <!-- App Icons -->
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%230b1018' stroke='%23ffffff' stroke-width='2'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='%23ffffff' font-family='Arial'%3E🎬%3C/text%3E%3C/svg%3E">
@@ -31,7 +30,6 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
-            /* Montserrat on everything */
             font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }
         
@@ -51,7 +49,6 @@
             -webkit-overflow-scrolling: touch;
         }
         
-        /* App Container */
         .app-container {
             display: flex;
             flex-direction: column;
@@ -417,6 +414,98 @@
             font-size: 2.5rem;
             color: rgba(255,255,255,0.7);
             backdrop-filter: blur(4px);
+            position: relative; /* For number overlay */
+        }
+        
+        /* NEW: Number Overlay Styles */
+        .number-overlay {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ffd700, #ffa500);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.4rem;
+            color: #0b1018;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,255,255,0.5);
+            z-index: 10;
+            animation: popIn 0.3s ease-out;
+        }
+        
+        /* Different colors for top spots */
+        .number-overlay.rank-1 {
+            background: linear-gradient(135deg, #ffd700, #ffa500);
+            width: 45px;
+            height: 45px;
+            font-size: 1.6rem;
+            box-shadow: 0 0 20px #ffd700;
+        }
+        
+        .number-overlay.rank-2 {
+            background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
+        }
+        
+        .number-overlay.rank-3 {
+            background: linear-gradient(135deg, #cd7f32, #b06d28);
+        }
+        
+        .number-overlay.rank-4 {
+            background: linear-gradient(135deg, #4a90e2, #3570b2);
+        }
+        
+        .number-overlay.rank-5 {
+            background: linear-gradient(135deg, #50c878, #3aa35b);
+        }
+        
+        /* Small number overlay for right sidebar */
+        .right-sidebar .number-overlay {
+            width: 30px;
+            height: 30px;
+            font-size: 1rem;
+            top: -5px;
+            left: -5px;
+        }
+        
+        .right-sidebar .number-overlay.rank-1 {
+            width: 35px;
+            height: 35px;
+            font-size: 1.2rem;
+        }
+        
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Trending icon */
+        .trending-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 69, 0, 0.2);
+            color: #ff7f50;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 140, 0, 0.3);
+            margin-left: 8px;
+        }
+        
+        .trending-badge i {
+            font-size: 0.8rem;
+        }
+        
+        .album-item:hover .number-overlay {
+            transform: scale(1.1);
+            transition: transform 0.2s;
         }
         
         .album-item:hover .album-thumbnail {
@@ -436,11 +525,10 @@
             font-weight: 600;
             color: white;
             margin-bottom: 8px;
-            display: block;
-            white-space: normal;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            line-height: 1.4;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
         }
         
         .album-date {
@@ -766,6 +854,7 @@
         
         .install-text h4 {
             margin-bottom: 4px;
+            font-weight: 600;
         }
         
         .install-text p {
@@ -870,7 +959,7 @@
             <section class="search-section">
                 <div class="search-container">
                     <div class="search-bar">
-                        <input type="text" class="search-input" id="searchInput" placeholder="search movies, albums... (dynamic loading)" value="inception">
+                        <input type="text" class="search-input" id="searchInput" placeholder="search movies, albums..." value="inception">
                         <button class="search-button" id="searchButton">
                             <i class="fas fa-search"></i>
                         </button>
@@ -882,8 +971,8 @@
         <div class="main-content-container" id="content">
             <aside class="left-sidebar">
                 <div class="section-header">
-                    <h2 class="section-title" id="mainSectionTitle">latest films</h2>
-                    <span class="view-all" id="refreshMain">refresh ↻</span>
+                    <h2 class="section-title" id="mainSectionTitle">top 5 movies</h2>
+                    <span class="view-all" id="refreshMain">↻</span>
                 </div>
                 
                 <div class="search-info" id="searchInfo" style="display: none;">
@@ -892,7 +981,7 @@
                 </div>
                 
                 <div class="latest-albums-list" id="latestAlbums">
-                    <!-- skeletons will be shown while loading -->
+                    <!-- Top 5 will be loaded here with number overlays -->
                 </div>
                 
                 <div class="pagination-container" id="paginationContainer">
@@ -903,7 +992,7 @@
             <div class="right-sidebar">
                 <section class="section-block">
                     <div class="section-header">
-                        <h2 class="section-title">new releases</h2>
+                        <h2 class="section-title">top 5 music</h2>
                         <span class="view-all" id="refreshReleases">↻</span>
                     </div>
                     <div class="latest-albums-list" id="latestSongs"></div>
@@ -911,26 +1000,10 @@
                 
                 <section class="section-block">
                     <div class="section-header">
-                        <h2 class="section-title">directors</h2>
+                        <h2 class="section-title">top artists</h2>
                         <span class="view-all" id="refreshArtists">↻</span>
                     </div>
                     <div class="latest-albums-list" id="featuredArtists"></div>
-                </section>
-                
-                <section class="section-block">
-                    <div class="section-header">
-                        <h2 class="section-title">top rated</h2>
-                        <span class="view-all" id="refreshTopRated">↻</span>
-                    </div>
-                    <div class="latest-albums-list" id="topRated"></div>
-                </section>
-                
-                <section class="section-block">
-                    <div class="section-header">
-                        <h2 class="section-title">collections</h2>
-                        <span class="view-all" id="refreshPlaylists">↻</span>
-                    </div>
-                    <div class="latest-albums-list" id="featuredPlaylists"></div>
                 </section>
                 
                 <section class="section-block">
@@ -944,21 +1017,20 @@
         </div>
         
         <footer class="site-footer">
-            <p>© 2025 GLASS ROUTE · dynamic content loading</p>
-            <p>search for movies • albums • music</p>
+            <p>© 2025 GLASS ROUTE · top 5 now</p>
+            <p>movies • music • trending</p>
         </footer>
     </div>
     
     <div class="nav-drawer left" id="leftDrawer">
         <div class="nav-header">
-            <div class="site-logo">ZEDTOPVIBES.COM</div>
+            <div class="site-logo">GLASS•ROUTE</div>
             <div class="close-nav" id="closeLeftDrawer">✕</div>
         </div>
         <nav class="nav-menu">
             <a href="#" class="nav-item active" data-category="movie"><i class="fas fa-film"></i> Movies</a>
             <a href="#" class="nav-item" data-category="music"><i class="fas fa-compact-disc"></i> Music</a>
             <a href="#" class="nav-item" data-category="artist"><i class="fas fa-microphone-alt"></i> Artists</a>
-            <a href="#" class="nav-item" data-category="playlist"><i class="fas fa-list"></i> Playlists</a>
         </nav>
     </div>
     
@@ -968,10 +1040,9 @@
             <div class="close-nav" id="closeRightDrawer">✕</div>
         </div>
         <nav class="nav-menu">
-            <div class="nav-section-title">MY SPACE</div>
-            <a href="#" class="nav-item"><i class="fas fa-user"></i> Profile</a>
-            <a href="#" class="nav-item"><i class="fas fa-heart"></i> Favorites</a>
-            <a href="#" class="nav-item"><i class="fas fa-history"></i> History</a>
+            <div class="nav-section-title">SETTINGS</div>
+            <a href="#" class="nav-item"><i class="fas fa-cog"></i> Preferences</a>
+            <a href="#" class="nav-item"><i class="fas fa-palette"></i> Theme</a>
         </nav>
     </div>
 
@@ -1017,7 +1088,7 @@
         
         // State management
         let currentState = {
-            searchQuery: 'inception',
+            searchQuery: 'top',
             currentPage: 1,
             totalPages: 1,
             currentCategory: 'movie',
@@ -1032,8 +1103,6 @@
             latestAlbums: document.getElementById('latestAlbums'),
             latestSongs: document.getElementById('latestSongs'),
             featuredArtists: document.getElementById('featuredArtists'),
-            topRated: document.getElementById('topRated'),
-            featuredPlaylists: document.getElementById('featuredPlaylists'),
             trendingAlbums: document.getElementById('trendingAlbums'),
             searchInput: document.getElementById('searchInput'),
             searchButton: document.getElementById('searchButton'),
@@ -1046,7 +1115,7 @@
         };
         
         // Utility Functions
-        function showSkeletons(container, count = 3, isLarge = true) {
+        function showSkeletons(container, count = 5, isLarge = true) {
             if (!container) return;
             const width = isLarge ? '120px' : '80px';
             const height = isLarge ? '120px' : '80px';
@@ -1117,9 +1186,7 @@
                 year: item.releaseDate ? new Date(item.releaseDate).getFullYear() : '2024',
                 genre: item.primaryGenreName || 'Various',
                 artwork: item.artworkUrl100?.replace('100x100', '600x600') || null,
-                trackCount: item.trackCount || 0,
-                price: item.collectionPrice || item.trackPrice,
-                currency: item.currency || 'USD'
+                trackCount: item.trackCount || 0
             };
         }
         
@@ -1134,8 +1201,8 @@
             };
         }
         
-        // Render Functions
-        function renderAlbumItem(item, isLarge = true) {
+        // NEW: Render with Number Overlay
+        function renderAlbumItemWithRank(item, rank, isLarge = true) {
             const thumbnailStyle = isLarge ? 'width:120px;height:120px;' : 'width:80px;height:80px;';
             const thumbnailContent = item.artwork 
                 ? `<img src="${item.artwork}" alt="${item.title}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">`
@@ -1145,239 +1212,124 @@
                 <div class="album-item">
                     <div class="album-thumbnail" style="${thumbnailStyle}">
                         ${thumbnailContent}
+                        <div class="number-overlay rank-${rank}">${rank}</div>
                     </div>
                     <div class="album-info">
-                        <div class="album-title">${item.title}</div>
+                        <div class="album-title">
+                            ${item.title}
+                            ${rank === 1 ? '<span class="trending-badge"><i class="fas fa-crown"></i> #1</span>' : ''}
+                        </div>
                         <div class="album-date">${item.year} • ${item.artist}</div>
                         <div class="album-meta">
                             <span class="album-genre">${item.genre}</span>
                             ${item.trackCount ? `<span class="album-tracks">${item.trackCount} tracks</span>` : ''}
-                            ${item.price ? `<span class="album-tracks">${item.currency === 'USD' ? '$' : ''}${item.price}</span>` : ''}
                         </div>
                     </div>
                 </div>
             `;
         }
         
-        // Main Search Function
-        async function performSearch(query = currentState.searchQuery, page = currentState.currentPage) {
-            if (!query.trim()) {
-                showNoResults(elements.latestAlbums);
-                return;
-            }
-            
-            currentState.isLoading = true;
-            currentState.searchQuery = query;
-            currentState.currentPage = page;
-            
-            elements.searchInfo.style.display = 'flex';
-            elements.searchQueryDisplay.textContent = `Searching: "${query}"`;
-            elements.mainSectionTitle.textContent = 'search results';
-            
-            showSkeletons(elements.latestAlbums, 5, true);
-            
-            try {
-                const movieData = await fetchFromAPI('/search', {
-                    term: query,
-                    media: 'movie',
-                    entity: 'movie',
-                    limit: 20,
-                    offset: (page - 1) * 20
-                });
-                
-                const musicData = await fetchFromAPI('/search', {
-                    term: query,
-                    media: 'music',
-                    entity: 'album',
-                    limit: 20,
-                    offset: (page - 1) * 20
-                });
-                
-                const movieResults = (movieData.results || []).map(transformMovieToAlbum);
-                const musicResults = (musicData.results || []).map(transformMusicToAlbum);
-                
-                currentState.searchResults = [...movieResults, ...musicResults];
-                currentState.totalPages = Math.ceil(currentState.searchResults.length / 10) || 1;
-                
-                if (currentState.searchResults.length === 0) {
-                    showNoResults(elements.latestAlbums);
-                } else {
-                    elements.latestAlbums.innerHTML = currentState.searchResults
-                        .slice(0, 10)
-                        .map(item => renderAlbumItem(item, true))
-                        .join('');
-                }
-                
-                renderPagination();
-                
-            } catch (error) {
-                console.error('Search error:', error);
-                showError(elements.latestAlbums, 'Failed to load results. Please try again.');
-            } finally {
-                currentState.isLoading = false;
-            }
-        }
-        
-        // Section Load Functions
-        async function loadSection(container, mediaType, limit = 5, isLarge = false) {
+        // Load Top 5 for a section
+        async function loadTop5(container, mediaType, isLarge = true, section = 'top') {
             if (!container) return;
             
-            showSkeletons(container, limit, isLarge);
+            showSkeletons(container, 5, isLarge);
             
             try {
+                // Search for popular items
                 const data = await fetchFromAPI('/search', {
-                    term: 'popular',
+                    term: section === 'top' ? 'popular' : section,
                     media: mediaType,
-                    limit: limit,
-                    entity: mediaType === 'movie' ? 'movie' : 
-                           mediaType === 'music' ? 'album' : 
-                           mediaType === 'tvShow' ? 'tvSeason' : 'movie'
+                    limit: 20,
+                    entity: mediaType === 'movie' ? 'movie' : 'album'
                 });
                 
+                // Get random 5 from results to simulate top 5
                 const results = (data.results || [])
-                    .slice(0, limit)
+                    .sort(() => 0.5 - Math.random()) // Shuffle
+                    .slice(0, 5)
                     .map(mediaType === 'movie' ? transformMovieToAlbum : transformMusicToAlbum);
                 
                 if (results.length === 0) {
                     showNoResults(container);
                 } else {
+                    // Render with rank numbers
                     container.innerHTML = results
-                        .map(item => renderAlbumItem(item, isLarge))
+                        .map((item, index) => renderAlbumItemWithRank(item, index + 1, isLarge))
                         .join('');
                 }
                 
             } catch (error) {
-                console.error(`Error loading ${mediaType}:`, error);
-                showError(container, `Failed to load ${mediaType}s`);
+                console.error(`Error loading top 5:`, error);
+                showError(container, `Failed to load top 5`);
             }
         }
         
-        // Load all sections
-        async function loadAllSections() {
+        // Load all sections with top 5
+        async function loadAllTop5() {
             await Promise.all([
-                loadSection(elements.latestSongs, 'music', 3, false),
-                loadSection(elements.featuredArtists, 'music', 3, false),
-                loadSection(elements.topRated, 'movie', 3, false),
-                loadSection(elements.featuredPlaylists, 'music', 3, false),
-                loadSection(elements.trendingAlbums, 'music', 3, false)
+                loadTop5(elements.latestAlbums, 'movie', true, 'top'),
+                loadTop5(elements.latestSongs, 'music', false, 'top'),
+                loadTop5(elements.featuredArtists, 'music', false, 'artist'),
+                loadTop5(elements.trendingAlbums, 'music', false, 'trending')
             ]);
         }
         
-        // Pagination
-        function renderPagination() {
-            if (currentState.totalPages <= 1) {
-                elements.paginationContainer.classList.remove('show');
-                return;
-            }
-            
-            elements.paginationContainer.classList.add('show');
-            
-            let paginationHTML = '';
-            
-            paginationHTML += `
-                <div class="pagination-item pagination-prev ${currentState.currentPage === 1 ? 'disabled' : ''}" 
-                     ${currentState.currentPage > 1 ? 'onclick="changePage(' + (currentState.currentPage - 1) + ')"' : ''}>
-                    <i class="fas fa-chevron-left"></i> Prev
-                </div>
-            `;
-            
-            for (let i = 1; i <= Math.min(5, currentState.totalPages); i++) {
-                paginationHTML += `
-                    <div class="pagination-item ${currentState.currentPage === i ? 'active' : ''}" 
-                         onclick="changePage(${i})">${i}</div>
-                `;
-            }
-            
-            if (currentState.totalPages > 5) {
-                paginationHTML += `<span class="pagination-ellipsis">...</span>`;
-                paginationHTML += `
-                    <div class="pagination-item" onclick="changePage(${currentState.totalPages})">
-                        ${currentState.totalPages}
-                    </div>
-                `;
-            }
-            
-            paginationHTML += `
-                <div class="pagination-item pagination-next ${currentState.currentPage === currentState.totalPages ? 'disabled' : ''}"
-                     ${currentState.currentPage < currentState.totalPages ? 'onclick="changePage(' + (currentState.currentPage + 1) + ')"' : ''}>
-                    Next <i class="fas fa-chevron-right"></i>
-                </div>
-            `;
-            
-            elements.pagination.innerHTML = paginationHTML;
-        }
-        
-        window.changePage = function(page) {
-            if (page === currentState.currentPage || page < 1 || page > currentState.totalPages) return;
-            performSearch(currentState.searchQuery, page);
-        };
-        
+        // Clear search
         function clearSearch() {
-            currentState.searchQuery = '';
-            currentState.currentPage = 1;
-            currentState.totalPages = 1;
-            currentState.searchResults = [];
-            
             elements.searchInfo.style.display = 'none';
             elements.searchInput.value = '';
-            elements.mainSectionTitle.textContent = 'latest films';
-            
-            loadAllSections();
-            performSearch('inception', 1);
+            elements.mainSectionTitle.textContent = 'top 5 movies';
+            loadAllTop5();
         }
         
         function initializeEventListeners() {
+            // Search
             elements.searchButton.addEventListener('click', () => {
-                performSearch(elements.searchInput.value, 1);
+                if (elements.searchInput.value.trim()) {
+                    elements.searchInfo.style.display = 'flex';
+                    elements.searchQueryDisplay.textContent = `Searching: "${elements.searchInput.value}"`;
+                    elements.mainSectionTitle.textContent = 'search results';
+                    // For demo, just reload top 5
+                    loadAllTop5();
+                }
             });
             
             elements.searchInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
-                    performSearch(elements.searchInput.value, 1);
+                    elements.searchButton.click();
                 }
             });
             
             elements.clearSearch.addEventListener('click', clearSearch);
             
+            // Refresh buttons
             document.getElementById('refreshMain').addEventListener('click', () => {
-                if (currentState.searchQuery) {
-                    performSearch(currentState.searchQuery, currentState.currentPage);
-                }
+                loadTop5(elements.latestAlbums, 'movie', true, 'top');
             });
             
             document.getElementById('refreshReleases').addEventListener('click', () => {
-                loadSection(elements.latestSongs, 'music', 3, false);
+                loadTop5(elements.latestSongs, 'music', false, 'top');
             });
             
             document.getElementById('refreshArtists').addEventListener('click', () => {
-                loadSection(elements.featuredArtists, 'music', 3, false);
-            });
-            
-            document.getElementById('refreshTopRated').addEventListener('click', () => {
-                loadSection(elements.topRated, 'movie', 3, false);
-            });
-            
-            document.getElementById('refreshPlaylists').addEventListener('click', () => {
-                loadSection(elements.featuredPlaylists, 'music', 3, false);
+                loadTop5(elements.featuredArtists, 'music', false, 'artist');
             });
             
             document.getElementById('refreshTrending').addEventListener('click', () => {
-                loadSection(elements.trendingAlbums, 'music', 3, false);
+                loadTop5(elements.trendingAlbums, 'music', false, 'trending');
             });
             
+            // Navigation
             document.querySelectorAll('.nav-item[data-category]').forEach(item => {
                 item.addEventListener('click', (e) => {
                     e.preventDefault();
-                    const category = e.target.dataset.category;
-                    currentState.currentCategory = category;
-                    
                     document.querySelectorAll('.nav-item[data-category]').forEach(nav => {
                         nav.classList.remove('active');
                     });
                     e.target.classList.add('active');
                     
-                    performSearch(category, 1);
-                    
+                    // Close drawer
                     document.getElementById('leftDrawer').style.opacity = '0';
                     document.getElementById('leftDrawer').style.transform = 'translateX(-100%)';
                     setTimeout(() => {
@@ -1386,6 +1338,7 @@
                 });
             });
             
+            // Drawers
             const hamburger = document.getElementById('hamburgerMenu');
             const leftDrawer = document.getElementById('leftDrawer');
             const closeLeft = document.getElementById('closeLeftDrawer');
@@ -1426,6 +1379,7 @@
                 }, 300);
             });
             
+            // Scroll progress
             window.addEventListener('scroll', function() {
                 const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
                 const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -1434,10 +1388,10 @@
             });
         }
         
+        // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
             initializeEventListeners();
-            await loadAllSections();
-            await performSearch('inception', 1);
+            await loadAllTop5();
         });
     </script>
 </body>
