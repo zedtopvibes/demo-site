@@ -13,7 +13,7 @@
     <meta name="theme-color" content="#0b1018">
     <meta name="msapplication-TileColor" content="#0b1018">
     
-    <!-- App Icons (using Font Awesome as fallback) -->
+    <!-- App Icons -->
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%230b1018' stroke='%23ffffff' stroke-width='2'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='%23ffffff' font-family='Arial'%3E🎬%3C/text%3E%3C/svg%3E">
     
     <!-- Montserrat + Playfair -->
@@ -30,7 +30,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
@@ -39,17 +39,14 @@
             color: #ffffff;
             line-height: 1.6;
             min-height: 100vh;
-            min-height: -webkit-fill-available; /* Better mobile height */
+            min-height: -webkit-fill-available;
             display: flex;
             flex-direction: column;
-            scroll-behavior: smooth;
             background-image: 
                 radial-gradient(circle at 30% 40%, rgba(180, 200, 240, 0.2) 0%, transparent 45%),
                 radial-gradient(circle at 80% 70%, rgba(140, 170, 220, 0.15) 0%, transparent 50%),
                 repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px);
             background-attachment: fixed;
-            /* App-like scrolling */
-            overscroll-behavior-y: none;
             -webkit-overflow-scrolling: touch;
         }
         
@@ -84,10 +81,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
             z-index: 2;
-            /* App-like smooth scrolling inside */
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            max-height: calc(100vh - 200px);
+            /* Regular scrolling - no max-height constraint */
         }
         
         .right-sidebar {
@@ -96,14 +90,9 @@
             flex-direction: column;
             gap: 20px;
             min-width: 300px;
-            /* App-like smooth scrolling inside */
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            max-height: calc(100vh - 200px);
-            padding-right: 2px;
+            /* Regular scrolling - no max-height constraint */
         }
         
-        /* Rest of your existing CSS remains exactly the same */
         .pagination-container {
             width: 100%;
             padding: 20px;
@@ -141,7 +130,6 @@
             cursor: pointer;
             transition: all 0.2s ease;
             text-decoration: none;
-            /* Better touch target */
             min-width: 44px;
             min-height: 44px;
         }
@@ -175,9 +163,7 @@
             width: 100%;
             background: transparent;
             margin-bottom: 10px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            /* No sticky positioning */
         }
         
         .branding-bar {
@@ -214,7 +200,6 @@
             flex-direction: column;
             justify-content: space-between;
             cursor: pointer;
-            /* Better touch target */
             padding: 10px;
             margin: -10px;
         }
@@ -246,7 +231,6 @@
             color: white;
             font-size: 1.3rem;
             border: 1px solid rgba(255,255,255,0.2);
-            /* Better touch target */
             min-width: 44px;
             min-height: 44px;
         }
@@ -267,9 +251,7 @@
             border-bottom: 1px solid rgba(255,255,255,0.1);
             border-top: 1px solid rgba(255,255,255,0.1);
             box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
-            position: sticky;
-            top: 80px;
-            z-index: 90;
+            /* No sticky positioning */
         }
         
         .search-container {
@@ -298,7 +280,6 @@
             background: transparent;
             outline: none;
             font-family: 'Montserrat', sans-serif;
-            /* Prevent zoom on focus for iOS */
             font-size: 16px;
         }
         
@@ -322,7 +303,6 @@
             transition: all 0.3s ease;
             font-size: 1.2rem;
             backdrop-filter: blur(4px);
-            /* Better touch target */
             min-width: 60px;
             min-height: 60px;
         }
@@ -341,10 +321,7 @@
             border-bottom: 1px solid rgba(255,255,255,0.15);
             transition: all 0.2s ease;
             height: 60px;
-            position: sticky;
-            top: 0;
-            z-index: 5;
-            backdrop-filter: blur(12px);
+            /* No sticky positioning */
         }
         
         .section-header:hover {
@@ -386,7 +363,6 @@
             letter-spacing: 0.5px;
             white-space: nowrap;
             cursor: pointer;
-            /* Better touch target */
             min-height: 44px;
             display: flex;
             align-items: center;
@@ -420,7 +396,6 @@
             cursor: pointer;
             position: relative;
             border-bottom: 1px solid rgba(255,255,255,0.05);
-            /* Better touch feedback */
             -webkit-touch-callout: none;
         }
         
@@ -603,7 +578,6 @@
             cursor: pointer;
             color: white;
             line-height: 1;
-            /* Better touch target */
             padding: 10px;
             margin: -10px;
         }
@@ -624,7 +598,6 @@
             font-weight: 500;
             transition: all 0.3s ease;
             border-left: 4px solid transparent;
-            /* Better touch target */
             min-height: 55px;
             display: flex;
             align-items: center;
@@ -749,7 +722,6 @@
             background: rgba(255,255,255,0.1);
             font-size: 0.8rem;
             transition: all 0.2s ease;
-            /* Better touch target */
             min-height: 44px;
             display: flex;
             align-items: center;
@@ -856,12 +828,6 @@
             .left-sidebar .album-thumbnail {
                 width: 100px;
                 height: 100px;
-            }
-            .left-sidebar, .right-sidebar {
-                max-height: none;
-            }
-            .search-section {
-                top: 70px;
             }
         }
         
@@ -1048,7 +1014,6 @@
             installPrompt.classList.remove('show');
         });
         
-        // Check if already installed
         window.addEventListener('appinstalled', () => {
             installPrompt.classList.remove('show');
             console.log('App was installed');
