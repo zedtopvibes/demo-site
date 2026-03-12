@@ -161,11 +161,10 @@
             margin-bottom: 5px;
         }
         
-        /* EXACT ORIGINAL HEADER - COMPLETELY RESTORED */
+        /* MAIN HEADER - KEEP COLORS, REMOVE BLUR */
         .branding-bar {
             background: rgba(120, 135, 155, 0.2);
-            backdrop-filter: blur(14px) saturate(180%);
-            -webkit-backdrop-filter: blur(14px) saturate(180%);
+            /* REMOVED: backdrop-filter: blur(14px) saturate(180%); */
             padding: 10px 20px;
             display: flex;
             justify-content: space-between;
@@ -188,14 +187,13 @@
             text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
         }
         
-        /* EXACT ORIGINAL HAMBURGER MENU */
+        /* RESIZED HAMBURGER MENU - SMALLER */
         .hamburger-menu {
-            width: 40px;
-            height: 40px;
+            width: 36px;  /* REDUCED from 40px */
+            height: 36px;  /* REDUCED from 40px */
             border-radius: 50%;
             background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            /* REMOVED: backdrop-filter: blur(8px); */
             border: 1px solid rgba(255,255,255,0.2);
             display: flex;
             flex-direction: column;
@@ -203,13 +201,13 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            gap: 5px;
+            gap: 4px;  /* REDUCED from 5px */
         }
         
         .hamburger-menu span {
             display: block;
             height: 2px;
-            width: 18px;
+            width: 16px;  /* REDUCED from 18px */
             background: rgba(255,255,255,0.8);
             border-radius: 3px;
             transition: all 0.3s ease;
@@ -224,23 +222,23 @@
             background: white;
         }
         
-        /* EXACT ORIGINAL PROFILE ICON */
+        /* RESIZED PROFILE ICON - SMALLER */
         .profile-icon {
-            width: 40px;
-            height: 40px;
+            width: 36px;  /* REDUCED from 40px */
+            height: 36px;  /* REDUCED from 40px */
             border-radius: 50%;
             background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(8px);
+            /* REMOVED: backdrop-filter: blur(8px); */
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
             color: white;
-            font-size: 1.3rem;
+            font-size: 1.1rem;  /* REDUCED from 1.3rem */
             border: 1px solid rgba(255,255,255,0.2);
-            min-width: 40px;
-            min-height: 40px;
+            min-width: 36px;
+            min-height: 36px;
         }
         
         .profile-icon:hover {
@@ -248,11 +246,10 @@
             transform: scale(1.05);
         }
         
-        /* EXACT ORIGINAL SEARCH SECTION */
+        /* SEARCH SECTION - KEEP COLORS, REMOVE BLUR */
         .search-section {
             background: rgba(110, 125, 145, 0.15);
-            backdrop-filter: blur(6px) saturate(140%);
-            -webkit-backdrop-filter: blur(6px) saturate(140%);
+            /* REMOVED: backdrop-filter: blur(6px) saturate(140%); */
             padding: 12px 20px;
             display: flex;
             align-items: center;
@@ -275,7 +272,7 @@
             width: 100%;
             border: 1px solid rgba(255,255,255,0.25);
             background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(4px);
+            /* REMOVED: backdrop-filter: blur(4px); */
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         
@@ -309,7 +306,7 @@
             justify-content: center;
             transition: all 0.3s ease;
             font-size: 1.1rem;
-            backdrop-filter: blur(4px);
+            /* REMOVED: backdrop-filter: blur(4px); */
             min-width: 50px;
             min-height: 42px;
         }
@@ -319,7 +316,6 @@
             border-left-color: rgba(255,255,255,0.4);
         }
         
-        /* Rest of your CSS remains exactly the same */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -433,7 +429,7 @@
             position: relative;
         }
         
-        /* Number Overlays */
+        /* Bold Number Overlays */
         .number-overlay {
             position: absolute;
             top: -12px;
@@ -973,7 +969,7 @@
     
     <div class="app-container">
         <header class="site-header">
-            <!-- EXACT ORIGINAL HEADER - COMPLETELY RESTORED -->
+            <!-- MAIN HEADER - NO BLUR, SMALLER ICONS -->
             <div class="branding-bar">
                 <div class="hamburger-menu" id="hamburgerMenu">
                     <span></span>
@@ -988,7 +984,7 @@
                 </div>
             </div>
             
-            <!-- EXACT ORIGINAL SEARCH SECTION -->
+            <!-- SEARCH SECTION - NO BLUR -->
             <section class="search-section">
                 <div class="search-container">
                     <div class="search-bar">
