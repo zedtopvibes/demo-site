@@ -15,7 +15,7 @@
     <!-- App Icons -->
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%230b1018' stroke='%23ffffff' stroke-width='2'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='%23ffffff' font-family='Arial'%3E🎬%3C/text%3E%3C/svg%3E">
     
-    <!-- Montserrat ONLY -->
+    <!-- Montserrat ONLY - Optimized loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ---------- EXACT LAYOUT FRAMEWORK (preserved) ---------- */
+        /* ---------- EXACT ORIGINAL DESIGN PRESERVED ---------- */
         * {
             margin: 0;
             padding: 0;
@@ -81,7 +81,6 @@
             z-index: 2;
             display: flex;
             flex-direction: column;
-            height: fit-content;
         }
         
         .right-sidebar {
@@ -92,11 +91,12 @@
             min-width: 300px;
         }
         
+        /* Original pagination styles */
         .pagination-container {
             width: 100%;
             padding: 20px;
             border-top: 1px solid rgba(255,255,255,0.1);
-            background: rgba(0,0,0,0.2);
+            background: transparent;
             display: block;
         }
         
@@ -104,7 +104,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             margin: 0 auto;
             width: 100%;
             flex-wrap: wrap;
@@ -118,6 +118,7 @@
             height: 40px;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 12px;
             color: #fff;
@@ -159,12 +160,6 @@
             width: auto;
             padding: 0 15px;
             gap: 6px;
-            background: rgba(255, 255, 255, 0.08);
-        }
-        
-        .pagination-prev i,
-        .pagination-next i {
-            font-size: 0.8rem;
         }
         
         .pagination-info {
@@ -176,13 +171,13 @@
             border-top: 1px solid rgba(255,255,255,0.1);
         }
         
+        /* Original header styles */
         .site-header {
             width: 100%;
             background: transparent;
             margin-bottom: 5px;
         }
         
-        /* EXACT ORIGINAL HEADER - COMPLETELY RESTORED */
         .branding-bar {
             background: rgba(120, 135, 155, 0.2);
             backdrop-filter: blur(14px) saturate(180%);
@@ -209,7 +204,7 @@
             text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
         }
         
-        /* EXACT ORIGINAL HAMBURGER MENU */
+        /* Original hamburger menu */
         .hamburger-menu {
             width: 50px;
             height: 50px;
@@ -240,13 +235,14 @@
             background: white;
         }
         
-        /* EXACT ORIGINAL PROFILE ICON */
+        /* Original profile icon */
         .profile-icon {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             background: rgba(255,255,255,0.15);
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -264,7 +260,7 @@
             transform: scale(1.05);
         }
         
-        /* EXACT ORIGINAL SEARCH SECTION */
+        /* Original search section */
         .search-section {
             background: rgba(110, 125, 145, 0.15);
             backdrop-filter: blur(6px) saturate(140%);
@@ -292,6 +288,7 @@
             border: 1px solid rgba(255,255,255,0.25);
             background: rgba(255,255,255,0.05);
             backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         
@@ -326,6 +323,7 @@
             transition: all 0.3s ease;
             font-size: 1.1rem;
             backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             min-width: 50px;
             min-height: 42px;
         }
@@ -335,68 +333,72 @@
             border-left-color: rgba(255,255,255,0.4);
         }
         
-        /* REFINED SECTION HEADERS - smaller and cleaner */
+        /* Original section headers */
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 16px;
-            background: rgba(255,255,255,0.05);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            height: 48px;
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.2s ease;
+            height: 60px;
+        }
+        
+        .section-header:hover {
+            background: rgba(255,255,255,0.12);
         }
         
         .section-title {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.3rem;
+            font-weight: 700;
             color: white;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 10px;
             padding: 0;
             margin: 0;
             line-height: 1;
-            letter-spacing: 0.3px;
-            text-transform: uppercase;
-            opacity: 0.9;
+            letter-spacing: 1px;
         }
         
         .section-title::before {
             content: "◈";
-            font-size: 1rem;
-            opacity: 0.7;
-            color: rgba(255,255,255,0.7);
+            font-size: 1.4rem;
+            opacity: 0.9;
+            color: rgba(255,255,255,0.8);
         }
         
-        /* NEW RELOAD BUTTON STYLE */
+        /* Updated reload button style - matching original aesthetic */
         .reload-btn {
             color: white;
             text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: 500;
-            padding: 4px 10px;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 6px 15px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px;
             transition: all 0.2s ease;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.1);
             backdrop-filter: blur(4px);
-            letter-spacing: 0.3px;
+            -webkit-backdrop-filter: blur(4px);
+            letter-spacing: 0.5px;
             white-space: nowrap;
             cursor: pointer;
-            min-height: 32px;
+            min-height: 44px;
             display: flex;
             align-items: center;
-            gap: 4px;
-        }
-        
-        .reload-btn i {
-            font-size: 0.7rem;
-            transition: transform 0.3s ease;
+            gap: 6px;
         }
         
         .reload-btn:hover {
-            background: rgba(255,255,255,0.15);
-            border-color: rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.5);
+        }
+        
+        .reload-btn i {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
         }
         
         .reload-btn:hover i {
@@ -406,6 +408,7 @@
         .section-block {
             background: rgba(120, 135, 155, 0.18);
             backdrop-filter: blur(12px) saturate(160%);
+            -webkit-backdrop-filter: blur(12px) saturate(160%);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 15px 30px rgba(0,0,0,0.3);
@@ -413,6 +416,7 @@
             position: relative;
         }
         
+        /* Original album list styles */
         .latest-albums-list {
             padding: 5px 0;
             min-height: 400px;
@@ -455,10 +459,18 @@
             font-size: 2.5rem;
             color: rgba(255,255,255,0.7);
             backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             position: relative;
         }
         
-        /* Number Overlays */
+        .album-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            aspect-ratio: 1/1;
+        }
+        
+        /* Original number overlays */
         .number-overlay {
             position: absolute;
             top: -12px;
@@ -570,17 +582,6 @@
             margin-left: 8px;
         }
         
-        .trending-badge i {
-            font-size: 0.8rem;
-            color: #ffd700;
-        }
-        
-        .album-item:hover .album-thumbnail {
-            border-color: rgba(255,255,255,0.5);
-            transform: scale(1.03) rotate(0.5deg);
-            box-shadow: 0 0 20px rgba(255,255,255,0.2);
-        }
-        
         .album-info {
             flex-grow: 1;
             min-width: 0;
@@ -621,7 +622,6 @@
             flex-wrap: wrap;
         }
         
-        .album-artist,
         .album-genre,
         .album-tracks {
             font-size: 0.75rem;
@@ -632,6 +632,7 @@
             line-height: 1.3;
             background: rgba(255,255,255,0.12);
             backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             border: 1px solid rgba(255,255,255,0.15);
             color: white;
         }
@@ -652,6 +653,7 @@
             margin-bottom: 4px;
         }
         
+        /* Original footer */
         .site-footer {
             text-align: center;
             margin-top: 45px;
@@ -659,6 +661,7 @@
             border-top: 1px solid rgba(255,255,255,0.15);
             background: rgba(100, 115, 135, 0.2);
             backdrop-filter: blur(14px) saturate(180%);
+            -webkit-backdrop-filter: blur(14px) saturate(180%);
             max-width: 1400px;
             margin-left: auto;
             margin-right: auto;
@@ -680,6 +683,7 @@
             font-size: 1.1rem;
         }
         
+        /* Original navigation drawer styles */
         .nav-drawer {
             position: fixed;
             top: 0;
@@ -778,6 +782,7 @@
             font-weight: 600;
         }
         
+        /* Original scroll progress */
         .scroll-progress {
             position: fixed;
             top: 0;
@@ -789,6 +794,7 @@
             box-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
         
+        /* Original skeleton styles */
         .skeleton-thumbnail {
             background: rgba(255,255,255,0.1);
             border-radius: 20px;
@@ -803,6 +809,13 @@
             animation: pulse 1.5s ease-in-out infinite;
         }
         
+        @keyframes pulse {
+            0% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.4; }
+        }
+        
+        /* Original utility styles */
         .loading-spinner {
             display: flex;
             justify-content: center;
@@ -819,12 +832,6 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 0.4; }
-            50% { opacity: 0.8; }
-            100% { opacity: 0.4; }
         }
         
         .error-message {
@@ -948,6 +955,7 @@
             margin: -10px;
         }
         
+        /* Safe area support */
         @supports (padding: max(0px)) {
             .branding-bar {
                 padding-left: max(10px, env(safe-area-inset-left));
@@ -963,6 +971,7 @@
             }
         }
         
+        /* Responsive styles */
         @media (max-width: 768px) {
             .main-content-container {
                 flex-direction: column;
@@ -973,11 +982,7 @@
                 height: 100px;
             }
             .section-title {
-                font-size: 1rem;
-            }
-            .reload-btn {
-                font-size: 0.7rem;
-                padding: 3px 8px;
+                font-size: 1.2rem;
             }
             .pagination-item {
                 width: 36px;
@@ -986,10 +991,6 @@
                 min-height: 36px;
                 font-size: 0.85rem;
             }
-            .pagination-prev,
-            .pagination-next {
-                padding: 0 10px;
-            }
         }
         
         @media (max-width: 480px) {
@@ -997,6 +998,18 @@
                 width: 70px !important;
                 height: 70px !important;
             }
+            .section-title {
+                font-size: 1.1rem;
+            }
+            .reload-btn {
+                padding: 4px 10px;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Reserve space to prevent layout shift */
+        .latest-albums-list {
+            min-height: 400px;
         }
     </style>
 </head>
@@ -1016,7 +1029,6 @@
     
     <div class="app-container">
         <header class="site-header">
-            <!-- EXACT ORIGINAL HEADER - COMPLETELY RESTORED -->
             <div class="branding-bar">
                 <div class="hamburger-menu" id="hamburgerMenu">
                     <span></span>
@@ -1031,7 +1043,6 @@
                 </div>
             </div>
             
-            <!-- EXACT ORIGINAL SEARCH SECTION -->
             <section class="search-section">
                 <div class="search-container">
                     <div class="search-bar">
@@ -1057,14 +1068,13 @@
                 </div>
                 
                 <div class="latest-albums-list" id="latestAlbums">
-                    <!-- Albums will be loaded here with number overlays -->
+                    <!-- Skeleton will be loaded by JS -->
                 </div>
                 
-                <!-- Pagination Section -->
                 <div class="pagination-container" id="paginationContainer">
                     <div class="pagination" id="pagination"></div>
                     <div class="pagination-info" id="paginationInfo">
-                        Showing page <span id="currentPageDisplay">1</span> of <span id="totalPagesDisplay">5</span>
+                        Showing page <span id="currentPageDisplay">1</span> of <span id="totalPagesDisplay">10</span>
                     </div>
                 </div>
             </aside>
@@ -1159,14 +1169,13 @@
         
         window.addEventListener('appinstalled', () => {
             installPrompt.classList.remove('show');
-            console.log('App was installed');
         });
         
         // API Configuration
         const API_BASE = 'https://itunes.apple.com';
         const CACHE_DURATION = 5 * 60 * 1000;
         const ITEMS_PER_PAGE = 5;
-        const TOTAL_PAGES = 10; // We'll simulate 10 pages of content
+        const TOTAL_PAGES = 10;
         
         // State management
         let currentState = {
@@ -1205,16 +1214,20 @@
             const width = isLarge ? '120px' : '80px';
             const height = isLarge ? '120px' : '80px';
             
-            container.innerHTML = Array(count).fill(0).map(() => `
-                <div class="album-item">
-                    <div class="skeleton-thumbnail" style="width:${width};height:${height};"></div>
-                    <div class="album-info">
-                        <div class="skeleton-line short" style="width:60%"></div>
-                        <div class="skeleton-line medium" style="width:80%"></div>
-                        ${isLarge ? '<div class="skeleton-line long" style="width:100%"></div>' : ''}
+            let html = '';
+            for (let i = 0; i < count; i++) {
+                html += `
+                    <div class="album-item">
+                        <div class="skeleton-thumbnail" style="width:${width};height:${height};"></div>
+                        <div class="album-info">
+                            <div class="skeleton-line" style="width:60%"></div>
+                            <div class="skeleton-line" style="width:80%"></div>
+                            ${isLarge ? '<div class="skeleton-line" style="width:100%"></div>' : ''}
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }
+            container.innerHTML = html;
         }
         
         function showError(container, message) {
@@ -1292,8 +1305,8 @@
         function renderAlbumItemWithRank(item, rank, isLarge = true) {
             const thumbnailStyle = isLarge ? 'width:120px;height:120px;' : 'width:80px;height:80px;';
             const thumbnailContent = item.artwork 
-                ? `<img src="${item.artwork}" alt="${item.title}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">`
-                : `<i class="fas fa-${isLarge ? 'compact-disc' : 'music'}" style="font-size:${isLarge ? '2.5rem' : '2rem'};"></i>`;
+                ? `<img src="${item.artwork}" alt="${item.title}" loading="lazy">`
+                : `<i class="fas fa-${isLarge ? 'film' : 'music'}" style="font-size:${isLarge ? '2.5rem' : '2rem'};"></i>`;
             
             return `
                 <div class="album-item">
@@ -1389,9 +1402,8 @@
             // Update pagination UI
             renderPagination(currentState.currentPage, currentState.totalPages);
             
-            // Load albums for this page with a different search term based on page number
+            // Load albums for this page
             const searchTerms = ['popular', 'hit', 'greatest', 'best', 'classic', 'grammy', 'rock', 'pop', 'hip hop', 'jazz'];
-            // Use page number to select a different search term for variety
             const termIndex = (page - 1) % searchTerms.length;
             const searchTerm = currentState.currentSearchTerm === 'top' ? searchTerms[termIndex] : currentState.currentSearchTerm;
             
@@ -1400,7 +1412,7 @@
             currentState.isLoading = false;
         }
         
-        // Load Top 5 Albums (main section) with pagination support
+        // Load Top 5 Albums (main section)
         async function loadTop5Albums(container, isLarge = true, searchTerm = 'top', resetPage = true) {
             if (!container) return;
             
@@ -1412,54 +1424,36 @@
             showSkeletons(container, 5, isLarge);
             
             try {
-                // Use different search terms for variety across pages
+                // Use different search terms for variety
                 const searchTerms = ['popular', 'hit', 'greatest', 'best', 'classic', 'grammy', 'rock', 'pop', 'hip hop', 'jazz', 'rnb', 'country', 'electronic', 'indie'];
                 let term = searchTerm;
                 
                 if (searchTerm === 'top') {
-                    // Use page number to select a different search term
                     const termIndex = (currentState.currentPage - 1) % searchTerms.length;
                     term = searchTerms[termIndex];
                 }
-                
-                // Add a small delay to simulate loading between pages
-                await new Promise(resolve => setTimeout(resolve, 300));
                 
                 const data = await fetchFromAPI('/search', {
                     term: term,
                     media: 'music',
                     entity: 'album',
-                    limit: 50 // Get more results to simulate different pages
+                    limit: 50
                 });
                 
-                // Filter out items without collectionName (albums) and map them
+                // Filter and transform results
                 let results = (data.results || [])
                     .filter(item => item.collectionName && item.collectionName.trim() !== '')
                     .map(transformAlbumItem);
                 
-                // If we don't have enough results, try a different search
-                if (results.length < 5) {
-                    const fallbackTerms = ['album', 'music', 'top', 'hits'];
-                    const fallbackTerm = fallbackTerms[Math.floor(Math.random() * fallbackTerms.length)];
-                    
-                    const fallbackData = await fetchFromAPI('/search', {
-                        term: fallbackTerm,
-                        media: 'music',
-                        entity: 'album',
-                        limit: 50
-                    });
-                    
-                    results = (fallbackData.results || [])
-                        .filter(item => item.collectionName && item.collectionName.trim() !== '')
-                        .map(transformAlbumItem);
+                // Shuffle results
+                for (let i = results.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [results[i], results[j]] = [results[j], results[i]];
                 }
                 
-                // Shuffle results to get different sets per page
-                const shuffled = results.sort(() => 0.5 - Math.random());
-                
-                // Get 5 items for current page (simulating different pages)
-                const startIndex = ((currentState.currentPage - 1) * 5) % Math.max(1, shuffled.length - 5);
-                const pageItems = shuffled.slice(startIndex, startIndex + 5);
+                // Get items for current page
+                const startIndex = ((currentState.currentPage - 1) * 5) % Math.max(1, results.length - 5);
+                const pageItems = results.slice(startIndex, startIndex + 5);
                 
                 if (pageItems.length === 0) {
                     showNoResults(container);
@@ -1486,7 +1480,6 @@
             showSkeletons(container, 5, isLarge);
             
             try {
-                // Determine search term based on section
                 let searchTerm = section;
                 if (section === 'artist') searchTerm = 'top artist';
                 if (section === 'trending') searchTerm = 'popular';
@@ -1498,7 +1491,6 @@
                     entity: mediaType === 'music' ? 'song' : 'musicArtist'
                 });
                 
-                // Get random 5 from results to simulate top 5
                 const results = (data.results || [])
                     .sort(() => 0.5 - Math.random())
                     .slice(0, 5)
@@ -1507,7 +1499,6 @@
                 if (results.length === 0) {
                     showNoResults(container);
                 } else {
-                    // Render with rank numbers
                     container.innerHTML = results
                         .map((item, index) => renderAlbumItemWithRank(item, index + 1, isLarge))
                         .join('');
@@ -1521,15 +1512,13 @@
         
         // Load all sections with top 5
         async function loadAllTop5() {
-            // Reset to page 1 when loading all sections
+            // Reset to page 1
             currentState.currentPage = 1;
             currentState.currentSearchTerm = 'top';
             
-            // Use the dedicated album function for the main albums section
-            await loadTop5Albums(elements.latestAlbums, true, 'top', true);
-            
-            // Load other sections normally
+            // Load all sections
             await Promise.all([
+                loadTop5Albums(elements.latestAlbums, true, 'top', true),
                 loadTop5(elements.latestSongs, 'music', false, 'top'),
                 loadTop5(elements.featuredArtists, 'music', false, 'artist'),
                 loadTop5(elements.trendingAlbums, 'music', false, 'trending')
@@ -1554,11 +1543,9 @@
                     elements.searchQueryDisplay.textContent = `Searching: "${elements.searchInput.value}"`;
                     elements.mainSectionTitle.textContent = 'search results';
                     
-                    // Reset to page 1 for new search
                     currentState.currentPage = 1;
                     currentState.currentSearchTerm = elements.searchInput.value;
                     
-                    // For search, search for albums
                     loadTop5Albums(elements.latestAlbums, true, elements.searchInput.value, true);
                 }
             });
@@ -1651,19 +1638,26 @@
                 }, 300);
             });
             
-            // Scroll progress
+            // Scroll progress with throttling
+            let ticking = false;
             window.addEventListener('scroll', function() {
-                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrolled = (winScroll / height) * 100;
-                document.getElementById('scrollProgress').style.width = scrolled + '%';
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                        const scrolled = (winScroll / height) * 100;
+                        document.getElementById('scrollProgress').style.width = scrolled + '%';
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
             });
         }
         
         // Initialize
-        document.addEventListener('DOMContentLoaded', async () => {
+        document.addEventListener('DOMContentLoaded', () => {
             initializeEventListeners();
-            await loadAllTop5();
+            loadAllTop5();
         });
     </script>
 </body>
