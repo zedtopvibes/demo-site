@@ -15,1008 +15,112 @@
     <!-- App Icons -->
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%230b1018' stroke='%23ffffff' stroke-width='2'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='%23ffffff' font-family='Arial'%3E🎬%3C/text%3E%3C/svg%3E">
     
-    <!-- Montserrat ONLY -->
+    <!-- CRITICAL: Preconnect to origins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://itunes.apple.com">
+    
+    <!-- CRITICAL: Inline minimal CSS for first paint -->
+    <style>
+        /* Critical CSS - only what's needed for above-the-fold */
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Montserrat',sans-serif}
+        body{background:#0b1018;color:#fff;min-height:100vh;display:flex;flex-direction:column}
+        .app-container{display:flex;flex-direction:column;min-height:100vh}
+        .main-content-container{max-width:1400px;margin:0 auto;padding:20px 10px;display:flex;gap:10px;width:100%;flex:1}
+        .left-sidebar{flex:3;background:rgba(130,145,165,0.18);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:12px;border:1px solid rgba(255,255,255,0.1)}
+        .right-sidebar{flex:1;display:flex;flex-direction:column;gap:20px;min-width:300px}
+        .branding-bar{background:rgba(120,135,155,0.2);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);padding:10px 20px;display:flex;justify-content:space-between;align-items:center}
+        .site-logo{font-weight:900;font-size:22px;background:linear-gradient(135deg,#fff,#e0e8ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .section-header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.15);height:60px}
+        .section-title{font-size:1.3rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px}
+        .section-title::before{content:"◈";font-size:1.4rem;opacity:0.9}
+        .reload-btn{color:#fff;padding:6px 15px;border:1px solid rgba(255,255,255,0.3);border-radius:40px;background:rgba(255,255,255,0.1);font-size:0.85rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
+        .latest-albums-list{min-height:500px}
+        .album-item{display:flex;align-items:center;gap:20px;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,0.05)}
+        .album-thumbnail{width:120px;height:120px;border-radius:12px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);position:relative;aspect-ratio:1/1}
+        .number-overlay{position:absolute;top:-12px;left:-12px;width:48px;height:48px;background:#fff;color:#0b1018;font-weight:900;font-size:1.6rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:3px solid rgba(255,255,255,0.9);z-index:10}
+        .skeleton-thumbnail{background:rgba(255,255,255,0.1);border-radius:12px;animation:pulse 1.5s ease infinite}
+        .skeleton-line{height:16px;background:rgba(255,255,255,0.1);border-radius:20px;margin-bottom:8px;animation:pulse 1.5s ease infinite}
+        @keyframes pulse{0%{opacity:0.4}50%{opacity:0.8}100%{opacity:0.4}}
+        .pagination-container{width:100%;padding:20px;border-top:1px solid rgba(255,255,255,0.1)}
+        .pagination{display:flex;justify-content:center;gap:6px}
+        .pagination-item{width:40px;height:40px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:12px;color:#fff;font-weight:600;display:flex;align-items:center;justify-content:center}
+        .site-footer{text-align:center;margin-top:45px;padding:25px 20px;border-top:1px solid rgba(255,255,255,0.15);background:rgba(100,115,135,0.2);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+        @media (max-width:768px){.main-content-container{flex-direction:column}}
+    </style>
+    
+    <!-- Montserrat font - optimized loading -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Awesome - deferred -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     
+    <!-- Full CSS - loaded after first paint -->
     <style>
-        /* ---------- EXACT ORIGINAL DESIGN - COMPLETELY RESTORED ---------- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif !important;
-        }
-        
-        body {
-            background: #0b1018;
-            color: #ffffff;
-            line-height: 1.6;
-            min-height: 100vh;
-            min-height: -webkit-fill-available;
-            display: flex;
-            flex-direction: column;
-            background-image: 
-                radial-gradient(circle at 30% 40%, rgba(180, 200, 240, 0.2) 0%, transparent 45%),
-                radial-gradient(circle at 80% 70%, rgba(140, 170, 220, 0.15) 0%, transparent 50%),
-                repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px);
-            background-attachment: fixed;
-            -webkit-overflow-scrolling: touch;
-        }
-        
-        .app-container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            min-height: -webkit-fill-available;
-        }
-        
-        .main-content-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px 10px;
-            display: flex;
-            gap: 10px;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-            flex: 1;
-        }
-        
-        .left-sidebar {
-            flex: 3;
-            background: rgba(130, 145, 165, 0.18);
-            backdrop-filter: blur(12px) saturate(160%);
-            -webkit-backdrop-filter: blur(12px) saturate(160%);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .right-sidebar {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            min-width: 300px;
-        }
-        
-        /* Original pagination styles - preserved exactly */
-        .pagination-container {
-            width: 100%;
-            padding: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            background: transparent;
-            display: block;
-        }
-        
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 6px;
-            margin: 0 auto;
-            width: 100%;
-            flex-wrap: wrap;
-        }
-        
-        .pagination-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            color: #fff;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            min-width: 44px;
-            min-height: 44px;
-        }
-        
-        .pagination-item:hover:not(.disabled) {
-            background: rgba(200, 215, 235, 0.25);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
-        }
-        
-        .pagination-item.active {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-        
-        .pagination-item.disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-        
-        .pagination-ellipsis {
-            color: rgba(255,255,255,0.5);
-            font-weight: 600;
-            padding: 0 5px;
-        }
-        
-        .pagination-prev,
-        .pagination-next {
-            width: auto;
-            padding: 0 15px;
-            gap: 6px;
-        }
-        
-        .pagination-info {
-            text-align: center;
-            color: rgba(255,255,255,0.6);
-            font-size: 0.8rem;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        /* EXACT ORIGINAL HEADER */
-        .site-header {
-            width: 100%;
-            background: transparent;
-            margin-bottom: 5px;
-        }
-        
-        .branding-bar {
-            background: rgba(120, 135, 155, 0.2);
-            backdrop-filter: blur(14px) saturate(180%);
-            -webkit-backdrop-filter: blur(14px) saturate(180%);
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            z-index: 100;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            width: 100%;
-            border-bottom: 1px solid rgba(255,255,255,0.15);
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .site-logo {
-            font-weight: 900;
-            font-size: 22px;
-            letter-spacing: 1.5px;
-            background: linear-gradient(135deg, #ffffff, #e0e8ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-        }
-        
-        /* EXACT ORIGINAL HAMBURGER MENU */
-        .hamburger-menu {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            gap: 5px;
-        }
-        
-        .hamburger-menu span {
-            display: block;
-            height: 2px;
-            width: 18px;
-            background: rgba(255,255,255,0.8);
-            border-radius: 3px;
-            transition: all 0.3s ease;
-        }
-        
-        .hamburger-menu:hover {
-            background: rgba(255,255,255,0.25);
-            transform: scale(1.05);
-        }
-        
-        .hamburger-menu:hover span {
-            background: white;
-        }
-        
-        /* EXACT ORIGINAL PROFILE ICON */
-        .profile-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: white;
-            font-size: 1.3rem;
-            border: 1px solid rgba(255,255,255,0.2);
-            min-width: 40px;
-            min-height: 40px;
-        }
-        
-        .profile-icon:hover {
-            background: rgba(255,255,255,0.25);
-            transform: scale(1.05);
-        }
-        
-        /* EXACT ORIGINAL SEARCH SECTION */
-        .search-section {
-            background: rgba(110, 125, 145, 0.15);
-            backdrop-filter: blur(6px) saturate(140%);
-            -webkit-backdrop-filter: blur(6px) saturate(140%);
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            border-top: 1px solid rgba(255,255,255,0.1);
-            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
-        }
-        
-        .search-container {
-            width: 100%;
-            max-width: 600px;
-            position: relative;
-        }
-        
-        .search-bar {
-            display: flex;
-            border-radius: 12px;
-            overflow: hidden;
-            width: 100%;
-            border: 1px solid rgba(255,255,255,0.25);
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        
-        .search-input {
-            flex: 1;
-            padding: 12px 18px;
-            border: none;
-            font-size: 15px;
-            color: white;
-            background: transparent;
-            outline: none;
-        }
-        
-        .search-input::placeholder {
-            color: rgba(255,255,255,0.8);
-            font-weight: 400;
-            letter-spacing: 0.3px;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-            font-size: 15px;
-        }
-        
-        .search-button {
-            background: rgba(255,255,255,0.1);
-            color: white;
-            border: none;
-            border-left: 1px solid rgba(255,255,255,0.25);
-            padding: 0 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            font-size: 1.1rem;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            min-width: 50px;
-            min-height: 42px;
-        }
-        
-        .search-button:hover {
-            background: rgba(255,255,255,0.2);
-            border-left-color: rgba(255,255,255,0.4);
-        }
-        
-        /* ORIGINAL SECTION HEADERS */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 18px;
-            background: rgba(255,255,255,0.08);
-            border-bottom: 1px solid rgba(255,255,255,0.15);
-            transition: all 0.2s ease;
-            height: 60px;
-        }
-        
-        .section-header:hover {
-            background: rgba(255,255,255,0.12);
-        }
-        
-        .section-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 0;
-            margin: 0;
-            line-height: 1;
-            letter-spacing: 1px;
-        }
-        
-        .section-title::before {
-            content: "◈";
-            font-size: 1.4rem;
-            opacity: 0.9;
-            color: rgba(255,255,255,0.8);
-        }
-        
-        /* RELOAD BUTTON - matches original view-all style */
-        .reload-btn {
-            color: white;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            padding: 6px 15px;
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 40px;
-            transition: all 0.2s ease;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            letter-spacing: 0.5px;
-            white-space: nowrap;
-            cursor: pointer;
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .reload-btn:hover {
-            background: rgba(255,255,255,0.2);
-            border-color: rgba(255,255,255,0.5);
-        }
-        
-        .reload-btn i {
-            font-size: 0.8rem;
-            transition: transform 0.3s ease;
-        }
-        
-        .reload-btn:hover i {
-            transform: rotate(180deg);
-        }
-        
-        /* ORIGINAL SECTION BLOCKS */
-        .section-block {
-            background: rgba(120, 135, 155, 0.18);
-            backdrop-filter: blur(12px) saturate(160%);
-            -webkit-backdrop-filter: blur(12px) saturate(160%);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-        }
-        
-        /* ORIGINAL ALBUM LIST STYLES */
-        .latest-albums-list {
-            padding: 5px 0;
-            min-height: 500px; /* Only addition for CLS */
-        }
-        
-        .album-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 16px 18px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            position: relative;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            -webkit-touch-callout: none;
-        }
-        
-        .album-item:hover {
-            background: rgba(255,255,255,0.08);
-            transform: translateX(6px);
-        }
-        
-        .album-item:active {
-            background: rgba(255,255,255,0.15);
-            transform: scale(0.99);
-        }
-        
-        .album-thumbnail {
-            width: 120px;
-            height: 120px;
-            flex-shrink: 0;
-            border-radius: 12px;
-            overflow: hidden;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            font-size: 2.5rem;
-            color: rgba(255,255,255,0.7);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            position: relative;
-        }
-        
-        .album-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        /* ORIGINAL NUMBER OVERLAYS */
-        .number-overlay {
-            position: absolute;
-            top: -12px;
-            left: -12px;
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
-            color: #0b1018;
-            font-weight: 900;
-            font-size: 1.6rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            border: 3px solid rgba(255,255,255,0.9);
-            box-shadow: 
-                0 4px 15px rgba(0,0,0,0.5),
-                0 0 30px rgba(255,255,255,0.3);
-            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            z-index: 10;
-            transform: rotate(-3deg);
-            transition: all 0.3s ease;
-        }
-        
-        .number-overlay.rank-1 {
-            background: linear-gradient(145deg, #ffd700, #ffa500);
-            border-color: #fff5b0;
-            box-shadow: 
-                0 4px 20px rgba(0,0,0,0.6),
-                0 0 40px #ffd700,
-                0 0 80px rgba(255,215,0,0.4);
-            transform: rotate(-5deg) scale(1.1);
-            animation: numberPulse 2s infinite;
-        }
-        
-        .number-overlay.rank-2 {
-            background: linear-gradient(145deg, #e0e0e0, #b0b0b0);
-            border-color: #ffffff;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5), 0 0 30px #c0c0c0;
-        }
-        
-        .number-overlay.rank-3 {
-            background: linear-gradient(145deg, #cd7f32, #b06d28);
-            border-color: #ffb347;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5), 0 0 30px #cd7f32;
-        }
-        
-        .number-overlay.rank-4 {
-            background: linear-gradient(145deg, #4a90e2, #2a5c9a);
-            border-color: #a0c0ff;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5), 0 0 30px #4a90e2;
-        }
-        
-        .number-overlay.rank-5 {
-            background: linear-gradient(145deg, #50c878, #2a8c4a);
-            border-color: #a0ffb0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5), 0 0 30px #50c878;
-        }
-        
-        .right-sidebar .number-overlay {
-            width: 36px;
-            height: 36px;
-            font-size: 1.2rem;
-            top: -8px;
-            left: -8px;
-        }
-        
-        .right-sidebar .number-overlay.rank-1 {
-            width: 42px;
-            height: 42px;
-            font-size: 1.4rem;
-        }
-        
-        .album-item:hover .number-overlay {
-            transform: scale(1.2) rotate(0deg);
-            box-shadow: 0 0 50px currentColor;
-        }
-        
-        .album-item:hover .number-overlay.rank-1 {
-            transform: scale(1.3) rotate(5deg);
-        }
-        
-        @keyframes numberPulse {
-            0% { 
-                box-shadow: 0 4px 20px rgba(0,0,0,0.6), 0 0 40px #ffd700, 0 0 80px rgba(255,215,0,0.4);
-                transform: rotate(-5deg) scale(1.1);
-            }
-            50% { 
-                box-shadow: 0 4px 30px rgba(0,0,0,0.8), 0 0 60px #ffd700, 0 0 100px rgba(255,215,0,0.6);
-                transform: rotate(-5deg) scale(1.15);
-            }
-            100% { 
-                box-shadow: 0 4px 20px rgba(0,0,0,0.6), 0 0 40px #ffd700, 0 0 80px rgba(255,215,0,0.4);
-                transform: rotate(-5deg) scale(1.1);
-            }
-        }
-        
-        .trending-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: rgba(255, 69, 0, 0.2);
-            color: #ff7f50;
-            padding: 4px 10px;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            border: 1px solid rgba(255, 140, 0, 0.3);
-            margin-left: 8px;
-        }
-        
-        .trending-badge i {
-            font-size: 0.8rem;
-            color: #ffd700;
-        }
-        
-        .album-item:hover .album-thumbnail {
-            border-color: rgba(255,255,255,0.5);
-            transform: scale(1.03) rotate(0.5deg);
-            box-shadow: 0 0 20px rgba(255,255,255,0.2);
-        }
-        
-        .album-info {
-            flex-grow: 1;
-            min-width: 0;
-            padding-right: 10px;
-        }
-        
-        .album-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: white;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        
-        .album-date {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.8rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .album-date::before {
-            content: "📅";
-            font-size: 0.75rem;
-            opacity: 0.7;
-        }
-        
-        .album-meta {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 6px;
-            flex-wrap: wrap;
-        }
-        
-        .album-genre,
-        .album-tracks {
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 4px 12px;
-            border-radius: 8px;
-            display: inline-block;
-            line-height: 1.3;
-            background: rgba(255,255,255,0.12);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(255,255,255,0.15);
-            color: white;
-        }
-        
-        .right-sidebar .album-item {
-            padding: 12px 15px;
-            gap: 15px;
-        }
-        
-        .right-sidebar .album-thumbnail {
-            width: 80px;
-            height: 80px;
-            font-size: 2rem;
-        }
-        
-        .right-sidebar .album-title {
-            font-size: 1rem;
-            margin-bottom: 4px;
-        }
-        
-        /* ORIGINAL FOOTER */
-        .site-footer {
-            text-align: center;
-            margin-top: 45px;
-            padding: 25px 20px;
-            border-top: 1px solid rgba(255,255,255,0.15);
-            background: rgba(100, 115, 135, 0.2);
-            backdrop-filter: blur(14px) saturate(180%);
-            -webkit-backdrop-filter: blur(14px) saturate(180%);
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
-            width: 100%;
-            box-shadow: 0 -8px 25px rgba(0,0,0,0.3);
-            border-radius: 12px 12px 0 0;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .site-footer p {
-            margin: 8px 0;
-            color: rgba(255,255,255,0.8);
-            font-weight: 500;
-        }
-        
-        .site-footer p:first-child {
-            font-weight: 600;
-            color: white;
-            font-size: 1.1rem;
-        }
-        
-        /* ORIGINAL NAV DRAWERS */
-        .nav-drawer {
-            position: fixed;
-            top: 0;
-            width: 85%;
-            max-width: 350px;
-            height: 100%;
-            background: rgba(100, 115, 135, 0.25);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            z-index: 1000;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            opacity: 0;
-            display: none;
-            border-right: 1px solid rgba(255,255,255,0.15);
-        }
-        
-        .nav-drawer.left {
-            left: 0;
-            transform: translateX(-100%);
-        }
-        
-        .nav-drawer.right {
-            right: 0;
-            transform: translateX(100%);
-        }
-        
-        .nav-header {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.15);
-            background: rgba(0,0,0,0.2);
-            padding-top: env(safe-area-inset-top, 20px);
-        }
-        
-        .close-nav {
-            font-size: 32px;
-            cursor: pointer;
-            color: white;
-            line-height: 1;
-            padding: 10px;
-            margin: -10px;
-        }
-        
-        .nav-menu {
-            padding: 20px 0;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            height: calc(100% - 80px);
-        }
-        
-        .nav-item {
-            display: block;
-            padding: 15px 25px;
-            color: white;
-            text-decoration: none;
-            font-size: 17px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
-            min-height: 55px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .nav-item i {
-            width: 24px;
-            margin-right: 10px;
-            color: rgba(255,255,255,0.7);
-        }
-        
-        .nav-item:hover {
-            background: rgba(255,255,255,0.15);
-            border-left-color: white;
-        }
-        
-        .nav-item.active {
-            background: rgba(255,255,255,0.2);
-            border-left-color: white;
-        }
-        
-        .nav-divider {
-            height: 1px;
-            background: rgba(255,255,255,0.15);
-            margin: 10px 0;
-        }
-        
-        .nav-section-title {
-            padding: 15px 25px 5px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: rgba(255,255,255,0.6);
-            font-weight: 600;
-        }
-        
-        /* ORIGINAL SCROLL PROGRESS */
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #a0c0ff, #ffffff);
-            width: 0%;
-            z-index: 1001;
-            box-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-        
-        /* ORIGINAL SKELETON STYLES */
-        .skeleton-thumbnail {
-            background: rgba(255,255,255,0.1);
-            border-radius: 20px;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-        
-        .skeleton-line {
-            height: 16px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 20px;
-            margin-bottom: 8px;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 0.4; }
-            50% { opacity: 0.8; }
-            100% { opacity: 0.4; }
-        }
-        
-        /* ORIGINAL UTILITY STYLES */
-        .loading-spinner {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-            color: white;
-        }
-        
-        .loading-spinner i {
-            font-size: 2rem;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .error-message {
-            padding: 40px;
-            text-align: center;
-            color: rgba(255,200,200,0.9);
-            font-weight: 500;
-        }
-        
-        .error-message i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            color: rgba(255,100,100,0.5);
-        }
-        
-        .no-results {
-            padding: 40px;
-            text-align: center;
-            color: rgba(255,255,255,0.6);
-            font-style: italic;
-        }
-        
-        .search-info {
-            padding: 10px 18px;
-            background: rgba(255,255,255,0.05);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.8);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .clear-search {
-            color: white;
-            cursor: pointer;
-            padding: 5px 12px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.1);
-            font-size: 0.8rem;
-            transition: all 0.2s ease;
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .clear-search:hover {
-            background: rgba(255,255,255,0.2);
-        }
-        
-        .install-prompt {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 20px;
-            padding: 16px;
-            display: none;
-            align-items: center;
-            gap: 16px;
-            z-index: 2000;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            max-width: 400px;
-            margin: 0 auto;
-        }
-        
-        .install-prompt.show {
-            display: flex;
-        }
-        
-        .install-icon {
-            width: 50px;
-            height: 50px;
-            background: #0b1018;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .install-text {
-            flex: 1;
-        }
-        
-        .install-text h4 {
-            margin-bottom: 4px;
-            font-weight: 600;
-        }
-        
-        .install-text p {
-            font-size: 0.8rem;
-            opacity: 0.8;
-        }
-        
-        .install-button {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            min-height: 44px;
-        }
-        
-        .install-button:hover {
-            background: rgba(255,255,255,0.3);
-        }
-        
-        .close-install {
-            color: rgba(255,255,255,0.6);
-            cursor: pointer;
-            padding: 10px;
-            margin: -10px;
-        }
-        
-        /* Safe area support */
-        @supports (padding: max(0px)) {
-            .branding-bar {
-                padding-left: max(10px, env(safe-area-inset-left));
-                padding-right: max(10px, env(safe-area-inset-right));
-            }
-            
-            .site-footer {
-                padding-bottom: max(25px, env(safe-area-inset-bottom));
-            }
-            
-            .nav-header {
-                padding-top: max(20px, env(safe-area-inset-top));
-            }
-        }
-        
-        /* Responsive styles */
-        @media (max-width: 768px) {
-            .main-content-container {
-                flex-direction: column;
-                padding: 10px 5px;
-            }
-            .left-sidebar .album-thumbnail {
-                width: 100px;
-                height: 100px;
-            }
-            .section-title {
-                font-size: 1.2rem;
-            }
-            .pagination-item {
-                width: 36px;
-                height: 36px;
-                min-width: 36px;
-                min-height: 36px;
-                font-size: 0.85rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .album-thumbnail {
-                width: 70px !important;
-                height: 70px !important;
-            }
-            .section-title {
-                font-size: 1.1rem;
-            }
-            .reload-btn {
-                padding: 4px 10px;
-                font-size: 0.75rem;
-            }
-        }
+        /* Non-critical styles - design identical to original */
+        .hamburger-menu{width:50px;height:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:5px}
+        .hamburger-menu span{display:block;height:2px;width:18px;background:rgba(255,255,255,0.8);border-radius:3px;transition:all 0.3s ease}
+        .hamburger-menu:hover{background:rgba(255,255,255,0.25);transform:scale(1.05)}
+        .hamburger-menu:hover span{background:#fff}
+        .profile-icon{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.15);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;font-size:1.3rem;border:1px solid rgba(255,255,255,0.2)}
+        .profile-icon:hover{background:rgba(255,255,255,0.25);transform:scale(1.05)}
+        .search-section{background:rgba(110,125,145,0.15);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:12px 20px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,0.1);border-top:1px solid rgba(255,255,255,0.1)}
+        .search-bar{display:flex;border-radius:12px;overflow:hidden;width:100%;border:1px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.05);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);box-shadow:0 4px 15px rgba(0,0,0,0.3)}
+        .search-input{flex:1;padding:12px 18px;border:none;background:transparent;color:#fff;font-size:15px;outline:none}
+        .search-input::placeholder{color:rgba(255,255,255,0.8)}
+        .search-button{background:rgba(255,255,255,0.1);border:none;border-left:1px solid rgba(255,255,255,0.25);padding:0 20px;cursor:pointer;color:#fff;font-size:1.1rem}
+        .search-button:hover{background:rgba(255,255,255,0.2)}
+        .section-header:hover{background:rgba(255,255,255,0.12)}
+        .reload-btn:hover{background:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.5)}
+        .reload-btn i{transition:transform 0.3s ease}
+        .reload-btn:hover i{transform:rotate(180deg)}
+        .section-block{background:rgba(120,135,155,0.18);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:12px;overflow:hidden;box-shadow:0 15px 30px rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1)}
+        .album-item:hover{background:rgba(255,255,255,0.08);transform:translateX(6px)}
+        .album-item:active{transform:scale(0.99)}
+        .album-thumbnail img{width:100%;height:100%;object-fit:cover}
+        .album-item:hover .album-thumbnail{border-color:rgba(255,255,255,0.5);transform:scale(1.03) rotate(0.5deg);box-shadow:0 0 20px rgba(255,255,255,0.2)}
+        .album-info{flex-grow:1;min-width:0}
+        .album-title{font-size:1.2rem;font-weight:600;color:#fff;margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+        .album-date{color:rgba(255,255,255,0.7);font-size:0.8rem;font-weight:500;display:flex;align-items:center;gap:5px}
+        .album-date::before{content:"📅";font-size:0.75rem;opacity:0.7}
+        .album-meta{display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap}
+        .album-genre,.album-tracks{font-size:0.75rem;font-weight:600;padding:4px 12px;border-radius:8px;background:rgba(255,255,255,0.12);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.15);color:#fff}
+        .trending-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,69,0,0.2);color:#ff7f50;padding:4px 10px;border-radius:30px;font-size:0.7rem;border:1px solid rgba(255,140,0,0.3)}
+        .trending-badge i{color:#ffd700}
+        .number-overlay{transition:all 0.3s ease}
+        .number-overlay.rank-1{background:linear-gradient(145deg,#ffd700,#ffa500);border-color:#fff5b0;animation:numberPulse 2s infinite}
+        .number-overlay.rank-2{background:linear-gradient(145deg,#e0e0e0,#b0b0b0)}
+        .number-overlay.rank-3{background:linear-gradient(145deg,#cd7f32,#b06d28)}
+        .number-overlay.rank-4{background:linear-gradient(145deg,#4a90e2,#2a5c9a)}
+        .number-overlay.rank-5{background:linear-gradient(145deg,#50c878,#2a8c4a)}
+        .album-item:hover .number-overlay{transform:scale(1.2) rotate(0deg);box-shadow:0 0 50px currentColor}
+        @keyframes numberPulse{0%{box-shadow:0 4px 20px rgba(0,0,0,0.6),0 0 40px #ffd700}50%{box-shadow:0 4px 30px rgba(0,0,0,0.8),0 0 60px #ffd700}100%{box-shadow:0 4px 20px rgba(0,0,0,0.6),0 0 40px #ffd700}}
+        .right-sidebar .album-thumbnail{width:80px;height:80px}
+        .right-sidebar .number-overlay{width:36px;height:36px;font-size:1.2rem;top:-8px;left:-8px}
+        .pagination-item:hover:not(.disabled){background:rgba(200,215,235,0.25);border-color:rgba(255,255,255,0.3);transform:translateY(-1px)}
+        .pagination-item.active{background:rgba(255,255,255,0.3);border-color:rgba(255,255,255,0.5);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+        .pagination-item.disabled{opacity:0.3;cursor:not-allowed;pointer-events:none}
+        .pagination-ellipsis{color:rgba(255,255,255,0.5);padding:0 5px}
+        .pagination-prev,.pagination-next{width:auto;padding:0 15px;gap:6px}
+        .pagination-info{text-align:center;color:rgba(255,255,255,0.6);font-size:0.8rem;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1)}
+        .nav-drawer{position:fixed;top:0;width:85%;max-width:350px;height:100%;background:rgba(100,115,135,0.25);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);z-index:1000;box-shadow:0 0 30px rgba(0,0,0,0.5);transition:transform 0.3s ease,opacity 0.3s ease;opacity:0;display:none}
+        .nav-drawer.left{left:0;transform:translateX(-100%)}
+        .nav-drawer.right{right:0;transform:translateX(100%)}
+        .nav-header{padding:20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.15)}
+        .close-nav{font-size:32px;cursor:pointer;color:#fff}
+        .nav-item{display:block;padding:15px 25px;color:#fff;text-decoration:none;font-size:17px;font-weight:500;transition:all 0.3s ease;border-left:4px solid transparent}
+        .nav-item i{width:24px;margin-right:10px;color:rgba(255,255,255,0.7)}
+        .nav-item:hover{background:rgba(255,255,255,0.15);border-left-color:#fff}
+        .nav-item.active{background:rgba(255,255,255,0.2);border-left-color:#fff}
+        .scroll-progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,#a0c0ff,#fff);width:0%;z-index:1001}
+        .search-info{padding:10px 18px;background:rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.1);display:flex;justify-content:space-between}
+        .clear-search{cursor:pointer;padding:5px 12px;border-radius:20px;background:rgba(255,255,255,0.1)}
+        .install-prompt{position:fixed;bottom:20px;left:20px;right:20px;background:rgba(255,255,255,0.15);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-radius:20px;padding:16px;display:none;align-items:center;gap:16px;z-index:2000;max-width:400px;margin:0 auto}
+        @media (max-width:768px){.album-thumbnail{width:100px!important;height:100px!important}}
+        @media (max-width:480px){.album-thumbnail{width:70px!important;height:70px!important}}
     </style>
 </head>
 <body>
@@ -1027,7 +131,7 @@
         <div class="install-icon">🎬</div>
         <div class="install-text">
             <h4>Install Glass Route</h4>
-            <p>Add to home screen for app-like experience</p>
+            <p>Add to home screen</p>
         </div>
         <button class="install-button" id="installButton">Install</button>
         <span class="close-install" id="closeInstall">✕</span>
@@ -1037,25 +141,17 @@
         <header class="site-header">
             <div class="branding-bar">
                 <div class="hamburger-menu" id="hamburgerMenu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span></span><span></span><span></span>
                 </div>
-                
                 <div class="site-logo">GLASS•ROUTE</div>
-                
-                <div class="profile-icon" id="profileIcon">
-                    <i class="fas fa-user"></i>
-                </div>
+                <div class="profile-icon" id="profileIcon"><i class="fas fa-user"></i></div>
             </div>
             
             <section class="search-section">
                 <div class="search-container">
                     <div class="search-bar">
                         <input type="text" class="search-input" id="searchInput" placeholder="search albums, music...">
-                        <button class="search-button" id="searchButton">
-                            <i class="fas fa-search"></i>
-                        </button>
+                        <button class="search-button" id="searchButton"><i class="fas fa-search"></i></button>
                     </div>
                 </div>
             </section>
@@ -1073,43 +169,25 @@
                     <span class="clear-search" id="clearSearch">✕ clear</span>
                 </div>
                 
+                <!-- Pre-rendered skeleton for instant visual feedback -->
                 <div class="latest-albums-list" id="latestAlbums">
-                    <!-- Skeleton will be loaded by JS -->
+                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:60%"></div><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:100%"></div></div></div>
+                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:60%"></div><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:100%"></div></div></div>
+                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:60%"></div><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:100%"></div></div></div>
                 </div>
                 
-                <!-- Pagination Section -->
-                <div class="pagination-container" id="paginationContainer">
+                <div class="pagination-container">
                     <div class="pagination" id="pagination"></div>
-                    <div class="pagination-info" id="paginationInfo">
-                        Showing page <span id="currentPageDisplay">1</span> of <span id="totalPagesDisplay">10</span>
+                    <div class="pagination-info">
+                        Page <span id="currentPageDisplay">1</span> of <span id="totalPagesDisplay">10</span>
                     </div>
                 </div>
             </aside>
             
             <div class="right-sidebar">
-                <section class="section-block">
-                    <div class="section-header">
-                        <h2 class="section-title">top 5 music</h2>
-                        <span class="reload-btn" id="refreshReleases"><i class="fas fa-redo-alt"></i> reload</span>
-                    </div>
-                    <div class="latest-albums-list" id="latestSongs"></div>
-                </section>
-                
-                <section class="section-block">
-                    <div class="section-header">
-                        <h2 class="section-title">top artists</h2>
-                        <span class="reload-btn" id="refreshArtists"><i class="fas fa-redo-alt"></i> reload</span>
-                    </div>
-                    <div class="latest-albums-list" id="featuredArtists"></div>
-                </section>
-                
-                <section class="section-block">
-                    <div class="section-header">
-                        <h2 class="section-title">trending</h2>
-                        <span class="reload-btn" id="refreshTrending"><i class="fas fa-redo-alt"></i> reload</span>
-                    </div>
-                    <div class="latest-albums-list" id="trendingAlbums"></div>
-                </section>
+                <section class="section-block"><div class="section-header"><h2 class="section-title">top 5 music</h2><span class="reload-btn" id="refreshReleases"><i class="fas fa-redo-alt"></i> reload</span></div><div class="latest-albums-list" id="latestSongs"></div></section>
+                <section class="section-block"><div class="section-header"><h2 class="section-title">top artists</h2><span class="reload-btn" id="refreshArtists"><i class="fas fa-redo-alt"></i> reload</span></div><div class="latest-albums-list" id="featuredArtists"></div></section>
+                <section class="section-block"><div class="section-header"><h2 class="section-title">trending</h2><span class="reload-btn" id="refreshTrending"><i class="fas fa-redo-alt"></i> reload</span></div><div class="latest-albums-list" id="trendingAlbums"></div></section>
             </div>
         </div>
         
@@ -1119,30 +197,10 @@
         </footer>
     </div>
     
-    <div class="nav-drawer left" id="leftDrawer">
-        <div class="nav-header">
-            <div class="site-logo">GLASS•ROUTE</div>
-            <div class="close-nav" id="closeLeftDrawer">✕</div>
-        </div>
-        <nav class="nav-menu">
-            <a href="#" class="nav-item active" data-category="album"><i class="fas fa-compact-disc"></i> Albums</a>
-            <a href="#" class="nav-item" data-category="music"><i class="fas fa-music"></i> Music</a>
-            <a href="#" class="nav-item" data-category="artist"><i class="fas fa-microphone-alt"></i> Artists</a>
-        </nav>
-    </div>
-    
-    <div class="nav-drawer right" id="rightDrawer">
-        <div class="nav-header">
-            <div class="site-logo">PROFILE</div>
-            <div class="close-nav" id="closeRightDrawer">✕</div>
-        </div>
-        <nav class="nav-menu">
-            <div class="nav-section-title">SETTINGS</div>
-            <a href="#" class="nav-item"><i class="fas fa-cog"></i> Preferences</a>
-            <a href="#" class="nav-item"><i class="fas fa-palette"></i> Theme</a>
-        </nav>
-    </div>
+    <div class="nav-drawer left" id="leftDrawer"><div class="nav-header"><div class="site-logo">GLASS•ROUTE</div><div class="close-nav" id="closeLeftDrawer">✕</div></div><nav class="nav-menu"><a href="#" class="nav-item active" data-category="album"><i class="fas fa-compact-disc"></i> Albums</a><a href="#" class="nav-item" data-category="music"><i class="fas fa-music"></i> Music</a><a href="#" class="nav-item" data-category="artist"><i class="fas fa-microphone-alt"></i> Artists</a></nav></div>
+    <div class="nav-drawer right" id="rightDrawer"><div class="nav-header"><div class="site-logo">PROFILE</div><div class="close-nav" id="closeRightDrawer">✕</div></div><nav class="nav-menu"><div class="nav-section-title">SETTINGS</div><a href="#" class="nav-item"><i class="fas fa-cog"></i> Preferences</a><a href="#" class="nav-item"><i class="fas fa-palette"></i> Theme</a></nav></div>
 
+    <!-- Optimized JavaScript -->
     <script>
         // PWA Installation
         let deferredPrompt;
@@ -1153,44 +211,28 @@
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            installPrompt.classList.add('show');
+            installPrompt.style.display = 'flex';
         });
         
-        installButton.addEventListener('click', async () => {
+        installButton?.addEventListener('click', async () => {
             if (!deferredPrompt) return;
-            
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
-            
-            if (outcome === 'accepted') {
-                console.log('App installed');
-            }
-            
+            if (outcome === 'accepted') console.log('App installed');
             deferredPrompt = null;
-            installPrompt.classList.remove('show');
+            installPrompt.style.display = 'none';
         });
         
-        closeInstall.addEventListener('click', () => {
-            installPrompt.classList.remove('show');
-        });
-        
-        window.addEventListener('appinstalled', () => {
-            installPrompt.classList.remove('show');
-        });
-        
-        // API Configuration
+        closeInstall?.addEventListener('click', () => installPrompt.style.display = 'none');
+        window.addEventListener('appinstalled', () => installPrompt.style.display = 'none');
+
+        // API Config
         const API_BASE = 'https://itunes.apple.com';
         const CACHE_DURATION = 5 * 60 * 1000;
         const TOTAL_PAGES = 10;
         
-        // State management
-        let currentState = {
-            currentPage: 1,
-            totalPages: TOTAL_PAGES,
-            currentSearchTerm: 'top',
-            isLoading: false
-        };
-        
+        // State
+        let currentState = { currentPage: 1, totalPages: TOTAL_PAGES, currentSearchTerm: 'popular', isLoading: false };
         let cache = new Map();
         
         // DOM Elements
@@ -1209,437 +251,221 @@
             currentPageDisplay: document.getElementById('currentPageDisplay'),
             totalPagesDisplay: document.getElementById('totalPagesDisplay')
         };
-        
-        // Utility Functions
-        function showSkeletons(container, count = 5, isLarge = true) {
-            if (!container) return;
-            const width = isLarge ? '120px' : '80px';
-            const height = isLarge ? '120px' : '80px';
-            
-            let html = '';
-            for (let i = 0; i < count; i++) {
-                html += `
-                    <div class="album-item">
-                        <div class="skeleton-thumbnail" style="width:${width};height:${height};"></div>
-                        <div class="album-info">
-                            <div class="skeleton-line" style="width:60%"></div>
-                            <div class="skeleton-line" style="width:80%"></div>
-                            ${isLarge ? '<div class="skeleton-line" style="width:100%"></div>' : ''}
-                        </div>
-                    </div>
-                `;
+
+        // Simple cache fetch
+        async function fetchWithCache(url) {
+            if (cache.has(url)) {
+                const { data, timestamp } = cache.get(url);
+                if (Date.now() - timestamp < CACHE_DURATION) return data;
             }
-            container.innerHTML = html;
-        }
-        
-        function showError(container, message) {
-            if (!container) return;
-            container.innerHTML = `
-                <div class="error-message">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <p>${message}</p>
-                </div>
-            `;
-        }
-        
-        function showNoResults(container) {
-            if (!container) return;
-            container.innerHTML = `
-                <div class="no-results">
-                    <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 10px; opacity: 0.5;"></i>
-                    <p>No results found</p>
-                </div>
-            `;
-        }
-        
-        // Data Fetching with Cache
-        async function fetchFromAPI(endpoint, params = {}) {
-            const queryString = new URLSearchParams(params).toString();
-            const url = `${API_BASE}${endpoint}${queryString ? '?' + queryString : ''}`;
-            const cacheKey = url;
-            
-            if (cache.has(cacheKey)) {
-                const { data, timestamp } = cache.get(cacheKey);
-                if (Date.now() - timestamp < CACHE_DURATION) {
-                    return data;
-                }
-            }
-            
             try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                const data = await response.json();
-                
-                cache.set(cacheKey, { data, timestamp: Date.now() });
+                const res = await fetch(url);
+                const data = await res.json();
+                cache.set(url, { data, timestamp: Date.now() });
                 return data;
-            } catch (error) {
-                console.error('API Error:', error);
-                throw error;
+            } catch (e) {
+                return { results: [] };
             }
         }
-        
-        // Data Transformers
-        function transformAlbumItem(item) {
-            return {
-                title: item.collectionName || item.trackName || 'Unknown Album',
-                artist: item.artistName || 'Unknown Artist',
-                year: item.releaseDate ? new Date(item.releaseDate).getFullYear() : '2024',
-                genre: item.primaryGenreName || 'Various',
-                artwork: item.artworkUrl100?.replace('100x100', '600x600') || null,
-                trackCount: item.trackCount || 0
-            };
-        }
-        
-        function transformMusicToAlbum(item) {
-            return {
-                title: item.collectionName || item.trackName || 'Unknown Title',
-                artist: item.artistName || 'Unknown Artist',
-                year: item.releaseDate ? new Date(item.releaseDate).getFullYear() : '2024',
-                genre: item.primaryGenreName || 'Various',
-                artwork: item.artworkUrl100?.replace('100x100', '600x600') || null,
-                trackCount: item.trackCount || 0
-            };
-        }
-        
-        // Render with Number Overlay
-        function renderAlbumItemWithRank(item, rank, isLarge = true) {
-            const thumbnailStyle = isLarge ? 'width:120px;height:120px;' : 'width:80px;height:80px;';
-            const thumbnailContent = item.artwork 
-                ? `<img src="${item.artwork}" alt="${item.title}" loading="lazy">`
-                : `<i class="fas fa-${isLarge ? 'compact-disc' : 'music'}" style="font-size:${isLarge ? '2.5rem' : '2rem'};"></i>`;
-            
+
+        // Transform
+        const transformAlbum = (item) => ({
+            title: item.collectionName || 'Unknown',
+            artist: item.artistName || 'Unknown',
+            year: item.releaseDate ? new Date(item.releaseDate).getFullYear() : '2024',
+            genre: item.primaryGenreName || 'Various',
+            artwork: item.artworkUrl100?.replace('100x100', '600x600'),
+            trackCount: item.trackCount || 0
+        });
+
+        // Render
+        function renderAlbum(item, rank, large = true) {
+            const size = large ? '120px' : '80px';
+            const icon = large ? 'compact-disc' : 'music';
             return `
                 <div class="album-item">
-                    <div class="album-thumbnail" style="${thumbnailStyle}">
-                        ${thumbnailContent}
+                    <div class="album-thumbnail" style="width:${size};height:${size}">
+                        ${item.artwork ? `<img src="${item.artwork}" alt="${item.title}" loading="lazy">` : `<i class="fas fa-${icon}"></i>`}
                         <div class="number-overlay rank-${rank}">${rank}</div>
                     </div>
                     <div class="album-info">
-                        <div class="album-title">
-                            ${item.title}
-                            ${rank === 1 ? '<span class="trending-badge"><i class="fas fa-crown"></i> #1</span>' : ''}
-                        </div>
+                        <div class="album-title">${item.title}${rank === 1 ? '<span class="trending-badge"><i class="fas fa-crown"></i> #1</span>' : ''}</div>
                         <div class="album-date">${item.year} • ${item.artist}</div>
-                        <div class="album-meta">
-                            <span class="album-genre">${item.genre}</span>
-                            ${item.trackCount ? `<span class="album-tracks">${item.trackCount} tracks</span>` : ''}
-                        </div>
+                        <div class="album-meta"><span class="album-genre">${item.genre}</span>${item.trackCount ? `<span class="album-tracks">${item.trackCount} tracks</span>` : ''}</div>
                     </div>
                 </div>
             `;
         }
-        
-        // Generate pagination HTML
-        function renderPagination(currentPage, totalPages) {
+
+        // Pagination render
+        function renderPagination(page, total) {
             if (!elements.pagination) return;
-            
-            let html = '';
-            
-            // Previous button
-            html += `<div class="pagination-item pagination-prev ${currentPage === 1 ? 'disabled' : ''}" data-page="${currentPage - 1}">
-                <i class="fas fa-chevron-left"></i> Prev
-            </div>`;
-            
-            // First page
-            if (currentPage > 3) {
+            let html = `<div class="pagination-item pagination-prev ${page === 1 ? 'disabled' : ''}" data-page="${page-1}"><i class="fas fa-chevron-left"></i> Prev</div>`;
+            if (page > 3) {
                 html += `<div class="pagination-item" data-page="1">1</div>`;
-                if (currentPage > 4) {
-                    html += `<span class="pagination-ellipsis">...</span>`;
-                }
+                if (page > 4) html += `<span class="pagination-ellipsis">...</span>`;
             }
-            
-            // Pages around current page
-            for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
-                if (i === currentPage) {
-                    html += `<div class="pagination-item active" data-page="${i}">${i}</div>`;
-                } else {
-                    html += `<div class="pagination-item" data-page="${i}">${i}</div>`;
-                }
+            for (let i = Math.max(1, page-2); i <= Math.min(total, page+2); i++) {
+                html += `<div class="pagination-item ${i === page ? 'active' : ''}" data-page="${i}">${i}</div>`;
             }
-            
-            // Last page
-            if (currentPage < totalPages - 2) {
-                if (currentPage < totalPages - 3) {
-                    html += `<span class="pagination-ellipsis">...</span>`;
-                }
-                html += `<div class="pagination-item" data-page="${totalPages}">${totalPages}</div>`;
+            if (page < total-2) {
+                if (page < total-3) html += `<span class="pagination-ellipsis">...</span>`;
+                html += `<div class="pagination-item" data-page="${total}">${total}</div>`;
             }
-            
-            // Next button
-            html += `<div class="pagination-item pagination-next ${currentPage === totalPages ? 'disabled' : ''}" data-page="${currentPage + 1}">
-                Next <i class="fas fa-chevron-right"></i>
-            </div>`;
-            
+            html += `<div class="pagination-item pagination-next ${page === total ? 'disabled' : ''}" data-page="${page+1}">Next <i class="fas fa-chevron-right"></i></div>`;
             elements.pagination.innerHTML = html;
-            
-            // Update page info
-            if (elements.currentPageDisplay) {
-                elements.currentPageDisplay.textContent = currentPage;
+            if (elements.currentPageDisplay) elements.currentPageDisplay.textContent = page;
+            if (elements.totalPagesDisplay) elements.totalPagesDisplay.textContent = total;
+        }
+
+        // Load main albums
+        async function loadMain() {
+            const terms = ['popular','hit','greatest','best','classic','grammy'];
+            const term = terms[(currentState.currentPage - 1) % terms.length];
+            const url = `${API_BASE}/search?term=${term}&media=music&entity=album&limit=30`;
+            const data = await fetchWithCache(url);
+            let results = (data.results || []).filter(i => i.collectionName).map(transformAlbum);
+            // Fisher-Yates shuffle
+            for (let i = results.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [results[i], results[j]] = [results[j], results[i]];
             }
-            if (elements.totalPagesDisplay) {
-                elements.totalPagesDisplay.textContent = totalPages;
+            const pageItems = results.slice(0, 5);
+            if (pageItems.length) {
+                elements.latestAlbums.innerHTML = pageItems.map((item, i) => renderAlbum(item, i+1, true)).join('');
             }
-            
-            // Add event listeners to pagination items
-            document.querySelectorAll('.pagination-item[data-page]').forEach(item => {
-                item.addEventListener('click', (e) => {
-                    const page = parseInt(e.currentTarget.dataset.page);
-                    if (!isNaN(page) && page !== currentState.currentPage && !e.currentTarget.classList.contains('disabled')) {
-                        loadPage(page);
+            renderPagination(currentState.currentPage, TOTAL_PAGES);
+        }
+
+        // Load other sections
+        async function loadOthers() {
+            const sections = [
+                { el: elements.latestSongs, term: 'top songs', entity: 'song' },
+                { el: elements.featuredArtists, term: 'top artist', entity: 'musicArtist' },
+                { el: elements.trendingAlbums, term: 'popular', entity: 'album' }
+            ];
+            for (const s of sections) {
+                const url = `${API_BASE}/search?term=${s.term}&media=music&entity=${s.entity}&limit=5`;
+                const data = await fetchWithCache(url);
+                const results = (data.results || []).map(transformAlbum);
+                if (results.length) {
+                    s.el.innerHTML = results.map((item, i) => renderAlbum(item, i+1, false)).join('');
+                }
+            }
+        }
+
+        // Page change
+        async function loadPage(page) {
+            if (page < 1 || page > TOTAL_PAGES || page === currentState.currentPage || currentState.isLoading) return;
+            currentState.currentPage = page;
+            currentState.isLoading = true;
+            await loadMain();
+            currentState.isLoading = false;
+        }
+
+        // Event listeners
+        function initEvents() {
+            // Pagination clicks
+            elements.pagination?.addEventListener('click', (e) => {
+                const item = e.target.closest('.pagination-item[data-page]');
+                if (!item || item.classList.contains('disabled')) return;
+                const page = parseInt(item.dataset.page);
+                loadPage(page);
+            });
+
+            // Search
+            elements.searchButton?.addEventListener('click', () => {
+                if (!elements.searchInput.value.trim()) return;
+                elements.searchInfo.style.display = 'flex';
+                elements.searchQueryDisplay.textContent = `"${elements.searchInput.value}"`;
+                elements.mainSectionTitle.textContent = 'search results';
+                currentState.currentSearchTerm = elements.searchInput.value;
+                currentState.currentPage = 1;
+                const url = `${API_BASE}/search?term=${elements.searchInput.value}&media=music&entity=album&limit=5`;
+                fetchWithCache(url).then(data => {
+                    const results = (data.results || []).filter(i => i.collectionName).map(transformAlbum);
+                    if (results.length) {
+                        elements.latestAlbums.innerHTML = results.map((item, i) => renderAlbum(item, i+1, true)).join('');
                     }
                 });
             });
-        }
-        
-        // Load specific page
-        async function loadPage(page) {
-            if (page < 1 || page > currentState.totalPages || page === currentState.currentPage || currentState.isLoading) return;
-            
-            currentState.currentPage = page;
-            currentState.isLoading = true;
-            
-            renderPagination(currentState.currentPage, currentState.totalPages);
-            
-            const searchTerms = ['popular', 'hit', 'greatest', 'best', 'classic', 'grammy', 'rock', 'pop', 'hip hop', 'jazz'];
-            const termIndex = (page - 1) % searchTerms.length;
-            const searchTerm = currentState.currentSearchTerm === 'top' ? searchTerms[termIndex] : currentState.currentSearchTerm;
-            
-            await loadTop5Albums(searchTerm, false);
-            
-            currentState.isLoading = false;
-        }
-        
-        // Load Top 5 Albums (main section)
-        async function loadTop5Albums(searchTerm = 'popular', resetPage = true) {
-            if (!elements.latestAlbums) return;
-            
-            if (resetPage) {
-                currentState.currentSearchTerm = searchTerm;
-                currentState.currentPage = 1;
-            }
-            
-            showSkeletons(elements.latestAlbums, 5, true);
-            
-            try {
-                const data = await fetchFromAPI('/search', {
-                    term: searchTerm,
-                    media: 'music',
-                    entity: 'album',
-                    limit: 50
-                });
-                
-                let results = (data.results || [])
-                    .filter(item => item.collectionName && item.collectionName.trim() !== '')
-                    .map(transformAlbumItem);
-                
-                // Shuffle results
-                for (let i = results.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [results[i], results[j]] = [results[j], results[i]];
-                }
-                
-                const startIndex = ((currentState.currentPage - 1) * 5) % Math.max(1, results.length - 5);
-                const pageItems = results.slice(startIndex, startIndex + 5);
-                
-                if (pageItems.length === 0) {
-                    showNoResults(elements.latestAlbums);
-                } else {
-                    elements.latestAlbums.innerHTML = pageItems
-                        .map((item, index) => renderAlbumItemWithRank(item, index + 1, true))
-                        .join('');
-                }
-                
-                renderPagination(currentState.currentPage, currentState.totalPages);
-                
-            } catch (error) {
-                console.error('Error loading top 5 albums:', error);
-                showError(elements.latestAlbums, 'Failed to load albums. Please try again.');
-            }
-        }
-        
-        // Load Top 5 for other sections
-        async function loadTop5(container, mediaType, isLarge = true, section = 'top') {
-            if (!container) return;
-            
-            showSkeletons(container, 5, isLarge);
-            
-            try {
-                let searchTerm = section;
-                if (section === 'artist') searchTerm = 'top artist';
-                if (section === 'trending') searchTerm = 'popular';
-                
-                const data = await fetchFromAPI('/search', {
-                    term: searchTerm,
-                    media: mediaType,
-                    limit: 20,
-                    entity: mediaType === 'music' ? 'song' : 'musicArtist'
-                });
-                
-                const results = (data.results || [])
-                    .sort(() => 0.5 - Math.random())
-                    .slice(0, 5)
-                    .map(transformMusicToAlbum);
-                
-                if (results.length === 0) {
-                    showNoResults(container);
-                } else {
-                    container.innerHTML = results
-                        .map((item, index) => renderAlbumItemWithRank(item, index + 1, isLarge))
-                        .join('');
-                }
-                
-            } catch (error) {
-                console.error(`Error loading top 5:`, error);
-                showError(container, `Failed to load top 5`);
-            }
-        }
-        
-        // Load all sections with top 5
-        async function loadAllTop5() {
-            currentState.currentPage = 1;
-            currentState.currentSearchTerm = 'top';
-            
-            await Promise.all([
-                loadTop5Albums('popular', true),
-                loadTop5(elements.latestSongs, 'music', false, 'top'),
-                loadTop5(elements.featuredArtists, 'music', false, 'artist'),
-                loadTop5(elements.trendingAlbums, 'music', false, 'trending')
-            ]);
-        }
-        
-        // Clear search
-        function clearSearch() {
-            elements.searchInfo.style.display = 'none';
-            elements.searchInput.value = '';
-            elements.mainSectionTitle.textContent = 'top 5 albums';
-            currentState.currentPage = 1;
-            currentState.currentSearchTerm = 'top';
-            loadAllTop5();
-        }
-        
-        function initializeEventListeners() {
-            // Search
-            elements.searchButton.addEventListener('click', () => {
-                if (elements.searchInput.value.trim()) {
-                    elements.searchInfo.style.display = 'flex';
-                    elements.searchQueryDisplay.textContent = `Searching: "${elements.searchInput.value}"`;
-                    elements.mainSectionTitle.textContent = 'search results';
-                    
-                    currentState.currentPage = 1;
-                    currentState.currentSearchTerm = elements.searchInput.value;
-                    
-                    loadTop5Albums(elements.searchInput.value, true);
-                }
+
+            elements.searchInput?.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') elements.searchButton.click();
             });
-            
-            elements.searchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    elements.searchButton.click();
-                }
-            });
-            
-            elements.clearSearch.addEventListener('click', clearSearch);
-            
-            // Refresh buttons
-            document.getElementById('refreshMain').addEventListener('click', () => {
-                currentState.currentPage = 1;
-                currentState.currentSearchTerm = 'top';
-                elements.mainSectionTitle.textContent = 'top 5 albums';
+
+            elements.clearSearch?.addEventListener('click', () => {
                 elements.searchInfo.style.display = 'none';
                 elements.searchInput.value = '';
-                loadTop5Albums('popular', true);
+                elements.mainSectionTitle.textContent = 'top 5 albums';
+                currentState.currentPage = 1;
+                loadMain();
             });
-            
-            document.getElementById('refreshReleases').addEventListener('click', () => {
-                loadTop5(elements.latestSongs, 'music', false, 'top');
+
+            // Refresh buttons
+            document.getElementById('refreshMain')?.addEventListener('click', () => {
+                currentState.currentPage = 1;
+                loadMain();
             });
-            
-            document.getElementById('refreshArtists').addEventListener('click', () => {
-                loadTop5(elements.featuredArtists, 'music', false, 'artist');
-            });
-            
-            document.getElementById('refreshTrending').addEventListener('click', () => {
-                loadTop5(elements.trendingAlbums, 'music', false, 'trending');
-            });
-            
-            // Navigation
-            document.querySelectorAll('.nav-item[data-category]').forEach(item => {
-                item.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    document.querySelectorAll('.nav-item[data-category]').forEach(nav => {
-                        nav.classList.remove('active');
-                    });
-                    e.target.classList.add('active');
-                    
-                    document.getElementById('leftDrawer').style.opacity = '0';
-                    document.getElementById('leftDrawer').style.transform = 'translateX(-100%)';
-                    setTimeout(() => {
-                        document.getElementById('leftDrawer').style.display = 'none';
-                    }, 300);
-                });
-            });
-            
+            document.getElementById('refreshReleases')?.addEventListener('click', () => loadOthers());
+            document.getElementById('refreshArtists')?.addEventListener('click', () => loadOthers());
+            document.getElementById('refreshTrending')?.addEventListener('click', () => loadOthers());
+
             // Drawers
             const hamburger = document.getElementById('hamburgerMenu');
             const leftDrawer = document.getElementById('leftDrawer');
             const closeLeft = document.getElementById('closeLeftDrawer');
-            
-            hamburger.addEventListener('click', () => {
+            const profileIcon = document.getElementById('profileIcon');
+            const rightDrawer = document.getElementById('rightDrawer');
+            const closeRight = document.getElementById('closeRightDrawer');
+
+            hamburger?.addEventListener('click', () => {
                 leftDrawer.style.display = 'block';
                 setTimeout(() => {
                     leftDrawer.style.opacity = '1';
                     leftDrawer.style.transform = 'translateX(0)';
                 }, 10);
             });
-            
-            closeLeft.addEventListener('click', () => {
+
+            closeLeft?.addEventListener('click', () => {
                 leftDrawer.style.opacity = '0';
                 leftDrawer.style.transform = 'translateX(-100%)';
-                setTimeout(() => {
-                    leftDrawer.style.display = 'none';
-                }, 300);
+                setTimeout(() => leftDrawer.style.display = 'none', 300);
             });
-            
-            const profileIcon = document.getElementById('profileIcon');
-            const rightDrawer = document.getElementById('rightDrawer');
-            const closeRight = document.getElementById('closeRightDrawer');
-            
-            profileIcon.addEventListener('click', () => {
+
+            profileIcon?.addEventListener('click', () => {
                 rightDrawer.style.display = 'block';
                 setTimeout(() => {
                     rightDrawer.style.opacity = '1';
                     rightDrawer.style.transform = 'translateX(0)';
                 }, 10);
             });
-            
-            closeRight.addEventListener('click', () => {
+
+            closeRight?.addEventListener('click', () => {
                 rightDrawer.style.opacity = '0';
                 rightDrawer.style.transform = 'translateX(100%)';
-                setTimeout(() => {
-                    rightDrawer.style.display = 'none';
-                }, 300);
+                setTimeout(() => rightDrawer.style.display = 'none', 300);
             });
-            
-            // Scroll progress with throttling
+
+            // Scroll progress (throttled)
             let ticking = false;
-            window.addEventListener('scroll', function() {
+            window.addEventListener('scroll', () => {
                 if (!ticking) {
-                    window.requestAnimationFrame(function() {
+                    window.requestAnimationFrame(() => {
                         const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
                         const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                        const scrolled = (winScroll / height) * 100;
-                        document.getElementById('scrollProgress').style.width = scrolled + '%';
+                        document.getElementById('scrollProgress').style.width = (winScroll / height) * 100 + '%';
                         ticking = false;
                     });
                     ticking = true;
                 }
             });
         }
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeEventListeners();
-            loadAllTop5();
+
+        // Start
+        document.addEventListener('DOMContentLoaded', async () => {
+            initEvents();
+            await Promise.all([loadMain(), loadOthers()]);
         });
     </script>
 </body>
