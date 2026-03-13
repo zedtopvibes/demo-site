@@ -79,6 +79,9 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
             z-index: 2;
+            display: flex;
+            flex-direction: column;
+            height: fit-content;
         }
         
         .right-sidebar {
@@ -93,11 +96,7 @@
             width: 100%;
             padding: 20px;
             border-top: 1px solid rgba(255,255,255,0.1);
-            background: transparent;
-            display: none;
-        }
-        
-        .pagination-container.show {
+            background: rgba(0,0,0,0.2);
             display: block;
         }
         
@@ -105,9 +104,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             margin: 0 auto;
             width: 100%;
+            flex-wrap: wrap;
         }
         
         .pagination-item {
@@ -130,7 +130,7 @@
             min-height: 44px;
         }
         
-        .pagination-item:hover {
+        .pagination-item:hover:not(.disabled) {
             background: rgba(200, 215, 235, 0.25);
             border-color: rgba(255, 255, 255, 0.3);
             transform: translateY(-1px);
@@ -140,6 +140,12 @@
             background: rgba(255, 255, 255, 0.3);
             border-color: rgba(255, 255, 255, 0.5);
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .pagination-item.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
         }
         
         .pagination-ellipsis {
@@ -153,6 +159,21 @@
             width: auto;
             padding: 0 15px;
             gap: 6px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .pagination-prev i,
+        .pagination-next i {
+            font-size: 0.8rem;
+        }
+        
+        .pagination-info {
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.8rem;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
         
         .site-header {
@@ -192,11 +213,6 @@
         .hamburger-menu {
             width: 50px;
             height: 50px;
-          /*  border-radius: 50%;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.2); */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -319,64 +335,72 @@
             border-left-color: rgba(255,255,255,0.4);
         }
         
-        /* Rest of your CSS remains exactly the same */
+        /* REFINED SECTION HEADERS - smaller and cleaner */
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px 18px;
-            background: rgba(255,255,255,0.08);
-            border-bottom: 1px solid rgba(255,255,255,0.15);
-            transition: all 0.2s ease;
-            height: 60px;
-        }
-        
-        .section-header:hover {
-            background: rgba(255,255,255,0.12);
+            padding: 10px 16px;
+            background: rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            height: 48px;
         }
         
         .section-title {
-            font-size: 1.3rem;
-            font-weight: 700;
+            font-size: 1.1rem;
+            font-weight: 600;
             color: white;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
             padding: 0;
             margin: 0;
             line-height: 1;
-            letter-spacing: 1px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            opacity: 0.9;
         }
         
         .section-title::before {
             content: "◈";
-            font-size: 1.4rem;
-            opacity: 0.9;
-            color: rgba(255,255,255,0.8);
+            font-size: 1rem;
+            opacity: 0.7;
+            color: rgba(255,255,255,0.7);
         }
         
-        .view-all {
+        /* NEW RELOAD BUTTON STYLE */
+        .reload-btn {
             color: white;
             text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            padding: 6px 15px;
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 4px 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
             transition: all 0.2s ease;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
             backdrop-filter: blur(4px);
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             white-space: nowrap;
             cursor: pointer;
-            min-height: 44px;
+            min-height: 32px;
             display: flex;
             align-items: center;
+            gap: 4px;
         }
         
-        .view-all:hover {
-            background: rgba(255,255,255,0.2);
-            border-color: rgba(255,255,255,0.5);
+        .reload-btn i {
+            font-size: 0.7rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .reload-btn:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.4);
+        }
+        
+        .reload-btn:hover i {
+            transform: rotate(180deg);
         }
         
         .section-block {
@@ -391,6 +415,7 @@
         
         .latest-albums-list {
             padding: 5px 0;
+            min-height: 400px;
         }
         
         .album-item {
@@ -947,6 +972,24 @@
                 width: 100px;
                 height: 100px;
             }
+            .section-title {
+                font-size: 1rem;
+            }
+            .reload-btn {
+                font-size: 0.7rem;
+                padding: 3px 8px;
+            }
+            .pagination-item {
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+                min-height: 36px;
+                font-size: 0.85rem;
+            }
+            .pagination-prev,
+            .pagination-next {
+                padding: 0 10px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -992,7 +1035,7 @@
             <section class="search-section">
                 <div class="search-container">
                     <div class="search-bar">
-                        <input type="text" class="search-input" id="searchInput" placeholder="search movies, albums..." value="inception">
+                        <input type="text" class="search-input" id="searchInput" placeholder="search albums, music...">
                         <button class="search-button" id="searchButton">
                             <i class="fas fa-search"></i>
                         </button>
@@ -1004,8 +1047,8 @@
         <div class="main-content-container" id="content">
             <aside class="left-sidebar">
                 <div class="section-header">
-                    <h2 class="section-title" id="mainSectionTitle">top 5 movies</h2>
-                    <span class="view-all" id="refreshMain">↻</span>
+                    <h2 class="section-title" id="mainSectionTitle">top 5 albums</h2>
+                    <span class="reload-btn" id="refreshMain"><i class="fas fa-redo-alt"></i> reload</span>
                 </div>
                 
                 <div class="search-info" id="searchInfo" style="display: none;">
@@ -1014,11 +1057,15 @@
                 </div>
                 
                 <div class="latest-albums-list" id="latestAlbums">
-                    <!-- Top 5 will be loaded here with number overlays -->
+                    <!-- Albums will be loaded here with number overlays -->
                 </div>
                 
+                <!-- Pagination Section -->
                 <div class="pagination-container" id="paginationContainer">
                     <div class="pagination" id="pagination"></div>
+                    <div class="pagination-info" id="paginationInfo">
+                        Showing page <span id="currentPageDisplay">1</span> of <span id="totalPagesDisplay">5</span>
+                    </div>
                 </div>
             </aside>
             
@@ -1026,7 +1073,7 @@
                 <section class="section-block">
                     <div class="section-header">
                         <h2 class="section-title">top 5 music</h2>
-                        <span class="view-all" id="refreshReleases">↻</span>
+                        <span class="reload-btn" id="refreshReleases"><i class="fas fa-redo-alt"></i> reload</span>
                     </div>
                     <div class="latest-albums-list" id="latestSongs"></div>
                 </section>
@@ -1034,7 +1081,7 @@
                 <section class="section-block">
                     <div class="section-header">
                         <h2 class="section-title">top artists</h2>
-                        <span class="view-all" id="refreshArtists">↻</span>
+                        <span class="reload-btn" id="refreshArtists"><i class="fas fa-redo-alt"></i> reload</span>
                     </div>
                     <div class="latest-albums-list" id="featuredArtists"></div>
                 </section>
@@ -1042,7 +1089,7 @@
                 <section class="section-block">
                     <div class="section-header">
                         <h2 class="section-title">trending</h2>
-                        <span class="view-all" id="refreshTrending">↻</span>
+                        <span class="reload-btn" id="refreshTrending"><i class="fas fa-redo-alt"></i> reload</span>
                     </div>
                     <div class="latest-albums-list" id="trendingAlbums"></div>
                 </section>
@@ -1051,7 +1098,7 @@
         
         <footer class="site-footer">
             <p>© 2025 GLASS ROUTE · top 5 now</p>
-            <p>movies • music • trending</p>
+            <p>albums • music • trending</p>
         </footer>
     </div>
     
@@ -1061,8 +1108,8 @@
             <div class="close-nav" id="closeLeftDrawer">✕</div>
         </div>
         <nav class="nav-menu">
-            <a href="#" class="nav-item active" data-category="movie"><i class="fas fa-film"></i> Movies</a>
-            <a href="#" class="nav-item" data-category="music"><i class="fas fa-compact-disc"></i> Music</a>
+            <a href="#" class="nav-item active" data-category="album"><i class="fas fa-compact-disc"></i> Albums</a>
+            <a href="#" class="nav-item" data-category="music"><i class="fas fa-music"></i> Music</a>
             <a href="#" class="nav-item" data-category="artist"><i class="fas fa-microphone-alt"></i> Artists</a>
         </nav>
     </div>
@@ -1118,15 +1165,18 @@
         // API Configuration
         const API_BASE = 'https://itunes.apple.com';
         const CACHE_DURATION = 5 * 60 * 1000;
+        const ITEMS_PER_PAGE = 5;
+        const TOTAL_PAGES = 10; // We'll simulate 10 pages of content
         
         // State management
         let currentState = {
             searchQuery: 'top',
             currentPage: 1,
-            totalPages: 1,
-            currentCategory: 'movie',
+            totalPages: TOTAL_PAGES,
+            currentCategory: 'album',
             isLoading: false,
-            searchResults: []
+            searchResults: [],
+            currentSearchTerm: 'top'
         };
         
         let cache = new Map();
@@ -1144,7 +1194,9 @@
             clearSearch: document.getElementById('clearSearch'),
             mainSectionTitle: document.getElementById('mainSectionTitle'),
             paginationContainer: document.getElementById('paginationContainer'),
-            pagination: document.getElementById('pagination')
+            pagination: document.getElementById('pagination'),
+            currentPageDisplay: document.getElementById('currentPageDisplay'),
+            totalPagesDisplay: document.getElementById('totalPagesDisplay')
         };
         
         // Utility Functions
@@ -1212,14 +1264,16 @@
         }
         
         // Data Transformers
-        function transformMovieToAlbum(item) {
+        function transformAlbumItem(item) {
             return {
-                title: item.trackName || item.collectionName || 'Unknown Title',
+                title: item.collectionName || item.trackName || 'Unknown Album',
                 artist: item.artistName || 'Unknown Artist',
                 year: item.releaseDate ? new Date(item.releaseDate).getFullYear() : '2024',
                 genre: item.primaryGenreName || 'Various',
                 artwork: item.artworkUrl100?.replace('100x100', '600x600') || null,
-                trackCount: item.trackCount || 0
+                trackCount: item.trackCount || 0,
+                price: item.collectionPrice || item.trackPrice || null,
+                currency: item.currency || 'USD'
             };
         }
         
@@ -1239,7 +1293,7 @@
             const thumbnailStyle = isLarge ? 'width:120px;height:120px;' : 'width:80px;height:80px;';
             const thumbnailContent = item.artwork 
                 ? `<img src="${item.artwork}" alt="${item.title}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">`
-                : `<i class="fas fa-${isLarge ? 'film' : 'music'}" style="font-size:${isLarge ? '2.5rem' : '2rem'};"></i>`;
+                : `<i class="fas fa-${isLarge ? 'compact-disc' : 'music'}" style="font-size:${isLarge ? '2.5rem' : '2rem'};"></i>`;
             
             return `
                 <div class="album-item">
@@ -1256,32 +1310,199 @@
                         <div class="album-meta">
                             <span class="album-genre">${item.genre}</span>
                             ${item.trackCount ? `<span class="album-tracks">${item.trackCount} tracks</span>` : ''}
+                            ${item.price ? `<span class="album-tracks">${item.currency} ${item.price}</span>` : ''}
                         </div>
                     </div>
                 </div>
             `;
         }
         
-        // Load Top 5 for a section
+        // Generate pagination HTML
+        function renderPagination(currentPage, totalPages) {
+            if (!elements.pagination) return;
+            
+            let html = '';
+            
+            // Previous button
+            html += `<div class="pagination-item pagination-prev ${currentPage === 1 ? 'disabled' : ''}" data-page="${currentPage - 1}">
+                <i class="fas fa-chevron-left"></i> Prev
+            </div>`;
+            
+            // First page
+            if (currentPage > 3) {
+                html += `<div class="pagination-item" data-page="1">1</div>`;
+                if (currentPage > 4) {
+                    html += `<span class="pagination-ellipsis">...</span>`;
+                }
+            }
+            
+            // Pages around current page
+            for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
+                if (i === currentPage) {
+                    html += `<div class="pagination-item active" data-page="${i}">${i}</div>`;
+                } else {
+                    html += `<div class="pagination-item" data-page="${i}">${i}</div>`;
+                }
+            }
+            
+            // Last page
+            if (currentPage < totalPages - 2) {
+                if (currentPage < totalPages - 3) {
+                    html += `<span class="pagination-ellipsis">...</span>`;
+                }
+                html += `<div class="pagination-item" data-page="${totalPages}">${totalPages}</div>`;
+            }
+            
+            // Next button
+            html += `<div class="pagination-item pagination-next ${currentPage === totalPages ? 'disabled' : ''}" data-page="${currentPage + 1}">
+                Next <i class="fas fa-chevron-right"></i>
+            </div>`;
+            
+            elements.pagination.innerHTML = html;
+            
+            // Update page info
+            if (elements.currentPageDisplay) {
+                elements.currentPageDisplay.textContent = currentPage;
+            }
+            if (elements.totalPagesDisplay) {
+                elements.totalPagesDisplay.textContent = totalPages;
+            }
+            
+            // Add event listeners to pagination items
+            document.querySelectorAll('.pagination-item[data-page]').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    const page = parseInt(e.currentTarget.dataset.page);
+                    if (!isNaN(page) && page !== currentState.currentPage && !e.currentTarget.classList.contains('disabled')) {
+                        loadPage(page);
+                    }
+                });
+            });
+        }
+        
+        // Load specific page
+        async function loadPage(page) {
+            if (page < 1 || page > currentState.totalPages || page === currentState.currentPage || currentState.isLoading) return;
+            
+            currentState.currentPage = page;
+            currentState.isLoading = true;
+            
+            // Update pagination UI
+            renderPagination(currentState.currentPage, currentState.totalPages);
+            
+            // Load albums for this page with a different search term based on page number
+            const searchTerms = ['popular', 'hit', 'greatest', 'best', 'classic', 'grammy', 'rock', 'pop', 'hip hop', 'jazz'];
+            // Use page number to select a different search term for variety
+            const termIndex = (page - 1) % searchTerms.length;
+            const searchTerm = currentState.currentSearchTerm === 'top' ? searchTerms[termIndex] : currentState.currentSearchTerm;
+            
+            await loadTop5Albums(elements.latestAlbums, true, searchTerm, false);
+            
+            currentState.isLoading = false;
+        }
+        
+        // Load Top 5 Albums (main section) with pagination support
+        async function loadTop5Albums(container, isLarge = true, searchTerm = 'top', resetPage = true) {
+            if (!container) return;
+            
+            if (resetPage) {
+                currentState.currentSearchTerm = searchTerm;
+                currentState.currentPage = 1;
+            }
+            
+            showSkeletons(container, 5, isLarge);
+            
+            try {
+                // Use different search terms for variety across pages
+                const searchTerms = ['popular', 'hit', 'greatest', 'best', 'classic', 'grammy', 'rock', 'pop', 'hip hop', 'jazz', 'rnb', 'country', 'electronic', 'indie'];
+                let term = searchTerm;
+                
+                if (searchTerm === 'top') {
+                    // Use page number to select a different search term
+                    const termIndex = (currentState.currentPage - 1) % searchTerms.length;
+                    term = searchTerms[termIndex];
+                }
+                
+                // Add a small delay to simulate loading between pages
+                await new Promise(resolve => setTimeout(resolve, 300));
+                
+                const data = await fetchFromAPI('/search', {
+                    term: term,
+                    media: 'music',
+                    entity: 'album',
+                    limit: 50 // Get more results to simulate different pages
+                });
+                
+                // Filter out items without collectionName (albums) and map them
+                let results = (data.results || [])
+                    .filter(item => item.collectionName && item.collectionName.trim() !== '')
+                    .map(transformAlbumItem);
+                
+                // If we don't have enough results, try a different search
+                if (results.length < 5) {
+                    const fallbackTerms = ['album', 'music', 'top', 'hits'];
+                    const fallbackTerm = fallbackTerms[Math.floor(Math.random() * fallbackTerms.length)];
+                    
+                    const fallbackData = await fetchFromAPI('/search', {
+                        term: fallbackTerm,
+                        media: 'music',
+                        entity: 'album',
+                        limit: 50
+                    });
+                    
+                    results = (fallbackData.results || [])
+                        .filter(item => item.collectionName && item.collectionName.trim() !== '')
+                        .map(transformAlbumItem);
+                }
+                
+                // Shuffle results to get different sets per page
+                const shuffled = results.sort(() => 0.5 - Math.random());
+                
+                // Get 5 items for current page (simulating different pages)
+                const startIndex = ((currentState.currentPage - 1) * 5) % Math.max(1, shuffled.length - 5);
+                const pageItems = shuffled.slice(startIndex, startIndex + 5);
+                
+                if (pageItems.length === 0) {
+                    showNoResults(container);
+                } else {
+                    // Render with rank numbers
+                    container.innerHTML = pageItems
+                        .map((item, index) => renderAlbumItemWithRank(item, index + 1, isLarge))
+                        .join('');
+                }
+                
+                // Update pagination
+                renderPagination(currentState.currentPage, currentState.totalPages);
+                
+            } catch (error) {
+                console.error('Error loading top 5 albums:', error);
+                showError(container, 'Failed to load albums. Please try again.');
+            }
+        }
+        
+        // Load Top 5 for other sections
         async function loadTop5(container, mediaType, isLarge = true, section = 'top') {
             if (!container) return;
             
             showSkeletons(container, 5, isLarge);
             
             try {
-                // Search for popular items
+                // Determine search term based on section
+                let searchTerm = section;
+                if (section === 'artist') searchTerm = 'top artist';
+                if (section === 'trending') searchTerm = 'popular';
+                
                 const data = await fetchFromAPI('/search', {
-                    term: section === 'top' ? 'popular' : section,
+                    term: searchTerm,
                     media: mediaType,
                     limit: 20,
-                    entity: mediaType === 'movie' ? 'movie' : 'album'
+                    entity: mediaType === 'music' ? 'song' : 'musicArtist'
                 });
                 
                 // Get random 5 from results to simulate top 5
                 const results = (data.results || [])
                     .sort(() => 0.5 - Math.random())
                     .slice(0, 5)
-                    .map(mediaType === 'movie' ? transformMovieToAlbum : transformMusicToAlbum);
+                    .map(transformMusicToAlbum);
                 
                 if (results.length === 0) {
                     showNoResults(container);
@@ -1300,8 +1521,15 @@
         
         // Load all sections with top 5
         async function loadAllTop5() {
+            // Reset to page 1 when loading all sections
+            currentState.currentPage = 1;
+            currentState.currentSearchTerm = 'top';
+            
+            // Use the dedicated album function for the main albums section
+            await loadTop5Albums(elements.latestAlbums, true, 'top', true);
+            
+            // Load other sections normally
             await Promise.all([
-                loadTop5(elements.latestAlbums, 'movie', true, 'top'),
                 loadTop5(elements.latestSongs, 'music', false, 'top'),
                 loadTop5(elements.featuredArtists, 'music', false, 'artist'),
                 loadTop5(elements.trendingAlbums, 'music', false, 'trending')
@@ -1312,7 +1540,9 @@
         function clearSearch() {
             elements.searchInfo.style.display = 'none';
             elements.searchInput.value = '';
-            elements.mainSectionTitle.textContent = 'top 5 movies';
+            elements.mainSectionTitle.textContent = 'top 5 albums';
+            currentState.currentPage = 1;
+            currentState.currentSearchTerm = 'top';
             loadAllTop5();
         }
         
@@ -1323,7 +1553,13 @@
                     elements.searchInfo.style.display = 'flex';
                     elements.searchQueryDisplay.textContent = `Searching: "${elements.searchInput.value}"`;
                     elements.mainSectionTitle.textContent = 'search results';
-                    loadAllTop5();
+                    
+                    // Reset to page 1 for new search
+                    currentState.currentPage = 1;
+                    currentState.currentSearchTerm = elements.searchInput.value;
+                    
+                    // For search, search for albums
+                    loadTop5Albums(elements.latestAlbums, true, elements.searchInput.value, true);
                 }
             });
             
@@ -1337,7 +1573,12 @@
             
             // Refresh buttons
             document.getElementById('refreshMain').addEventListener('click', () => {
-                loadTop5(elements.latestAlbums, 'movie', true, 'top');
+                currentState.currentPage = 1;
+                currentState.currentSearchTerm = 'top';
+                elements.mainSectionTitle.textContent = 'top 5 albums';
+                elements.searchInfo.style.display = 'none';
+                elements.searchInput.value = '';
+                loadTop5Albums(elements.latestAlbums, true, 'top', true);
             });
             
             document.getElementById('refreshReleases').addEventListener('click', () => {
