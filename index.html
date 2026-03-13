@@ -73,7 +73,7 @@
             background: rgba(130, 145, 165, 0.18);
             backdrop-filter: blur(12px) saturate(160%);
             -webkit-backdrop-filter: blur(12px) saturate(160%);
-            border-radius: 28px;
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -161,10 +161,11 @@
             margin-bottom: 5px;
         }
         
-        /* MAIN HEADER - KEEP COLORS, REMOVE BLUR */
+        /* EXACT ORIGINAL HEADER - COMPLETELY RESTORED */
         .branding-bar {
             background: rgba(120, 135, 155, 0.2);
-            /* REMOVED: backdrop-filter: blur(14px) saturate(180%); */
+            backdrop-filter: blur(14px) saturate(180%);
+            -webkit-backdrop-filter: blur(14px) saturate(180%);
             padding: 10px 20px;
             display: flex;
             justify-content: space-between;
@@ -187,27 +188,28 @@
             text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
         }
         
-        /* RESIZED HAMBURGER MENU - SMALLER */
+        /* EXACT ORIGINAL HAMBURGER MENU */
         .hamburger-menu {
-            width: 36px;  /* REDUCED from 40px */
-            height: 36px;  /* REDUCED from 40px */
-            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+          /*  border-radius: 50%;
             background: rgba(255,255,255,0.15);
-            /* REMOVED: backdrop-filter: blur(8px); */
-            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.2); */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            gap: 4px;  /* REDUCED from 5px */
+            gap: 5px;
         }
         
         .hamburger-menu span {
             display: block;
             height: 2px;
-            width: 16px;  /* REDUCED from 18px */
+            width: 18px;
             background: rgba(255,255,255,0.8);
             border-radius: 3px;
             transition: all 0.3s ease;
@@ -222,23 +224,23 @@
             background: white;
         }
         
-        /* RESIZED PROFILE ICON - SMALLER */
+        /* EXACT ORIGINAL PROFILE ICON */
         .profile-icon {
-            width: 36px;  /* REDUCED from 40px */
-            height: 36px;  /* REDUCED from 40px */
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: rgba(255,255,255,0.15);
-            /* REMOVED: backdrop-filter: blur(8px); */
+            backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
             color: white;
-            font-size: 1.1rem;  /* REDUCED from 1.3rem */
+            font-size: 1.3rem;
             border: 1px solid rgba(255,255,255,0.2);
-            min-width: 36px;
-            min-height: 36px;
+            min-width: 40px;
+            min-height: 40px;
         }
         
         .profile-icon:hover {
@@ -246,10 +248,11 @@
             transform: scale(1.05);
         }
         
-        /* SEARCH SECTION - KEEP COLORS, REMOVE BLUR */
+        /* EXACT ORIGINAL SEARCH SECTION */
         .search-section {
             background: rgba(110, 125, 145, 0.15);
-            /* REMOVED: backdrop-filter: blur(6px) saturate(140%); */
+            backdrop-filter: blur(6px) saturate(140%);
+            -webkit-backdrop-filter: blur(6px) saturate(140%);
             padding: 12px 20px;
             display: flex;
             align-items: center;
@@ -267,12 +270,12 @@
         
         .search-bar {
             display: flex;
-            border-radius: 60px;
+            border-radius: 12px;
             overflow: hidden;
             width: 100%;
             border: 1px solid rgba(255,255,255,0.25);
             background: rgba(255,255,255,0.05);
-            /* REMOVED: backdrop-filter: blur(4px); */
+            backdrop-filter: blur(4px);
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         
@@ -306,7 +309,7 @@
             justify-content: center;
             transition: all 0.3s ease;
             font-size: 1.1rem;
-            /* REMOVED: backdrop-filter: blur(4px); */
+            backdrop-filter: blur(4px);
             min-width: 50px;
             min-height: 42px;
         }
@@ -316,6 +319,7 @@
             border-left-color: rgba(255,255,255,0.4);
         }
         
+        /* Rest of your CSS remains exactly the same */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -378,7 +382,7 @@
         .section-block {
             background: rgba(120, 135, 155, 0.18);
             backdrop-filter: blur(12px) saturate(160%);
-            border-radius: 28px;
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 15px 30px rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.1);
@@ -415,7 +419,7 @@
             width: 120px;
             height: 120px;
             flex-shrink: 0;
-            border-radius: 20px;
+            border-radius: 12px;
             overflow: hidden;
             background: rgba(255,255,255,0.1);
             border: 1px solid rgba(255,255,255,0.2);
@@ -429,7 +433,7 @@
             position: relative;
         }
         
-        /* Bold Number Overlays */
+        /* Number Overlays */
         .number-overlay {
             position: absolute;
             top: -12px;
@@ -598,7 +602,7 @@
             font-size: 0.75rem;
             font-weight: 600;
             padding: 4px 12px;
-            border-radius: 30px;
+            border-radius: 8px;
             display: inline-block;
             line-height: 1.3;
             background: rgba(255,255,255,0.12);
@@ -635,7 +639,7 @@
             margin-right: auto;
             width: 100%;
             box-shadow: 0 -8px 25px rgba(0,0,0,0.3);
-            border-radius: 40px 40px 0 0;
+            border-radius: 12px 12px 0 0;
             border: 1px solid rgba(255,255,255,0.1);
         }
         
@@ -921,8 +925,8 @@
         
         @supports (padding: max(0px)) {
             .branding-bar {
-                padding-left: max(20px, env(safe-area-inset-left));
-                padding-right: max(20px, env(safe-area-inset-right));
+                padding-left: max(10px, env(safe-area-inset-left));
+                padding-right: max(10px, env(safe-area-inset-right));
             }
             
             .site-footer {
@@ -969,7 +973,7 @@
     
     <div class="app-container">
         <header class="site-header">
-            <!-- MAIN HEADER - NO BLUR, SMALLER ICONS -->
+            <!-- EXACT ORIGINAL HEADER - COMPLETELY RESTORED -->
             <div class="branding-bar">
                 <div class="hamburger-menu" id="hamburgerMenu">
                     <span></span>
@@ -984,7 +988,7 @@
                 </div>
             </div>
             
-            <!-- SEARCH SECTION - NO BLUR -->
+            <!-- EXACT ORIGINAL SEARCH SECTION -->
             <section class="search-section">
                 <div class="search-container">
                     <div class="search-bar">
