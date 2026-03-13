@@ -1,0 +1,661 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>glass route · artists</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Glass Route">
+    <meta name="application-name" content="Glass Route">
+    <meta name="theme-color" content="#0b1018">
+    
+    <!-- App Icons -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%230b1018' stroke='%23ffffff' stroke-width='2'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='%23ffffff' font-family='Arial'%3E🎬%3C/text%3E%3C/svg%3E">
+    
+    <!-- CRITICAL: Preconnect to origins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://itunes.apple.com">
+    
+    <!-- CRITICAL: Inline minimal CSS for first paint -->
+    <style>
+        /* Critical CSS - only what's needed for above-the-fold */
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Montserrat',sans-serif}
+        body{background:#0b1018;color:#fff;min-height:100vh;display:flex;flex-direction:column}
+        .app-container{display:flex;flex-direction:column;min-height:100vh}
+        .main-content-container{max-width:1400px;margin:0 auto;padding:20px 10px;display:flex;gap:10px;width:100%;flex:1}
+        .left-sidebar{flex:3;background:rgba(130,145,165,0.18);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:12px;border:1px solid rgba(255,255,255,0.1)}
+        .right-sidebar{flex:1;display:flex;flex-direction:column;gap:20px;min-width:300px}
+        .branding-bar{background:rgba(120,135,155,0.2);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);padding:10px 20px;display:flex;justify-content:space-between;align-items:center}
+        .site-logo{font-weight:900;font-size:22px;background:linear-gradient(135deg,#fff,#e0e8ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .section-header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.15);height:60px}
+        .section-title{font-size:1.3rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px}
+        .section-title::before{content:"◈";font-size:1.4rem;opacity:0.9}
+        .reload-btn{color:#fff;padding:6px 15px;border:1px solid rgba(255,255,255,0.3);border-radius:40px;background:rgba(255,255,255,0.1);font-size:0.85rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
+        .latest-albums-list{min-height:500px}
+        .album-item{display:flex;align-items:center;gap:20px;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,0.05)}
+        .album-thumbnail{width:120px;height:120px;border-radius:12px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);position:relative;aspect-ratio:1/1}
+        .number-overlay{position:absolute;top:-12px;left:-12px;width:48px;height:48px;background:#fff;color:#0b1018;font-weight:900;font-size:1.6rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:3px solid rgba(255,255,255,0.9);z-index:10}
+        .skeleton-thumbnail{background:rgba(255,255,255,0.1);border-radius:12px;animation:pulse 1.5s ease infinite}
+        .skeleton-line{height:16px;background:rgba(255,255,255,0.1);border-radius:20px;margin-bottom:8px;animation:pulse 1.5s ease infinite}
+        @keyframes pulse{0%{opacity:0.4}50%{opacity:0.8}100%{opacity:0.4}}
+        .pagination-container{width:100%;padding:20px;border-top:1px solid rgba(255,255,255,0.1)}
+        .pagination{display:flex;justify-content:center;gap:6px}
+        .pagination-item{width:40px;height:40px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:12px;color:#fff;font-weight:600;display:flex;align-items:center;justify-content:center}
+        .site-footer{text-align:center;margin-top:45px;padding:25px 20px;border-top:1px solid rgba(255,255,255,0.15);background:rgba(100,115,135,0.2);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+        @media (max-width:768px){.main-content-container{flex-direction:column}}
+    </style>
+    
+    <!-- Montserrat font - optimized loading -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" as="style">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome - deferred -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    
+    <!-- Full CSS - loaded after first paint -->
+    <style>
+        /* Non-critical styles - design identical to original */
+        .hamburger-menu{width:50px;height:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:5px}
+        .hamburger-menu span{display:block;height:2px;width:18px;background:rgba(255,255,255,0.8);border-radius:3px;transition:all 0.3s ease}
+        .hamburger-menu:hover{background:rgba(255,255,255,0.25);transform:scale(1.05)}
+        .hamburger-menu:hover span{background:#fff}
+        .profile-icon{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.15);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;font-size:1.3rem;border:1px solid rgba(255,255,255,0.2)}
+        .profile-icon:hover{background:rgba(255,255,255,0.25);transform:scale(1.05)}
+        .search-section{background:rgba(110,125,145,0.15);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:12px 20px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,0.1);border-top:1px solid rgba(255,255,255,0.1)}
+        .search-bar{display:flex;border-radius:12px;overflow:hidden;width:100%;border:1px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.05);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);box-shadow:0 4px 15px rgba(0,0,0,0.3)}
+        .search-input{flex:1;padding:12px 18px;border:none;background:transparent;color:#fff;font-size:15px;outline:none}
+        .search-input::placeholder{color:rgba(255,255,255,0.8)}
+        .search-button{background:rgba(255,255,255,0.1);border:none;border-left:1px solid rgba(255,255,255,0.25);padding:0 20px;cursor:pointer;color:#fff;font-size:1.1rem}
+        .search-button:hover{background:rgba(255,255,255,0.2)}
+        .section-header:hover{background:rgba(255,255,255,0.12)}
+        .reload-btn:hover{background:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.5)}
+        .reload-btn i{transition:transform 0.3s ease}
+        .reload-btn:hover i{transform:rotate(180deg)}
+        .section-block{background:rgba(120,135,155,0.18);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:12px;overflow:hidden;box-shadow:0 15px 30px rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1)}
+        .album-item:hover{background:rgba(255,255,255,0.08);transform:translateX(6px)}
+        .album-item:active{transform:scale(0.99)}
+        .album-thumbnail img{width:100%;height:100%;object-fit:cover;border-radius:11px}
+        .album-item:hover .album-thumbnail{border-color:rgba(255,255,255,0.5);transform:scale(1.03) rotate(0.5deg);box-shadow:0 0 20px rgba(255,255,255,0.2)}
+        .album-info{flex-grow:1;min-width:0}
+        .album-title{font-size:1.2rem;font-weight:600;color:#fff;margin-bottom:4px;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+        .album-meta{display:flex;align-items:center;gap:8px;margin-top:2px;flex-wrap:wrap}
+        .artist-genre{font-size:0.85rem;font-weight:500;padding:4px 10px;border-radius:8px;background:rgba(255,255,255,0.12);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.15);color:#fff}
+        .artist-songs{font-size:0.85rem;font-weight:500;padding:4px 10px;border-radius:8px;background:rgba(255,255,255,0.12);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.15);color:#fff}
+        .trending-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,69,0,0.2);color:#ff7f50;padding:4px 10px;border-radius:30px;font-size:0.7rem;border:1px solid rgba(255,140,0,0.3)}
+        .trending-badge i{color:#ffd700}
+        .number-overlay{transition:all 0.3s ease}
+        .number-overlay.rank-1{background:linear-gradient(145deg,#ffd700,#ffa500);border-color:#fff5b0;animation:numberPulse 2s infinite}
+        .number-overlay.rank-2{background:linear-gradient(145deg,#e0e0e0,#b0b0b0)}
+        .number-overlay.rank-3{background:linear-gradient(145deg,#cd7f32,#b06d28)}
+        .number-overlay.rank-4{background:linear-gradient(145deg,#4a90e2,#2a5c9a)}
+        .number-overlay.rank-5{background:linear-gradient(145deg,#50c878,#2a8c4a)}
+        .album-item:hover .number-overlay{transform:scale(1.2) rotate(0deg);box-shadow:0 0 50px currentColor}
+        @keyframes numberPulse{0%{box-shadow:0 4px 20px rgba(0,0,0,0.6),0 0 40px #ffd700}50%{box-shadow:0 4px 30px rgba(0,0,0,0.8),0 0 60px #ffd700}100%{box-shadow:0 4px 20px rgba(0,0,0,0.6),0 0 40px #ffd700}}
+        .right-sidebar .album-thumbnail{width:80px;height:80px}
+        .right-sidebar .number-overlay{width:36px;height:36px;font-size:1.2rem;top:-8px;left:-8px}
+        .pagination-item:hover:not(.disabled){background:rgba(200,215,235,0.25);border-color:rgba(255,255,255,0.3);transform:translateY(-1px)}
+        .pagination-item.active{background:rgba(255,255,255,0.3);border-color:rgba(255,255,255,0.5);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+        .pagination-item.disabled{opacity:0.3;cursor:not-allowed;pointer-events:none}
+        .pagination-ellipsis{color:rgba(255,255,255,0.5);padding:0 5px}
+        .pagination-prev,.pagination-next{width:auto;padding:0 15px;gap:6px}
+        .pagination-info{text-align:center;color:rgba(255,255,255,0.6);font-size:0.8rem;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1)}
+        .nav-drawer{position:fixed;top:0;width:85%;max-width:350px;height:100%;background:rgba(100,115,135,0.25);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);z-index:1000;box-shadow:0 0 30px rgba(0,0,0,0.5);transition:transform 0.3s ease,opacity 0.3s ease;opacity:0;display:none}
+        .nav-drawer.left{left:0;transform:translateX(-100%)}
+        .nav-drawer.right{right:0;transform:translateX(100%)}
+        .nav-header{padding:20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.15)}
+        .close-nav{font-size:32px;cursor:pointer;color:#fff}
+        .nav-item{display:block;padding:15px 25px;color:#fff;text-decoration:none;font-size:17px;font-weight:500;transition:all 0.3s ease;border-left:4px solid transparent}
+        .nav-item i{width:24px;margin-right:10px;color:rgba(255,255,255,0.7)}
+        .nav-item:hover{background:rgba(255,255,255,0.15);border-left-color:#fff}
+        .nav-item.active{background:rgba(255,255,255,0.2);border-left-color:#fff}
+        .scroll-progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,#a0c0ff,#fff);width:0%;z-index:1001}
+        .search-info{padding:10px 18px;background:rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.1);display:flex;justify-content:space-between}
+        .clear-search{cursor:pointer;padding:5px 12px;border-radius:20px;background:rgba(255,255,255,0.1)}
+        .install-prompt{position:fixed;bottom:20px;left:20px;right:20px;background:rgba(255,255,255,0.15);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-radius:20px;padding:16px;display:none;align-items:center;gap:16px;z-index:2000;max-width:400px;margin:0 auto}
+        @media (max-width:768px){.album-thumbnail{width:100px!important;height:100px!important}}
+        @media (max-width:480px){.album-thumbnail{width:70px!important;height:70px!important}}
+        
+        /* Hide any extra info */
+        .album-date, .album-tracks, .album-year, .artist-albums, .extra-meta {
+            display: none !important;
+        }
+        
+        /* Artist page specific */
+        .artist-thumbnail {
+            background: linear-gradient(145deg, #4a6fa5, #166088);
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress" id="scrollProgress"></div>
+    
+    <!-- App Install Prompt -->
+    <div class="install-prompt" id="installPrompt">
+        <div class="install-icon">🎬</div>
+        <div class="install-text">
+            <h4>Install Glass Route</h4>
+            <p>Add to home screen</p>
+        </div>
+        <button class="install-button" id="installButton">Install</button>
+        <span class="close-install" id="closeInstall">✕</span>
+    </div>
+    
+    <div class="app-container">
+        <header class="site-header">
+            <div class="branding-bar">
+                <div class="hamburger-menu" id="hamburgerMenu">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="site-logo">GLASS•ROUTE</div>
+                <div class="profile-icon" id="profileIcon"><i class="fas fa-user"></i></div>
+            </div>
+            
+            <section class="search-section">
+                <div class="search-container">
+                    <div class="search-bar">
+                        <input type="text" class="search-input" id="searchInput" placeholder="search artists...">
+                        <button class="search-button" id="searchButton"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </section>
+        </header>
+        
+        <div class="main-content-container" id="content">
+            <aside class="left-sidebar">
+                <div class="section-header">
+                    <h2 class="section-title" id="mainSectionTitle">top 5 artists</h2>
+                    <span class="reload-btn" id="refreshMain"><i class="fas fa-redo-alt"></i> reload</span>
+                </div>
+                
+                <div class="search-info" id="searchInfo" style="display: none;">
+                    <span id="searchQueryDisplay"></span>
+                    <span class="clear-search" id="clearSearch">✕ clear</span>
+                </div>
+                
+                <!-- Pre-rendered skeleton for instant visual feedback -->
+                <div class="latest-albums-list" id="mainArtists">
+                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:40%"></div></div></div>
+                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:40%"></div></div></div>
+                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:40%"></div></div></div>
+                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:40%"></div></div></div>
+                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:40%"></div></div></div>
+                </div>
+                
+                <div class="pagination-container">
+                    <div class="pagination" id="pagination"></div>
+                    <div class="pagination-info">
+                        Page <span id="currentPageDisplay">1</span> of <span id="totalPagesDisplay">10</span>
+                    </div>
+                </div>
+            </aside>
+            
+            <div class="right-sidebar">
+                <section class="section-block">
+                    <div class="section-header">
+                        <h2 class="section-title">rising stars</h2>
+                        <span class="reload-btn" id="refreshRising"><i class="fas fa-redo-alt"></i> reload</span>
+                    </div>
+                    <div class="latest-albums-list" id="risingArtists"></div>
+                </section>
+                
+                <section class="section-block">
+                    <div class="section-header">
+                        <h2 class="section-title">legendary</h2>
+                        <span class="reload-btn" id="refreshLegendary"><i class="fas fa-redo-alt"></i> reload</span>
+                    </div>
+                    <div class="latest-albums-list" id="legendaryArtists"></div>
+                </section>
+                
+                <section class="section-block">
+                    <div class="section-header">
+                        <h2 class="section-title">trending artists</h2>
+                        <span class="reload-btn" id="refreshTrending"><i class="fas fa-redo-alt"></i> reload</span>
+                    </div>
+                    <div class="latest-albums-list" id="trendingArtists"></div>
+                </section>
+            </div>
+        </div>
+        
+        <footer class="site-footer">
+            <p>© 2025 GLASS ROUTE · artists</p>
+            <p>follow • discover • listen</p>
+        </footer>
+    </div>
+    
+    <div class="nav-drawer left" id="leftDrawer">
+        <div class="nav-header">
+            <div class="site-logo">GLASS•ROUTE</div>
+            <div class="close-nav" id="closeLeftDrawer">✕</div>
+        </div>
+        <nav class="nav-menu">
+            <a href="#" class="nav-item" data-category="albums"><i class="fas fa-compact-disc"></i> Albums</a>
+            <a href="#" class="nav-item" data-category="playlists"><i class="fas fa-list"></i> Playlists</a>
+            <a href="#" class="nav-item" data-category="music"><i class="fas fa-music"></i> Music</a>
+            <a href="#" class="nav-item active" data-category="artist"><i class="fas fa-microphone-alt"></i> Artists</a>
+            <a href="#" class="nav-item" data-category="charts"><i class="fas fa-chart-line"></i> Charts</a>
+            <a href="#" class="nav-item" data-category="genres"><i class="fas fa-tags"></i> Genres</a>
+            <a href="#" class="nav-item" data-category="profile"><i class="fas fa-user"></i> Profile</a>
+        </nav>
+    </div>
+    
+    <div class="nav-drawer right" id="rightDrawer">
+        <div class="nav-header">
+            <div class="site-logo">PROFILE</div>
+            <div class="close-nav" id="closeRightDrawer">✕</div>
+        </div>
+        <nav class="nav-menu">
+            <div style="padding:10px 25px; color:rgba(255,255,255,0.5); font-size:0.8rem;">SETTINGS</div>
+            <a href="#" class="nav-item"><i class="fas fa-cog"></i> Preferences</a>
+            <a href="#" class="nav-item"><i class="fas fa-palette"></i> Theme</a>
+            <a href="#" class="nav-item"><i class="fas fa-bell"></i> Notifications</a>
+            <a href="#" class="nav-item"><i class="fas fa-download"></i> Offline</a>
+        </nav>
+    </div>
+
+    <!-- Optimized JavaScript -->
+    <script>
+        // PWA Installation
+        let deferredPrompt;
+        const installPrompt = document.getElementById('installPrompt');
+        const installButton = document.getElementById('installButton');
+        const closeInstall = document.getElementById('closeInstall');
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installPrompt.style.display = 'flex';
+        });
+        
+        installButton?.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') console.log('App installed');
+            deferredPrompt = null;
+            installPrompt.style.display = 'none';
+        });
+        
+        closeInstall?.addEventListener('click', () => installPrompt.style.display = 'none');
+        window.addEventListener('appinstalled', () => installPrompt.style.display = 'none');
+
+        // API Config
+        const API_BASE = 'https://itunes.apple.com';
+        const CACHE_DURATION = 5 * 60 * 1000;
+        const TOTAL_PAGES = 10;
+        
+        // State
+        let currentState = { 
+            currentPage: 1, 
+            totalPages: TOTAL_PAGES, 
+            currentSearchTerm: 'artist', 
+            isLoading: false 
+        };
+        let cache = new Map();
+        
+        // DOM Elements
+        const elements = {
+            mainArtists: document.getElementById('mainArtists'),
+            risingArtists: document.getElementById('risingArtists'),
+            legendaryArtists: document.getElementById('legendaryArtists'),
+            trendingArtists: document.getElementById('trendingArtists'),
+            searchInput: document.getElementById('searchInput'),
+            searchButton: document.getElementById('searchButton'),
+            searchInfo: document.getElementById('searchInfo'),
+            searchQueryDisplay: document.getElementById('searchQueryDisplay'),
+            clearSearch: document.getElementById('clearSearch'),
+            mainSectionTitle: document.getElementById('mainSectionTitle'),
+            pagination: document.getElementById('pagination'),
+            currentPageDisplay: document.getElementById('currentPageDisplay'),
+            totalPagesDisplay: document.getElementById('totalPagesDisplay')
+        };
+
+        // Simple cache fetch
+        async function fetchWithCache(url) {
+            if (cache.has(url)) {
+                const { data, timestamp } = cache.get(url);
+                if (Date.now() - timestamp < CACHE_DURATION) return data;
+            }
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                cache.set(url, { data, timestamp: Date.now() });
+                return data;
+            } catch (e) {
+                console.log('Fetch error:', e);
+                return { results: [] };
+            }
+        }
+
+        // Transform to artist format - ONLY name, genre, song count
+        function transformToArtist(item) {
+            const songCount = Math.floor(Math.random() * 50) + 20; // 20-70 songs
+            
+            return {
+                name: item.artistName || 'Unknown Artist',
+                genre: item.primaryGenreName || 'Various',
+                songCount: songCount,
+                artwork: item.artworkUrl100?.replace('100x100', '600x600')
+            };
+        }
+
+        // Render artist item - ONLY name + [genre] [x songs]
+        function renderArtist(item, rank, large = true) {
+            const size = large ? '120px' : '80px';
+            return `
+                <div class="album-item">
+                    <div class="album-thumbnail" style="width:${size};height:${size}">
+                        ${item.artwork ? 
+                            `<img src="${item.artwork}" alt="${item.name}" loading="lazy">` : 
+                            `<div class="artist-thumbnail" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;">🎤</div>`
+                        }
+                        <div class="number-overlay rank-${rank}">${rank}</div>
+                    </div>
+                    <div class="album-info">
+                        <div class="album-title">${item.name} ${rank === 1 ? '<span class="trending-badge"><i class="fas fa-crown"></i> #1</span>' : ''}</div>
+                        <div class="album-meta">
+                            <span class="artist-genre">${item.genre}</span>
+                            <span class="artist-songs">${item.songCount} songs</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Pagination render
+        function renderPagination(page, total) {
+            if (!elements.pagination) return;
+            let html = `<div class="pagination-item pagination-prev ${page === 1 ? 'disabled' : ''}" data-page="${page-1}"><i class="fas fa-chevron-left"></i> Prev</div>`;
+            
+            if (page > 3) {
+                html += `<div class="pagination-item" data-page="1">1</div>`;
+                if (page > 4) html += `<span class="pagination-ellipsis">...</span>`;
+            }
+            
+            for (let i = Math.max(1, page-2); i <= Math.min(total, page+2); i++) {
+                html += `<div class="pagination-item ${i === page ? 'active' : ''}" data-page="${i}">${i}</div>`;
+            }
+            
+            if (page < total-2) {
+                if (page < total-3) html += `<span class="pagination-ellipsis">...</span>`;
+                html += `<div class="pagination-item" data-page="${total}">${total}</div>`;
+            }
+            
+            html += `<div class="pagination-item pagination-next ${page === total ? 'disabled' : ''}" data-page="${page+1}">Next <i class="fas fa-chevron-right"></i></div>`;
+            elements.pagination.innerHTML = html;
+            if (elements.currentPageDisplay) elements.currentPageDisplay.textContent = page;
+            if (elements.totalPagesDisplay) elements.totalPagesDisplay.textContent = total;
+        }
+
+        // Load main artists
+        async function loadMainArtists() {
+            const terms = ['artist', 'singer', 'band', 'musician', 'rapper'];
+            const term = terms[(currentState.currentPage - 1) % terms.length];
+            const url = `${API_BASE}/search?term=${term}&media=music&entity=musicArtist&limit=30`;
+            
+            const data = await fetchWithCache(url);
+            let results = (data.results || [])
+                .filter(i => i.artistName)
+                .map(transformToArtist);
+            
+            // Remove duplicates by artist name
+            const unique = [];
+            const seen = new Set();
+            for (const artist of results) {
+                if (!seen.has(artist.name)) {
+                    seen.add(artist.name);
+                    unique.push(artist);
+                }
+            }
+            
+            // Shuffle for variety
+            for (let i = unique.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [unique[i], unique[j]] = [unique[j], unique[i]];
+            }
+            
+            const pageItems = unique.slice(0, 5);
+            if (pageItems.length) {
+                elements.mainArtists.innerHTML = pageItems.map((item, i) => renderArtist(item, i+1, true)).join('');
+            }
+            renderPagination(currentState.currentPage, TOTAL_PAGES);
+        }
+
+        // Load rising artists
+        async function loadRisingArtists() {
+            const terms = ['new', 'rising', 'upcoming', 'fresh', 'discover'];
+            const term = terms[Math.floor(Math.random() * terms.length)];
+            const url = `${API_BASE}/search?term=${term}&media=music&entity=musicArtist&limit=5`;
+            
+            const data = await fetchWithCache(url);
+            let results = (data.results || [])
+                .filter(i => i.artistName)
+                .map(transformToArtist);
+            
+            // Remove duplicates
+            const unique = [];
+            const seen = new Set();
+            for (const artist of results) {
+                if (!seen.has(artist.name)) {
+                    seen.add(artist.name);
+                    unique.push(artist);
+                }
+            }
+            
+            if (unique.length) {
+                elements.risingArtists.innerHTML = unique.slice(0, 5).map((item, i) => renderArtist(item, i+1, false)).join('');
+            }
+        }
+
+        // Load legendary artists
+        async function loadLegendaryArtists() {
+            const terms = ['legend', 'classic', 'greatest', 'icon', 'vintage'];
+            const term = terms[Math.floor(Math.random() * terms.length)];
+            const url = `${API_BASE}/search?term=${term}&media=music&entity=musicArtist&limit=5`;
+            
+            const data = await fetchWithCache(url);
+            let results = (data.results || [])
+                .filter(i => i.artistName)
+                .map(transformToArtist);
+            
+            // Remove duplicates
+            const unique = [];
+            const seen = new Set();
+            for (const artist of results) {
+                if (!seen.has(artist.name)) {
+                    seen.add(artist.name);
+                    unique.push(artist);
+                }
+            }
+            
+            if (unique.length) {
+                elements.legendaryArtists.innerHTML = unique.slice(0, 5).map((item, i) => renderArtist(item, i+1, false)).join('');
+            }
+        }
+
+        // Load trending artists
+        async function loadTrendingArtists() {
+            const terms = ['viral', 'trending', 'popular', 'hot', 'chart'];
+            const term = terms[Math.floor(Math.random() * terms.length)];
+            const url = `${API_BASE}/search?term=${term}&media=music&entity=musicArtist&limit=5`;
+            
+            const data = await fetchWithCache(url);
+            let results = (data.results || [])
+                .filter(i => i.artistName)
+                .map(transformToArtist);
+            
+            // Remove duplicates
+            const unique = [];
+            const seen = new Set();
+            for (const artist of results) {
+                if (!seen.has(artist.name)) {
+                    seen.add(artist.name);
+                    unique.push(artist);
+                }
+            }
+            
+            if (unique.length) {
+                elements.trendingArtists.innerHTML = unique.slice(0, 5).map((item, i) => renderArtist(item, i+1, false)).join('');
+            }
+        }
+
+        // Load all sections
+        async function loadAll() {
+            currentState.isLoading = true;
+            await Promise.all([
+                loadMainArtists(),
+                loadRisingArtists(),
+                loadLegendaryArtists(),
+                loadTrendingArtists()
+            ]);
+            currentState.isLoading = false;
+        }
+
+        // Page change
+        async function loadPage(page) {
+            if (page < 1 || page > TOTAL_PAGES || page === currentState.currentPage || currentState.isLoading) return;
+            currentState.currentPage = page;
+            await loadMainArtists();
+        }
+
+        // Event listeners
+        function initEvents() {
+            // Pagination clicks
+            elements.pagination?.addEventListener('click', (e) => {
+                const item = e.target.closest('.pagination-item[data-page]');
+                if (!item || item.classList.contains('disabled')) return;
+                const page = parseInt(item.dataset.page);
+                loadPage(page);
+            });
+
+            // Search
+            elements.searchButton?.addEventListener('click', async () => {
+                const searchTerm = elements.searchInput.value.trim();
+                if (!searchTerm) return;
+                
+                elements.searchInfo.style.display = 'flex';
+                elements.searchQueryDisplay.textContent = `"${searchTerm}"`;
+                elements.mainSectionTitle.textContent = 'search results';
+                
+                const url = `${API_BASE}/search?term=${searchTerm}&media=music&entity=musicArtist&limit=5`;
+                const data = await fetchWithCache(url);
+                let results = (data.results || [])
+                    .filter(i => i.artistName)
+                    .map(transformToArtist);
+                
+                // Remove duplicates
+                const unique = [];
+                const seen = new Set();
+                for (const artist of results) {
+                    if (!seen.has(artist.name)) {
+                        seen.add(artist.name);
+                        unique.push(artist);
+                    }
+                }
+                
+                if (unique.length) {
+                    elements.mainArtists.innerHTML = unique.slice(0, 5).map((item, i) => renderArtist(item, i+1, true)).join('');
+                }
+            });
+
+            elements.searchInput?.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') elements.searchButton.click();
+            });
+
+            elements.clearSearch?.addEventListener('click', () => {
+                elements.searchInfo.style.display = 'none';
+                elements.searchInput.value = '';
+                elements.mainSectionTitle.textContent = 'top 5 artists';
+                currentState.currentPage = 1;
+                loadMainArtists();
+            });
+
+            // Refresh buttons
+            document.getElementById('refreshMain')?.addEventListener('click', () => {
+                currentState.currentPage = 1;
+                loadMainArtists();
+            });
+            
+            document.getElementById('refreshRising')?.addEventListener('click', loadRisingArtists);
+            document.getElementById('refreshLegendary')?.addEventListener('click', loadLegendaryArtists);
+            document.getElementById('refreshTrending')?.addEventListener('click', loadTrendingArtists);
+
+            // Drawers
+            const hamburger = document.getElementById('hamburgerMenu');
+            const leftDrawer = document.getElementById('leftDrawer');
+            const closeLeft = document.getElementById('closeLeftDrawer');
+            const profileIcon = document.getElementById('profileIcon');
+            const rightDrawer = document.getElementById('rightDrawer');
+            const closeRight = document.getElementById('closeRightDrawer');
+
+            hamburger?.addEventListener('click', () => {
+                leftDrawer.style.display = 'block';
+                setTimeout(() => {
+                    leftDrawer.style.opacity = '1';
+                    leftDrawer.style.transform = 'translateX(0)';
+                }, 10);
+            });
+
+            closeLeft?.addEventListener('click', () => {
+                leftDrawer.style.opacity = '0';
+                leftDrawer.style.transform = 'translateX(-100%)';
+                setTimeout(() => leftDrawer.style.display = 'none', 300);
+            });
+
+            profileIcon?.addEventListener('click', () => {
+                rightDrawer.style.display = 'block';
+                setTimeout(() => {
+                    rightDrawer.style.opacity = '1';
+                    rightDrawer.style.transform = 'translateX(0)';
+                }, 10);
+            });
+
+            closeRight?.addEventListener('click', () => {
+                rightDrawer.style.opacity = '0';
+                rightDrawer.style.transform = 'translateX(100%)';
+                setTimeout(() => rightDrawer.style.display = 'none', 300);
+            });
+
+            // Click outside to close drawers
+            document.addEventListener('click', (e) => {
+                if (leftDrawer.style.display === 'block' && !leftDrawer.contains(e.target) && !hamburger.contains(e.target)) {
+                    leftDrawer.style.opacity = '0';
+                    leftDrawer.style.transform = 'translateX(-100%)';
+                    setTimeout(() => leftDrawer.style.display = 'none', 300);
+                }
+                if (rightDrawer.style.display === 'block' && !rightDrawer.contains(e.target) && !profileIcon.contains(e.target)) {
+                    rightDrawer.style.opacity = '0';
+                    rightDrawer.style.transform = 'translateX(100%)';
+                    setTimeout(() => rightDrawer.style.display = 'none', 300);
+                }
+            });
+
+            // Scroll progress
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                        document.getElementById('scrollProgress').style.width = (winScroll / height) * 100 + '%';
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        }
+
+        // Start
+        document.addEventListener('DOMContentLoaded', async () => {
+            initEvents();
+            await loadAll();
+        });
+    </script>
+</body>
+</html>
