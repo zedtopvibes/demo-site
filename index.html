@@ -55,8 +55,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Font Awesome - deferred -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css-all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css-all.min.css"></noscript>
     
     <!-- Full CSS - loaded after first paint -->
     <style>
@@ -122,6 +122,100 @@
         .install-prompt{position:fixed;bottom:20px;left:20px;right:20px;background:rgba(255,255,255,0.15);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-radius:20px;padding:16px;display:none;align-items:center;gap:16px;z-index:2000;max-width:400px;margin:0 auto}
         @media (max-width:768px){.album-thumbnail{width:100px!important;height:100px!important}}
         @media (max-width:480px){.album-thumbnail{width:70px!important;height:70px!important}}
+        
+        /* Colorful live stats with pill design */
+        .live-stats-container {
+            background: rgba(120,135,155,0.18);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 16px 20px;
+        }
+        
+        .live-stats {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .live-icon {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            color: #fff;
+        }
+        
+        .live-icon i {
+            color: #ff4d4d;
+            font-size: 0.7rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .stat-pill {
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid;
+            backdrop-filter: blur(4px);
+            white-space: nowrap;
+        }
+        
+        .stat-pill.songs {
+            background: rgba(64, 128, 255, 0.15);
+            border-color: rgba(64, 128, 255, 0.3);
+            color: #a0c0ff;
+        }
+        
+        .stat-pill.artists {
+            background: rgba(160, 100, 255, 0.15);
+            border-color: rgba(160, 100, 255, 0.3);
+            color: #c4b0ff;
+        }
+        
+        .stat-pill.playlists {
+            background: rgba(80, 200, 120, 0.15);
+            border-color: rgba(80, 200, 120, 0.3);
+            color: #a0e0a0;
+        }
+        
+        .stat-pill.albums {
+            background: rgba(255, 160, 64, 0.15);
+            border-color: rgba(255, 160, 64, 0.3);
+            color: #ffcca0;
+        }
+        
+        .stat-number {
+            font-weight: 700;
+            margin-right: 4px;
+            color: #fff;
+        }
+        
+        @media (max-width: 768px) {
+            .live-stats {
+                gap: 10px;
+            }
+            .stat-pill {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -156,6 +250,27 @@
                     </div>
                 </div>
             </section>
+            
+            <!-- Colorful Live Stats with Full Numbers -->
+            <div class="live-stats-container">
+                <div class="live-stats">
+                    <div class="live-icon">
+                        <i class="fas fa-circle"></i> LIVE
+                    </div>
+                    <div class="stat-pill songs">
+                        <span class="stat-number">124,832</span> SONGS
+                    </div>
+                    <div class="stat-pill artists">
+                        <span class="stat-number">12,458</span> ARTISTS
+                    </div>
+                    <div class="stat-pill playlists">
+                        <span class="stat-number">5,219</span> PLAYLISTS
+                    </div>
+                    <div class="stat-pill albums">
+                        <span class="stat-number">1,845,932</span> ALBUMS
+                    </div>
+                </div>
+            </div>
         </header>
         
         <div class="main-content-container" id="content">
@@ -369,7 +484,7 @@
             // Navigate based on category
             switch(category) {
                 case 'home':
-                    window.location.href = 'index.html'; // Current page
+                    window.location.href = 'index.html';
                     break;
                 case 'albums':
                     window.location.href = 'albums.html';
@@ -558,6 +673,20 @@
                     ticking = true;
                 }
             });
+            
+            // Live stats update (simulated)
+            function updateLiveStats() {
+                // In a real app, you'd fetch these from your API
+                console.log('Live stats active');
+                
+                // Simulate small increments every 30 seconds
+                setInterval(() => {
+                    // This is just for demo - in production, fetch real data
+                    console.log('Stats would update here');
+                }, 30000);
+            }
+            
+            updateLiveStats();
         }
 
         // Start
