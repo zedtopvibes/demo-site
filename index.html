@@ -54,9 +54,8 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome - deferred -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css-all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css-all.min.css"></noscript>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Full CSS - loaded after first paint -->
     <style>
@@ -123,7 +122,7 @@
         @media (max-width:768px){.album-thumbnail{width:100px!important;height:100px!important}}
         @media (max-width:480px){.album-thumbnail{width:70px!important;height:70px!important}}
         
-        /* Colorful live stats with pill design */
+        /* Colorful live stats with your pulsing dot design */
         .live-stats-container {
             background: rgba(120,135,155,0.18);
             -webkit-backdrop-filter: blur(12px);
@@ -141,10 +140,10 @@
             flex-wrap: wrap;
         }
         
-        .live-icon {
+        .live-indicator {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             background: rgba(255, 255, 255, 0.1);
             padding: 6px 14px;
             border-radius: 30px;
@@ -155,16 +154,26 @@
             color: #fff;
         }
         
-        .live-icon i {
-            color: #ff4d4d;
-            font-size: 0.7rem;
-            animation: pulse 2s infinite;
+        /* Your pulsing dot design */
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #ff0000;
+            border-radius: 50%;
+            box-shadow: 0 0 0 rgba(255,0,0,0.7);
+            animation: livePulse 1.6s infinite;
         }
-        
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+
+        @keyframes livePulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255,0,0,0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255,0,0,0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255,0,0,0);
+            }
         }
         
         .stat-pill {
@@ -251,11 +260,12 @@
                 </div>
             </section>
             
-            <!-- Colorful Live Stats with Full Numbers -->
+            <!-- Live Stats with your pulsing dot -->
             <div class="live-stats-container">
                 <div class="live-stats">
-                    <div class="live-icon">
-                        <i class="fas fa-circle"></i> LIVE
+                    <div class="live-indicator">
+                        <span class="live-dot"></span>
+                        LIVE
                     </div>
                     <div class="stat-pill songs">
                         <span class="stat-number">124,832</span> SONGS
@@ -313,7 +323,7 @@
         </footer>
     </div>
     
-    <!-- Navigation Drawers - Updated with full menu -->
+    <!-- Navigation Drawers -->
     <div class="nav-drawer left" id="leftDrawer">
         <div class="nav-header">
             <div class="site-logo">GLASS•ROUTE</div>
@@ -673,20 +683,6 @@
                     ticking = true;
                 }
             });
-            
-            // Live stats update (simulated)
-            function updateLiveStats() {
-                // In a real app, you'd fetch these from your API
-                console.log('Live stats active');
-                
-                // Simulate small increments every 30 seconds
-                setInterval(() => {
-                    // This is just for demo - in production, fetch real data
-                    console.log('Stats would update here');
-                }, 30000);
-            }
-            
-            updateLiveStats();
         }
 
         // Start
