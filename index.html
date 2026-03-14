@@ -1,815 +1,1696 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
-    <meta charset="UTF-8">
-    <title>glass route · top 5 now</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    
-    <!-- PWA Meta Tags -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Glass Route">
-    <meta name="application-name" content="Glass Route">
-    <meta name="theme-color" content="#0b1018">
-    
-    <!-- App Icons -->
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%230b1018' stroke='%23ffffff' stroke-width='2'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='%23ffffff' font-family='Arial'%3E🎬%3C/text%3E%3C/svg%3E">
-    
-    <!-- CRITICAL: Preconnect to origins -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://itunes.apple.com">
-    
-    <!-- CRITICAL: Inline minimal CSS for first paint -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MusicHub | Your Ultimate Music Destination</title>
     <style>
-        /* Critical CSS - only what's needed for above-the-fold */
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Montserrat',sans-serif}
-        body{background:#0b1018;color:#fff;min-height:100vh;display:flex;flex-direction:column}
-        .app-container{display:flex;flex-direction:column;min-height:100vh}
-        .main-content-container{max-width:1400px;margin:0 auto;padding:20px 10px;display:flex;gap:10px;width:100%;flex:1}
-        .left-sidebar{flex:3;background:rgba(130,145,165,0.18);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:12px;border:1px solid rgba(255,255,255,0.1)}
-        .right-sidebar{flex:1;display:flex;flex-direction:column;gap:20px;min-width:300px}
-        
-        /* BRANDING BAR */
-        .branding-bar{
-            background:rgba(120,135,155,0.2);
-            -webkit-backdrop-filter:blur(14px);
-            backdrop-filter:blur(14px);
-            padding:10px 20px;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
+        /* Consolidated design CSS - from the external stylesheet and custom styles */
+        html, body {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            color: #333;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+            -ms-touch-action: none;
+            overflow-x: hidden;
         }
-        
-        .site-logo{
-            font-weight:700;
-            font-size:20px;
-            background:linear-gradient(135deg,#fff,#e0e8ff);
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
+        body {
+            margin: 0;
+            background: #eee;
+            color: #3e3e3e;
+            font-size: 14px;
+            -webkit-font-smoothing: auto;
+            -moz-osx-font-smoothing: auto;
+            text-rendering: optimizeLegibility;
         }
-        
-        .hamburger-menu{
-            width:44px;
-            height:44px;
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            justify-content:center;
-            cursor:pointer;
-            gap:5px;
+        h1, h2, h3 {
+            padding: 0;
+            margin: 0;
         }
-        
-        .hamburger-menu span{
-            display:block;
-            height:2px;
-            width:18px;
-            background:rgba(255,255,255,0.8);
-            border-radius:3px;
-            transition:all 0.3s ease;
+        h1, h2, h3, .bp-title {
+            font-size: 16px;
         }
-        
-        .profile-icon{
-            width:38px;
-            height:38px;
-            border-radius:50%;
-            background:rgba(255,255,255,0.15);
-            -webkit-backdrop-filter:blur(8px);
-            backdrop-filter:blur(8px);
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            cursor:pointer;
-            color:#fff;
-            font-size:1.2rem;
-            border:1px solid rgba(255,255,255,0.2);
-        }
-        
-        /* SEARCH SECTION */
-        .search-section{
-            background:rgba(110,125,145,0.15);
-            -webkit-backdrop-filter:blur(6px);
-            backdrop-filter:blur(6px);
-            padding:10px 20px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            border-bottom:1px solid rgba(255,255,255,0.1);
-            border-top:1px solid rgba(255,255,255,0.1);
-        }
-        
-        .search-bar{
-            display:flex;
-            border-radius:12px;
-            overflow:hidden;
-            width:100%;
-            max-width:600px;
-            border:1px solid rgba(255,255,255,0.25);
-            background:rgba(255,255,255,0.05);
-            -webkit-backdrop-filter:blur(4px);
-            backdrop-filter:blur(4px);
-            box-shadow:0 4px 15px rgba(0,0,0,0.3);
-        }
-        
-        .search-input{
-            flex:1;
-            padding:10px 18px;
-            border:none;
-            background:transparent;
-            color:#fff;
-            font-size:15px;
-            outline:none;
-        }
-        
-        .search-input::placeholder{color:rgba(255,255,255,0.8)}
-        
-        .search-button{
-            background:rgba(255,255,255,0.1);
-            border:none;
-            border-left:1px solid rgba(255,255,255,0.25);
-            padding:0 18px;
-            cursor:pointer;
-            color:#fff;
-            font-size:1.1rem;
-        }
-        
-        /* COMPACT SECTION HEADERS */
-        .section-header{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            padding:8px 18px;
-            background:rgba(255,255,255,0.08);
-            border-bottom:1px solid rgba(255,255,255,0.15);
-            height:44px;
-        }
-        
-        .section-title{
-            font-size:1.1rem;
-            font-weight:600;
-            color:#fff;
-            display:flex;
-            align-items:center;
-            gap:8px;
-        }
-        
-        .section-title::before{
-            content:"◈";
-            font-size:1.2rem;
-            opacity:0.9;
-        }
-        
-        .reload-btn{
-            color:#fff;
-            padding:4px 12px;
-            border:1px solid rgba(255,255,255,0.3);
-            border-radius:30px;
-            background:rgba(255,255,255,0.1);
-            font-size:0.75rem;
-            font-weight:600;
-            cursor:pointer;
-            display:flex;
-            align-items:center;
-            gap:4px;
-        }
-        
-        .latest-albums-list{min-height:500px}
-        
-        /* Album items - no number overlays */
-        .album-item{
-            display:flex;
-            align-items:center;
-            gap:20px;
-            padding:16px 18px;
-            border-bottom:1px solid rgba(255,255,255,0.05);
-            position:relative;
-        }
-        
-        .album-thumbnail{
-            width:120px;
-            height:120px;
-            border-radius:12px;
-            background:rgba(255,255,255,0.1);
-            border:1px solid rgba(255,255,255,0.2);
-            aspect-ratio:1/1;
-        }
-        
-        .skeleton-thumbnail{background:rgba(255,255,255,0.1);border-radius:12px;animation:pulse 1.5s ease infinite}
-        .skeleton-line{height:16px;background:rgba(255,255,255,0.1);border-radius:20px;margin-bottom:8px;animation:pulse 1.5s ease infinite}
-        @keyframes pulse{0%{opacity:0.4}50%{opacity:0.8}100%{opacity:0.4}}
-        .pagination-container{width:100%;padding:20px;border-top:1px solid rgba(255,255,255,0.1)}
-        .pagination{display:flex;justify-content:center;gap:6px}
-        .pagination-item{width:40px;height:40px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:12px;color:#fff;font-weight:600;display:flex;align-items:center;justify-content:center}
-        .site-footer{text-align:center;margin-top:45px;padding:25px 20px;border-top:1px solid rgba(255,255,255,0.15);background:rgba(100,115,135,0.2);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
-        @media (max-width:768px){.main-content-container{flex-direction:column}}
-    </style>
-    
-    <!-- Montserrat font -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" as="style">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Full CSS - loaded after first paint -->
-    <style>
-        /* Non-critical styles */
-        .hamburger-menu:hover{background:rgba(255,255,255,0.25);transform:scale(1.05);border-radius:8px;}
-        .hamburger-menu:hover span{background:#fff}
-        .profile-icon:hover{background:rgba(255,255,255,0.25);transform:scale(1.05)}
-        .search-button:hover{background:rgba(255,255,255,0.2)}
-        .section-header:hover{background:rgba(255,255,255,0.12)}
-        .reload-btn:hover{background:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.5)}
-        .reload-btn i{transition:transform 0.3s ease}
-        .reload-btn:hover i{transform:rotate(180deg)}
-        .section-block{background:rgba(120,135,155,0.18);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:12px;overflow:hidden;box-shadow:0 15px 30px rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1)}
-        .album-item:hover{background:rgba(255,255,255,0.08);transform:translateX(6px)}
-        .album-item:active{transform:scale(0.99)}
-        .album-thumbnail img{width:100%;height:100%;object-fit:cover;border-radius:11px;}
-        .album-item:hover .album-thumbnail{border-color:rgba(255,255,255,0.5);transform:scale(1.03) rotate(0.5deg);box-shadow:0 0 20px rgba(255,255,255,0.2)}
-        .album-info{flex-grow:1;min-width:0}
-        
-        /* Album details */
-        .album-title {
-            font-size: 15px;
+        h1, h3 {
+            color: #333;
             font-weight: 600;
+        }
+        h2 {
             color: #fff;
-            margin-bottom: 8px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            margin-top: 0;
+        }
+        a:active, a:link, a:visited {
+            color: #fff;
+            text-decoration: none !important;
+            outline: 0;
+        }
+        a:focus, a:hover {
+            color: #e74c3c;
+            outline: 0;
+        }
+        .breadcrumb, .btn-more {
+            text-transform: uppercase;
+        }
+        .btn-more {
+            display: inline-block;
+            box-sizing: border-box;
+            padding: 3px 5px;
+            background: #f44336;
+            margin: 2px;
+            color: #fff;
+            text-decoration: none !important;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 11px;
+            border: 1px;
+            text-align: center;
+        }
+        .btn-more:hover {
+            background: #424242;
+        }
+        .pull-left {
+            float: left;
+        }
+        .pull-right {
+            float: right;
+        }
+        .aligncenter {
+            text-align: center !important;
+        }
+        .clear {
+            clear: both;
+        }
+        .head, .bp-search {
+            text-align: center;
+        }
+        .head {
+            height: 36px;
+            background: #333;
+            padding: 3px;
+        }
+        .bp-search {
+            background: #333;
+            padding: 6px;
+            margin: 0 auto 5px;
+            color: #fff;
+            font-weight: 600;
+        }
+        input[type=search] {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            padding: 6px 10px;
+            color: #222;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            outline: none;
+            background-color: #fff;
+            text-shadow: none;
+            transition: all 0.25s ease;
+        }
+        input[type=search]:focus {
+            border-color: #ff4b2b;
+            box-shadow: 0 0 6px rgba(255, 75, 43, 0.4);
+        }
+        .bp-search input[type=submit] {
+            background-color: #ff4b2b;
+            color: #fff;
+            font-weight: 600;
+            width: auto;
+            padding: 4px;
+            border-radius: 3px;
+            text-shadow: 1px 1px 1px #000;
+            margin: 0 10px;
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .bp-search input[type=submit]:hover {
+            width: auto;
+            padding: 4px;
+            border-radius: 3px;
+            text-shadow: 1px 1px 1px #000;
+            background-color: #ff784b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        .telegram {
+            background: #1e90ff;
+            font-weight: 700;
+            color: #fff;
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 10px;
+        }
+        .telegram a {
+            color: #fff;
+        }
+        .container {
+            margin: 0 3px;
+        }
+        .bp-title {
+            color: #fff;
+            display: block;
+            padding: 6px 12px;
+            border-bottom: 1px solid #ff2121;
+            border-radius: 6px;
+            -webkit-box-shadow: inset 0 -1px red;
+            box-shadow: inset 0 -1px red;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            background: #424242;
+        }
+        .bp-post-list, .list-group-item {
+            position: relative;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            display: inline-block;
+            padding: 6px 8px;
+            margin: -2px 2px;
+            border: 1px solid #ddd;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        .bp-post-list a, .list-group-item a {
+            color: #222;
+            text-decoration: none;
+        }
+        .bp-post-list:hover, a.bp-post-list:focus, a.list-group-item:focus, a.list-group-item:hover, button.list-group-item:focus, button.list-group-item:hover {
+            color: #233dce;
+            background-color: #f0f4ff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+        }
+        .bp-post-list.active, .bp-post-list.active:focus, .bp-post-list.active:hover {
+            z-index: 2;
+            color: #fff;
+            background-color: #36f;
+            border-color: #36f;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+        }
+        .post-style-3 {
             display: flex;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
+            width: 100%;
         }
-        
-        .album-date {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.8rem;
-            font-weight: 400;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+        .bp-post-thumb {
+            flex-shrink: 0;
+            margin-right: 12px;
         }
-        
-        .album-date::before{content:"📅";font-size:0.75rem;opacity:0.7}
-        
-        .album-meta {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 6px;
-            flex-wrap: wrap;
+        .bp-post-data {
+            flex: 1;
+            min-width: 0;
         }
-        
-        .album-genre, .album-tracks {
-            font-size: 0.7rem;
-            font-weight: 500;
-            padding: 4px 10px;
+        .post-style-1, .post-style-2 {
+            font-size: 12px !important;
+            display: table;
+        }
+        .bp-post-data, .bp-post-thumb, .sm-thumb {
+            display: table-cell;
+            vertical-align: middle;
+        }
+        .bp-post-thumb, .sm-thumb {
+            margin-right: 8px;
+            float: left;
+            padding: 0;
+        }
+        .bp-post-data {
+            font-size: 14px !important;
+            font-weight: 600;
+        }
+        span.cat-lang {
+            color: #777 !important;
+            display: block;
+            font-size: 12px !important;
+            margin-top: 2px;
+        }
+        .post-style-1 p, .post-style-2 p, .post-tags p {
+            margin: 0;
+        }
+        .roundthumb {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+            cursor: pointer;
+            filter: brightness(0.95);
+        }
+        .roundthumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            filter: brightness(1);
+        }
+        .postbody img {
+            max-width: 98%;
+            border: 1px solid #ddd;
+            padding: 4px;
+            display: block;
+            margin: 0 auto;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .postbody img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .postbody {
+            background: #fff;
+            padding: 8px;
             border-radius: 8px;
-            background: rgba(255,255,255,0.12);
-            -webkit-backdrop-filter: blur(4px);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .list-group-item {
+            display: block;
+            padding: 6px 8px;
+            margin-bottom: -1px;
+            border: 1px solid #ddd;
+        }
+        .list-group-item:first-child {
+            border-top-right-radius: 6px;
+            border-top-left-radius: 6px;
+        }
+        .list-group-item:last-child {
+            margin-bottom: 0;
+            border-bottom-right-radius: 6px;
+            border-bottom-left-radius: 6px;
+        }
+        .footer-link a:hover, .list-group-item a:hover {
+            color: #e74c3c;
+        }
+        .top-footer a, a.list-group-item, button.list-group-item {
+            color: #000;
+        }
+        a.list-group-item .list-group-item-heading, button.list-group-item .list-group-item-heading {
+            color: #333;
+        }
+        button.list-group-item {
+            width: 100%;
+            text-align: left;
+        }
+        .breadcrumb {
+            background: #333;
+            font-size: 12px;
+            color: #ccc;
+            margin: 10px 0 !important;
+            border: 1px solid #ddd;
+            padding: 4px 6px;
+            border-radius: 6px;
+        }
+        .breadcrumb a {
+            color: red;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            color: #c00;
+            text-decoration: underline;
+        }
+        .breadcrumb, .breadcrumb a, .breadcrumb span {
+            text-transform: none !important;
+        }
+        .bp-notice, .post-tags {
+            position: relative;
+            display: block;
+            padding: 6px 8px;
+            bottom: -1px;
+            background-color: #fff;
+        }
+        .bp-notice, .top-footer, a.buttn {
+            text-align: center;
+        }
+        .post-tags {
+            margin: 3px 0 6px;
+            border: 1px solid #ddd;
+        }
+        .bp-notice {
+            margin: 3px 0 10px;
+            border: 1px solid #ddd;
+        }
+        a.buttn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
+            font-weight: 700;
             color: #fff;
         }
-        
-        .trending-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,69,0,0.2);color:#ff7f50;padding:4px 10px;border-radius:30px;font-size:0.7rem;border:1px solid rgba(255,140,0,0.3)}
-        .trending-badge i{color:#ffd700}
-        
-        /* Right sidebar adjustments */
-        .right-sidebar .album-thumbnail{width:80px;height:80px}
-        
-        .pagination-item:hover:not(.disabled){background:rgba(200,215,235,0.25);border-color:rgba(255,255,255,0.3);transform:translateY(-1px)}
-        .pagination-item.active{background:rgba(255,255,255,0.3);border-color:rgba(255,255,255,0.5);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
-        .pagination-item.disabled{opacity:0.3;cursor:not-allowed;pointer-events:none}
-        .pagination-ellipsis{color:rgba(255,255,255,0.5);padding:0 5px}
-        .pagination-prev,.pagination-next{width:auto;padding:0 15px;gap:6px}
-        .pagination-info{text-align:center;color:rgba(255,255,255,0.6);font-size:0.8rem;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1)}
-        .nav-drawer{position:fixed;top:0;width:85%;max-width:350px;height:100%;background:rgba(100,115,135,0.25);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);z-index:1000;box-shadow:0 0 30px rgba(0,0,0,0.5);transition:transform 0.3s ease,opacity 0.3s ease;opacity:0;display:none}
-        .nav-drawer.left{left:0;transform:translateX(-100%)}
-        .nav-drawer.right{right:0;transform:translateX(100%)}
-        .nav-header{padding:20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.15)}
-        .close-nav{font-size:32px;cursor:pointer;color:#fff}
-        .nav-item{display:block;padding:15px 25px;color:#fff;text-decoration:none;font-size:17px;font-weight:500;transition:all 0.3s ease;border-left:4px solid transparent;cursor:pointer}
-        .nav-item i{width:24px;margin-right:10px;color:rgba(255,255,255,0.7)}
-        .nav-item:hover{background:rgba(255,255,255,0.15);border-left-color:#fff}
-        .nav-item.active{background:rgba(255,255,255,0.2);border-left-color:#fff}
-        .nav-section-title{padding:10px 25px;color:rgba(255,255,255,0.5);font-size:0.8rem}
-        .scroll-progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,#a0c0ff,#fff);width:0%;z-index:1001}
-        .search-info{padding:10px 18px;background:rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.1);display:flex;justify-content:space-between}
-        .clear-search{cursor:pointer;padding:5px 12px;border-radius:20px;background:rgba(255,255,255,0.1)}
-        .install-prompt{position:fixed;bottom:20px;left:20px;right:20px;background:rgba(255,255,255,0.15);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-radius:20px;padding:16px;display:none;align-items:center;gap:16px;z-index:2000;max-width:400px;margin:0 auto}
-        @media (max-width:768px){.album-thumbnail{width:100px!important;height:100px!important}}
-        @media (max-width:480px){.album-thumbnail{width:70px!important;height:70px!important}}
-        
-        @media (max-width: 768px) {
-            .section-header {
-                padding: 6px 12px;
-                height: 40px;
+        a.buttn:hover {
+            background: #003;
+            color: #fff;
+        }
+        .page-navi {
+            padding: 6px;
+            margin: 10px;
+            text-align: center;
+        }
+        .page-numbers, a.page-numbers {
+            background: #424242;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #555;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        .page-numbers:hover, a.page-numbers:hover {
+            background: #ff4b2b;
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .page-numbers.current {
+            background: #ff4b2b;
+            color: #fff;
+            border-color: #ff4b2b;
+        }
+        .page-numbers.dots {
+            border: none;
+            color: #ff4b2b;
+            font-weight: 600;
+        }
+        .bp-footer, .top-footer {
+            background: #fff;
+            color: #000;
+            padding: 10px;
+            overflow: hidden;
+            border-top: 1px;
+        }
+        .top-footer {
+            border-top: 2px solid red;
+            border-bottom: 1px solid #eee;
+        }
+        .top-footer a {
+            color: blue;
+            margin: 0 3px;
+        }
+        h4 {
+            margin: 0;
+        }
+        .page-meta {
+            margin: 0 auto 6px;
+        }
+        .page-meta a {
+            background: #fff;
+            padding: 2px 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: inline-block;
+            margin-right: 2px;
+        }
+        iframe {
+            width: 100%;
+            height: 420px;
+        }
+        .watch-online-video {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+        }
+        .watch-online-video iframe, .watch-online-video object, .watch-online-video embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        button {
+            border-radius: 30px;
+            font-family: 'Alef', sans-serif;
+            font-size: 16px;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 2px solid #ff2121;
+            background-color: #333;
+            color: #fff;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            text-align: center;
+        }
+        button:hover {
+            background-color: #ff2121;
+            color: #fff;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background-color: #000;
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: red;
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        }
+        ::-webkit-scrollbar-corner {
+            background-color: #000;
+        }
+        .red {
+            background: red;
+        }
+        .green {
+            background: #3c0;
+        }
+        .redlink {
+            color: #000;
+        }
+        .redlink:hover {
+            color: red;
+        }
+        @media screen and (min-width: 720px) {
+            .bp-post-list {
+                width: 46.5%;
             }
-            .section-title {
-                font-size: 1rem;
+        }
+        @media screen and (max-width: 719px) {
+            .bp-post-list {
+                display: block;
+                overflow: hidden;
+                width: 100%;
+            }
+        }
+        @media screen and (min-width: 1066px) {
+            .bp-post-list {
+                width: 47.7%;
+            }
+        }
+        @media screen and (max-width: 567px) {
+            iframe {
+                width: 100%;
+                height: 240px;
+            }
+        }
+        @media (max-width: 380px) {
+            .link1 {
+                padding: 5px 10px;
+                margin: 5px 0;
+            }
+        }
+        .l2 {
+            font-size: 1em;
+            padding: 2px 0 2px 2px;
+            border-bottom: 1px solid #464646;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            color: #000;
+            font-family: Arial, sans-serif;
+        }
+        .l2 span:first-child {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: bold;
+        }
+        .l2 img {
+            height: 14px;
+            width: auto;
+            vertical-align: middle;
+        }
+        .note.wr {
+            position: relative;
+            padding: 14px 18px 14px 46px;
+            background: #ffecec;
+            color: #4a0d12;
+            border-left: 5px solid #d93025;
+            border-radius: 6px;
+            font-family: var(--fontB);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+        .note.wr::before {
+            content: "!";
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            font-weight: 700;
+            color: #d93025;
+        }
+        .note.wr a {
+            color: #0b57d0;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .note.wr a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 480px) {
+            .note.wr {
+                font-size: 0.88rem;
+            }
+        }
+        .genre-list {
+            list-style: none;
+            padding: 0;
+            margin: 2rem auto;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            max-width: 800px;
+        }
+        .genre-item {
+            background-color: #ffffff;
+            border-left: 4px solid #0073aa;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .genre-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .genre-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .genre-name {
+            font-weight: 600;
+            color: #222;
+        }
+        .genre-count {
+            color: #ff4b2b;
+            font-weight: 600;
+        }
+        .notice-bar {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(to right, #d4ff00, #00ff85, #00bfff);
+            color: #000;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            overflow: hidden;
+        }
+        .notice-bar .icon {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        .notice-bar .icon svg.clock {
+            width: 18px;
+            height: 18px;
+            fill: #000;
+            margin-right: 6px;
+        }
+        .notice-bar .icon svg.arrow {
+            width: 20px;
+            height: 20px;
+            margin-left: 8px;
+        }
+        .notice-bar marquee {
+            flex: 1;
+            color: #000;
+            font-weight: 600;
+        }
+        .gtag {
+            font-weight: 600;
+            font-size: 16px;
+            color: #333;
+            margin: 20px 0;
+            padding: 10px 0;
+            border-top: 2px solid #eee;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+        .gtag a {
+            display: inline-block;
+            margin: 5px 0;
+            text-decoration: none;
+            background-color: #f0f0f0;
+            padding: 6px 14px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid #ccc;
+        }
+        .gtag a:hover {
+            background-color: #0073aa;
+            color: #fff;
+            border-color: #0073aa;
+        }
+        .taglist {
+            font-style: normal;
+            font-size: 14px;
+            color: #555;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        .spotify-bar {
+            background-color: #1DB954;
+            color: white;
+            padding: 8px 14px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border-bottom: 3px solid #169c46;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .spotify-bar a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s, opacity 0.3s;
+        }
+        .spotify-bar a:hover {
+            color: #ffeb3b;
+            opacity: 0.9;
+        }
+        .spotify-icon {
+            width: 26px;
+            height: 26px;
+        }
+        .disclaimer-box {
+            background-color: #fbe9e7;
+            border-left: 2px solid #d84315;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 10px;
+            font-family: 'Segoe UI', sans-serif;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+        .disclaimer-box h3 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #bf360c;
+        }
+        .disclaimer-box p {
+            font-size: 16px;
+            color: #4e342e;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .disclaimer-box strong {
+            color: #d84315;
+        }
+        .notice-box {
+            background-color: #fff9c4;
+            border-left: 2px solid #fbc02d;
+            padding: 16px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-family: 'Segoe UI', sans-serif;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .notice-box h3 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #e65100;
+        }
+        .notice-box p {
+            margin: 8px 0 0;
+            font-size: 16px;
+            color: #424242;
+        }
+        .notice-box a {
+            color: #0277bd;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .notice-box a:hover {
+            text-decoration: underline;
+        }
+        .page-meta .page-meta-text {
+            font-size: 16px;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        .page-meta a {
+            background: #333;
+            padding: 2px 8px;
+            border: 1px solid #b00610;
+            border-radius: 4px;
+            display: inline-block;
+            margin-right: 4px;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .page-meta a:hover {
+            background: #b00610;
+            border-color: #80050b;
+            color: #fff;
+        }
+        .dlbtn {
+            text-align: center;
+            font-size: 0.8em;
+        }
+        .dlbtn a {
+            border-radius: 30px;
+            font-family: 'Alef', sans-serif;
+            font-size: 16px;
+            margin: 5px 0;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 2px solid #ff2121;
+            text-align: center;
+            background-color: #424242;
+            color: #ffffff;
+            display: inline-block;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+        }
+        .dlbtn a:hover {
+            background-color: #ff2121;
+            color: #fff;
+            opacity: 0.95;
+        }
+        .article .l1 span {
+            color: #eee;
+            font-weight: 700;
+            font-size: 1em;
+            padding-right: 6px;
+        }
+        .article .ss {
+            margin: 0 5px;
+            text-align: center;
+        }
+        .article .ss img {
+            border: 2px solid #363636;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .article .ss img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        .fname {
+            border-bottom: 1px #ccc solid;
+            padding: 5px;
+            font-weight: bold;
+        }
+        .dbtn {
+            display: block;
+            border: 2px solid #424242;
+            max-width: 200px;
+            padding: 6px;
+            border-radius: 5px;
+            width: 100%;
+            text-decoration: none !important;
+        }
+        a {
+            background: transparent;
+            text-decoration: none;
+        }
+        .spotify-join-btn {
+            display: block;
+            width: max-content;
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #1DB954;
+            border-radius: 8px;
+            border: 2px solid #169c46;
+            font-family: 'Exo', sans-serif;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin: 10px auto;
+            transition: all 0.3s ease-in-out;
+            text-decoration: none !important;
+            box-shadow: 0 4px 6px rgba(29, 185, 84, 0.2);
+        }
+        .spotify-join-btn:hover {
+            background-color: #169c46;
+            border-color: #0f7a35;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(29, 185, 84, 0.3);
+        }
+        .spotify-join-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 5px rgba(29, 185, 84, 0.2);
+        }
+        #footer-top {
+            background: linear-gradient(#161616, #303030);
+            margin: 0 auto;
+            padding: 8px 12px;
+            overflow: hidden;
+            color: #00ffff;
+            font-size: 15px;
+            border-top: 2px solid #ff2121;
+            border-radius: 6px 6px 0 0;
+        }
+        #footer-top a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.25s ease;
+        }
+        #footer-top a:hover {
+            color: #ff784b;
+        }
+        .daud_footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            background: #333;
+            font-size: 100%;
+            text-align: center;
+            padding: 12px;
+            color: #fff;
+            list-style: none;
+            position: relative;
+        }
+        .daud_footer a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.25s ease;
+        }
+        .daud_footer a:hover {
+            color: #ff4b2b;
+        }
+        .footer_link a {
+            padding: 4px 6px;
+            margin: 3px;
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.25s ease;
+        }
+        .footer_link a:hover {
+            color: #ff4b2b;
+        }
+        .footer_box {
+            color: #fff;
+            text-align: center;
+            padding: 6px 4px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 4px 2px;
+            font-size: 14px;
+            border-radius: 6px;
+            transition: all 0.25s ease;
+        }
+        .footer_box:hover {
+            background-color: rgba(255, 75, 43, 0.1);
+        }
+        .daud_footer > .footer-links {
+            width: 100%;
+            display: inline-block;
+        }
+        #footerfix {
+            overflow: hidden;
+            background: #fff;
+            padding: 10px 5px;
+            border-top: 1px solid #3c474b;
+            font-size: 11px;
+            text-align: center;
+            color: #333;
+            border-radius: 0 0 6px 6px;
+        }
+        blockquote {
+            margin: 0;
+            padding: 4px;
+            position: relative;
+        }
+        blockquote h1:before {
+            content: '';
+            background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20data-name%3D%22Layer%201%22%20viewBox%3D%220%200%2032%2032%22%20id%3D%22camera%22%3E%3Cpath%20fill%3D%22%23c9de79%22%20d%3D%22m25.5%209.5-2-3h-6l-2%203H.5v19h31v-19h-6z%22%3E%3C%2Fpath%3E%3Cpath%20fill%3D%22%238b8893%22%20d%3D%22M8.5%207.5h5v2h-5zM27.5%207.5h3v2h-3z%22%3E%3C%2Fpath%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2219%22%20r%3D%227.5%22%20fill%3D%22%23dadadc%22%3E%3C%2Fcircle%3E%3Cpath%20fill%3D%22%23c8c5cc%22%20d%3D%22M20%2011.5a4.19%204.19%200%200%200-.5%200%207.49%207.49%200%200%201%200%2014.94%204.19%204.19%200%200%200%20.5%200%207.5%207.5%200%200%200%200-15Z%22%3E%3C%2Fpath%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2219%22%20r%3D%224.5%22%20fill%3D%22%2352bbe9%22%3E%3C%2Fcircle%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2219%22%20r%3D%221.5%22%20fill%3D%22%23fff%22%3E%3C%2Fcircle%3E%3Cpath%20fill%3D%22%23e1e1e3%22%20d%3D%22M20%2017.5a1.86%201.86%200%200%200-.34%200%201.5%201.5%200%200%201%200%202.92%201.86%201.86%200%200%200%20.34%200%201.5%201.5%200%200%200%200-3Z%22%3E%3C%2Fpath%3E%3Cpath%20fill%3D%22%231cabe1%22%20d%3D%22M20%2014.5a4.23%204.23%200%200%200-.5.05%204.48%204.48%200%200%201%200%208.9%204.23%204.23%200%200%200%20.5.05%204.5%204.5%200%200%200%200-9Z%22%3E%3C%2Fpath%3E%3Ccircle%20cx%3D%2211.5%22%20cy%3D%2212.5%22%20r%3D%221%22%20fill%3D%22%23fff%22%3E%3C%2Fcircle%3E%3Cpath%20fill%3D%22%23bcd44c%22%20d%3D%22M.5%2012.5h5.3a2.7%202.7%200%200%201%202.7%202.7v13.3h-8%22%3E%3C%2Fpath%3E%3Cpath%20fill%3D%22%23aece44%22%20d%3D%22M5.8%2012.5h-1a2.7%202.7%200%200%201%202.7%202.7v13.3h1V15.2a2.7%202.7%200%200%200-2.7-2.7Z%22%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M15%2019a5%205%200%201%200%205-5%205%205%200%200%200-5%205Zm9%200a4%204%200%201%201-4-4%204%204%200%200%201%204%204Zm7-10V7h-4v2h-1.23l-2-3h-6.54l-2%203H14V7H8v2H0v20h32V9Zm-3-1h2v1h-2ZM9%208h4v1H9ZM8%2028H1V13h7Zm23%200H9V12H1v-2h14.77l2-3h5.46l2%203H31Zm-19-9a8%208%200%201%200%208-8%208%208%200%200%200-8%208Zm15%200a7%207%200%201%201-7-7%207%207%200%200%201%207%207Zm-14-6.5a1.5%201.5%200%201%200-1.5%201.5%201.5%201.5%200%200%200%201.5-1.5Zm-1.5.5a.5.5%200%201%201%20.5-.5.5.5%200%200%201-.5.5Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E');
+            background-size: 25px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: black;
+            width: 48px;
+            height: 48px;
+            position: absolute;
+            top: -3px;
+            left: 0px;
+            transform: rotate(180deg);
+        }
+        blockquote h1 {
+            margin-top: 0px !important;
+        }
+        blockquote h2, blockquote h1 {
+            display: block;
+            align-items: center;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            text-align: center;
+            padding: 5px 10px;
+            background: #424242;
+            border: 2px solid #ff2121;
+            border-radius: 5px 5px 20px;
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: white;
+            margin-bottom: 10px !important;
+            margin-top: 2px !important;
+        }
+        blockquote h2:before {
+            content: '';
+            background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20enable-background%3D%22new%200%200%20780%20780%22%20viewBox%3D%220%200%20780%20780%22%20id%3D%22xmas-star%22%3E%3Cpath%20fill%3D%22%23ffaf1c%22%20d%3D%22M483.7%2C440.3c2.4-5.9%2C283.5-49.4%2C283.5-49.4s-281.1-43.5-283.5-49.4c-2.4-5.9%2C84.6-127.4%2C84.6-127.4%0A%09l-127.4%2C84.6c-5.9-2.4-49.4-283.5-49.4-283.5S347.9%2C296.2%2C342%2C298.7c-5.9%2C2.4-127.4-84.6-127.4-84.6s87%2C121.6%2C84.6%2C127.4%0A%09c-2.4%2C5.9-283.5%2C49.4-283.5%2C49.4s281.1%2C43.5%2C283.5%2C49.4c2.4%2C5.9-84.6%2C127.4-84.6%2C127.4s125.2-85.5%2C127.4-84.6%0A%09c5.9%2C2.4%2C49.4%2C283.5%2C49.4%2C283.5s43.5-281.1%2C49.4-283.5c5.9-2.4%2C127.4%2C84.6%2C127.4%2C84.6S481.2%2C446.2%2C483.7%2C440.3z%22%3E%3C%2Fpath%3E%3Cpath%20fill%3D%22%23ffd485%22%20d%3D%22M392.9%2C370.4l-3.3-343.7v0c-8.3%2C52.8-42.5%2C269.9-47.6%2C272c-5.9%2C2.4-127.4-84.6-127.4-84.6s87%2C121.6%2C84.6%2C127.4%0A%09c-2.4%2C5.9-283.5%2C49.4-283.5%2C49.4s281.1%2C43.5%2C283.5%2C49.4c1.5%2C3.7-32.1%2C52.8-57.4%2C88.9L392.9%2C370.4z%22%3E%3C%2Fpath%3E%3Cpath%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-miterlimit%3D%2210%22%20stroke-width%3D%2220%22%20d%3D%22M440.8%2C298.7c-5.9-2.4-49.4-283.5-49.4-283.5S347.9%2C296.2%2C342%2C298.7c-5.9%2C2.4-127.4-84.6-127.4-84.6%0A%09s87%2C121.6%2C84.6%2C127.4c-2.4%2C5.9-283.5%2C49.4-283.5%2C49.4s281.1%2C43.5%2C283.5%2C49.4c2.4%2C5.9-84.6%2C127.4-84.6%2C127.4s125.2-85.5%2C127.4-84.6%0A%09c5.9%2C2.4%2C49.4%2C283.5%2C49.4%2C283.5s43.5-281.1%2C49.4-283.5c5.9-2.4%2C127.4%2C84.6%2C127.4%2C84.6s-87-121.6-84.6-127.4%0A%09c2.4-5.9%2C283.5-49.4%2C283.5-49.4s-281.1-43.5-283.5-49.4c-2.4-5.9%2C84.6-127.4%2C84.6-127.4L440.8%2C298.7z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E');
+            background-size: 25px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: black;
+            width: 48px;
+            height: 48px;
+            position: absolute;
+            top: -3px;
+            left: 0px;
+            transform: rotate(180deg);
+        }
+        blockquote small, blockquote footer {
+            display: block;
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+        .link {
+            overflow: hidden;
+            display: block;
+            padding: 5px 5px 5px 5px;
+            text-align: center;
+            color: black;
+        }
+        .link1 {
+            border-radius: 30px;
+            font-family: 'Alef', sans-serif;
+            font-size: 16px;
+            margin: 10px 0;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 2px solid #ff2121;
+            text-align: center;
+            background-color: #424242;
+            color: #ffffff;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .link1:hover {
+            background-color: #ff2121;
+            color: #fff;
+        }
+        @media (max-width: 380px) {
+            .link1 {
+                padding: 5px 10px;
+                margin: 5px 0;
+            }
+        }
+        .note {
+            position: relative;
+            padding: 16px 20px 16px 50px;
+            color: #3c4043;
+            font-size: .85rem;
+            line-height: 1.6em;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .note::before {
+            content: '';
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 0, 0, .4);
+            display: block;
+            border-radius: 50%;
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            opacity: .1;
+        }
+        .note::after {
+            content: '\002A';
+            position: absolute;
+            left: 18px;
+            top: 16px;
+            font-size: 20px;
+            min-width: 15px;
+            text-align: center;
+        }
+        .note.wr {
+            background: #ffdfdf;
+            color: #48525c;
+        }
+        .note.wr::after {
+            content: '\0021';
+        }
+        .drK .note {
+            background: var(--darkBs);
+            color: rgba(255, 255, 255, .9);
+        }
+        .header-social {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .header-social a {
+            display: inline-block;
+            text-decoration: none;
+            padding: 8px 12px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000;
+            border-radius: 50px;
+            background: linear-gradient(to right, #00ff85, #00bfff);
+            transition: all 0.3s ease;
+        }
+        .header-social a:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        @media (max-width: 768px) {
+            .header-social {
                 gap: 6px;
             }
-            .section-title::before {
-                font-size: 1rem;
+            .header-social a {
+                padding: 6px 10px;
+                font-size: 12px;
             }
-            .reload-btn {
-                padding: 3px 8px;
-                font-size: 0.7rem;
+        }
+        @media (max-width: 480px) {
+            .header-social {
+                gap: 5px;
             }
-            .branding-bar {
-                padding: 8px 16px;
+            .header-social a {
+                padding: 5px 8px;
+                font-size: 12px;
             }
-            .site-logo {
-                font-size: 18px;
+        }
+        #spotifyBtn {
+            position: fixed;
+            bottom: 40px;
+            left: 30px;
+            z-index: 9999;
+            background-color: #1DB954;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 0 15px rgba(29, 185, 84, 0.5);
+            transition: all 0.3s ease;
+            animation: gentlePulse 3s infinite;
+        }
+        #spotifyBtn svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        #spotifyBtn:hover {
+            background-color: #169c46;
+            transform: scale(1.1) rotate(-5deg);
+            box-shadow: 0 0 20px rgba(29, 185, 84, 0.6), 0 0 12px rgba(29, 185, 84, 0.5);
+        }
+        #spotifyBtn:hover svg {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 5px #ffffff);
+        }
+        @keyframes gentlePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .tTb {
+            --progress: 0;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform .3s ease;
+            color: #343a40;
+        }
+        .tTb:hover {
+            transform: scale(1.1);
+        }
+        .tTb svg {
+            width: 100%;
+            height: 100%;
+            transform: none;
+        }
+        .tTb circle.track {
+            fill: #ffffff;
+            stroke: #e9ecef;
+        }
+        .tTb circle.progress {
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            fill: none;
+            stroke: cyan;
+            stroke-dasharray: 100;
+            stroke-dashoffset: calc(100 - var(--progress));
+            transition: stroke-dashoffset 0.2s linear;
+        }
+        .tTb path {
+            stroke: currentColor;
+        }
+        .tTb .arrow-up {
+            display: block;
+            opacity: 1;
+            transition: opacity .3s ease;
+        }
+        .tTb .arrow-down {
+            display: none;
+            opacity: 0;
+            transition: opacity .3s ease;
+        }
+        .tTb.scroll-at-top .arrow-up {
+            display: none;
+            opacity: 0;
+        }
+        .tTb.scroll-at-top .arrow-down {
+            display: block;
+            opacity: 1;
+        }
+        @media (max-width: 768px) {
+            .tTb {
+                width: 45px;
+                height: 45px;
+                bottom: 80px;
+                right: 15px;
             }
-            .hamburger-menu {
-                width: 40px;
-                height: 40px;
-            }
-            .profile-icon {
-                width: 34px;
-                height: 34px;
-                font-size: 1.1rem;
-            }
-            .search-section {
-                padding: 8px 16px;
-            }
-            .search-input {
-                padding: 8px 14px;
-                font-size: 14px;
-            }
-            .search-button {
-                padding: 0 14px;
-            }
+        }
+        #liveSearchResults {
+            background: #fff;
+            border: 1px solid #ddd;
+            position: absolute;
+            width: 100%;
+            z-index: 1000;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 5px;
+        }
+        .live-search-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .live-search-list li {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .live-search-list li a {
+            text-decoration: none;
+            color: #333;
+        }
+        .live-search-list li:hover {
+            background: #f9f9f9;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+        .error-message {
+            text-align: center;
+            padding: 20px;
+            color: #ff2121;
+            font-size: 14px;
+        }
+        .artist-name {
+            color: #666;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+        .release-date {
+            color: #999;
+            font-size: 11px;
         }
     </style>
 </head>
 <body>
-    <div class="scroll-progress" id="scrollProgress"></div>
-    
-    <!-- App Install Prompt -->
-    <div class="install-prompt" id="installPrompt">
-        <div class="install-icon">🎬</div>
-        <div class="install-text">
-            <h4>Install Glass Route</h4>
-            <p>Add to home screen</p>
+    <header>
+        <div class="head">
+            <h1>
+                <a href="#" class="ltext">
+                    <strong style="vertical-align:middle;color:#fff;font-size:28px">MusicHub</strong>
+                </a>
+            </h1>
         </div>
-        <button class="install-button" id="installButton">Install</button>
-        <span class="close-install" id="closeInstall">✕</span>
-    </div>
-    
-    <div class="app-container">
-        <header class="site-header">
-            <div class="branding-bar">
-                <div class="hamburger-menu" id="hamburgerMenu">
-                    <span></span><span></span><span></span>
-                </div>
-                <div class="site-logo">GLASS•ROUTE</div>
-                <div class="profile-icon" id="profileIcon"><i class="fas fa-user"></i></div>
-            </div>
-            
-            <section class="search-section">
-                <div class="search-container">
-                    <div class="search-bar">
-                        <input type="text" class="search-input" id="searchInput" placeholder="search albums, music...">
-                        <button class="search-button" id="searchButton"><i class="fas fa-search"></i></button>
-                    </div>
-                </div>
-            </section>
-        </header>
-        
-        <div class="main-content-container" id="content">
-            <aside class="left-sidebar">
-                <div class="section-header">
-                    <h2 class="section-title" id="mainSectionTitle">top 5 albums</h2>
-                    <span class="reload-btn" id="refreshMain"><i class="fas fa-redo-alt"></i> reload</span>
-                </div>
-                
-                <div class="search-info" id="searchInfo" style="display: none;">
-                    <span id="searchQueryDisplay"></span>
-                    <span class="clear-search" id="clearSearch">✕ clear</span>
-                </div>
-                
-                <!-- Main albums list without number overlays -->
-                <div class="latest-albums-list" id="latestAlbums">
-                    <!-- Skeleton loaders will be replaced with actual content -->
-                </div>
-                
-                <div class="pagination-container">
-                    <div class="pagination" id="pagination"></div>
-                    <div class="pagination-info">
-                        Page <span id="currentPageDisplay">1</span> of <span id="totalPagesDisplay">10</span>
-                    </div>
-                </div>
-            </aside>
-            
-            <div class="right-sidebar">
-                <section class="section-block">
-                    <div class="section-header">
-                        <h2 class="section-title">top 5 music</h2>
-                        <span class="reload-btn" id="refreshReleases"><i class="fas fa-redo-alt"></i> reload</span>
-                    </div>
-                    <div class="latest-albums-list" id="latestSongs"></div>
-                </section>
-                
-                <section class="section-block">
-                    <div class="section-header">
-                        <h2 class="section-title">top artists</h2>
-                        <span class="reload-btn" id="refreshArtists"><i class="fas fa-redo-alt"></i> reload</span>
-                    </div>
-                    <div class="latest-albums-list" id="featuredArtists"></div>
-                </section>
-                
-                <section class="section-block">
-                    <div class="section-header">
-                        <h2 class="section-title">trending</h2>
-                        <span class="reload-btn" id="refreshTrending"><i class="fas fa-redo-alt"></i> reload</span>
-                    </div>
-                    <div class="latest-albums-list" id="trendingAlbums"></div>
-                </section>
-            </div>
+        <div class="bp-search" style="position: relative;">
+            <form id="searchForm" onsubmit="event.preventDefault(); searchMusic();">
+                <input type="search" id="searchInput" class="forminput" placeholder="Search for music, artists, albums..." autocomplete="off" />
+                <input type="submit" class="searchsubmit" value="Search" />
+            </form>
+            <div id="liveSearchResults"></div>
         </div>
-        
-        <footer class="site-footer">
-            <p>© 2025 GLASS ROUTE · top 5 now</p>
-            <p>albums • music • trending</p>
-        </footer>
-    </div>
+    </header>
+    <div class="clearfix"></div>
     
-    <!-- Navigation Drawers -->
-    <div class="nav-drawer left" id="leftDrawer">
-        <div class="nav-header">
-            <div class="site-logo">GLASS•ROUTE</div>
-            <div class="close-nav" id="closeLeftDrawer">✕</div>
-        </div>
-        <nav class="nav-menu">
-            <div class="nav-item active" data-category="home"><i class="fas fa-home"></i> Home</div>
-            <div class="nav-item" data-category="albums"><i class="fas fa-compact-disc"></i> Albums</div>
-            <div class="nav-item" data-category="playlists"><i class="fas fa-list"></i> Playlists</div>
-            <div class="nav-item" data-category="music"><i class="fas fa-music"></i> Music</div>
-            <div class="nav-item" data-category="artists"><i class="fas fa-microphone-alt"></i> Artists</div>
-            <div class="nav-item" data-category="charts"><i class="fas fa-chart-line"></i> Charts</div>
-            <div class="nav-item" data-category="genres"><i class="fas fa-tags"></i> Genres</div>
-        </nav>
-    </div>
-    
-    <div class="nav-drawer right" id="rightDrawer">
-        <div class="nav-header">
-            <div class="site-logo">PROFILE</div>
-            <div class="close-nav" id="closeRightDrawer">✕</div>
-        </div>
-        <nav class="nav-menu">
-            <div class="nav-section-title">ACCOUNT</div>
-            <div class="nav-item" data-category="profile"><i class="fas fa-user"></i> Your Profile</div>
-            <div class="nav-item" data-category="library"><i class="fas fa-bookmark"></i> Your Library</div>
-            <div class="nav-item" data-category="history"><i class="fas fa-history"></i> History</div>
-            <div class="nav-section-title">SETTINGS</div>
-            <div class="nav-item" data-category="preferences"><i class="fas fa-cog"></i> Preferences</div>
-            <div class="nav-item" data-category="theme"><i class="fas fa-palette"></i> Theme</div>
-            <div class="nav-item" data-category="notifications"><i class="fas fa-bell"></i> Notifications</div>
-            <div class="nav-item" data-category="offline"><i class="fas fa-download"></i> Offline</div>
-        </nav>
+    <div class="spotify-bar">
+        <svg class="spotify-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.66.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141 4.14-1.26 9.479-.6 13.08 1.56.36.24.48.78.24 1.26zm.12-3.438c-3.84-2.28-10.14-2.52-13.86-1.38-.6.18-1.26-.24-1.44-.84-.18-.6.24-1.26.84-1.44 4.2-1.26 11.04-1.02 15.36 1.56.54.3.78 1.02.48 1.56-.3.42-1.02.66-1.56.36z"/>
+        </svg>
+        <span>🎵 Discover millions of songs on Spotify</span>
+        <a href="https://open.spotify.com" target="_blank">Open Spotify →</a>
     </div>
 
-    <!-- Optimized JavaScript -->
+    <h2 class="bp-title" id="trending-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+            <path d="M13.5 2C12 6 8 8 8 13c0 3.31 2.69 6 6 6s6-2.69 6-6c0-5-4-7-6.5-11z"></path>
+        </svg>
+        Trending Now
+    </h2>
+    <div class="corner dtype">
+        <div class="bp-post" id="trending-container">
+            <div class="loading">Loading trending music...</div>
+        </div>
+    </div>
+
+    <h2 class="bp-title" id="latest-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+            <path d="M4 4h16v16H4V4zm2 2v12h12V6H6zm2 2h8v2H8V8zm0 4h8v2H8v-2z"></path>
+        </svg>
+        Latest Releases
+    </h2>
+    <div class="corner dtype">
+        <div class="bp-post" id="latest-container">
+            <div class="loading">Loading latest music...</div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="page-navi" align="center">
+            <span class="page-numbers current">1</span>
+            <a class="page-numbers" href="#" onclick="loadMore(2); return false;">2</a>
+            <a class="page-numbers" href="#" onclick="loadMore(3); return false;">3</a>
+            <span class="page-numbers dots">…</span>
+            <a class="page-numbers" href="#" onclick="loadMore(10); return false;">10</a>
+            <a class="next page-numbers" href="#" onclick="loadMore(2); return false;">Next »</a>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    
+    <h2 class="bp-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+            <path d="M3 3h8v8H3V3zm0 10h8v8H3v-8zm10-10h8v8h-8V3zm0 10h8v8h-8v-8z"></path>
+        </svg>
+        Music Genres
+    </h2>
+    <div class="corner bp-post" id="genres-container">
+        <a class="bp-post-list" href="#" onclick="searchByGenre('rock'); return false;">
+            <div class="post-style-1" style="display:flex;align-items:center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
+                </svg>
+                <strong style="font-size:15px;color:#000;margin-left:6px;">Rock</strong>
+                <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(1.2M)</span>
+            </div>
+        </a>
+        <a class="bp-post-list" href="#" onclick="searchByGenre('pop'); return false;">
+            <div class="post-style-1" style="display:flex;align-items:center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
+                </svg>
+                <strong style="font-size:15px;color:#000;margin-left:6px;">Pop</strong>
+                <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(2.5M)</span>
+            </div>
+        </a>
+        <a class="bp-post-list" href="#" onclick="searchByGenre('hip-hop'); return false;">
+            <div class="post-style-1" style="display:flex;align-items:center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
+                </svg>
+                <strong style="font-size:15px;color:#000;margin-left:6px;">Hip-Hop</strong>
+                <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(1.8M)</span>
+            </div>
+        </a>
+        <a class="bp-post-list" href="#" onclick="searchByGenre('jazz'); return false;">
+            <div class="post-style-1" style="display:flex;align-items:center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
+                </svg>
+                <strong style="font-size:15px;color:#000;margin-left:6px;">Jazz</strong>
+                <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(856K)</span>
+            </div>
+        </a>
+        <a class="bp-post-list" href="#" onclick="searchByGenre('classical'); return false;">
+            <div class="post-style-1" style="display:flex;align-items:center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
+                </svg>
+                <strong style="font-size:15px;color:#000;margin-left:6px;">Classical</strong>
+                <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(654K)</span>
+            </div>
+        </a>
+        <a class="bp-post-list" href="#" onclick="searchByGenre('electronic'); return false;">
+            <div class="post-style-1" style="display:flex;align-items:center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
+                </svg>
+                <strong style="font-size:15px;color:#000;margin-left:6px;">Electronic</strong>
+                <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(1.1M)</span>
+            </div>
+        </a>
+        <a class="bp-post-list" href="#" onclick="searchByGenre('r&b'); return false;">
+            <div class="post-style-1" style="display:flex;align-items:center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
+                </svg>
+                <strong style="font-size:15px;color:#000;margin-left:6px;">R&B</strong>
+                <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(945K)</span>
+            </div>
+        </a>
+        <a class="bp-post-list" href="#" onclick="searchByGenre('country'); return false;">
+            <div class="post-style-1" style="display:flex;align-items:center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
+                </svg>
+                <strong style="font-size:15px;color:#000;margin-left:6px;">Country</strong>
+                <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(723K)</span>
+            </div>
+        </a>
+    </div>
+    <div class="clearfix"></div>
+
+    <a href="https://open.spotify.com" target="_blank" id="spotifyBtn" title="Listen on Spotify">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.66.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141 4.14-1.26 9.479-.6 13.08 1.56.36.24.48.78.24 1.26zm.12-3.438c-3.84-2.28-10.14-2.52-13.86-1.38-.6.18-1.26-.24-1.44-.84-.18-.6.24-1.26.84-1.44 4.2-1.26 11.04-1.02 15.36 1.56.54.3.78 1.02.48 1.56-.3.42-1.02.66-1.56.36z"/>
+        </svg>
+    </a>
+
+    <footer>
+        <div id="footer-top">
+            <span style="float:left"><a href="#" title="spotify">Follow on Spotify</a></span>
+            <span style="float:right"><a href="#" title="apple-music">Apple Music</a></span>
+        </div>
+        <div class="daud_footer">
+            <div>
+                <h3 style="margin: 0; color: #fff; text-align: center; font-size: 15px;">
+                    MusicHub is your ultimate destination for discovering new music, artists, and albums from around the world.
+                </h3>
+            </div>
+            <div class="footer_link">
+                <a href="#" class="buttn red">Home</a> |
+                <a href="#">About</a> |
+                <a href="#">Privacy</a> |
+                <a href="#">Request</a> |
+                <a href="#">Contact</a> |
+                <a href="#">Terms</a>
+            </div>
+            <div style="margin-top:2px">
+                Powered by <a href="#" target="_blank" rel="noopener">iTunes API</a>
+            </div>
+            <div class="footer_box">
+                2026 © MusicHub. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+    <div class="tTb" id="UioveXSmartScroll">
+        <svg viewBox="0 0 36 36">
+            <circle class="track" cx="18" cy="18" r="15.9" stroke-width="2.5"></circle>
+            <circle class="progress" cx="18" cy="18" r="15.9" stroke-width="2.5"></circle>
+            <g class="arrow-down">
+                <path d="M18 8 V 26 M 13 21 L 18 26 L 23 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </g>
+            <g class="arrow-up">
+                <path d="M18 28 V 10 M 13 15 L 18 10 L 23 15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </g>
+        </svg>
+    </div>
+
     <script>
-        // PWA Installation
-        let deferredPrompt;
-        const installPrompt = document.getElementById('installPrompt');
-        const installButton = document.getElementById('installButton');
-        const closeInstall = document.getElementById('closeInstall');
-        
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installPrompt.style.display = 'flex';
-        });
-        
-        installButton?.addEventListener('click', async () => {
-            if (!deferredPrompt) return;
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') console.log('App installed');
-            deferredPrompt = null;
-            installPrompt.style.display = 'none';
-        });
-        
-        closeInstall?.addEventListener('click', () => installPrompt.style.display = 'none');
-        window.addEventListener('appinstalled', () => installPrompt.style.display = 'none');
+        // iTunes API endpoints
+        const ITUNES_API = 'https://itunes.apple.com/search';
+        const ITUNES_TOP = 'https://itunes.apple.com/us/rss/topsongs/limit=25/json';
+        const ITUNES_NEW = 'https://itunes.apple.com/us/rss/newreleases/limit=25/json';
 
-        // API Config
-        const API_BASE = 'https://itunes.apple.com';
-        const CACHE_DURATION = 5 * 60 * 1000;
-        const TOTAL_PAGES = 10;
-        
-        // State
-        let currentState = { currentPage: 1, totalPages: TOTAL_PAGES, currentSearchTerm: 'popular', isLoading: false };
-        let cache = new Map();
-        
-        // DOM Elements
-        const elements = {
-            latestAlbums: document.getElementById('latestAlbums'),
-            latestSongs: document.getElementById('latestSongs'),
-            featuredArtists: document.getElementById('featuredArtists'),
-            trendingAlbums: document.getElementById('trendingAlbums'),
-            searchInput: document.getElementById('searchInput'),
-            searchButton: document.getElementById('searchButton'),
-            searchInfo: document.getElementById('searchInfo'),
-            searchQueryDisplay: document.getElementById('searchQueryDisplay'),
-            clearSearch: document.getElementById('clearSearch'),
-            mainSectionTitle: document.getElementById('mainSectionTitle'),
-            pagination: document.getElementById('pagination'),
-            currentPageDisplay: document.getElementById('currentPageDisplay'),
-            totalPagesDisplay: document.getElementById('totalPagesDisplay')
+        let currentPage = 1;
+        let currentSearchTerm = '';
+
+        // Load initial data
+        window.onload = function() {
+            loadTrending();
+            loadLatestReleases();
         };
 
-        // Simple cache fetch
-        async function fetchWithCache(url) {
-            if (cache.has(url)) {
-                const { data, timestamp } = cache.get(url);
-                if (Date.now() - timestamp < CACHE_DURATION) return data;
-            }
-            try {
-                const res = await fetch(url);
-                const data = await res.json();
-                cache.set(url, { data, timestamp: Date.now() });
-                return data;
-            } catch (e) {
-                return { results: [] };
-            }
-        }
-
-        // Transform
-        const transformAlbum = (item) => ({
-            title: item.collectionName || 'Unknown',
-            artist: item.artistName || 'Unknown',
-            year: item.releaseDate ? new Date(item.releaseDate).getFullYear() : '2024',
-            genre: item.primaryGenreName || 'Various',
-            artwork: item.artworkUrl100?.replace('100x100', '600x600'),
-            trackCount: item.trackCount || 0
-        });
-
-        // Render - NO number overlays
-        function renderAlbum(item, rank, large = true) {
-            const size = large ? '120px' : '80px';
-            const icon = large ? 'compact-disc' : 'music';
-            return `
-                <div class="album-item">
-                    <div class="album-thumbnail" style="width:${size};height:${size}">
-                        ${item.artwork ? `<img src="${item.artwork}" alt="${item.title}" loading="lazy">` : `<i class="fas fa-${icon}"></i>`}
-                    </div>
-                    <div class="album-info">
-                        <div class="album-title">${item.title}${rank === 1 ? '<span class="trending-badge"><i class="fas fa-crown"></i> #1</span>' : ''}</div>
-                        <div class="album-meta"><span class="album-genre">${item.year}</span>${item.trackCount ? `<span class="album-tracks">${item.trackCount} tracks</span>` : ''}</div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Pagination render
-        function renderPagination(page, total) {
-            if (!elements.pagination) return;
-            let html = `<div class="pagination-item pagination-prev ${page === 1 ? 'disabled' : ''}" data-page="${page-1}"><i class="fas fa-chevron-left"></i> Prev</div>`;
-            if (page > 3) {
-                html += `<div class="pagination-item" data-page="1">1</div>`;
-                if (page > 4) html += `<span class="pagination-ellipsis">...</span>`;
-            }
-            for (let i = Math.max(1, page-2); i <= Math.min(total, page+2); i++) {
-                html += `<div class="pagination-item ${i === page ? 'active' : ''}" data-page="${i}">${i}</div>`;
-            }
-            if (page < total-2) {
-                if (page < total-3) html += `<span class="pagination-ellipsis">...</span>`;
-                html += `<div class="pagination-item" data-page="${total}">${total}</div>`;
-            }
-            html += `<div class="pagination-item pagination-next ${page === total ? 'disabled' : ''}" data-page="${page+1}">Next <i class="fas fa-chevron-right"></i></div>`;
-            elements.pagination.innerHTML = html;
-            if (elements.currentPageDisplay) elements.currentPageDisplay.textContent = page;
-            if (elements.totalPagesDisplay) elements.totalPagesDisplay.textContent = total;
-        }
-
-        // Navigation function
-        function navigateTo(category) {
-            // Update active state in drawer
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            const activeItem = document.querySelector(`.nav-item[data-category="${category}"]`);
-            if (activeItem) activeItem.classList.add('active');
+        // Search function
+        function searchMusic() {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (!searchTerm) return;
             
-            // Close drawer
-            const leftDrawer = document.getElementById('leftDrawer');
-            leftDrawer.style.opacity = '0';
-            leftDrawer.style.transform = 'translateX(-100%)';
-            setTimeout(() => leftDrawer.style.display = 'none', 300);
+            currentSearchTerm = searchTerm;
+            currentPage = 1;
             
-            // Navigate based on category
-            switch(category) {
-                case 'home':
-                    window.location.href = 'index.html';
-                    break;
-                case 'albums':
-                    window.location.href = 'albums.html';
-                    break;
-                case 'playlists':
-                    window.location.href = 'playlists.html';
-                    break;
-                case 'music':
-                    window.location.href = 'music.html';
-                    break;
-                case 'artists':
-                    window.location.href = 'artists.html';
-                    break;
-                case 'charts':
-                    window.location.href = 'charts.html';
-                    break;
-                case 'genres':
-                    window.location.href = 'genres.html';
-                    break;
-                default:
-                    console.log('Navigate to:', category);
-            }
+            const url = `${ITUNES_API}?term=${encodeURIComponent(searchTerm)}&limit=25&entity=song`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    displayResults(data.results, 'trending-container');
+                    document.getElementById('trending-title').innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+                            <path d="M13.5 2C12 6 8 8 8 13c0 3.31 2.69 6 6 6s6-2.69 6-6c0-5-4-7-6.5-11z"></path>
+                        </svg>
+                        Search Results: "${searchTerm}"
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('trending-container').innerHTML = '<div class="error-message">Error loading results. Please try again.</div>';
+                });
         }
 
-        // Load main albums
-        async function loadMain() {
-            const terms = ['popular','hit','greatest','best','classic','grammy'];
-            const term = terms[(currentState.currentPage - 1) % terms.length];
-            const url = `${API_BASE}/search?term=${term}&media=music&entity=album&limit=30`;
-            const data = await fetchWithCache(url);
-            let results = (data.results || []).filter(i => i.collectionName).map(transformAlbum);
-            // Fisher-Yates shuffle
-            for (let i = results.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [results[i], results[j]] = [results[j], results[i]];
-            }
-            const pageItems = results.slice(0, 5);
-            if (pageItems.length) {
-                elements.latestAlbums.innerHTML = pageItems.map((item, i) => renderAlbum(item, i+1, true)).join('');
-            } else {
-                // Show skeleton if no results
-                elements.latestAlbums.innerHTML = `
-                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:60%"></div><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:100%"></div></div></div>
-                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:60%"></div><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:100%"></div></div></div>
-                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:60%"></div><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:100%"></div></div></div>
+        // Search by genre
+        function searchByGenre(genre) {
+            currentSearchTerm = genre;
+            const url = `${ITUNES_API}?term=${encodeURIComponent(genre)}&limit=25&entity=song&attribute=genreTerm`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    displayResults(data.results, 'trending-container');
+                    document.getElementById('trending-title').innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+                            <path d="M13.5 2C12 6 8 8 8 13c0 3.31 2.69 6 6 6s6-2.69 6-6c0-5-4-7-6.5-11z"></path>
+                        </svg>
+                        ${genre.charAt(0).toUpperCase() + genre.slice(1)} Music
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('trending-container').innerHTML = '<div class="error-message">Error loading results. Please try again.</div>';
+                });
+        }
+
+        // Load trending songs
+        function loadTrending() {
+            fetch(ITUNES_TOP)
+                .then(response => response.json())
+                .then(data => {
+                    const songs = data.feed.entry;
+                    displayTrending(songs);
+                })
+                .catch(error => {
+                    console.error('Error loading trending:', error);
+                    // Fallback to search API
+                    const url = `${ITUNES_API}?term=top&limit=25&entity=song`;
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => displayResults(data.results, 'trending-container'))
+                        .catch(err => {
+                            document.getElementById('trending-container').innerHTML = '<div class="error-message">Unable to load trending music</div>';
+                        });
+                });
+        }
+
+        // Load latest releases
+        function loadLatestReleases() {
+            fetch(ITUNES_NEW)
+                .then(response => response.json())
+                .then(data => {
+                    const albums = data.feed.entry;
+                    displayLatest(albums);
+                })
+                .catch(error => {
+                    console.error('Error loading latest:', error);
+                    const url = `${ITUNES_API}?term=new&limit=25&entity=album&sort=recent`;
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => displayResults(data.results, 'latest-container'))
+                        .catch(err => {
+                            document.getElementById('latest-container').innerHTML = '<div class="error-message">Unable to load latest releases</div>';
+                        });
+                });
+        }
+
+        // Display trending songs
+        function displayTrending(songs) {
+            let html = '';
+            songs.slice(0, 8).forEach(song => {
+                const name = song['im:name'].label;
+                const artist = song['im:artist'].label;
+                const image = song['im:image'][2]?.label || song['im:image'][0]?.label || 'https://via.placeholder.com/80';
+                const releaseDate = new Date(song['im:releaseDate']?.label).getFullYear() || '2026';
+                
+                html += `
+                    <a class="bp-post-list" href="${song.link?.attributes?.href || '#'}" target="_blank">
+                        <div class="post-style-3">
+                            <div class="bp-post-thumb">
+                                <img src="${image}" width="80" height="80" class="roundthumb" alt="${name}" onerror="this.src='https://via.placeholder.com/80'">
+                            </div>
+                            <div class="bp-post-data">
+                                <span class="redlink"><b>${name.length > 50 ? name.substr(0, 50) + '...' : name}</b></span>
+                                <div class="artist-name">${artist}</div>
+                                <span class="cat-lang cred">
+                                    <b style="color:#ff0000">Released:</b> ${releaseDate}
+                                    <span class="new-badge" style="background:#ff9800; color:#fff; display:inline-flex; align-items:center; gap:6px; padding:2px 6px; margin-left:5px; border-radius:3px; font-size:11px;">
+                                        <span style="line-height:1; font-weight:600;">Trending</span>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
                 `;
+            });
+            document.getElementById('trending-container').innerHTML = html;
+        }
+
+        // Display latest releases (albums)
+        function displayLatest(albums) {
+            let html = '';
+            albums.slice(0, 8).forEach(album => {
+                const name = album['im:name'].label;
+                const artist = album['im:artist'].label;
+                const image = album['im:image'][2]?.label || album['im:image'][0]?.label || 'https://via.placeholder.com/80';
+                const releaseDate = new Date(album['im:releaseDate']?.label).getFullYear() || '2026';
+                
+                html += `
+                    <a class="bp-post-list" href="${album.link?.attributes?.href || '#'}" target="_blank">
+                        <div class="post-style-3">
+                            <div class="bp-post-thumb">
+                                <img src="${image}" width="80" height="80" class="roundthumb" alt="${name}" onerror="this.src='https://via.placeholder.com/80'">
+                            </div>
+                            <div class="bp-post-data">
+                                <span class="redlink"><b>${name.length > 50 ? name.substr(0, 50) + '...' : name}</b></span>
+                                <div class="artist-name">${artist}</div>
+                                <span class="cat-lang cred">
+                                    <b style="color:#ff0000">Released:</b> ${releaseDate}
+                                    <span class="new-badge" style="background:#4caf50; color:#fff; padding:2px 6px; margin-left:5px; border-radius:3px; font-size:11px;">New</span>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            });
+            document.getElementById('latest-container').innerHTML = html;
+        }
+
+        // Generic display function for search results
+        function displayResults(results, containerId) {
+            if (!results || results.length === 0) {
+                document.getElementById(containerId).innerHTML = '<div class="error-message">No results found</div>';
+                return;
             }
-            renderPagination(currentState.currentPage, TOTAL_PAGES);
+
+            let html = '';
+            results.slice(0, 8).forEach(item => {
+                const name = item.trackName || item.collectionName || 'Unknown';
+                const artist = item.artistName || 'Unknown Artist';
+                const image = item.artworkUrl100 || 'https://via.placeholder.com/80';
+                const releaseDate = item.releaseDate ? new Date(item.releaseDate).getFullYear() : '2026';
+                const trackId = item.trackId || item.collectionId;
+                const url = item.trackViewUrl || item.collectionViewUrl || '#';
+                
+                html += `
+                    <a class="bp-post-list" href="${url}" target="_blank">
+                        <div class="post-style-3">
+                            <div class="bp-post-thumb">
+                                <img src="${image}" width="80" height="80" class="roundthumb" alt="${name}" onerror="this.src='https://via.placeholder.com/80'">
+                            </div>
+                            <div class="bp-post-data">
+                                <span class="redlink"><b>${name.length > 50 ? name.substr(0, 50) + '...' : name}</b></span>
+                                <div class="artist-name">${artist}</div>
+                                <span class="cat-lang cred">
+                                    <b style="color:#ff0000">Released:</b> ${releaseDate}
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            });
+            document.getElementById(containerId).innerHTML = html;
         }
 
-        // Load other sections
-        async function loadOthers() {
-            const sections = [
-                { el: elements.latestSongs, term: 'top songs', entity: 'song' },
-                { el: elements.featuredArtists, term: 'top artist', entity: 'musicArtist' },
-                { el: elements.trendingAlbums, term: 'popular', entity: 'album' }
-            ];
-            for (const s of sections) {
-                const url = `${API_BASE}/search?term=${s.term}&media=music&entity=${s.entity}&limit=5`;
-                const data = await fetchWithCache(url);
-                const results = (data.results || []).map(transformAlbum);
-                if (results.length) {
-                    s.el.innerHTML = results.slice(0, 5).map((item, i) => renderAlbum(item, i+1, false)).join('');
-                }
-            }
-        }
-
-        // Page change
-        async function loadPage(page) {
-            if (page < 1 || page > TOTAL_PAGES || page === currentState.currentPage || currentState.isLoading) return;
-            currentState.currentPage = page;
-            currentState.isLoading = true;
-            await loadMain();
-            currentState.isLoading = false;
-        }
-
-        // Event listeners
-        function initEvents() {
-            // Pagination clicks
-            elements.pagination?.addEventListener('click', (e) => {
-                const item = e.target.closest('.pagination-item[data-page]');
-                if (!item || item.classList.contains('disabled')) return;
-                const page = parseInt(item.dataset.page);
-                loadPage(page);
-            });
-
-            // Search
-            elements.searchButton?.addEventListener('click', () => {
-                if (!elements.searchInput.value.trim()) return;
-                elements.searchInfo.style.display = 'flex';
-                elements.searchQueryDisplay.textContent = `"${elements.searchInput.value}"`;
-                elements.mainSectionTitle.textContent = 'search results';
-                currentState.currentSearchTerm = elements.searchInput.value;
-                currentState.currentPage = 1;
-                const url = `${API_BASE}/search?term=${elements.searchInput.value}&media=music&entity=album&limit=5`;
-                fetchWithCache(url).then(data => {
-                    const results = (data.results || []).filter(i => i.collectionName).map(transformAlbum);
-                    if (results.length) {
-                        elements.latestAlbums.innerHTML = results.map((item, i) => renderAlbum(item, i+1, true)).join('');
-                    }
-                });
-            });
-
-            elements.searchInput?.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') elements.searchButton.click();
-            });
-
-            elements.clearSearch?.addEventListener('click', () => {
-                elements.searchInfo.style.display = 'none';
-                elements.searchInput.value = '';
-                elements.mainSectionTitle.textContent = 'top 5 albums';
-                currentState.currentPage = 1;
-                loadMain();
-            });
-
-            // Refresh buttons
-            document.getElementById('refreshMain')?.addEventListener('click', () => {
-                currentState.currentPage = 1;
-                loadMain();
-            });
-            document.getElementById('refreshReleases')?.addEventListener('click', () => loadOthers());
-            document.getElementById('refreshArtists')?.addEventListener('click', () => loadOthers());
-            document.getElementById('refreshTrending')?.addEventListener('click', () => loadOthers());
-
-            // Drawers
-            const hamburger = document.getElementById('hamburgerMenu');
-            const leftDrawer = document.getElementById('leftDrawer');
-            const closeLeft = document.getElementById('closeLeftDrawer');
-            const profileIcon = document.getElementById('profileIcon');
-            const rightDrawer = document.getElementById('rightDrawer');
-            const closeRight = document.getElementById('closeRightDrawer');
-
-            hamburger?.addEventListener('click', () => {
-                leftDrawer.style.display = 'block';
-                setTimeout(() => {
-                    leftDrawer.style.opacity = '1';
-                    leftDrawer.style.transform = 'translateX(0)';
-                }, 10);
-            });
-
-            closeLeft?.addEventListener('click', () => {
-                leftDrawer.style.opacity = '0';
-                leftDrawer.style.transform = 'translateX(-100%)';
-                setTimeout(() => leftDrawer.style.display = 'none', 300);
-            });
-
-            profileIcon?.addEventListener('click', () => {
-                rightDrawer.style.display = 'block';
-                setTimeout(() => {
-                    rightDrawer.style.opacity = '1';
-                    rightDrawer.style.transform = 'translateX(0)';
-                }, 10);
-            });
-
-            closeRight?.addEventListener('click', () => {
-                rightDrawer.style.opacity = '0';
-                rightDrawer.style.transform = 'translateX(100%)';
-                setTimeout(() => rightDrawer.style.display = 'none', 300);
-            });
-
-            // Navigation items click
-            document.querySelectorAll('.nav-item[data-category]').forEach(item => {
-                item.addEventListener('click', (e) => {
-                    const category = e.currentTarget.dataset.category;
-                    navigateTo(category);
-                });
-            });
-
-            // Click outside to close drawers
-            document.addEventListener('click', (e) => {
-                if (leftDrawer.style.display === 'block' && !leftDrawer.contains(e.target) && !hamburger.contains(e.target)) {
-                    leftDrawer.style.opacity = '0';
-                    leftDrawer.style.transform = 'translateX(-100%)';
-                    setTimeout(() => leftDrawer.style.display = 'none', 300);
-                }
-                if (rightDrawer.style.display === 'block' && !rightDrawer.contains(e.target) && !profileIcon.contains(e.target)) {
-                    rightDrawer.style.opacity = '0';
-                    rightDrawer.style.transform = 'translateX(100%)';
-                    setTimeout(() => rightDrawer.style.display = 'none', 300);
-                }
-            });
-
-            // Scroll progress (throttled)
-            let ticking = false;
-            window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    window.requestAnimationFrame(() => {
-                        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                        document.getElementById('scrollProgress').style.width = (winScroll / height) * 100 + '%';
-                        ticking = false;
+        // Load more pages
+        function loadMore(page) {
+            currentPage = page;
+            if (currentSearchTerm) {
+                const url = `${ITUNES_API}?term=${encodeURIComponent(currentSearchTerm)}&limit=25&entity=song&offset=${(page-1)*25}`;
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => displayResults(data.results, 'latest-container'))
+                    .catch(error => {
+                        console.error('Error:', error);
                     });
-                    ticking = true;
-                }
-            });
+            } else {
+                loadLatestReleases();
+            }
+            return false;
         }
 
-        // Start
-        document.addEventListener('DOMContentLoaded', async () => {
-            initEvents();
-            await Promise.all([loadMain(), loadOthers()]);
+        // Live search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value;
+            if (searchTerm.length < 3) {
+                document.getElementById('liveSearchResults').innerHTML = '';
+                return;
+            }
+
+            const url = `${ITUNES_API}?term=${encodeURIComponent(searchTerm)}&limit=5&entity=song`;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    let html = '<ul class="live-search-list">';
+                    data.results.forEach(item => {
+                        html += `<li><a href="${item.trackViewUrl || '#'}" target="_blank">${item.trackName} - ${item.artistName}</a></li>`;
+                    });
+                    html += '</ul>';
+                    document.getElementById('liveSearchResults').innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         });
+
+        // Scroll to top button functionality
+        (function(){'use strict';const scrollButton=document.getElementById('UioveXSmartScroll');if(!scrollButton)return;const progressCircle=scrollButton.querySelector('.progress');const circumference=2*Math.PI*progressCircle.r.baseVal.value;progressCircle.style.strokeDasharray=circumference;const handleScroll=()=>{const scrollTop=window.scrollY||document.documentElement.scrollTop;const scrollHeight=document.documentElement.scrollHeight-document.documentElement.clientHeight;const scrollPercentage=(scrollHeight>0)?(scrollTop/scrollHeight)*100:0;scrollButton.style.setProperty('--progress',scrollPercentage);if(scrollTop<50){scrollButton.classList.add('scroll-at-top');scrollButton.setAttribute('aria-label','Scroll Down')}else{scrollButton.classList.remove('scroll-at-top');scrollButton.setAttribute('aria-label','Scroll to Top')}};const handleClick=()=>{const isAtTop=scrollButton.classList.contains('scroll-at-top');window.scrollTo({top:isAtTop?document.body.scrollHeight:0,behavior:'smooth'})};window.addEventListener('scroll',handleScroll,{passive:!0});scrollButton.addEventListener('click',handleClick);handleScroll()})();
     </script>
 </body>
 </html>
