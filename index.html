@@ -50,14 +50,17 @@
             width: 280px;
         }
         
-        .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background: #424242;
-            border-bottom: 2px solid #ff2121;
-        }
+      /* Sidebar Header - NOW MATCHES MAIN HEADER HEIGHT */
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;        /* No top/bottom padding */
+    background: #424242;
+    border-bottom: 2px solid #ff2121;  /* Orange line */
+    height: 36px;            /* Exact same as header (36px) */
+    box-sizing: border-box;  /* Ensures height includes padding/border */
+}
         
         .sidebar-header h3 {
             color: #fff;
