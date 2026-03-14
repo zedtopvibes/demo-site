@@ -134,92 +134,6 @@
             font-size:1.1rem;
         }
         
-        /* COMPACT LIVE STATS - Back! */
-        .live-stats-container {
-            background: rgba(120,135,155,0.18);
-            -webkit-backdrop-filter: blur(12px);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding: 8px 20px;
-        }
-        
-        .live-stats {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 4px 10px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            font-weight: 600;
-            font-size: 0.7rem;
-            letter-spacing: 0.5px;
-            color: #fff;
-        }
-        
-        .live-dot {
-            width: 6px;
-            height: 6px;
-            background: #ff0000;
-            border-radius: 50%;
-            animation: livePulse 1.6s infinite;
-        }
-
-        @keyframes livePulse {
-            0% { box-shadow: 0 0 0 0 rgba(255,0,0,0.7); }
-            70% { box-shadow: 0 0 0 6px rgba(255,0,0,0); }
-            100% { box-shadow: 0 0 0 0 rgba(255,0,0,0); }
-        }
-        
-        .stat-pill {
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 0.75rem;
-            border: 1px solid;
-            backdrop-filter: blur(4px);
-            white-space: nowrap;
-        }
-        
-        .stat-pill.songs {
-            background: rgba(64, 128, 255, 0.15);
-            border-color: rgba(64, 128, 255, 0.3);
-            color: #a0c0ff;
-        }
-        
-        .stat-pill.artists {
-            background: rgba(160, 100, 255, 0.15);
-            border-color: rgba(160, 100, 255, 0.3);
-            color: #c4b0ff;
-        }
-        
-        .stat-pill.playlists {
-            background: rgba(80, 200, 120, 0.15);
-            border-color: rgba(80, 200, 120, 0.3);
-            color: #a0e0a0;
-        }
-        
-        .stat-pill.albums {
-            background: rgba(255, 160, 64, 0.15);
-            border-color: rgba(255, 160, 64, 0.3);
-            color: #ffcca0;
-        }
-        
-        .stat-number {
-            font-weight: 700;
-            margin-right: 2px;
-            color: #fff;
-        }
-        
         /* COMPACT SECTION HEADERS */
         .section-header{
             display:flex;
@@ -429,24 +343,6 @@
             .search-button {
                 padding: 0 14px;
             }
-            .live-stats-container {
-                padding: 6px 16px;
-            }
-            .live-stats {
-                gap: 8px;
-            }
-            .stat-pill {
-                padding: 3px 8px;
-                font-size: 0.7rem;
-            }
-            .live-indicator {
-                padding: 3px 8px;
-                font-size: 0.65rem;
-            }
-            .live-dot {
-                width: 5px;
-                height: 5px;
-            }
         }
     </style>
 </head>
@@ -482,28 +378,6 @@
                     </div>
                 </div>
             </section>
-            
-            <!-- LIVE STATS - Back and better than ever! -->
-            <div class="live-stats-container">
-                <div class="live-stats">
-                    <div class="live-indicator">
-                        <span class="live-dot"></span>
-                        LIVE
-                    </div>
-                    <div class="stat-pill songs">
-                        <span class="stat-number">124,832</span> SONGS
-                    </div>
-                    <div class="stat-pill artists">
-                        <span class="stat-number">12,458</span> ARTISTS
-                    </div>
-                    <div class="stat-pill playlists">
-                        <span class="stat-number">5,219</span> PLAYLISTS
-                    </div>
-                    <div class="stat-pill albums">
-                        <span class="stat-number">1,845,932</span> ALBUMS
-                    </div>
-                </div>
-            </div>
         </header>
         
         <div class="main-content-container" id="content">
