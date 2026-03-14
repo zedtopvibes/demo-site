@@ -30,16 +30,171 @@
         .main-content-container{max-width:1400px;margin:0 auto;padding:20px 10px;display:flex;gap:10px;width:100%;flex:1}
         .left-sidebar{flex:3;background:rgba(130,145,165,0.18);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:12px;border:1px solid rgba(255,255,255,0.1)}
         .right-sidebar{flex:1;display:flex;flex-direction:column;gap:20px;min-width:300px}
-        .branding-bar{background:rgba(120,135,155,0.2);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);padding:10px 20px;display:flex;justify-content:space-between;align-items:center}
-        .site-logo{font-weight:900;font-size:22px;background:linear-gradient(135deg,#fff,#e0e8ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        .section-header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.15);height:60px}
-        .section-title{font-size:1.3rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px}
-        .section-title::before{content:"◈";font-size:1.4rem;opacity:0.9}
-        .reload-btn{color:#fff;padding:6px 15px;border:1px solid rgba(255,255,255,0.3);border-radius:40px;background:rgba(255,255,255,0.1);font-size:0.85rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
+        
+        /* BRANDING BAR - Slightly increased */
+        .branding-bar{
+            background:rgba(120,135,155,0.2);
+            -webkit-backdrop-filter:blur(14px);
+            backdrop-filter:blur(14px);
+            padding:10px 20px;  /* Increased from 6px 16px */
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+        
+        .site-logo{
+            font-weight:700;
+            font-size:20px;  /* Increased from 18px */
+            background:linear-gradient(135deg,#fff,#e0e8ff);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+        
+        .hamburger-menu{
+            width:44px;  /* Increased from 40px */
+            height:44px;  /* Increased from 40px */
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            cursor:pointer;
+            gap:5px;  /* Increased from 4px */
+        }
+        
+        .hamburger-menu span{
+            display:block;
+            height:2px;
+            width:18px;  /* Increased from 16px */
+            background:rgba(255,255,255,0.8);
+            border-radius:3px;
+            transition:all 0.3s ease;
+        }
+        
+        .profile-icon{
+            width:38px;  /* Increased from 34px */
+            height:38px;  /* Increased from 34px */
+            border-radius:50%;
+            background:rgba(255,255,255,0.15);
+            -webkit-backdrop-filter:blur(8px);
+            backdrop-filter:blur(8px);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            cursor:pointer;
+            color:#fff;
+            font-size:1.2rem;  /* Increased from 1.1rem */
+            border:1px solid rgba(255,255,255,0.2);
+        }
+        
+        /* SEARCH SECTION - Slightly increased */
+        .search-section{
+            background:rgba(110,125,145,0.15);
+            -webkit-backdrop-filter:blur(6px);
+            backdrop-filter:blur(6px);
+            padding:10px 20px;  /* Increased from 8px 16px */
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-bottom:1px solid rgba(255,255,255,0.1);
+            border-top:1px solid rgba(255,255,255,0.1);
+        }
+        
+        .search-bar{
+            display:flex;
+            border-radius:12px;  /* Increased from 10px */
+            overflow:hidden;
+            width:100%;
+            max-width:600px;
+            border:1px solid rgba(255,255,255,0.25);
+            background:rgba(255,255,255,0.05);
+            -webkit-backdrop-filter:blur(4px);
+            backdrop-filter:blur(4px);
+            box-shadow:0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .search-input{
+            flex:1;
+            padding:10px 18px;  /* Increased from 8px 16px */
+            border:none;
+            background:transparent;
+            color:#fff;
+            font-size:15px;  /* Increased from 14px */
+            outline:none;
+        }
+        
+        .search-button{
+            background:rgba(255,255,255,0.1);
+            border:none;
+            border-left:1px solid rgba(255,255,255,0.25);
+            padding:0 18px;  /* Increased from 0 16px */
+            cursor:pointer;
+            color:#fff;
+            font-size:1.1rem;  /* Increased from 1rem */
+        }
+        
+        /* COMPACT SECTION HEADERS */
+        .section-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:8px 18px;
+            background:rgba(255,255,255,0.08);
+            border-bottom:1px solid rgba(255,255,255,0.15);
+            height:44px;
+        }
+        
+        .section-title{
+            font-size:1.1rem;
+            font-weight:600;
+            color:#fff;
+            display:flex;
+            align-items:center;
+            gap:8px;
+        }
+        
+        .section-title::before{
+            content:"◈";
+            font-size:1.2rem;
+            opacity:0.9;
+        }
+        
+        .reload-btn{
+            color:#fff;
+            padding:4px 12px;
+            border:1px solid rgba(255,255,255,0.3);
+            border-radius:30px;
+            background:rgba(255,255,255,0.1);
+            font-size:0.75rem;
+            font-weight:600;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            gap:4px;
+        }
+        
         .latest-albums-list{min-height:500px}
-        .album-item{display:flex;align-items:center;gap:20px;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,0.05)}
-        .album-thumbnail{width:120px;height:120px;border-radius:12px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);position:relative;aspect-ratio:1/1}
-        .number-overlay{position:absolute;top:-12px;left:-12px;width:48px;height:48px;background:#fff;color:#0b1018;font-weight:900;font-size:1.6rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:3px solid rgba(255,255,255,0.9);z-index:10}
+        
+        /* REMOVED NUMBER OVERLAYS - Now just album items without rank numbers */
+        .album-item{
+            display:flex;
+            align-items:center;
+            gap:20px;
+            padding:16px 18px;
+            border-bottom:1px solid rgba(255,255,255,0.05);
+            position:relative;
+        }
+        
+        .album-thumbnail{
+            width:120px;
+            height:120px;
+            border-radius:12px;
+            background:rgba(255,255,255,0.1);
+            border:1px solid rgba(255,255,255,0.2);
+            aspect-ratio:1/1;
+        }
+        
+        /* Number overlay completely removed */
+        
         .skeleton-thumbnail{background:rgba(255,255,255,0.1);border-radius:12px;animation:pulse 1.5s ease infinite}
         .skeleton-line{height:16px;background:rgba(255,255,255,0.1);border-radius:20px;margin-bottom:8px;animation:pulse 1.5s ease infinite}
         @keyframes pulse{0%{opacity:0.4}50%{opacity:0.8}100%{opacity:0.4}}
@@ -50,7 +205,7 @@
         @media (max-width:768px){.main-content-container{flex-direction:column}}
     </style>
     
-    <!-- Montserrat font - optimized loading -->
+    <!-- Montserrat font -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
@@ -59,18 +214,10 @@
     
     <!-- Full CSS - loaded after first paint -->
     <style>
-        /* Non-critical styles - design identical to original */
-        .hamburger-menu{width:50px;height:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:5px}
-        .hamburger-menu span{display:block;height:2px;width:18px;background:rgba(255,255,255,0.8);border-radius:3px;transition:all 0.3s ease}
-        .hamburger-menu:hover{background:rgba(255,255,255,0.25);transform:scale(1.05)}
+        /* Non-critical styles */
+        .hamburger-menu:hover{background:rgba(255,255,255,0.25);transform:scale(1.05);border-radius:8px;}
         .hamburger-menu:hover span{background:#fff}
-        .profile-icon{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.15);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;font-size:1.3rem;border:1px solid rgba(255,255,255,0.2)}
         .profile-icon:hover{background:rgba(255,255,255,0.25);transform:scale(1.05)}
-        .search-section{background:rgba(110,125,145,0.15);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:12px 20px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,0.1);border-top:1px solid rgba(255,255,255,0.1)}
-        .search-bar{display:flex;border-radius:12px;overflow:hidden;width:100%;border:1px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.05);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);box-shadow:0 4px 15px rgba(0,0,0,0.3)}
-        .search-input{flex:1;padding:12px 18px;border:none;background:transparent;color:#fff;font-size:15px;outline:none}
-        .search-input::placeholder{color:rgba(255,255,255,0.8)}
-        .search-button{background:rgba(255,255,255,0.1);border:none;border-left:1px solid rgba(255,255,255,0.25);padding:0 20px;cursor:pointer;color:#fff;font-size:1.1rem}
         .search-button:hover{background:rgba(255,255,255,0.2)}
         .section-header:hover{background:rgba(255,255,255,0.12)}
         .reload-btn:hover{background:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.5)}
@@ -79,26 +226,59 @@
         .section-block{background:rgba(120,135,155,0.18);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:12px;overflow:hidden;box-shadow:0 15px 30px rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1)}
         .album-item:hover{background:rgba(255,255,255,0.08);transform:translateX(6px)}
         .album-item:active{transform:scale(0.99)}
-        .album-thumbnail img{width:100%;height:100%;object-fit:cover}
+        .album-thumbnail img{width:100%;height:100%;object-fit:cover;border-radius:11px;}
         .album-item:hover .album-thumbnail{border-color:rgba(255,255,255,0.5);transform:scale(1.03) rotate(0.5deg);box-shadow:0 0 20px rgba(255,255,255,0.2)}
         .album-info{flex-grow:1;min-width:0}
-        .album-title{font-size:1.2rem;font-weight:600;color:#fff;margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
-        .album-date{color:rgba(255,255,255,0.7);font-size:0.8rem;font-weight:500;display:flex;align-items:center;gap:5px}
+        
+        /* Updated styles as requested */
+        .album-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .album-date {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8rem;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
         .album-date::before{content:"📅";font-size:0.75rem;opacity:0.7}
-        .album-meta{display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap}
-        .album-genre,.album-tracks{font-size:0.75rem;font-weight:600;padding:4px 12px;border-radius:8px;background:rgba(255,255,255,0.12);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.15);color:#fff}
+        
+        .album-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+        
+        .album-genre, .album-tracks {
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.12);
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #fff;
+        }
+        
         .trending-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,69,0,0.2);color:#ff7f50;padding:4px 10px;border-radius:30px;font-size:0.7rem;border:1px solid rgba(255,140,0,0.3)}
         .trending-badge i{color:#ffd700}
-        .number-overlay{transition:all 0.3s ease}
-        .number-overlay.rank-1{background:linear-gradient(145deg,#ffd700,#ffa500);border-color:#fff5b0;animation:numberPulse 2s infinite}
-        .number-overlay.rank-2{background:linear-gradient(145deg,#e0e0e0,#b0b0b0)}
-        .number-overlay.rank-3{background:linear-gradient(145deg,#cd7f32,#b06d28)}
-        .number-overlay.rank-4{background:linear-gradient(145deg,#4a90e2,#2a5c9a)}
-        .number-overlay.rank-5{background:linear-gradient(145deg,#50c878,#2a8c4a)}
-        .album-item:hover .number-overlay{transform:scale(1.2) rotate(0deg);box-shadow:0 0 50px currentColor}
-        @keyframes numberPulse{0%{box-shadow:0 4px 20px rgba(0,0,0,0.6),0 0 40px #ffd700}50%{box-shadow:0 4px 30px rgba(0,0,0,0.8),0 0 60px #ffd700}100%{box-shadow:0 4px 20px rgba(0,0,0,0.6),0 0 40px #ffd700}}
+        
+        /* Right sidebar adjustments */
         .right-sidebar .album-thumbnail{width:80px;height:80px}
-        .right-sidebar .number-overlay{width:36px;height:36px;font-size:1.2rem;top:-8px;left:-8px}
+        
         .pagination-item:hover:not(.disabled){background:rgba(200,215,235,0.25);border-color:rgba(255,255,255,0.3);transform:translateY(-1px)}
         .pagination-item.active{background:rgba(255,255,255,0.3);border-color:rgba(255,255,255,0.5);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
         .pagination-item.disabled{opacity:0.3;cursor:not-allowed;pointer-events:none}
@@ -122,107 +302,46 @@
         @media (max-width:768px){.album-thumbnail{width:100px!important;height:100px!important}}
         @media (max-width:480px){.album-thumbnail{width:70px!important;height:70px!important}}
         
-        /* Colorful live stats with your pulsing dot design */
-        .live-stats-container {
-            background: rgba(120,135,155,0.18);
-            -webkit-backdrop-filter: blur(12px);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding: 16px 20px;
-        }
-        
-        .live-stats {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-        
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 6px 14px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            font-weight: 600;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-            color: #fff;
-        }
-        
-        /* Your pulsing dot design */
-        .live-dot {
-            width: 8px;
-            height: 8px;
-            background: #ff0000;
-            border-radius: 50%;
-            box-shadow: 0 0 0 rgba(255,0,0,0.7);
-            animation: livePulse 1.6s infinite;
-        }
-
-        @keyframes livePulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(255,0,0,0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(255,0,0,0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(255,0,0,0);
-            }
-        }
-        
-        .stat-pill {
-            padding: 8px 18px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            border: 1px solid;
-            backdrop-filter: blur(4px);
-            white-space: nowrap;
-        }
-        
-        .stat-pill.songs {
-            background: rgba(64, 128, 255, 0.15);
-            border-color: rgba(64, 128, 255, 0.3);
-            color: #a0c0ff;
-        }
-        
-        .stat-pill.artists {
-            background: rgba(160, 100, 255, 0.15);
-            border-color: rgba(160, 100, 255, 0.3);
-            color: #c4b0ff;
-        }
-        
-        .stat-pill.playlists {
-            background: rgba(80, 200, 120, 0.15);
-            border-color: rgba(80, 200, 120, 0.3);
-            color: #a0e0a0;
-        }
-        
-        .stat-pill.albums {
-            background: rgba(255, 160, 64, 0.15);
-            border-color: rgba(255, 160, 64, 0.3);
-            color: #ffcca0;
-        }
-        
-        .stat-number {
-            font-weight: 700;
-            margin-right: 4px;
-            color: #fff;
-        }
-        
         @media (max-width: 768px) {
-            .live-stats {
-                gap: 10px;
-            }
-            .stat-pill {
+            .section-header {
                 padding: 6px 12px;
-                font-size: 0.8rem;
+                height: 40px;
+            }
+            .section-title {
+                font-size: 1rem;
+                gap: 6px;
+            }
+            .section-title::before {
+                font-size: 1rem;
+            }
+            .reload-btn {
+                padding: 3px 8px;
+                font-size: 0.7rem;
+            }
+            .branding-bar {
+                padding: 8px 16px;
+            }
+            .site-logo {
+                font-size: 18px;
+            }
+            .hamburger-menu {
+                width: 40px;
+                height: 40px;
+            }
+            .profile-icon {
+                width: 34px;
+                height: 34px;
+                font-size: 1.1rem;
+            }
+            .search-section {
+                padding: 8px 16px;
+            }
+            .search-input {
+                padding: 8px 14px;
+                font-size: 14px;
+            }
+            .search-button {
+                padding: 0 14px;
             }
         }
     </style>
@@ -259,28 +378,6 @@
                     </div>
                 </div>
             </section>
-            
-            <!-- Live Stats with your pulsing dot -->
-            <div class="live-stats-container">
-                <div class="live-stats">
-                    <div class="live-indicator">
-                        <span class="live-dot"></span>
-                        LIVE
-                    </div>
-                    <div class="stat-pill songs">
-                        <span class="stat-number">124,832</span> SONGS
-                    </div>
-                    <div class="stat-pill artists">
-                        <span class="stat-number">12,458</span> ARTISTS
-                    </div>
-                    <div class="stat-pill playlists">
-                        <span class="stat-number">5,219</span> PLAYLISTS
-                    </div>
-                    <div class="stat-pill albums">
-                        <span class="stat-number">1,845,932</span> ALBUMS
-                    </div>
-                </div>
-            </div>
         </header>
         
         <div class="main-content-container" id="content">
@@ -295,11 +392,9 @@
                     <span class="clear-search" id="clearSearch">✕ clear</span>
                 </div>
                 
-                <!-- Pre-rendered skeleton for instant visual feedback -->
+                <!-- Main albums list without number overlays -->
                 <div class="latest-albums-list" id="latestAlbums">
-                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:60%"></div><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:100%"></div></div></div>
-                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:60%"></div><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:100%"></div></div></div>
-                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:60%"></div><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:100%"></div></div></div>
+                    <!-- Skeleton loaders will be replaced with actual content -->
                 </div>
                 
                 <div class="pagination-container">
@@ -311,9 +406,29 @@
             </aside>
             
             <div class="right-sidebar">
-                <section class="section-block"><div class="section-header"><h2 class="section-title">top 5 music</h2><span class="reload-btn" id="refreshReleases"><i class="fas fa-redo-alt"></i> reload</span></div><div class="latest-albums-list" id="latestSongs"></div></section>
-                <section class="section-block"><div class="section-header"><h2 class="section-title">top artists</h2><span class="reload-btn" id="refreshArtists"><i class="fas fa-redo-alt"></i> reload</span></div><div class="latest-albums-list" id="featuredArtists"></div></section>
-                <section class="section-block"><div class="section-header"><h2 class="section-title">trending</h2><span class="reload-btn" id="refreshTrending"><i class="fas fa-redo-alt"></i> reload</span></div><div class="latest-albums-list" id="trendingAlbums"></div></section>
+                <section class="section-block">
+                    <div class="section-header">
+                        <h2 class="section-title">top 5 music</h2>
+                        <span class="reload-btn" id="refreshReleases"><i class="fas fa-redo-alt"></i> reload</span>
+                    </div>
+                    <div class="latest-albums-list" id="latestSongs"></div>
+                </section>
+                
+                <section class="section-block">
+                    <div class="section-header">
+                        <h2 class="section-title">top artists</h2>
+                        <span class="reload-btn" id="refreshArtists"><i class="fas fa-redo-alt"></i> reload</span>
+                    </div>
+                    <div class="latest-albums-list" id="featuredArtists"></div>
+                </section>
+                
+                <section class="section-block">
+                    <div class="section-header">
+                        <h2 class="section-title">trending</h2>
+                        <span class="reload-btn" id="refreshTrending"><i class="fas fa-redo-alt"></i> reload</span>
+                    </div>
+                    <div class="latest-albums-list" id="trendingAlbums"></div>
+                </section>
             </div>
         </div>
         
@@ -358,7 +473,7 @@
         </nav>
     </div>
 
-    <!-- Optimized JavaScript -->
+    <!-- Optimized JavaScript - Updated to remove number overlays from render function -->
     <script>
         // PWA Installation
         let deferredPrompt;
@@ -436,7 +551,7 @@
             trackCount: item.trackCount || 0
         });
 
-        // Render
+        // Render - REMOVED number overlays
         function renderAlbum(item, rank, large = true) {
             const size = large ? '120px' : '80px';
             const icon = large ? 'compact-disc' : 'music';
@@ -444,7 +559,7 @@
                 <div class="album-item">
                     <div class="album-thumbnail" style="width:${size};height:${size}">
                         ${item.artwork ? `<img src="${item.artwork}" alt="${item.title}" loading="lazy">` : `<i class="fas fa-${icon}"></i>`}
-                        <div class="number-overlay rank-${rank}">${rank}</div>
+                        <!-- Number overlay completely removed -->
                     </div>
                     <div class="album-info">
                         <div class="album-title">${item.title}${rank === 1 ? '<span class="trending-badge"><i class="fas fa-crown"></i> #1</span>' : ''}</div>
@@ -534,6 +649,13 @@
             const pageItems = results.slice(0, 5);
             if (pageItems.length) {
                 elements.latestAlbums.innerHTML = pageItems.map((item, i) => renderAlbum(item, i+1, true)).join('');
+            } else {
+                // Show skeleton if no results
+                elements.latestAlbums.innerHTML = `
+                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:60%"></div><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:100%"></div></div></div>
+                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:60%"></div><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:100%"></div></div></div>
+                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:60%"></div><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:100%"></div></div></div>
+                `;
             }
             renderPagination(currentState.currentPage, TOTAL_PAGES);
         }
@@ -550,7 +672,7 @@
                 const data = await fetchWithCache(url);
                 const results = (data.results || []).map(transformAlbum);
                 if (results.length) {
-                    s.el.innerHTML = results.map((item, i) => renderAlbum(item, i+1, false)).join('');
+                    s.el.innerHTML = results.slice(0, 5).map((item, i) => renderAlbum(item, i+1, false)).join('');
                 }
             }
         }
