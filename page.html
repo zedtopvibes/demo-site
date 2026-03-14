@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>glass route · detail</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Glass Route">
+    <meta name="application-name" content="Glass Route">
+    <meta name="theme-color" content="#0b1018">
+    
+    <!-- CRITICAL: Preconnect to origins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://itunes.apple.com">
+    
+    <style>
+        /* Critical CSS */
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Montserrat',sans-serif}
+        body{background:#0b1018;color:#fff;min-height:100vh;display:flex;flex-direction:column}
+        .app-container{display:flex;flex-direction:column;min-height:100vh}
+        .main-content-container{max-width:1400px;margin:0 auto;padding:20px 10px;display:flex;gap:10px;width:100%;flex:1}
+        .left-sidebar{flex:3;background:rgba(130,145,165,0.18);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:12px;border:1px solid rgba(255,255,255,0.1)}
+        .right-sidebar{flex:1;display:flex;flex-direction:column;gap:20px;min-width:300px}
+        
+        /* Header */
+        .branding-bar{
+            background:rgba(120,135,155,0.2);
+            -webkit-backdrop-filter:blur(14px);
+            backdrop-filter:blur(14px);
+            padding:10px 20px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+        .site-logo{
+            font-weight:700;
+            font-size:20px;
+            background:linear-gradient(135deg,#fff,#e0e8ff);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+        .hamburger-menu{
+            width:44px;height:44px;
+            display:flex;flex-direction:column;
+            align-items:center;justify-content:center;
+            cursor:pointer;gap:5px;
+        }
+        .hamburger-menu span{
+            display:block;height:2px;width:18px;
+            background:rgba(255,255,255,0.8);
+            border-radius:3px;
+        }
+        .profile-icon{
+            width:38px;height:38px;
+            border-radius:50%;
+            background:rgba(255,255,255,0.15);
+            backdrop-filter:blur(8px);
+            display:flex;align-items:center;justify-content:center;
+            cursor:pointer;color:#fff;font-size:1.2rem;
+            border:1px solid rgba(255,255,255,0.2);
+        }
+        
+        /* Search */
+        .search-section{
+            background:rgba(110,125,145,0.15);
+            backdrop-filter:blur(6px);
+            padding:10px 20px;
+            border-bottom:1px solid rgba(255,255,255,0.1);
+            border-top:1px solid rgba(255,255,255,0.1);
+        }
+        .search-bar{
+            display:flex;border-radius:12px;overflow:hidden;
+            max-width:600px;margin:0 auto;
+            border:1px solid rgba(255,255,255,0.25);
+            background:rgba(255,255,255,0.05);
+            backdrop-filter:blur(4px);
+        }
+        .search-input{
+            flex:1;padding:10px 18px;
+            border:none;background:transparent;
+            color:#fff;font-size:15px;outline:none;
+        }
+        .search-input::placeholder{color:rgba(255,255,255,0.8)}
+        .search-button{
+            background:rgba(255,255,255,0.1);
+            border:none;border-left:1px solid rgba(255,255,255,0.25);
+            padding:0 18px;cursor:pointer;color:#fff;
+        }
+        
+        /* Section Headers */
+        .section-header{
+            display:flex;justify-content:space-between;
+            align-items:center;padding:12px 18px;
+            background:rgba(255,255,255,0.08);
+            border-bottom:1px solid rgba(255,255,255,0.15);
+        }
+        .section-title{
+            font-size:1.1rem;font-weight:600;color:#fff;
+            display:flex;align-items:center;gap:8px;
+        }
+        .section-title::before{content:"◈";font-size:1.2rem;opacity:0.9}
+        .reload-btn{
+            color:#fff;padding:4px 12px;
+            border:1px solid rgba(255,255,255,0.3);
+            border-radius:30px;background:rgba(255,255,255,0.1);
+            font-size:0.75rem;font-weight:600;cursor:pointer;
+            display:flex;align-items:center;gap:4px;
+        }
+        
+        /* Header Item */
+        .header-item{
+            display:flex;align-items:center;gap:20px;
+            padding:20px 18px;
+            border-bottom:1px solid rgba(255,255,255,0.05);
+        }
+        .header-thumbnail{
+            width:180px;height:180px;
+            border-radius:12px;
+            background:rgba(255,255,255,0.1);
+            border:1px solid rgba(255,255,255,0.2);
+        }
+        .header-thumbnail img{width:100%;height:100%;object-fit:cover;border-radius:11px;}
+        .header-info h1{
+            font-size:2rem;font-weight:700;margin-bottom:8px;
+        }
+        .header-info p{
+            color:rgba(255,255,255,0.7);font-size:1rem;margin-bottom:12px;
+        }
+        .header-meta{
+            display:flex;gap:12px;flex-wrap:wrap;
+        }
+        .header-meta span{
+            padding:6px 14px;border-radius:30px;
+            background:rgba(255,255,255,0.1);
+            border:1px solid rgba(255,255,255,0.2);
+            font-size:0.9rem;
+        }
+        
+        /* List Items - Same as homepage */
+        .album-item{
+            display:flex;align-items:center;gap:20px;
+            padding:16px 18px;
+            border-bottom:1px solid rgba(255,255,255,0.05);
+            cursor:pointer;
+        }
+        .album-item:hover{background:rgba(255,255,255,0.08);transform:translateX(6px);}
+        .album-thumbnail{
+            width:80px;height:80px;
+            border-radius:12px;
+            background:rgba(255,255,255,0.1);
+            border:1px solid rgba(255,255,255,0.2);
+        }
+        .album-thumbnail img{width:100%;height:100%;object-fit:cover;border-radius:11px;}
+        .album-info{flex-grow:1;min-width:0}
+        .album-title{
+            font-size:15px;font-weight:600;color:#fff;
+            margin-bottom:6px;
+        }
+        .album-date{
+            color:rgba(255,255,255,0.7);
+            font-size:0.8rem;font-weight:400;
+            margin-bottom:6px;
+        }
+        .album-meta{
+            display:flex;align-items:center;gap:8px;
+            flex-wrap:wrap;
+        }
+        .album-genre, .album-tracks{
+            font-size:0.7rem;font-weight:500;
+            padding:4px 10px;border-radius:8px;
+            background:rgba(255,255,255,0.12);
+            backdrop-filter:blur(4px);
+            border:1px solid rgba(255,255,255,0.15);
+            color:#fff;
+        }
+        .trending-badge{
+            background:rgba(255,69,0,0.2);color:#ff7f50;
+            padding:4px 10px;border-radius:30px;
+            font-size:0.7rem;border:1px solid rgba(255,140,0,0.3);
+        }
+        
+        /* Right sidebar items - smaller */
+        .right-sidebar .album-thumbnail{width:60px;height:60px;}
+        .right-sidebar .album-title{font-size:13px;}
+        
+        /* Skeleton */
+        .skeleton-thumbnail{background:rgba(255,255,255,0.1);border-radius:12px;animation:pulse 1.5s infinite;}
+        .skeleton-line{height:16px;background:rgba(255,255,255,0.1);border-radius:20px;margin-bottom:8px;animation:pulse 1.5s infinite;}
+        @keyframes pulse{0%{opacity:0.4}50%{opacity:0.8}100%{opacity:0.4}}
+        
+        .site-footer{
+            text-align:center;margin-top:45px;padding:25px 20px;
+            border-top:1px solid rgba(255,255,255,0.15);
+            background:rgba(100,115,135,0.2);backdrop-filter:blur(14px);
+        }
+        @media (max-width:768px){.main-content-container{flex-direction:column}}
+    </style>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="site-header">
+            <div class="branding-bar">
+                <div class="hamburger-menu" id="hamburgerMenu">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="site-logo">GLASS•ROUTE</div>
+                <div class="profile-icon" id="profileIcon"><i class="fas fa-user"></i></div>
+            </div>
+            
+            <section class="search-section">
+                <div class="search-bar">
+                    <input type="text" class="search-input" id="searchInput" placeholder="search...">
+                    <button class="search-button" id="searchButton"><i class="fas fa-search"></i></button>
+                </div>
+            </section>
+        </header>
+        
+        <div class="main-content-container" id="content">
+            <!-- Left Sidebar - Main Content -->
+            <aside class="left-sidebar">
+                <!-- Header Section -->
+                <div class="header-item" id="headerSection">
+                    <div class="skeleton-thumbnail" style="width:180px;height:180px"></div>
+                    <div class="header-info">
+                        <div class="skeleton-line" style="width:200px"></div>
+                        <div class="skeleton-line" style="width:150px"></div>
+                        <div class="skeleton-line" style="width:100px"></div>
+                    </div>
+                </div>
+                
+                <!-- Tracks/Songs List -->
+                <div class="section-header">
+                    <h2 class="section-title" id="listTitle">tracks</h2>
+                    <span class="reload-btn" id="refreshList"><i class="fas fa-redo-alt"></i> reload</span>
+                </div>
+                <div class="latest-albums-list" id="itemsList"></div>
+            </aside>
+            
+            <!-- Right Sidebar -->
+            <div class="right-sidebar">
+                <section class="section-block">
+                    <div class="section-header">
+                        <h2 class="section-title" id="sidebar1Title"></h2>
+                        <span class="reload-btn" id="refreshSidebar1"><i class="fas fa-redo-alt"></i></span>
+                    </div>
+                    <div class="latest-albums-list" id="sidebar1"></div>
+                </section>
+                
+                <section class="section-block">
+                    <div class="section-header">
+                        <h2 class="section-title" id="sidebar2Title"></h2>
+                        <span class="reload-btn" id="refreshSidebar2"><i class="fas fa-redo-alt"></i></span>
+                    </div>
+                    <div class="latest-albums-list" id="sidebar2"></div>
+                </section>
+            </div>
+        </div>
+        
+        <footer class="site-footer">
+            <p>© 2025 GLASS ROUTE</p>
+        </footer>
+    </div>
+
+    <script>
+        // Get type and slug from URL
+        const path = window.location.pathname.split('/');
+        const type = path[1] || 'album'; // Default to album for testing
+        const slug = path[2] || 'midnights'; // Default slug
+        
+        const API_BASE = 'https://itunes.apple.com';
+        let cache = new Map();
+        
+        // DOM Elements
+        const elements = {
+            headerSection: document.getElementById('headerSection'),
+            itemsList: document.getElementById('itemsList'),
+            listTitle: document.getElementById('listTitle'),
+            sidebar1: document.getElementById('sidebar1'),
+            sidebar2: document.getElementById('sidebar2'),
+            sidebar1Title: document.getElementById('sidebar1Title'),
+            sidebar2Title: document.getElementById('sidebar2Title')
+        };
+
+        // Fetch with cache
+        async function fetchWithCache(url) {
+            if (cache.has(url)) {
+                return cache.get(url);
+            }
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                cache.set(url, data);
+                return data;
+            } catch (e) {
+                console.log('Fetch error:', e);
+                return { results: [] };
+            }
+        }
+
+        // Render functions
+        function renderHeader(data) {
+            return `
+                <div class="header-thumbnail">
+                    <img src="${data.artwork || 'https://via.placeholder.com/180'}" alt="${data.title}">
+                </div>
+                <div class="header-info">
+                    <h1>${data.title}</h1>
+                    <p>${data.subtitle || ''}</p>
+                    <div class="header-meta">
+                        ${data.meta ? `<span>${data.meta}</span>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderItem(item, index) {
+            const isLarge = false; // Sidebar items are smaller
+            const size = isLarge ? '120px' : '80px';
+            
+            return `
+                <div class="album-item" onclick="navigateToItem('${item.type || 'song'}', '${item.slug || item.id}')">
+                    <div class="album-thumbnail" style="width:${size};height:${size}">
+                        <img src="${item.artwork || 'https://via.placeholder.com/80'}" alt="${item.title}">
+                    </div>
+                    <div class="album-info">
+                        <div class="album-title">
+                            ${item.title}
+                            ${index === 0 ? '<span class="trending-badge"><i class="fas fa-crown"></i> #1</span>' : ''}
+                        </div>
+                        <div class="album-date">${item.subtitle || ''}</div>
+                        <div class="album-meta">
+                            ${item.genre ? `<span class="album-genre">${item.genre}</span>` : ''}
+                            ${item.tracks ? `<span class="album-tracks">${item.tracks}</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Load album data
+        async function loadAlbum(albumId) {
+            const url = `${API_BASE}/lookup?id=${albumId}&entity=song`;
+            const data = await fetchWithCache(url);
+            
+            if (!data.results || data.results.length === 0) return null;
+            
+            const album = data.results[0];
+            const tracks = data.results.slice(1) || [];
+            
+            return {
+                header: {
+                    title: album.collectionName,
+                    subtitle: album.artistName,
+                    meta: `${album.releaseDate ? new Date(album.releaseDate).getFullYear() : 'Unknown'} • ${album.trackCount} tracks`,
+                    artwork: album.artworkUrl100?.replace('100x100', '600x600')
+                },
+                items: tracks.map(track => ({
+                    id: track.trackId,
+                    title: track.trackName,
+                    subtitle: `${album.artistName} • ${Math.floor(track.trackTimeMillis/60000)}:${Math.floor((track.trackTimeMillis%60000)/1000).toString().padStart(2,'0')}`,
+                    genre: track.primaryGenreName,
+                    tracks: `${Math.floor(track.trackTimeMillis/60000)}:${Math.floor((track.trackTimeMillis%60000)/1000).toString().padStart(2,'0')}`,
+                    artwork: track.artworkUrl100?.replace('100x100', '200x200'),
+                    type: 'song',
+                    slug: track.trackName?.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+                }))
+            };
+        }
+
+        // Load artist data
+        async function loadArtist(artistName) {
+            const url = `${API_BASE}/search?term=${encodeURIComponent(artistName)}&media=music&entity=album&limit=5`;
+            const data = await fetchWithCache(url);
+            
+            const albums = data.results || [];
+            
+            return {
+                header: {
+                    title: artistName,
+                    subtitle: 'Artist',
+                    meta: `${albums.length} albums`,
+                    artwork: albums[0]?.artworkUrl100?.replace('100x100', '600x600')
+                },
+                items: albums.slice(0, 5).map(album => ({
+                    id: album.collectionId,
+                    title: album.collectionName,
+                    subtitle: `${new Date(album.releaseDate).getFullYear()} • ${album.trackCount} tracks`,
+                    genre: album.primaryGenreName,
+                    artwork: album.artworkUrl100?.replace('100x100', '200x200'),
+                    type: 'album',
+                    slug: album.collectionName?.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+                }))
+            };
+        }
+
+        // Load playlist data (simulated with search)
+        async function loadPlaylist(playlistName) {
+            const url = `${API_BASE}/search?term=${encodeURIComponent(playlistName)}&media=music&entity=song&limit=10`;
+            const data = await fetchWithCache(url);
+            
+            const tracks = data.results || [];
+            
+            return {
+                header: {
+                    title: playlistName,
+                    subtitle: 'Playlist',
+                    meta: `${tracks.length} songs`,
+                    artwork: tracks[0]?.artworkUrl100?.replace('100x100', '600x600')
+                },
+                items: tracks.slice(0, 5).map(track => ({
+                    id: track.trackId,
+                    title: track.trackName,
+                    subtitle: track.artistName,
+                    genre: track.primaryGenreName,
+                    artwork: track.artworkUrl100?.replace('100x100', '200x200'),
+                    type: 'song',
+                    slug: track.trackName?.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+                }))
+            };
+        }
+
+        // Load sidebar content (more like this)
+        async function loadSidebarContent(currentType, currentId, currentGenre) {
+            const searchTerms = {
+                album: ['popular', 'hits', 'top'],
+                artist: ['similar', 'related', 'like'],
+                playlist: ['playlist', 'mix', 'vibes']
+            };
+            
+            const terms = searchTerms[currentType] || ['popular'];
+            const randomTerm = terms[Math.floor(Math.random() * terms.length)];
+            
+            let url;
+            if (currentType === 'artist') {
+                url = `${API_BASE}/search?term=${randomTerm}%20artist&media=music&entity=musicArtist&limit=5`;
+            } else {
+                url = `${API_BASE}/search?term=${randomTerm}&media=music&entity=album&limit=5`;
+            }
+            
+            const data = await fetchWithCache(url);
+            const results = data.results || [];
+            
+            return results.map(item => ({
+                id: item.artistId || item.collectionId,
+                title: item.artistName || item.collectionName,
+                subtitle: item.primaryGenreName || 'Various',
+                genre: item.primaryGenreName,
+                artwork: item.artworkUrl100?.replace('100x100', '200x200'),
+                type: item.artistId ? 'artist' : 'album',
+                slug: (item.artistName || item.collectionName)?.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+            }));
+        }
+
+        // Main load function
+        async function loadPage() {
+            // Show skeletons
+            elements.itemsList.innerHTML = Array(5).fill(0).map(() => `
+                <div class="album-item"><div class="skeleton-thumbnail" style="width:80px;height:80px"></div><div class="album-info"><div class="skeleton-line" style="width:60%"></div><div class="skeleton-line" style="width:40%"></div></div></div>
+            `).join('');
+            
+            let data;
+            let sidebarItems1 = [];
+            let sidebarItems2 = [];
+            
+            // Load data based on type
+            if (type === 'album') {
+                // Use a real album ID from iTunes
+                const albumId = slug === 'midnights' ? '1658944443' : '1440846689'; // Midnights or 1989
+                data = await loadAlbum(albumId);
+                elements.listTitle.innerText = 'tracks';
+                elements.sidebar1Title.innerText = 'more albums';
+                elements.sidebar2Title.innerText = 'you might also like';
+                
+                // Load sidebar content
+                const moreAlbums = await loadSidebarContent('album', albumId, data?.items[0]?.genre);
+                sidebarItems1 = moreAlbums.slice(0, 3);
+                sidebarItems2 = moreAlbums.slice(3, 6);
+                
+            } else if (type === 'artist') {
+                const artistName = slug === 'taylor-swift' ? 'Taylor Swift' : 'Drake';
+                data = await loadArtist(artistName);
+                elements.listTitle.innerText = 'albums';
+                elements.sidebar1Title.innerText = 'similar artists';
+                elements.sidebar2Title.innerText = 'fans also like';
+                
+                const similarArtists = await loadSidebarContent('artist', artistName);
+                sidebarItems1 = similarArtists.slice(0, 3);
+                sidebarItems2 = similarArtists.slice(3, 6);
+                
+            } else if (type === 'playlist') {
+                const playlistName = slug === 'chill-vibes' ? 'chill' : 'workout';
+                data = await loadPlaylist(playlistName);
+                elements.listTitle.innerText = 'tracks';
+                elements.sidebar1Title.innerText = 'more playlists';
+                elements.sidebar2Title.innerText = 'recommended';
+                
+                const morePlaylists = await loadSidebarContent('playlist', playlistName);
+                sidebarItems1 = morePlaylists.slice(0, 3);
+                sidebarItems2 = morePlaylists.slice(3, 6);
+            }
+            
+            if (data) {
+                // Render header
+                elements.headerSection.innerHTML = renderHeader(data.header);
+                
+                // Render main items
+                elements.itemsList.innerHTML = data.items.map((item, i) => renderItem(item, i)).join('');
+                
+                // Render sidebars
+                elements.sidebar1.innerHTML = sidebarItems1.map(item => renderItem(item)).join('');
+                elements.sidebar2.innerHTML = sidebarItems2.map(item => renderItem(item)).join('');
+            }
+        }
+
+        // Navigation
+        function navigateToItem(type, slug) {
+            if (type === 'song') {
+                window.location.href = `/song/${slug}`;
+            } else {
+                window.location.href = `/${type}/${slug}`;
+            }
+        }
+
+        // Refresh buttons
+        document.getElementById('refreshList').addEventListener('click', () => {
+            loadPage();
+        });
+
+        document.getElementById('refreshSidebar1').addEventListener('click', () => {
+            loadPage();
+        });
+
+        document.getElementById('refreshSidebar2').addEventListener('click', () => {
+            loadPage();
+        });
+
+        // Search
+        document.getElementById('searchButton').addEventListener('click', () => {
+            const term = document.getElementById('searchInput').value;
+            if (term) {
+                window.location.href = `/search?q=${encodeURIComponent(term)}`;
+            }
+        });
+
+        // Load on page load
+        document.addEventListener('DOMContentLoaded', loadPage);
+    </script>
+</body>
+</html>
