@@ -110,34 +110,31 @@
             height: 20px;
         }
         
-        /* Menu Toggle Button */
+        /* Menu Toggle Button - NOW MATCHES HEADER STYLE */
         .menu-toggle {
-            position: fixed;
-            top: 10px;
+            position: absolute;
+            top: 8px;
             left: 10px;
-            z-index: 999;
-            background: #ff4b2b;
+            z-index: 99;
+            background: transparent;
             border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
         }
         
-        .menu-toggle:hover {
-            background: #ff784b;
-            transform: scale(1.1);
-        }
-        
         .menu-toggle svg {
-            fill: white;
+            fill: #fff;
             width: 24px;
             height: 24px;
+        }
+        
+        .menu-toggle:hover svg {
+            fill: #ff4b2b;
         }
         
         /* Overlay when menu is open */
@@ -159,7 +156,9 @@
         
         /* Adjust header for menu button */
         .header {
-            padding-left: 50px !important;
+            height: 36px;
+            background: #333;
+            padding: 3px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -236,11 +235,6 @@
         }
         .header, .search-section {
             text-align: center;
-        }
-        .header {
-            height: 36px;
-            background: #333;
-            padding: 3px;
         }
         .search-section {
             background: #333;
@@ -830,7 +824,7 @@
     </style>
 </head>
 <body>
-    <!-- Hamburger Menu Button -->
+    <!-- Hamburger Menu Button - NOW TRANSPARENT WITH WHITE ICON -->
     <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
         <svg viewBox="0 0 24 24">
             <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
@@ -900,7 +894,8 @@
     </header>
     <div class="clear"></div>
 
-    <!-- Trending Now Section with See All -->
+    <!-- Rest of the sections remain exactly the same -->
+    <!-- Trending Now Section -->
     <div class="section-header" id="trending">
         <h2 class="section-title" id="trending-title">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
@@ -918,7 +913,7 @@
         </div>
     </div>
 
-    <!-- Latest Releases Section with See All -->
+    <!-- Latest Releases Section -->
     <div class="section-header section-spacing" id="latest">
         <h2 class="section-title" id="latest-title">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
@@ -1228,7 +1223,7 @@
         </div>
     </div>
     
-    <!-- Music Genres Section with See All -->
+    <!-- Music Genres Section -->
     <div class="section-header section-spacing" id="genres">
         <h2 class="section-title">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
@@ -1242,6 +1237,7 @@
     </div>
     <div class="corner">
         <div class="music-grid" id="genres-container">
+            <!-- Genre items remain the same -->
             <a class="music-item" href="#" onclick="searchByGenre('rock'); return false;">
                 <div class="item-container" style="display:flex;align-items:center;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
