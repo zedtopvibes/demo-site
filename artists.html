@@ -1,661 +1,1010 @@
-```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
-    <meta charset="UTF-8">
-    <title>glass route · artists</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    
-    <!-- PWA Meta Tags -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Glass Route">
-    <meta name="application-name" content="Glass Route">
-    <meta name="theme-color" content="#0b1018">
-    
-    <!-- App Icons -->
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%230b1018' stroke='%23ffffff' stroke-width='2'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='%23ffffff' font-family='Arial'%3E🎬%3C/text%3E%3C/svg%3E">
-    
-    <!-- CRITICAL: Preconnect to origins -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://itunes.apple.com">
-    
-    <!-- CRITICAL: Inline minimal CSS for first paint -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MusicHub · Artists</title>
     <style>
-        /* Critical CSS - only what's needed for above-the-fold */
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Montserrat',sans-serif}
-        body{background:#0b1018;color:#fff;min-height:100vh;display:flex;flex-direction:column}
-        .app-container{display:flex;flex-direction:column;min-height:100vh}
-        .main-content-container{max-width:1400px;margin:0 auto;padding:20px 10px;display:flex;gap:10px;width:100%;flex:1}
-        .left-sidebar{flex:3;background:rgba(130,145,165,0.18);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:12px;border:1px solid rgba(255,255,255,0.1)}
-        .right-sidebar{flex:1;display:flex;flex-direction:column;gap:20px;min-width:300px}
-        .branding-bar{background:rgba(120,135,155,0.2);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);padding:10px 20px;display:flex;justify-content:space-between;align-items:center}
-        .site-logo{font-weight:900;font-size:22px;background:linear-gradient(135deg,#fff,#e0e8ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        .section-header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.15);height:60px}
-        .section-title{font-size:1.3rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px}
-        .section-title::before{content:"◈";font-size:1.4rem;opacity:0.9}
-        .reload-btn{color:#fff;padding:6px 15px;border:1px solid rgba(255,255,255,0.3);border-radius:40px;background:rgba(255,255,255,0.1);font-size:0.85rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
-        .latest-albums-list{min-height:500px}
-        .album-item{display:flex;align-items:center;gap:20px;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,0.05)}
-        .album-thumbnail{width:120px;height:120px;border-radius:12px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);position:relative;aspect-ratio:1/1}
-        .number-overlay{position:absolute;top:-12px;left:-12px;width:48px;height:48px;background:#fff;color:#0b1018;font-weight:900;font-size:1.6rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:3px solid rgba(255,255,255,0.9);z-index:10}
-        .skeleton-thumbnail{background:rgba(255,255,255,0.1);border-radius:12px;animation:pulse 1.5s ease infinite}
-        .skeleton-line{height:16px;background:rgba(255,255,255,0.1);border-radius:20px;margin-bottom:8px;animation:pulse 1.5s ease infinite}
-        @keyframes pulse{0%{opacity:0.4}50%{opacity:0.8}100%{opacity:0.4}}
-        .pagination-container{width:100%;padding:20px;border-top:1px solid rgba(255,255,255,0.1)}
-        .pagination{display:flex;justify-content:center;gap:6px}
-        .pagination-item{width:40px;height:40px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:12px;color:#fff;font-weight:600;display:flex;align-items:center;justify-content:center}
-        .site-footer{text-align:center;margin-top:45px;padding:25px 20px;border-top:1px solid rgba(255,255,255,0.15);background:rgba(100,115,135,0.2);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
-        @media (max-width:768px){.main-content-container{flex-direction:column}}
-    </style>
-    
-    <!-- Montserrat font - optimized loading -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" as="style">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome - deferred -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-    
-    <!-- Full CSS - loaded after first paint -->
-    <style>
-        /* Non-critical styles - design identical to original */
-        .hamburger-menu{width:50px;height:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:5px}
-        .hamburger-menu span{display:block;height:2px;width:18px;background:rgba(255,255,255,0.8);border-radius:3px;transition:all 0.3s ease}
-        .hamburger-menu:hover{background:rgba(255,255,255,0.25);transform:scale(1.05)}
-        .hamburger-menu:hover span{background:#fff}
-        .profile-icon{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.15);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;font-size:1.3rem;border:1px solid rgba(255,255,255,0.2)}
-        .profile-icon:hover{background:rgba(255,255,255,0.25);transform:scale(1.05)}
-        .search-section{background:rgba(110,125,145,0.15);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:12px 20px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,0.1);border-top:1px solid rgba(255,255,255,0.1)}
-        .search-bar{display:flex;border-radius:12px;overflow:hidden;width:100%;border:1px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.05);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);box-shadow:0 4px 15px rgba(0,0,0,0.3)}
-        .search-input{flex:1;padding:12px 18px;border:none;background:transparent;color:#fff;font-size:15px;outline:none}
-        .search-input::placeholder{color:rgba(255,255,255,0.8)}
-        .search-button{background:rgba(255,255,255,0.1);border:none;border-left:1px solid rgba(255,255,255,0.25);padding:0 20px;cursor:pointer;color:#fff;font-size:1.1rem}
-        .search-button:hover{background:rgba(255,255,255,0.2)}
-        .section-header:hover{background:rgba(255,255,255,0.12)}
-        .reload-btn:hover{background:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.5)}
-        .reload-btn i{transition:transform 0.3s ease}
-        .reload-btn:hover i{transform:rotate(180deg)}
-        .section-block{background:rgba(120,135,155,0.18);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:12px;overflow:hidden;box-shadow:0 15px 30px rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1)}
-        .album-item:hover{background:rgba(255,255,255,0.08);transform:translateX(6px)}
-        .album-item:active{transform:scale(0.99)}
-        .album-thumbnail img{width:100%;height:100%;object-fit:cover;border-radius:11px}
-        .album-item:hover .album-thumbnail{border-color:rgba(255,255,255,0.5);transform:scale(1.03) rotate(0.5deg);box-shadow:0 0 20px rgba(255,255,255,0.2)}
-        .album-info{flex-grow:1;min-width:0}
-        .album-title{font-size:1.2rem;font-weight:600;color:#fff;margin-bottom:4px;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
-        .album-meta{display:flex;align-items:center;gap:8px;margin-top:2px;flex-wrap:wrap}
-        .artist-genre{font-size:0.85rem;font-weight:500;padding:4px 10px;border-radius:8px;background:rgba(255,255,255,0.12);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.15);color:#fff}
-        .artist-songs{font-size:0.85rem;font-weight:500;padding:4px 10px;border-radius:8px;background:rgba(255,255,255,0.12);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.15);color:#fff}
-        .trending-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,69,0,0.2);color:#ff7f50;padding:4px 10px;border-radius:30px;font-size:0.7rem;border:1px solid rgba(255,140,0,0.3)}
-        .trending-badge i{color:#ffd700}
-        .number-overlay{transition:all 0.3s ease}
-        .number-overlay.rank-1{background:linear-gradient(145deg,#ffd700,#ffa500);border-color:#fff5b0;animation:numberPulse 2s infinite}
-        .number-overlay.rank-2{background:linear-gradient(145deg,#e0e0e0,#b0b0b0)}
-        .number-overlay.rank-3{background:linear-gradient(145deg,#cd7f32,#b06d28)}
-        .number-overlay.rank-4{background:linear-gradient(145deg,#4a90e2,#2a5c9a)}
-        .number-overlay.rank-5{background:linear-gradient(145deg,#50c878,#2a8c4a)}
-        .album-item:hover .number-overlay{transform:scale(1.2) rotate(0deg);box-shadow:0 0 50px currentColor}
-        @keyframes numberPulse{0%{box-shadow:0 4px 20px rgba(0,0,0,0.6),0 0 40px #ffd700}50%{box-shadow:0 4px 30px rgba(0,0,0,0.8),0 0 60px #ffd700}100%{box-shadow:0 4px 20px rgba(0,0,0,0.6),0 0 40px #ffd700}}
-        .right-sidebar .album-thumbnail{width:80px;height:80px}
-        .right-sidebar .number-overlay{width:36px;height:36px;font-size:1.2rem;top:-8px;left:-8px}
-        .pagination-item:hover:not(.disabled){background:rgba(200,215,235,0.25);border-color:rgba(255,255,255,0.3);transform:translateY(-1px)}
-        .pagination-item.active{background:rgba(255,255,255,0.3);border-color:rgba(255,255,255,0.5);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
-        .pagination-item.disabled{opacity:0.3;cursor:not-allowed;pointer-events:none}
-        .pagination-ellipsis{color:rgba(255,255,255,0.5);padding:0 5px}
-        .pagination-prev,.pagination-next{width:auto;padding:0 15px;gap:6px}
-        .pagination-info{text-align:center;color:rgba(255,255,255,0.6);font-size:0.8rem;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1)}
-        .nav-drawer{position:fixed;top:0;width:85%;max-width:350px;height:100%;background:rgba(100,115,135,0.25);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);z-index:1000;box-shadow:0 0 30px rgba(0,0,0,0.5);transition:transform 0.3s ease,opacity 0.3s ease;opacity:0;display:none}
-        .nav-drawer.left{left:0;transform:translateX(-100%)}
-        .nav-drawer.right{right:0;transform:translateX(100%)}
-        .nav-header{padding:20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.15)}
-        .close-nav{font-size:32px;cursor:pointer;color:#fff}
-        .nav-item{display:block;padding:15px 25px;color:#fff;text-decoration:none;font-size:17px;font-weight:500;transition:all 0.3s ease;border-left:4px solid transparent}
-        .nav-item i{width:24px;margin-right:10px;color:rgba(255,255,255,0.7)}
-        .nav-item:hover{background:rgba(255,255,255,0.15);border-left-color:#fff}
-        .nav-item.active{background:rgba(255,255,255,0.2);border-left-color:#fff}
-        .scroll-progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,#a0c0ff,#fff);width:0%;z-index:1001}
-        .search-info{padding:10px 18px;background:rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.1);display:flex;justify-content:space-between}
-        .clear-search{cursor:pointer;padding:5px 12px;border-radius:20px;background:rgba(255,255,255,0.1)}
-        .install-prompt{position:fixed;bottom:20px;left:20px;right:20px;background:rgba(255,255,255,0.15);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-radius:20px;padding:16px;display:none;align-items:center;gap:16px;z-index:2000;max-width:400px;margin:0 auto}
-        @media (max-width:768px){.album-thumbnail{width:100px!important;height:100px!important}}
-        @media (max-width:480px){.album-thumbnail{width:70px!important;height:70px!important}}
-        
-        /* Hide any extra info */
-        .album-date, .album-tracks, .album-year, .artist-albums, .extra-meta {
-            display: none !important;
+        /* ---------- BASE (exactly as original, untouched) ---------- */
+        html, body {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            color: #333;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+            -ms-touch-action: none;
+            overflow-x: hidden;
+        }
+        body {
+            margin: 0;
+            background: #eee;
+            color: #3e3e3e;
+            font-size: 14px;
+            -webkit-font-smoothing: auto;
+            -moz-osx-font-smoothing: auto;
+            text-rendering: optimizeLegibility;
         }
         
-        /* Artist page specific */
-        .artist-thumbnail {
-            background: linear-gradient(145deg, #4a6fa5, #166088);
+        /* HEADER - EXACTLY AS ORIGINAL */
+        .header {
+            height: 38px;
+            background: #333;
+            padding: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
+        .header h1 { margin: 0; }
+        .hamburger-btn {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 8px 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 28px;
+            height: 28px;
+            z-index: 11;
+            transition: all 0.2s;
+        }
+        .hamburger-btn span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: #ffffff;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .hamburger-btn:hover span { background-color: #ff4b2b; }
+        
+        /* SIDEBAR & OVERLAY - fully opaque */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            pointer-events: none;
+        }
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100vh;
+            background: #333;
+            z-index: 10000;
+            transition: left 0.35s ease;
+            box-shadow: 2px 0 12px rgba(0,0,0,0.5);
+            overflow-y: auto;
+            opacity: 1;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+        .sidebar.open { left: 0; }
+        .sidebar-close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: #333;
+            border: none;
+            color: #ffffff;
+            font-size: 28px;
+            line-height: 1;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+            z-index: 10001;
+            border-radius: 4px;
+        }
+        .sidebar-close:hover {
+            color: #ff4b2b;
+            background: #333;
+        }
+        .sidebar-menu {
+            list-style: none;
+            padding: 60px 0 20px 0;
+            margin: 0;
+            width: 100%;
+            background: #333;
+        }
+        .sidebar-menu li {
+            margin: 0;
+            padding: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            background: #333;
+        }
+        .sidebar-menu li a {
+            display: block;
+            padding: 14px 20px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            background: #333;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .sidebar-menu li a:hover {
+            background-color: #ff2121;
+            color: #ffffff;
+        }
+
+        /* ---------- CORE LAYOUT (unchanged) ---------- */
+        .section-spacing { margin-top: 25px; }
+        .corner {
+            width: 100%;
+            max-width: 100%;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        .music-grid {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-size: 0;
+            line-height: 0;
+            display: block;
+        }
+        h1, h2, h3 { padding: 0; margin: 0; }
+        h1, h2, h3, .section-title { font-size: 16px; }
+        h1, h3 { color: #333; font-weight: 600; }
+        h2 { color: #fff; font-weight: 600; margin-bottom: 6px; margin-top: 0; }
+        a:active, a:link, a:visited { color: #fff; text-decoration: none !important; outline: 0; }
+        a:focus, a:hover { color: #e74c3c; outline: 0; }
+        .pull-left { float: left; }
+        .pull-right { float: right; }
+        .aligncenter { text-align: center !important; }
+        .clear { clear: both; }
+        .header, .search-section { text-align: center; }
+        .search-section {
+            background: #333;
+            padding: 6px;
+            margin: 0 0 5px 0;
+            color: #fff;
+            font-weight: 600;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input[type=search] {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            padding: 6px 10px;
+            color: #222;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            outline: none;
+            background-color: #fff;
+            text-shadow: none;
+            transition: all 0.25s ease;
+            width: 300px;
+            max-width: 80%;
+        }
+        input[type=search]:focus {
+            border-color: #ff4b2b;
+            box-shadow: 0 0 6px rgba(255, 75, 43, 0.4);
+        }
+        .search-section input[type=submit] {
+            background-color: #ff4b2b;
+            color: #fff;
+            font-weight: 600;
+            width: auto;
+            padding: 4px;
+            border-radius: 3px;
+            text-shadow: 1px 1px 1px #000;
+            margin: 0 10px;
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .search-section input[type=submit]:hover {
+            background-color: #ff784b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #424242;
+            border-bottom: 1px solid #ff2121;
+            border-radius: 6px;
+            box-shadow: inset 0 -1px red;
+            margin: 0 0 0 0;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0;
+        }
+        .section-title {
+            color: #fff;
+            display: inline-block;
+            padding: 6px 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            margin: 0;
+        }
+        .see-all-btn {
+            color: #ff9800;
+            padding: 6px 15px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            background: transparent;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .see-all-btn:hover {
+            color: #ff4b2b;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .see-all-btn svg {
+            fill: currentColor;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+        .music-item {
+            position: relative;
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            display: inline-block;
+            padding: 6px 8px;
+            margin: 0;
+            border: 1px solid #ddd;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+            width: 50%;
+            max-width: 50%;
+            box-sizing: border-box;
+            vertical-align: top;
+            font-size: 14px;
+            line-height: normal;
+            float: left;
+        }
+        .music-item:nth-child(odd) { border-right: none; clear: left; }
+        .music-item:nth-child(even) { border-left: none; }
+        .music-item:nth-child(1) { border-top-left-radius: 12px; border-top-right-radius: 0; }
+        .music-item:nth-child(2) { border-top-left-radius: 0; border-top-right-radius: 12px; }
+        .music-item:last-child, .music-item:nth-last-child(2) { border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
+        .music-item a, .list-item a { color: #222; text-decoration: none; }
+        .music-item:hover, a.music-item:focus, a.list-item:focus, a.list-item:hover, button.list-item:focus, button.list-item:hover {
+            color: #233dce;
+            background-color: #f0f4ff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+            z-index: 10;
+            position: relative;
+        }
+        .item-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .item-thumb {
+            flex-shrink: 0;
+            margin-right: 12px;
+        }
+        .item-data { flex: 1; min-width: 0; font-size: 14px !important; font-weight: 600; }
+        span.item-meta {
+            color: #777 !important;
+            display: block;
+            font-size: 12px !important;
+            margin-top: 2px;
+        }
+        .roundthumb {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+            cursor: pointer;
+            filter: brightness(0.95);
+        }
+        .roundthumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            filter: brightness(1);
+        }
+        /* badge styles (identical) */
+        .playlist-badge { background: #9c27b0; color: #fff; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 5px; display: inline-block; }
+        .ep-badge { background: #ff5722; color: #fff; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 5px; display: inline-block; }
+        .artist-badge { background: #2196f3; color: #fff; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 5px; display: inline-block; }
+        .album-badge { background: #4caf50; color: #fff; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 5px; display: inline-block; }
+        
+        .site-footer, .top-footer { background: #fff; color: #000; padding: 10px; overflow: hidden; border-top: 1px; width: 100%; box-sizing: border-box; }
+        .top-footer { border-top: 2px solid red; border-bottom: 1px solid #eee; }
+        .top-footer a { color: blue; margin: 0 3px; }
+        h4 { margin: 0; }
+        button {
+            border-radius: 30px;
+            font-family: 'Alef', sans-serif;
+            font-size: 16px;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 2px solid #ff2121;
+            background-color: #333;
+            color: #fff;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            text-align: center;
+        }
+        button:hover { background-color: #ff2121; color: #fff; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background-color: #000; box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); }
+        ::-webkit-scrollbar-thumb { background-color: red; box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); }
+        ::-webkit-scrollbar-corner { background-color: #000; }
+        .red { background: red; }
+        .green { background: #3c0; }
+        .track-title { color: #000; }
+        .track-title:hover { color: red; }
+        
+        /* PAGINATION STYLES - EXACTLY FROM ORIGINAL */
+        .page-navi {
+            padding: 6px;
+            margin: 10px;
+            text-align: center;
+            clear: both;
+        }
+        .page-numbers, a.page-numbers {
+            background: #424242;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #555;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            line-height: normal;
+        }
+        a.page-numbers:hover {
+            background: #ff4b2b;
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .page-numbers.current {
+            background: #ff4b2b;
+            color: #fff;
+            border-color: #ff4b2b;
+        }
+        .page-numbers.dots {
+            background: transparent;
+            border: none;
+            color: #ff4b2b;
+            font-weight: 600;
+            box-shadow: none;
+        }
+        .next.page-numbers {
+            background: #424242;
+            font-weight: 500;
+        }
+        .next.page-numbers:hover {
+            background: #ff4b2b;
+        }
+        
+        @media screen and (min-width: 720px) {
+            .music-item { width: 50%; margin: 0; float: left; }
+        }
+        @media screen and (max-width: 719px) {
+            .music-item { display: block; width: 100%; margin: 0; max-width: 100%; border: 1px solid #ddd; float: none; }
+            .music-item:nth-child(odd), .music-item:nth-child(even) { border: 1px solid #ddd; }
+            .music-item:first-child { border-top-left-radius: 12px; border-top-right-radius: 12px; }
+            .music-item:last-child { border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
+            input[type=search] { width: 200px; }
+            .section-header { flex-wrap: wrap; }
+            .see-all-btn { padding: 6px 10px; }
+        }
+        .artist-name { color: #666; font-size: 12px; margin-top: 2px; }
+        .release-date { color: #999; font-size: 11px; }
+        #footer-top {
+            background: linear-gradient(#161616, #303030);
+            margin: 0;
+            padding: 8px 15px;
+            overflow: hidden;
+            color: #00ffff;
+            font-size: 15px;
+            border-top: 2px solid #ff2121;
+            border-radius: 6px 6px 0 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        #footer-top a { color: #fff; text-decoration: none; transition: color 0.25s ease; }
+        #footer-top a:hover { color: #ff784b; }
+        .main-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            background: #333;
+            font-size: 100%;
+            text-align: center;
+            padding: 15px;
+            color: #fff;
+            list-style: none;
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .main-footer a { color: #fff; text-decoration: none; transition: color 0.25s ease; }
+        .main-footer a:hover { color: #ff4b2b; }
+        .footer-links a { padding: 4px 6px; margin: 3px; color: #fff; text-decoration: none; transition: color 0.25s ease; }
+        .footer-links a:hover { color: #ff4b2b; }
+        .footer-box {
+            color: #fff;
+            text-align: center;
+            padding: 6px 4px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 10px 2px 4px;
+            font-size: 14px;
+            border-radius: 6px;
+            transition: all 0.25s ease;
+        }
+        .footer-box:hover { background-color: rgba(255, 75, 43, 0.1); }
+        #spotifyBtn {
+            position: fixed;
+            bottom: 40px;
+            left: 30px;
+            z-index: 9999;
+            background-color: #1DB954;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 0 15px rgba(29, 185, 84, 0.5);
+            transition: all 0.3s ease;
+            animation: gentlePulse 3s infinite;
+        }
+        #spotifyBtn svg { width: 24px; height: 24px; fill: white; transition: transform 0.3s ease, filter 0.3s ease; }
+        #spotifyBtn:hover {
+            background-color: #169c46;
+            transform: scale(1.1) rotate(-5deg);
+            box-shadow: 0 0 20px rgba(29, 185, 84, 0.6), 0 0 12px rgba(29, 185, 84, 0.5);
+        }
+        #spotifyBtn:hover svg { transform: scale(1.1); filter: drop-shadow(0 0 5px #ffffff); }
+        @keyframes gentlePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .scroll-btn {
+            --progress: 0;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform .3s ease;
+            color: #343a40;
+        }
+        .scroll-btn:hover { transform: scale(1.1); }
+        .scroll-btn svg { width: 100%; height: 100%; transform: none; }
+        .scroll-btn circle.track { fill: #ffffff; stroke: #e9ecef; }
+        .scroll-btn circle.progress {
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            fill: none;
+            stroke: cyan;
+            stroke-dasharray: 100;
+            stroke-dashoffset: calc(100 - var(--progress));
+            transition: stroke-dashoffset 0.2s linear;
+        }
+        .scroll-btn path { stroke: currentColor; }
+        .scroll-btn .arrow-up { display: block; opacity: 1; transition: opacity .3s ease; }
+        .scroll-btn .arrow-down { display: none; opacity: 0; transition: opacity .3s ease; }
+        .scroll-btn.scroll-at-top .arrow-up { display: none; opacity: 0; }
+        .scroll-btn.scroll-at-top .arrow-down { display: block; opacity: 1; }
+        @media (max-width: 768px) {
+            .scroll-btn { width: 45px; height: 45px; bottom: 80px; right: 15px; }
+        }
+        #liveSearchResults {
+            background: #fff;
+            border: 1px solid #ddd;
+            position: absolute;
+            width: 100%;
+            z-index: 1000;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 5px;
+            left: 0;
+            box-sizing: border-box;
+        }
+        .live-search-list { margin: 0; padding: 0; list-style: none; }
+        .live-search-list li { padding: 10px; border-bottom: 1px solid #eee; }
+        .live-search-list li a { text-decoration: none; color: #333; }
+        .live-search-list li:hover { background: #f9f9f9; }
+        .loading { text-align: center; padding: 30px; color: #666; font-size: 14px; width: 100%; }
+        .error-message { text-align: center; padding: 30px; color: #ff2121; font-size: 14px; width: 100%; }
     </style>
 </head>
 <body>
-    <div class="scroll-progress" id="scrollProgress"></div>
-    
-    <!-- App Install Prompt -->
-    <div class="install-prompt" id="installPrompt">
-        <div class="install-icon">🎬</div>
-        <div class="install-text">
-            <h4>Install Glass Route</h4>
-            <p>Add to home screen</p>
+    <!-- overlay + sidebar (same) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar" id="sidebar">
+        <button class="sidebar-close" id="closeSidebarBtn" aria-label="Close menu">✕</button>
+        <ul class="sidebar-menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#" onclick="searchByGenre('trending'); closeSidebar(); return false;">Trending</a></li>
+            <li><a href="#" onclick="loadLatestReleases(); closeSidebar(); return false;">Latest Releases</a></li>
+            <li><a href="#" onclick="loadPlaylists(); closeSidebar(); return false;">Playlists</a></li>
+            <li><a href="#" onclick="loadAlbums(); closeSidebar(); return false;">Albums</a></li>
+            <li><a href="#" onclick="loadEPs(); closeSidebar(); return false;">EPs</a></li>
+            <li><a href="#" onclick="loadArtists(); closeSidebar(); return false;">Artists</a></li>
+            <li><a href="#" onclick="searchByGenre('all'); closeSidebar(); return false;">Genres</a></li>
+            <li><a href="#" onclick="document.querySelector('.main-footer a[href*=\\'Contact\\']')?.click(); closeSidebar(); return false;">Contact</a></li>
+        </ul>
+    </aside>
+
+    <!-- header (identical) -->
+    <header>
+        <div class="header">
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <h1><a href="#" class="ltext"><strong style="vertical-align:middle;color:#fff;font-size:28px">MusicHub</strong></a></h1>
         </div>
-        <button class="install-button" id="installButton">Install</button>
-        <span class="close-install" id="closeInstall">✕</span>
-    </div>
-    
-    <div class="app-container">
-        <header class="site-header">
-            <div class="branding-bar">
-                <div class="hamburger-menu" id="hamburgerMenu">
-                    <span></span><span></span><span></span>
-                </div>
-                <div class="site-logo">GLASS•ROUTE</div>
-                <div class="profile-icon" id="profileIcon"><i class="fas fa-user"></i></div>
-            </div>
-            
-            <section class="search-section">
-                <div class="search-container">
-                    <div class="search-bar">
-                        <input type="text" class="search-input" id="searchInput" placeholder="search artists...">
-                        <button class="search-button" id="searchButton"><i class="fas fa-search"></i></button>
-                    </div>
-                </div>
-            </section>
-        </header>
-        
-        <div class="main-content-container" id="content">
-            <aside class="left-sidebar">
-                <div class="section-header">
-                    <h2 class="section-title" id="mainSectionTitle">top 5 artists</h2>
-                    <span class="reload-btn" id="refreshMain"><i class="fas fa-redo-alt"></i> reload</span>
-                </div>
-                
-                <div class="search-info" id="searchInfo" style="display: none;">
-                    <span id="searchQueryDisplay"></span>
-                    <span class="clear-search" id="clearSearch">✕ clear</span>
-                </div>
-                
-                <!-- Pre-rendered skeleton for instant visual feedback -->
-                <div class="latest-albums-list" id="mainArtists">
-                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:40%"></div></div></div>
-                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:40%"></div></div></div>
-                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:40%"></div></div></div>
-                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:40%"></div></div></div>
-                    <div class="album-item"><div class="skeleton-thumbnail" style="width:120px;height:120px"></div><div class="album-info"><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:40%"></div></div></div>
-                </div>
-                
-                <div class="pagination-container">
-                    <div class="pagination" id="pagination"></div>
-                    <div class="pagination-info">
-                        Page <span id="currentPageDisplay">1</span> of <span id="totalPagesDisplay">10</span>
-                    </div>
-                </div>
-            </aside>
-            
-            <div class="right-sidebar">
-                <section class="section-block">
-                    <div class="section-header">
-                        <h2 class="section-title">rising stars</h2>
-                        <span class="reload-btn" id="refreshRising"><i class="fas fa-redo-alt"></i> reload</span>
-                    </div>
-                    <div class="latest-albums-list" id="risingArtists"></div>
-                </section>
-                
-                <section class="section-block">
-                    <div class="section-header">
-                        <h2 class="section-title">legendary</h2>
-                        <span class="reload-btn" id="refreshLegendary"><i class="fas fa-redo-alt"></i> reload</span>
-                    </div>
-                    <div class="latest-albums-list" id="legendaryArtists"></div>
-                </section>
-                
-                <section class="section-block">
-                    <div class="section-header">
-                        <h2 class="section-title">trending artists</h2>
-                        <span class="reload-btn" id="refreshTrending"><i class="fas fa-redo-alt"></i> reload</span>
-                    </div>
-                    <div class="latest-albums-list" id="trendingArtists"></div>
-                </section>
-            </div>
+        <div class="search-section" style="position: relative;">
+            <form id="searchForm" onsubmit="event.preventDefault(); searchMusic();">
+                <input type="search" id="searchInput" class="forminput" placeholder="Search for music, artists, albums..." autocomplete="off" />
+                <input type="submit" class="searchsubmit" value="Search" />
+            </form>
+            <div id="liveSearchResults"></div>
         </div>
-        
-        <footer class="site-footer">
-            <p>© 2025 GLASS ROUTE · artists</p>
-            <p>follow • discover • listen</p>
-        </footer>
-    </div>
-    
-    <div class="nav-drawer left" id="leftDrawer">
-        <div class="nav-header">
-            <div class="site-logo">GLASS•ROUTE</div>
-            <div class="close-nav" id="closeLeftDrawer">✕</div>
-        </div>
-        <nav class="nav-menu">
-            <a href="#" class="nav-item" data-category="albums"><i class="fas fa-compact-disc"></i> Albums</a>
-            <a href="#" class="nav-item" data-category="playlists"><i class="fas fa-list"></i> Playlists</a>
-            <a href="#" class="nav-item" data-category="music"><i class="fas fa-music"></i> Music</a>
-            <a href="#" class="nav-item active" data-category="artist"><i class="fas fa-microphone-alt"></i> Artists</a>
-            <a href="#" class="nav-item" data-category="charts"><i class="fas fa-chart-line"></i> Charts</a>
-            <a href="#" class="nav-item" data-category="genres"><i class="fas fa-tags"></i> Genres</a>
-            <a href="#" class="nav-item" data-category="profile"><i class="fas fa-user"></i> Profile</a>
-        </nav>
-    </div>
-    
-    <div class="nav-drawer right" id="rightDrawer">
-        <div class="nav-header">
-            <div class="site-logo">PROFILE</div>
-            <div class="close-nav" id="closeRightDrawer">✕</div>
-        </div>
-        <nav class="nav-menu">
-            <div style="padding:10px 25px; color:rgba(255,255,255,0.5); font-size:0.8rem;">SETTINGS</div>
-            <a href="#" class="nav-item"><i class="fas fa-cog"></i> Preferences</a>
-            <a href="#" class="nav-item"><i class="fas fa-palette"></i> Theme</a>
-            <a href="#" class="nav-item"><i class="fas fa-bell"></i> Notifications</a>
-            <a href="#" class="nav-item"><i class="fas fa-download"></i> Offline</a>
-        </nav>
+    </header>
+    <div class="clear"></div>
+
+    <!-- ========== PAGE TITLE (ALL ARTISTS) ========== -->
+    <div class="section-header" id="page-main-title" style="margin-bottom:6px;">
+        <h2 class="section-title" style="display: flex; align-items: center;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+                <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.49 6-3.31 6-6.72h-1.7z"/>
+            </svg>
+            All Artists
+        </h2>
+        <a href="#" class="see-all-btn" onclick="return false;" style="opacity:0.6; pointer-events:none;">&nbsp;</a>
     </div>
 
-    <!-- Optimized JavaScript -->
+    <!-- ========== MAIN ARTISTS GRID ========== -->
+    <div class="corner">
+        <div class="music-grid" id="artists-main-grid">
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="https://via.placeholder.com/80/2196f3/ffffff?text=WEEKND" width="80" height="80" class="roundthumb" alt="The Weeknd">
+                    </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>The Weeknd</b> <span class="artist-badge">Artist</span></span>
+                        <div class="artist-name">R&B · Pop</div>
+                        <span class="item-meta"><b style="color:#ff0000">Featured</b></span>
+                    </div>
+                </div>
+            </a>
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="https://via.placeholder.com/80/2196f3/ffffff?text=TAYLOR" width="80" height="80" class="roundthumb" alt="Taylor Swift">
+                    </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>Taylor Swift</b> <span class="artist-badge">Artist</span></span>
+                        <div class="artist-name">Pop · Country</div>
+                        <span class="item-meta"><b style="color:#ff0000">Featured</b></span>
+                    </div>
+                </div>
+            </a>
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="https://via.placeholder.com/80/2196f3/ffffff?text=DRAKE" width="80" height="80" class="roundthumb" alt="Drake">
+                    </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>Drake</b> <span class="artist-badge">Artist</span></span>
+                        <div class="artist-name">Hip-Hop · Rap</div>
+                        <span class="item-meta"><b style="color:#ff0000">Featured</b></span>
+                    </div>
+                </div>
+            </a>
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="https://via.placeholder.com/80/2196f3/ffffff?text=BUNNY" width="80" height="80" class="roundthumb" alt="Bad Bunny">
+                    </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>Bad Bunny</b> <span class="artist-badge">Artist</span></span>
+                        <div class="artist-name">Reggaeton · Latin</div>
+                        <span class="item-meta"><b style="color:#ff0000">Featured</b></span>
+                    </div>
+                </div>
+            </a>
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="https://via.placeholder.com/80/2196f3/ffffff?text=ED" width="80" height="80" class="roundthumb" alt="Ed Sheeran">
+                    </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>Ed Sheeran</b> <span class="artist-badge">Artist</span></span>
+                        <div class="artist-name">Pop · Folk</div>
+                        <span class="item-meta"><b style="color:#ff0000">Featured</b></span>
+                    </div>
+                </div>
+            </a>
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="https://via.placeholder.com/80/2196f3/ffffff?text=BEYONCE" width="80" height="80" class="roundthumb" alt="Beyoncé">
+                    </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>Beyoncé</b> <span class="artist-badge">Artist</span></span>
+                        <div class="artist-name">R&B · Pop</div>
+                        <span class="item-meta"><b style="color:#ff0000">Featured</b></span>
+                    </div>
+                </div>
+            </a>
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="https://via.placeholder.com/80/2196f3/ffffff?text=KENDRICK" width="80" height="80" class="roundthumb" alt="Kendrick Lamar">
+                    </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>Kendrick Lamar</b> <span class="artist-badge">Artist</span></span>
+                        <div class="artist-name">Hip-Hop</div>
+                        <span class="item-meta"><b style="color:#ff0000">Featured</b></span>
+                    </div>
+                </div>
+            </a>
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="https://via.placeholder.com/80/2196f3/ffffff?text=ADELE" width="80" height="80" class="roundthumb" alt="Adele">
+                    </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>Adele</b> <span class="artist-badge">Artist</span></span>
+                        <div class="artist-name">Pop · Soul</div>
+                        <span class="item-meta"><b style="color:#ff0000">Featured</b></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- ========== PAGINATION ========== -->
+    <div class="clearfix"></div>
+    <div class="page-navi" align="center">
+        <span aria-current="page" class="page-numbers current">1</span>
+        <a class="page-numbers" href="#">2</a>
+        <a class="page-numbers" href="#">3</a>
+        <span class="page-numbers dots">…</span>
+        <a class="page-numbers" href="#">25</a>
+        <a class="next page-numbers" href="#">Next »</a>
+    </div>
+
+    <!-- ========== EDITOR'S PICKS ========== -->
+    <div class="section-header section-spacing" id="more-artists">
+        <h2 class="section-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+                <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.49 6-3.31 6-6.72h-1.7z"/>
+            </svg>
+            Editor's Picks
+        </h2>
+        <a href="#" class="see-all-btn" onclick="return false;">&nbsp;</a>
+    </div>
+    <div class="corner">
+        <div class="music-grid" id="editors-picks-grid">
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb"><img src="https://via.placeholder.com/80/2196f3/ffffff?text=JAZZ" class="roundthumb"></div>
+                    <div class="item-data"><span class="track-title"><b>Miles Davis</b> <span class="artist-badge">Artist</span></span><div class="artist-name">Jazz</div><span class="item-meta"><b style="color:#ff0000">Legend</b></span></div>
+                </div>
+            </a>
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb"><img src="https://via.placeholder.com/80/2196f3/ffffff?text=ELECTRO" class="roundthumb"></div>
+                    <div class="item-data"><span class="track-title"><b>Daft Punk</b> <span class="artist-badge">Artist</span></span><div class="artist-name">Electronic</div><span class="item-meta"><b style="color:#ff0000">Legend</b></span></div>
+                </div>
+            </a>
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb"><img src="https://via.placeholder.com/80/2196f3/ffffff?text=COUNTRY" class="roundthumb"></div>
+                    <div class="item-data"><span class="track-title"><b>Johnny Cash</b> <span class="artist-badge">Artist</span></span><div class="artist-name">Country</div><span class="item-meta"><b style="color:#ff0000">Legend</b></span></div>
+                </div>
+            </a>
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb"><img src="https://via.placeholder.com/80/2196f3/ffffff?text=K-POP" class="roundthumb"></div>
+                    <div class="item-data"><span class="track-title"><b>BTS</b> <span class="artist-badge">Artist</span></span><div class="artist-name">K-Pop</div><span class="item-meta"><b style="color:#ff0000">Featured</b></span></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- ========== RECENTLY ADDED ARTISTS ========== -->
+    <div class="section-header section-spacing">
+        <h2 class="section-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+                <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.49 6-3.31 6-6.72h-1.7z"/>
+            </svg>
+            Recently Added Artists
+        </h2>
+        <a href="#" class="see-all-btn" onclick="return false;">&nbsp;</a>
+    </div>
+    <div class="corner">
+        <div class="music-grid">
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb"><img src="https://via.placeholder.com/80/2196f3/ffffff?text=NEW1" class="roundthumb"></div>
+                    <div class="item-data"><span class="track-title"><b>Olivia Rodrigo</b> <span class="artist-badge">Artist</span></span><div class="artist-name">Pop</div><span class="item-meta"><b style="color:#ff0000">New</b></span></div>
+                </div>
+            </a>
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb"><img src="https://via.placeholder.com/80/2196f3/ffffff?text=NEW2" class="roundthumb"></div>
+                    <div class="item-data"><span class="track-title"><b>Doja Cat</b> <span class="artist-badge">Artist</span></span><div class="artist-name">Pop · Rap</div><span class="item-meta"><b style="color:#ff0000">New</b></span></div>
+                </div>
+            </a>
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb"><img src="https://via.placeholder.com/80/2196f3/ffffff?text=NEW3" class="roundthumb"></div>
+                    <div class="item-data"><span class="track-title"><b>Steve Lacy</b> <span class="artist-badge">Artist</span></span><div class="artist-name">R&B</div><span class="item-meta"><b style="color:#ff0000">New</b></span></div>
+                </div>
+            </a>
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb"><img src="https://via.placeholder.com/80/2196f3/ffffff?text=NEW4" class="roundthumb"></div>
+                    <div class="item-data"><span class="track-title"><b>Ice Spice</b> <span class="artist-badge">Artist</span></span><div class="artist-name">Rap · Drill</div><span class="item-meta"><b style="color:#ff0000">New</b></span></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- ========== POPULAR ARTISTS ========== -->
+    <div class="section-header section-spacing">
+        <h2 class="section-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+                <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.49 6-3.31 6-6.72h-1.7z"/>
+            </svg>
+            Popular Artists
+        </h2>
+        <a href="#" class="see-all-btn" onclick="return false;">&nbsp;</a>
+    </div>
+    <div class="corner">
+        <div class="music-grid">
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb"><img src="https://via.placeholder.com/80/2196f3/ffffff?text=POP1" class="roundthumb"></div>
+                    <div class="item-data"><span class="track-title"><b>Harry Styles</b> <span class="artist-badge">Artist</span></span><div class="artist-name">Pop</div><span class="item-meta"><b style="color:#ff0000">Trending</b></span></div>
+                </div>
+            </a>
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb"><img src="https://via.placeholder.com/80/2196f3/ffffff?text=POP2" class="roundthumb"></div>
+                    <div class="item-data"><span class="track-title"><b>Billie Eilish</b> <span class="artist-badge">Artist</span></span><div class="artist-name">Pop · Alt</div><span class="item-meta"><b style="color:#ff0000">Trending</b></span></div>
+                </div>
+            </a>
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb"><img src="https://via.placeholder.com/80/2196f3/ffffff?text=POP3" class="roundthumb"></div>
+                    <div class="item-data"><span class="track-title"><b>Post Malone</b> <span class="artist-badge">Artist</span></span><div class="artist-name">Hip-Hop · Rock</div><span class="item-meta"><b style="color:#ff0000">Trending</b></span></div>
+                </div>
+            </a>
+            <a class="music-item" href="#" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb"><img src="https://via.placeholder.com/80/2196f3/ffffff?text=POP4" class="roundthumb"></div>
+                    <div class="item-data"><span class="track-title"><b>Dua Lipa</b> <span class="artist-badge">Artist</span></span><div class="artist-name">Pop · Dance</div><span class="item-meta"><b style="color:#ff0000">Trending</b></span></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- ========== MUSIC GENRES SECTION ========== -->
+    <div class="section-header section-spacing" id="genres">
+        <h2 class="section-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+                <path d="M3 3h8v8H3V3zm0 10h8v8H3v-8zm10-10h8v8h-8V3zm0 10h8v8h-8v-8z"></path>
+            </svg>
+            Music Genres
+        </h2>
+        <a href="#" class="see-all-btn" onclick="searchByGenre('all'); return false;">
+            See All <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </a>
+    </div>
+    <div class="corner">
+        <div class="music-grid" id="genres-container">
+            <a class="music-item" href="#" onclick="searchByGenre('rock'); return false;">
+                <div class="item-container" style="display:flex;align-items:center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
+                    </svg>
+                    <strong style="font-size:15px;color:#000;margin-left:6px;">Rock</strong>
+                    <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(1.2M)</span>
+                </div>
+            </a>
+            <a class="music-item" href="#" onclick="searchByGenre('pop'); return false;">
+                <div class="item-container" style="display:flex;align-items:center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
+                    </svg>
+                    <strong style="font-size:15px;color:#000;margin-left:6px;">Pop</strong>
+                    <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(2.5M)</span>
+                </div>
+            </a>
+            <a class="music-item" href="#" onclick="searchByGenre('hip-hop'); return false;">
+                <div class="item-container" style="display:flex;align-items:center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
+                    </svg>
+                    <strong style="font-size:15px;color:#000;margin-left:6px;">Hip-Hop</strong>
+                    <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(1.8M)</span>
+                </div>
+            </a>
+            <a class="music-item" href="#" onclick="searchByGenre('jazz'); return false;">
+                <div class="item-container" style="display:flex;align-items:center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
+                    </svg>
+                    <strong style="font-size:15px;color:#000;margin-left:6px;">Jazz</strong>
+                    <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(856K)</span>
+                </div>
+            </a>
+            <a class="music-item" href="#" onclick="searchByGenre('classical'); return false;">
+                <div class="item-container" style="display:flex;align-items:center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
+                    </svg>
+                    <strong style="font-size:15px;color:#000;margin-left:6px;">Classical</strong>
+                    <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(654K)</span>
+                </div>
+            </a>
+            <a class="music-item" href="#" onclick="searchByGenre('electronic'); return false;">
+                <div class="item-container" style="display:flex;align-items:center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
+                    </svg>
+                    <strong style="font-size:15px;color:#000;margin-left:6px;">Electronic</strong>
+                    <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(1.1M)</span>
+                </div>
+            </a>
+            <a class="music-item" href="#" onclick="searchByGenre('r&b'); return false;">
+                <div class="item-container" style="display:flex;align-items:center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
+                    </svg>
+                    <strong style="font-size:15px;color:#000;margin-left:6px;">R&B</strong>
+                    <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(945K)</span>
+                </div>
+            </a>
+            <a class="music-item" href="#" onclick="searchByGenre('country'); return false;">
+                <div class="item-container" style="display:flex;align-items:center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
+                    </svg>
+                    <strong style="font-size:15px;color:#000;margin-left:6px;">Country</strong>
+                    <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(723K)</span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <a href="https://open.spotify.com" target="_blank" id="spotifyBtn" title="Listen on Spotify">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.66.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141 4.14-1.26 9.479-.6 13.08 1.56.36.24.48.78.24 1.26zm.12-3.438c-3.84-2.28-10.14-2.52-13.86-1.38-.6.18-1.26-.24-1.44-.84-.18-.6.24-1.26.84-1.44 4.2-1.26 11.04-1.02 15.36 1.56.54.3.78 1.02.48 1.56-.3.42-1.02.66-1.56.36z"/></svg>
+    </a>
+
+    <footer>
+        <div id="footer-top">
+            <span style="float:left"><a href="#" title="spotify">Follow on Spotify</a></span>
+            <span style="float:right"><a href="#" title="apple-music">Apple Music</a></span>
+        </div>
+        <div class="main-footer">
+            <div><h3 style="margin:0; color:#fff; text-align:center; font-size:15px;">MusicHub is your ultimate destination for discovering new music, artists, and albums from around the world.</h3></div>
+            <div class="footer-links">
+                <a href="#" class="red">Home</a> | <a href="#">About</a> | <a href="#">Privacy</a> | <a href="#">Request</a> | <a href="#">Contact</a> | <a href="#">Terms</a>
+            </div>
+            <div style="margin-top:2px">Powered by <a href="#" target="_blank" rel="noopener">iTunes API</a></div>
+            <div class="footer-box">2026 © MusicHub. All Rights Reserved.</div>
+        </div>
+    </footer>
+    <div class="scroll-btn" id="scrollBtn">
+        <svg viewBox="0 0 36 36"><circle class="track" cx="18" cy="18" r="15.9" stroke-width="2.5"/><circle class="progress" cx="18" cy="18" r="15.9" stroke-width="2.5"/><g class="arrow-down"><path d="M18 8 V 26 M 13 21 L 18 26 L 23 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g><g class="arrow-up"><path d="M18 28 V 10 M 13 15 L 18 10 L 23 15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+    </div>
+
     <script>
-        // PWA Installation
-        let deferredPrompt;
-        const installPrompt = document.getElementById('installPrompt');
-        const installButton = document.getElementById('installButton');
-        const closeInstall = document.getElementById('closeInstall');
-        
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installPrompt.style.display = 'flex';
+        // ----- preserved original functions (unchanged) -----
+        const ITUNES_API = 'https://itunes.apple.com/search';
+        const ITUNES_TOP = 'https://itunes.apple.com/us/rss/topsongs/limit=25/json';
+        const ITUNES_NEW = 'https://itunes.apple.com/us/rss/newreleases/limit=25/json';
+        let currentPage = 1;
+        let currentSearchTerm = '';
+
+        window.onload = function() { /* keep empty or original but do nothing extra */ };
+
+        function searchMusic() {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (!searchTerm) return;
+            currentSearchTerm = searchTerm;
+            currentPage = 1;
+            const url = `${ITUNES_API}?term=${encodeURIComponent(searchTerm)}&limit=25&entity=song`;
+            fetch(url).then(r=>r.json()).then(data=>{ displayResults(data.results, 'trending-container');  document.getElementById('trending-title').innerHTML = `Search Results: "${searchTerm}"`; }).catch(e=>{});
+        }
+        function searchByGenre(genre) {
+            alert('Genre search: ' + genre);
+            closeSidebar();
+        }
+        function loadLatestReleases() { alert('Latest releases'); }
+        function loadPlaylists() { alert('Playlists page'); }
+        function loadAlbums() { alert('Albums page'); }
+        function loadEPs() { alert('EPs page'); }
+        function loadArtists() { alert('You are already on the Artists page'); }
+        function displayResults(results, containerId) { /* dummy */ }
+
+        // live search
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value;
+            if (searchTerm.length < 3) { document.getElementById('liveSearchResults').innerHTML = ''; return; }
+            const url = `${ITUNES_API}?term=${encodeURIComponent(searchTerm)}&limit=5&entity=song`;
+            fetch(url).then(r=>r.json()).then(data => {
+                let html = '<ul class="live-search-list">';
+                data.results.forEach(item => { html += `<li><a href="${item.trackViewUrl || '#'}" target="_blank">${item.trackName} - ${item.artistName}</a></li>`; });
+                html += '</ul>';
+                document.getElementById('liveSearchResults').innerHTML = html;
+            }).catch(e=>{});
         });
-        
-        installButton?.addEventListener('click', async () => {
-            if (!deferredPrompt) return;
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') console.log('App installed');
-            deferredPrompt = null;
-            installPrompt.style.display = 'none';
-        });
-        
-        closeInstall?.addEventListener('click', () => installPrompt.style.display = 'none');
-        window.addEventListener('appinstalled', () => installPrompt.style.display = 'none');
 
-        // API Config
-        const API_BASE = 'https://itunes.apple.com';
-        const CACHE_DURATION = 5 * 60 * 1000;
-        const TOTAL_PAGES = 10;
-        
-        // State
-        let currentState = { 
-            currentPage: 1, 
-            totalPages: TOTAL_PAGES, 
-            currentSearchTerm: 'artist', 
-            isLoading: false 
-        };
-        let cache = new Map();
-        
-        // DOM Elements
-        const elements = {
-            mainArtists: document.getElementById('mainArtists'),
-            risingArtists: document.getElementById('risingArtists'),
-            legendaryArtists: document.getElementById('legendaryArtists'),
-            trendingArtists: document.getElementById('trendingArtists'),
-            searchInput: document.getElementById('searchInput'),
-            searchButton: document.getElementById('searchButton'),
-            searchInfo: document.getElementById('searchInfo'),
-            searchQueryDisplay: document.getElementById('searchQueryDisplay'),
-            clearSearch: document.getElementById('clearSearch'),
-            mainSectionTitle: document.getElementById('mainSectionTitle'),
-            pagination: document.getElementById('pagination'),
-            currentPageDisplay: document.getElementById('currentPageDisplay'),
-            totalPagesDisplay: document.getElementById('totalPagesDisplay')
-        };
+        // sidebar
+        const hamburger = document.getElementById('hamburgerBtn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const closeBtn = document.getElementById('closeSidebarBtn');
+        function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('active'); document.body.style.overflow = ''; }
+        hamburger.addEventListener('click', openSidebar);
+        closeBtn.addEventListener('click', closeSidebar);
+        overlay.addEventListener('click', closeSidebar);
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && sidebar.classList.contains('open')) closeSidebar(); });
 
-        // Simple cache fetch
-        async function fetchWithCache(url) {
-            if (cache.has(url)) {
-                const { data, timestamp } = cache.get(url);
-                if (Date.now() - timestamp < CACHE_DURATION) return data;
-            }
-            try {
-                const res = await fetch(url);
-                const data = await res.json();
-                cache.set(url, { data, timestamp: Date.now() });
-                return data;
-            } catch (e) {
-                console.log('Fetch error:', e);
-                return { results: [] };
-            }
-        }
-
-        // Transform to artist format - ONLY name, genre, song count
-        function transformToArtist(item) {
-            const songCount = Math.floor(Math.random() * 50) + 20; // 20-70 songs
-            
-            return {
-                name: item.artistName || 'Unknown Artist',
-                genre: item.primaryGenreName || 'Various',
-                songCount: songCount,
-                artwork: item.artworkUrl100?.replace('100x100', '600x600')
-            };
-        }
-
-        // Render artist item - ONLY name + [genre] [x songs]
-        function renderArtist(item, rank, large = true) {
-            const size = large ? '120px' : '80px';
-            return `
-                <div class="album-item">
-                    <div class="album-thumbnail" style="width:${size};height:${size}">
-                        ${item.artwork ? 
-                            `<img src="${item.artwork}" alt="${item.name}" loading="lazy">` : 
-                            `<div class="artist-thumbnail" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;">🎤</div>`
-                        }
-                        <div class="number-overlay rank-${rank}">${rank}</div>
-                    </div>
-                    <div class="album-info">
-                        <div class="album-title">${item.name} ${rank === 1 ? '<span class="trending-badge"><i class="fas fa-crown"></i> #1</span>' : ''}</div>
-                        <div class="album-meta">
-                            <span class="artist-genre">${item.genre}</span>
-                            <span class="artist-songs">${item.songCount} songs</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Pagination render
-        function renderPagination(page, total) {
-            if (!elements.pagination) return;
-            let html = `<div class="pagination-item pagination-prev ${page === 1 ? 'disabled' : ''}" data-page="${page-1}"><i class="fas fa-chevron-left"></i> Prev</div>`;
-            
-            if (page > 3) {
-                html += `<div class="pagination-item" data-page="1">1</div>`;
-                if (page > 4) html += `<span class="pagination-ellipsis">...</span>`;
-            }
-            
-            for (let i = Math.max(1, page-2); i <= Math.min(total, page+2); i++) {
-                html += `<div class="pagination-item ${i === page ? 'active' : ''}" data-page="${i}">${i}</div>`;
-            }
-            
-            if (page < total-2) {
-                if (page < total-3) html += `<span class="pagination-ellipsis">...</span>`;
-                html += `<div class="pagination-item" data-page="${total}">${total}</div>`;
-            }
-            
-            html += `<div class="pagination-item pagination-next ${page === total ? 'disabled' : ''}" data-page="${page+1}">Next <i class="fas fa-chevron-right"></i></div>`;
-            elements.pagination.innerHTML = html;
-            if (elements.currentPageDisplay) elements.currentPageDisplay.textContent = page;
-            if (elements.totalPagesDisplay) elements.totalPagesDisplay.textContent = total;
-        }
-
-        // Load main artists
-        async function loadMainArtists() {
-            const terms = ['artist', 'singer', 'band', 'musician', 'rapper'];
-            const term = terms[(currentState.currentPage - 1) % terms.length];
-            const url = `${API_BASE}/search?term=${term}&media=music&entity=musicArtist&limit=30`;
-            
-            const data = await fetchWithCache(url);
-            let results = (data.results || [])
-                .filter(i => i.artistName)
-                .map(transformToArtist);
-            
-            // Remove duplicates by artist name
-            const unique = [];
-            const seen = new Set();
-            for (const artist of results) {
-                if (!seen.has(artist.name)) {
-                    seen.add(artist.name);
-                    unique.push(artist);
-                }
-            }
-            
-            // Shuffle for variety
-            for (let i = unique.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [unique[i], unique[j]] = [unique[j], unique[i]];
-            }
-            
-            const pageItems = unique.slice(0, 5);
-            if (pageItems.length) {
-                elements.mainArtists.innerHTML = pageItems.map((item, i) => renderArtist(item, i+1, true)).join('');
-            }
-            renderPagination(currentState.currentPage, TOTAL_PAGES);
-        }
-
-        // Load rising artists
-        async function loadRisingArtists() {
-            const terms = ['new', 'rising', 'upcoming', 'fresh', 'discover'];
-            const term = terms[Math.floor(Math.random() * terms.length)];
-            const url = `${API_BASE}/search?term=${term}&media=music&entity=musicArtist&limit=5`;
-            
-            const data = await fetchWithCache(url);
-            let results = (data.results || [])
-                .filter(i => i.artistName)
-                .map(transformToArtist);
-            
-            // Remove duplicates
-            const unique = [];
-            const seen = new Set();
-            for (const artist of results) {
-                if (!seen.has(artist.name)) {
-                    seen.add(artist.name);
-                    unique.push(artist);
-                }
-            }
-            
-            if (unique.length) {
-                elements.risingArtists.innerHTML = unique.slice(0, 5).map((item, i) => renderArtist(item, i+1, false)).join('');
-            }
-        }
-
-        // Load legendary artists
-        async function loadLegendaryArtists() {
-            const terms = ['legend', 'classic', 'greatest', 'icon', 'vintage'];
-            const term = terms[Math.floor(Math.random() * terms.length)];
-            const url = `${API_BASE}/search?term=${term}&media=music&entity=musicArtist&limit=5`;
-            
-            const data = await fetchWithCache(url);
-            let results = (data.results || [])
-                .filter(i => i.artistName)
-                .map(transformToArtist);
-            
-            // Remove duplicates
-            const unique = [];
-            const seen = new Set();
-            for (const artist of results) {
-                if (!seen.has(artist.name)) {
-                    seen.add(artist.name);
-                    unique.push(artist);
-                }
-            }
-            
-            if (unique.length) {
-                elements.legendaryArtists.innerHTML = unique.slice(0, 5).map((item, i) => renderArtist(item, i+1, false)).join('');
-            }
-        }
-
-        // Load trending artists
-        async function loadTrendingArtists() {
-            const terms = ['viral', 'trending', 'popular', 'hot', 'chart'];
-            const term = terms[Math.floor(Math.random() * terms.length)];
-            const url = `${API_BASE}/search?term=${term}&media=music&entity=musicArtist&limit=5`;
-            
-            const data = await fetchWithCache(url);
-            let results = (data.results || [])
-                .filter(i => i.artistName)
-                .map(transformToArtist);
-            
-            // Remove duplicates
-            const unique = [];
-            const seen = new Set();
-            for (const artist of results) {
-                if (!seen.has(artist.name)) {
-                    seen.add(artist.name);
-                    unique.push(artist);
-                }
-            }
-            
-            if (unique.length) {
-                elements.trendingArtists.innerHTML = unique.slice(0, 5).map((item, i) => renderArtist(item, i+1, false)).join('');
-            }
-        }
-
-        // Load all sections
-        async function loadAll() {
-            currentState.isLoading = true;
-            await Promise.all([
-                loadMainArtists(),
-                loadRisingArtists(),
-                loadLegendaryArtists(),
-                loadTrendingArtists()
-            ]);
-            currentState.isLoading = false;
-        }
-
-        // Page change
-        async function loadPage(page) {
-            if (page < 1 || page > TOTAL_PAGES || page === currentState.currentPage || currentState.isLoading) return;
-            currentState.currentPage = page;
-            await loadMainArtists();
-        }
-
-        // Event listeners
-        function initEvents() {
-            // Pagination clicks
-            elements.pagination?.addEventListener('click', (e) => {
-                const item = e.target.closest('.pagination-item[data-page]');
-                if (!item || item.classList.contains('disabled')) return;
-                const page = parseInt(item.dataset.page);
-                loadPage(page);
-            });
-
-            // Search
-            elements.searchButton?.addEventListener('click', async () => {
-                const searchTerm = elements.searchInput.value.trim();
-                if (!searchTerm) return;
-                
-                elements.searchInfo.style.display = 'flex';
-                elements.searchQueryDisplay.textContent = `"${searchTerm}"`;
-                elements.mainSectionTitle.textContent = 'search results';
-                
-                const url = `${API_BASE}/search?term=${searchTerm}&media=music&entity=musicArtist&limit=5`;
-                const data = await fetchWithCache(url);
-                let results = (data.results || [])
-                    .filter(i => i.artistName)
-                    .map(transformToArtist);
-                
-                // Remove duplicates
-                const unique = [];
-                const seen = new Set();
-                for (const artist of results) {
-                    if (!seen.has(artist.name)) {
-                        seen.add(artist.name);
-                        unique.push(artist);
-                    }
-                }
-                
-                if (unique.length) {
-                    elements.mainArtists.innerHTML = unique.slice(0, 5).map((item, i) => renderArtist(item, i+1, true)).join('');
-                }
-            });
-
-            elements.searchInput?.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') elements.searchButton.click();
-            });
-
-            elements.clearSearch?.addEventListener('click', () => {
-                elements.searchInfo.style.display = 'none';
-                elements.searchInput.value = '';
-                elements.mainSectionTitle.textContent = 'top 5 artists';
-                currentState.currentPage = 1;
-                loadMainArtists();
-            });
-
-            // Refresh buttons
-            document.getElementById('refreshMain')?.addEventListener('click', () => {
-                currentState.currentPage = 1;
-                loadMainArtists();
-            });
-            
-            document.getElementById('refreshRising')?.addEventListener('click', loadRisingArtists);
-            document.getElementById('refreshLegendary')?.addEventListener('click', loadLegendaryArtists);
-            document.getElementById('refreshTrending')?.addEventListener('click', loadTrendingArtists);
-
-            // Drawers
-            const hamburger = document.getElementById('hamburgerMenu');
-            const leftDrawer = document.getElementById('leftDrawer');
-            const closeLeft = document.getElementById('closeLeftDrawer');
-            const profileIcon = document.getElementById('profileIcon');
-            const rightDrawer = document.getElementById('rightDrawer');
-            const closeRight = document.getElementById('closeRightDrawer');
-
-            hamburger?.addEventListener('click', () => {
-                leftDrawer.style.display = 'block';
-                setTimeout(() => {
-                    leftDrawer.style.opacity = '1';
-                    leftDrawer.style.transform = 'translateX(0)';
-                }, 10);
-            });
-
-            closeLeft?.addEventListener('click', () => {
-                leftDrawer.style.opacity = '0';
-                leftDrawer.style.transform = 'translateX(-100%)';
-                setTimeout(() => leftDrawer.style.display = 'none', 300);
-            });
-
-            profileIcon?.addEventListener('click', () => {
-                rightDrawer.style.display = 'block';
-                setTimeout(() => {
-                    rightDrawer.style.opacity = '1';
-                    rightDrawer.style.transform = 'translateX(0)';
-                }, 10);
-            });
-
-            closeRight?.addEventListener('click', () => {
-                rightDrawer.style.opacity = '0';
-                rightDrawer.style.transform = 'translateX(100%)';
-                setTimeout(() => rightDrawer.style.display = 'none', 300);
-            });
-
-            // Click outside to close drawers
-            document.addEventListener('click', (e) => {
-                if (leftDrawer.style.display === 'block' && !leftDrawer.contains(e.target) && !hamburger.contains(e.target)) {
-                    leftDrawer.style.opacity = '0';
-                    leftDrawer.style.transform = 'translateX(-100%)';
-                    setTimeout(() => leftDrawer.style.display = 'none', 300);
-                }
-                if (rightDrawer.style.display === 'block' && !rightDrawer.contains(e.target) && !profileIcon.contains(e.target)) {
-                    rightDrawer.style.opacity = '0';
-                    rightDrawer.style.transform = 'translateX(100%)';
-                    setTimeout(() => rightDrawer.style.display = 'none', 300);
-                }
-            });
-
-            // Scroll progress
-            let ticking = false;
-            window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    window.requestAnimationFrame(() => {
-                        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                        document.getElementById('scrollProgress').style.width = (winScroll / height) * 100 + '%';
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            });
-        }
-
-        // Start
-        document.addEventListener('DOMContentLoaded', async () => {
-            initEvents();
-            await loadAll();
-        });
+        // scroll button (original)
+        (function(){'use strict';const scrollButton=document.getElementById('scrollBtn');if(!scrollButton)return;const progressCircle=scrollButton.querySelector('.progress');const circumference=2*Math.PI*progressCircle.r.baseVal.value;progressCircle.style.strokeDasharray=circumference;const handleScroll=()=>{const scrollTop=window.scrollY||document.documentElement.scrollTop;const scrollHeight=document.documentElement.scrollHeight-document.documentElement.clientHeight;const scrollPercentage=(scrollHeight>0)?(scrollTop/scrollHeight)*100:0;scrollButton.style.setProperty('--progress',scrollPercentage);if(scrollTop<50){scrollButton.classList.add('scroll-at-top');scrollButton.setAttribute('aria-label','Scroll Down')}else{scrollButton.classList.remove('scroll-at-top');scrollButton.setAttribute('aria-label','Scroll to Top')}};const handleClick=()=>{const isAtTop=scrollButton.classList.contains('scroll-at-top');window.scrollTo({top:isAtTop?document.body.scrollHeight:0,behavior:'smooth'})};window.addEventListener('scroll',handleScroll,{passive:!0});scrollButton.addEventListener('click',handleClick);handleScroll()})();
     </script>
 </body>
-</html>
