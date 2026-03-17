@@ -38,7 +38,7 @@
             color: #333;
         }
         
-        /* Page Meta / Category */
+        /* Page Meta / Category - Using our existing badge style */
         .page-meta {
             margin: 10px 0;
         }
@@ -51,6 +51,7 @@
             text-decoration: none;
             font-size: 13px;
             transition: all 0.3s ease;
+            display: inline-block;
         }
         .page-meta a:hover {
             background: #ff2121;
@@ -71,81 +72,81 @@
         .featured-image img {
             max-width: 100%;
             height: auto;
+            border-radius: 16px; /* Match .roundthumb */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+        .featured-image img:hover {
+            transform: scale(1.02);
+        }
+        
+        /* Info Grid - Using our existing card style */
+        .info-grid {
+            background: #fff;
+            border: 1px solid #ddd;
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        }
-        
-        /* Info Headers */
-        .header7 {
-            background: #303030;
-            color: #fff;
-            margin: 20px 0 10px;
-            padding: 8px 18px;
-            border-radius: 6px;
-            font-size: 18px;
-            font-weight: 600;
-            border-left: 4px solid #ff2121;
-        }
-        
-        /* Info Grid */
-        .article {
-            background: #f9f9f9;
-            border-radius: 8px;
             padding: 15px;
             margin: 15px 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }
-        .fname {
-            border-bottom: 1px solid #ccc;
-            padding: 10px 5px;
-            font-weight: 500;
+        .info-row {
+            border-bottom: 1px solid #eee;
+            padding: 12px 8px;
             display: flex;
             align-items: center;
+            font-size: 14px;
         }
-        .fname span:first-child {
-            min-width: 100px;
-            color: #555;
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            min-width: 120px;
+            color: #666;
             font-weight: 600;
         }
-        .fname span:last-child {
-            color: #ff4b2b;
-        }
-        .fname font {
-            margin-left: 5px;
+        .info-value {
+            color: #333;
+            font-weight: 500;
         }
         
-        /* Colors for different fields */
-        .fname font[color="#33ccff"] { color: #33ccff; }
-        .fname font[color="#1ABC9C"] { color: #1ABC9C; }
-        .fname font[color="#F39C12"] { color: #F39C12; }
-        .fname font[color="#ff751a"] { color: #ff751a; }
-        .fname font[color="#F1C40F"] { color: #F1C40F; }
-        .fname font[color="#cc99ff"] { color: #cc99ff; }
-        .fname font[color="#2ECC71"] { color: #2ECC71; }
-        .fname font[color="#ff0066"] { color: #ff0066; }
-        .fname font[color="#3357FF"] { color: #3357FF; }
+        /* Colorful values */
+        .info-value.genre { color: #33ccff; }
+        .info-value.duration { color: #1ABC9C; }
+        .info-value.date { color: #F39C12; }
+        .info-value.language { color: #ff751a; }
+        .info-value.artist { color: #F1C40F; }
+        .info-value.size { color: #2ECC71; }
+        .info-value.quality { color: #ff0066; }
+        .info-value.description { color: #3357FF; }
         
         /* Screenshot Section */
-        .ss {
-            display: flex;
-            justify-content: center;
+        .screenshot-container {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 20px;
             margin: 15px 0;
+            text-align: center;
         }
-        .ss img {
+        .screenshot-container img {
             max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 0 18px rgba(0, 255, 200, 0.15);
-            transition: transform 0.3s;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
         }
-        .ss img:hover {
+        .screenshot-container img:hover {
             transform: scale(1.02);
         }
         
         /* Download Buttons */
-        .dlbtn {
-            text-align: center;
-            margin: 15px 0;
+        .download-section {
+            margin: 25px 0;
         }
-        .dlbtn a {
+        .download-btn {
+            text-align: center;
+            margin: 12px 0;
+        }
+        .download-btn a {
             display: inline-block;
             border-radius: 30px;
             font-family: 'Inter', sans-serif;
@@ -157,22 +158,22 @@
             color: #ffffff;
             text-decoration: none;
             transition: all 0.3s ease;
-            min-width: 250px;
+            min-width: 280px;
         }
-        .dlbtn a:hover {
+        .download-btn a:hover {
             background-color: #ff2121;
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(255, 33, 33, 0.3);
         }
         
         /* Telegram Button */
-        .telegram-join-btn {
+        .telegram-btn {
             display: block;
             width: max-content;
             padding: 12px 25px;
             color: #ffffff;
             background-color: #0088cc;
-            border-radius: 8px;
+            border-radius: 30px; /* Match our button style */
             border: 2px solid #005f8b;
             font-family: 'Inter', sans-serif;
             font-size: 16px;
@@ -182,17 +183,17 @@
             box-shadow: 0 4px 6px rgba(0, 136, 204, 0.2);
             transition: all 0.3s ease;
         }
-        .telegram-join-btn:hover {
+        .telegram-btn:hover {
             background-color: #005f8b;
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             box-shadow: 0 6px 10px rgba(0, 136, 204, 0.3);
         }
-        .telegram-join-btn i {
+        .telegram-btn i {
             margin-right: 8px;
         }
         
         /* Tags Section */
-        .gtag {
+        .tags-section {
             font-weight: 600;
             font-size: 16px;
             color: #333;
@@ -205,7 +206,7 @@
             align-items: center;
             gap: 10px;
         }
-        .gtag a {
+        .tag-link {
             display: inline-block;
             background-color: #f0f0f0;
             padding: 6px 14px;
@@ -214,32 +215,43 @@
             color: #333;
             border: 1px solid #ccc;
             transition: all 0.3s ease;
+            font-size: 14px;
         }
-        .gtag a:hover {
+        .tag-link:hover {
             background-color: #ff2121;
             color: #fff;
             border-color: #ff2121;
         }
-        .taglist {
-            font-style: normal;
-            font-size: 14px;
-            color: #555;
+        
+        /* How to download link */
+        .how-to-download {
+            margin: 15px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        .how-to-download a {
+            color: #E74C3C;
+            text-decoration: none;
             font-weight: 600;
-            margin-right: 8px;
+            margin-left: 10px;
+        }
+        .how-to-download a:hover {
+            text-decoration: underline;
         }
         
         /* Responsive */
         @media (max-width: 768px) {
-            .fname {
+            .info-row {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 5px;
             }
-            .fname span:first-child {
+            .info-label {
                 min-width: auto;
             }
-            .dlbtn a {
-                min-width: 200px;
+            .download-btn a {
+                min-width: 240px;
                 padding: 10px 20px;
             }
         }
@@ -265,104 +277,119 @@
 
         <!-- ===== PAGE META / CATEGORY ===== -->
         <div class="page-meta">
-            <a href="/{{CATEGORY_URL}}">
+            <a href="/{{CATEGORY_URL}}/">
                 <em class="page-meta-text">{{CATEGORY_NAME}}</em>
             </a>
         </div>
 
         <!-- ===== FEATURED IMAGE ===== -->
         <div class="featured-image">
-            <img src="{{IMAGE_URL}}" alt="{{ITEM_TITLE}}" width="200" height="300">
+            <img src="{{IMAGE_URL}}" alt="{{ITEM_TITLE}}" width="200" height="300" loading="lazy">
         </div>
 
-        <!-- ===== INFORMATION HEADER ===== -->
-        <h3 class="header7" align="center">INFORMATION</h3>
+        <!-- ===== INFORMATION SECTION ===== -->
+        <div class="section-header">
+            <h2 class="section-title">
+                <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
+                INFORMATION
+            </h2>
+        </div>
 
         <!-- ===== INFO GRID ===== -->
-        <div class="article">
-            <div class="fname">
-                <span>Name:</span>
-                <span style="color:#ff4e50;">{{ITEM_NAME}}</span>
+        <div class="info-grid">
+            <div class="info-row">
+                <span class="info-label">Name:</span>
+                <span class="info-value" style="color:#ff4e50;">{{ITEM_NAME}}</span>
             </div>
-            <div class="fname">
-                <span>Genre:</span>
-                <font color="#33ccff">{{GENRE}}</font>
+            <div class="info-row">
+                <span class="info-label">Genre:</span>
+                <span class="info-value genre">{{GENRE}}</span>
             </div>
-            <div class="fname">
-                <span>Duration:</span> 
-                <font color="#1ABC9C">{{DURATION}}</font>
+            <div class="info-row">
+                <span class="info-label">Duration:</span> 
+                <span class="info-value duration">{{DURATION}}</span>
             </div>
-            <div class="fname">
-                <span>Release Date:</span> 
-                <font color="#F39C12">{{RELEASE_DATE}}</font>
+            <div class="info-row">
+                <span class="info-label">Release Date:</span> 
+                <span class="info-value date">{{RELEASE_DATE}}</span>
             </div>
-            <div class="fname">
-                <span>Language:</span> 
-                <font color="#ff751a">{{LANGUAGE}}</font>
+            <div class="info-row">
+                <span class="info-label">Language:</span> 
+                <span class="info-value language">{{LANGUAGE}}</span>
             </div>
-            <div class="fname">
-                <span>Artist / Director:</span> 
-                <font color="#F1C40F">{{ARTIST}}</font>
+            <div class="info-row">
+                <span class="info-label">Artist / Director:</span> 
+                <span class="info-value artist">{{ARTIST}}</span>
             </div>
-            <div class="fname">
-                <span>Size:</span> 
-                <font color="#2ECC71">{{SIZE}}</font>
+            <div class="info-row">
+                <span class="info-label">Size:</span> 
+                <span class="info-value size">{{SIZE}}</span>
             </div>
-            <div class="fname">
-                <span>Quality:</span> 
-                <font color="#ff0066">{{QUALITY}}</font>
+            <div class="info-row">
+                <span class="info-label">Quality:</span> 
+                <span class="info-value quality">{{QUALITY}}</span>
             </div>
-            <div class="fname">
-                <span>Description:</span> 
-                <font color="#3357FF">{{DESCRIPTION}}</font>
+            <div class="info-row">
+                <span class="info-label">Description:</span> 
+                <span class="info-value description">{{DESCRIPTION}}</span>
             </div>
         </div>
 
-        <!-- ===== DOWNLOAD INFO ===== -->
-        <div class="fname">
+        <!-- ===== HOW TO DOWNLOAD ===== -->
+        <div class="how-to-download">
             <strong>How To Download:</strong>
-            <a href="/how-to-download/" style="color: #E74C3C; margin-left: 10px;" target="_blank">Click Here</a>
+            <a href="/how-to-download/" target="_blank">Click Here</a>
         </div>
 
-        <!-- ===== SCREENSHOT HEADER ===== -->
-        <h3 class="header7" align="center">SCREENSHOT</h3>
+        <!-- ===== SCREENSHOT SECTION ===== -->
+        <div class="section-header section-spacing">
+            <h2 class="section-title">
+                <i class="fas fa-camera" style="margin-right: 8px;"></i>
+                SCREENSHOT
+            </h2>
+        </div>
 
         <!-- ===== SCREENSHOT ===== -->
-        <div class="article">
-            <div class="ss">
-                <img src="{{SCREENSHOT_URL}}" alt="Screenshot" />
-            </div>
+        <div class="screenshot-container">
+            <img src="{{SCREENSHOT_URL}}" alt="Screenshot" loading="lazy" />
         </div>
 
-        <!-- ===== DOWNLOAD HEADER ===== -->
-        <h3 class="bp-title" align="center">DOWNLOAD LINK BELOW</h3>
+        <!-- ===== DOWNLOAD SECTION ===== -->
+        <div class="section-header section-spacing">
+            <h2 class="section-title">
+                <i class="fas fa-download" style="margin-right: 8px;"></i>
+                DOWNLOAD LINKS
+            </h2>
+        </div>
 
         <!-- ===== TELEGRAM BUTTON ===== -->
-        <a class="telegram-join-btn" href="{{TELEGRAM_LINK}}" target="_blank">
+        <a class="telegram-btn" href="{{TELEGRAM_LINK}}" target="_blank">
             <i class="fa-brands fa-telegram"></i> Join Telegram
         </a>
 
         <!-- ===== DOWNLOAD BUTTONS ===== -->
-        <div class="dlbtn">
-            <a href="{{DOWNLOAD_LINK_480P}}" target="_blank">Download 480p [{{SIZE_480P}}]</a>
-        </div>
-        <div class="dlbtn">
-            <a href="{{DOWNLOAD_LINK_720P}}" target="_blank">Download 720p [{{SIZE_720P}}]</a>
-        </div>
-        <div class="dlbtn">
-            <a href="{{DOWNLOAD_LINK_1080P}}" target="_blank">Download 1080p [{{SIZE_1080P}}]</a>
+        <div class="download-section">
+            <div class="download-btn">
+                <a href="{{DOWNLOAD_LINK_480P}}" target="_blank">Download 480p [{{SIZE_480P}}]</a>
+            </div>
+            <div class="download-btn">
+                <a href="{{DOWNLOAD_LINK_720P}}" target="_blank">Download 720p [{{SIZE_720P}}]</a>
+            </div>
+            <div class="download-btn">
+                <a href="{{DOWNLOAD_LINK_1080P}}" target="_blank">Download 1080p [{{SIZE_1080P}}]</a>
+            </div>
         </div>
 
         <!-- ===== REQUEST BUTTON ===== -->
-        <a class='telegram-join-btn' href='/request-a-movie/'>
-            <i class='ab-send'></i> Request a Movie
+        <a class="telegram-btn" href="/request/">
+            <i class="fas fa-envelope"></i> Request a Movie
         </a>
 
         <!-- ===== TAGS SECTION ===== -->
-        <div class="gtag">
-            Tag:
-            <a href="/tag/{{TAG_SLUG}}/">
-                <em class="taglist">{{TAG_NAME}}</em>
+        <div class="tags-section">
+            <span>Tag:</span>
+            <a href="/tag/{{TAG_SLUG}}/" class="tag-link">
+                <em>{{TAG_NAME}}</em>
             </a>
         </div>
 
