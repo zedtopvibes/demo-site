@@ -49,7 +49,7 @@
     </header>
     <div class="clear"></div>
 
-    <!-- Trending Now Section -->
+    <!-- ===== TRENDING NOW SECTION ===== -->
     <div class="section-header" id="trending">
         <h2 class="section-title" id="trending-title">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
@@ -63,11 +63,11 @@
     </div>
     <div class="corner">
         <div class="music-grid" id="trending-container">
-            <!-- Content loads dynamically via JavaScript -->
+            <!-- Content loads via API -->
         </div>
     </div>
 
-    <!-- Latest Releases Section -->
+    <!-- ===== LATEST RELEASES SECTION ===== -->
     <div class="section-header section-spacing" id="latest">
         <h2 class="section-title" id="latest-title">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
@@ -81,11 +81,11 @@
     </div>
     <div class="corner">
         <div class="music-grid" id="latest-container">
-            <!-- Content loads dynamically via JavaScript -->
+            <!-- Content loads via API -->
         </div>
     </div>
     
-    <!-- Playlists Section -->
+    <!-- ===== PLAYLISTS SECTION ===== -->
     <div class="section-header section-spacing" id="playlists">
         <h2 class="section-title">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
@@ -99,11 +99,11 @@
     </div>
     <div class="corner">
         <div class="music-grid" id="playlists-container">
-            <!-- Content loads dynamically or will be populated -->
+            <!-- Content loads via API -->
         </div>
     </div>
     
-    <!-- Albums Section -->
+    <!-- ===== ALBUMS SECTION ===== -->
     <div class="section-header section-spacing" id="albums">
         <h2 class="section-title">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
@@ -117,11 +117,11 @@
     </div>
     <div class="corner">
         <div class="music-grid" id="albums-container">
-            <!-- Content loads dynamically or will be populated -->
+            <!-- Content loads via API -->
         </div>
     </div>
     
-    <!-- EPs Section -->
+    <!-- ===== EPS SECTION ===== -->
     <div class="section-header section-spacing" id="eps">
         <h2 class="section-title">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
@@ -135,11 +135,11 @@
     </div>
     <div class="corner">
         <div class="music-grid" id="eps-container">
-            <!-- Content loads dynamically or will be populated -->
+            <!-- Content loads via API -->
         </div>
     </div>
     
-    <!-- Artists Section -->
+    <!-- ===== ARTISTS SECTION ===== -->
     <div class="section-header section-spacing" id="artists">
         <h2 class="section-title">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
@@ -153,11 +153,11 @@
     </div>
     <div class="corner">
         <div class="music-grid" id="artists-container">
-            <!-- Content loads dynamically or will be populated -->
+            <!-- Content loads via API -->
         </div>
     </div>
     
-    <!-- Music Genres Section -->
+    <!-- ===== MUSIC GENRES SECTION ===== -->
     <div class="section-header section-spacing" id="genres">
         <h2 class="section-title">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
@@ -171,16 +171,18 @@
     </div>
     <div class="corner">
         <div class="music-grid" id="genres-container">
-            <!-- Genres will be populated via JavaScript -->
+            <!-- Content loads via API -->
         </div>
     </div>
 
+    <!-- Spotify Button -->
     <a href="https://open.spotify.com" target="_blank" id="spotifyBtn" title="Listen on Spotify">
         <svg viewBox="0 0 24 24">
             <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.66.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141 4.14-1.26 9.479-.6 13.08 1.56.36.24.48.78.24 1.26zm.12-3.438c-3.84-2.28-10.14-2.52-13.86-1.38-.6.18-1.26-.24-1.44-.84-.18-.6.24-1.26.84-1.44 4.2-1.26 11.04-1.02 15.36 1.56.54.3.78 1.02.48 1.56-.3.42-1.02.66-1.56.36z"/>
         </svg>
     </a>
 
+    <!-- Footer -->
     <footer>
         <div id="footer-top">
             <span style="float:left"><a href="#" title="spotify">Follow on Spotify</a></span>
@@ -208,6 +210,8 @@
             </div>
         </div>
     </footer>
+
+    <!-- Scroll Button -->
     <div class="scroll-btn" id="scrollBtn">
         <svg viewBox="0 0 36 36">
             <circle class="track" cx="18" cy="18" r="15.9" stroke-width="2.5"></circle>
