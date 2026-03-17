@@ -20,7 +20,64 @@
     
     <!-- Minimal inline styles for detail page layout -->
     <style>
-        /*
+        /* ONLY layout styles - NO colors, NO borders, NO typography */
+        .postbody {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .breadcrumb {
+            padding: 10px 0;
+            margin: 10px 0;
+        }
+        .featured-image {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .info-grid {
+            margin: 15px 0;
+        }
+        .info-row {
+            padding: 12px 8px;
+            display: flex;
+            align-items: center;
+        }
+        .info-label {
+            min-width: 120px;
+        }
+        .screenshot-container {
+            margin: 15px 0;
+            text-align: center;
+        }
+        .download-section {
+            margin: 25px 0;
+        }
+        .download-btn {
+            text-align: center;
+            margin: 12px 0;
+        }
+        .how-to-download {
+            margin: 15px 0;
+            padding: 10px;
+        }
+        .tags-section {
+            margin: 30px 0;
+            padding: 15px 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+        @media (max-width: 768px) {
+            .info-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            .info-label {
+                min-width: auto;
+            }
+        }
     </style>
 </head>
 <body>
