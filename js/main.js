@@ -17,6 +17,7 @@ window.onload = function() {
     loadHomeEPs();
     loadHomeArtists();
     loadGenres();
+loadRecommended();
 };
 
 // ===== EXISTING FUNCTIONS (keep all your original ones) =====
