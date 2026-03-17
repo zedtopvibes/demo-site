@@ -12,133 +12,43 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome for icons -->
+    <!-- Font Awesome for icons (optional) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Main CSS -->
+    <!-- Main CSS - ONLY this! -->
     <link rel="stylesheet" href="/css/style.css">
     
-    <!-- Detail Page Specific Styles -->
+    <!-- Minimal inline styles for detail page layout (no new designs) -->
     <style>
-        /* Breadcrumb Styles */
-        .breadcrumb {
-            padding: 10px 0;
-            margin: 10px 0;
-            font-size: 14px;
-            color: #666;
-        }
-        .breadcrumb a {
-            color: #ff4b2b;
-            text-decoration: none;
-        }
-        .breadcrumb a:hover {
-            text-decoration: underline;
-        }
-        .breadcrumb strong {
-            color: #333;
-        }
-        
-        /* Page Meta / Category - Using our existing badge style */
-        .page-meta {
-            margin: 10px 0;
-        }
-        .page-meta a {
-            background: #333;
-            padding: 4px 12px;
-            border: 1px solid #ff2121;
-            border-radius: 4px;
-            color: #fff;
-            text-decoration: none;
-            font-size: 13px;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-        .page-meta a:hover {
-            background: #ff2121;
-        }
-        
-        /* Main Content Area */
+        /* ONLY layout styles - NO colors, NO borders, NO typography */
         .postbody {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
         }
-        
-        /* Featured Image */
+        .breadcrumb {
+            padding: 10px 0;
+            margin: 10px 0;
+        }
         .featured-image {
             text-align: center;
             margin: 20px 0;
         }
-        .featured-image img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 16px; /* Match .roundthumb */
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease;
-        }
-        .featured-image img:hover {
-            transform: scale(1.02);
-        }
-        
-        /* Info Grid - Using our existing card style */
         .info-grid {
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            padding: 15px;
             margin: 15px 0;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }
         .info-row {
-            border-bottom: 1px solid #eee;
             padding: 12px 8px;
             display: flex;
             align-items: center;
-            font-size: 14px;
-        }
-        .info-row:last-child {
-            border-bottom: none;
         }
         .info-label {
             min-width: 120px;
-            color: #666;
-            font-weight: 600;
         }
-        .info-value {
-            color: #333;
-            font-weight: 500;
-        }
-        
-        /* Colorful values */
-        .info-value.genre { color: #33ccff; }
-        .info-value.duration { color: #1ABC9C; }
-        .info-value.date { color: #F39C12; }
-        .info-value.language { color: #ff751a; }
-        .info-value.artist { color: #F1C40F; }
-        .info-value.size { color: #2ECC71; }
-        .info-value.quality { color: #ff0066; }
-        .info-value.description { color: #3357FF; }
-        
-        /* Screenshot Section */
         .screenshot-container {
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            padding: 20px;
             margin: 15px 0;
             text-align: center;
         }
-        .screenshot-container img {
-            max-width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease;
-        }
-        .screenshot-container img:hover {
-            transform: scale(1.02);
-        }
-        
-        /* Download Buttons */
         .download-section {
             margin: 25px 0;
         }
@@ -146,101 +56,18 @@
             text-align: center;
             margin: 12px 0;
         }
-        .download-btn a {
-            display: inline-block;
-            border-radius: 30px;
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            padding: 12px 30px;
-            cursor: pointer;
-            border: 2px solid #ff2121;
-            background-color: #424242;
-            color: #ffffff;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            min-width: 280px;
+        .how-to-download {
+            margin: 15px 0;
+            padding: 10px;
         }
-        .download-btn a:hover {
-            background-color: #ff2121;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 33, 33, 0.3);
-        }
-        
-        /* Telegram Button */
-        .telegram-btn {
-            display: block;
-            width: max-content;
-            padding: 12px 25px;
-            color: #ffffff;
-            background-color: #0088cc;
-            border-radius: 30px; /* Match our button style */
-            border: 2px solid #005f8b;
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            font-weight: 600;
-            margin: 20px auto;
-            text-decoration: none;
-            box-shadow: 0 4px 6px rgba(0, 136, 204, 0.2);
-            transition: all 0.3s ease;
-        }
-        .telegram-btn:hover {
-            background-color: #005f8b;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 10px rgba(0, 136, 204, 0.3);
-        }
-        .telegram-btn i {
-            margin-right: 8px;
-        }
-        
-        /* Tags Section */
         .tags-section {
-            font-weight: 600;
-            font-size: 16px;
-            color: #333;
             margin: 30px 0;
             padding: 15px 0;
-            border-top: 2px solid #eee;
-            border-bottom: 2px solid #eee;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: 10px;
         }
-        .tag-link {
-            display: inline-block;
-            background-color: #f0f0f0;
-            padding: 6px 14px;
-            border-radius: 20px;
-            text-decoration: none;
-            color: #333;
-            border: 1px solid #ccc;
-            transition: all 0.3s ease;
-            font-size: 14px;
-        }
-        .tag-link:hover {
-            background-color: #ff2121;
-            color: #fff;
-            border-color: #ff2121;
-        }
-        
-        /* How to download link */
-        .how-to-download {
-            margin: 15px 0;
-            padding: 10px;
-            background: #f9f9f9;
-            border-radius: 8px;
-        }
-        .how-to-download a {
-            color: #E74C3C;
-            text-decoration: none;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-        .how-to-download a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Responsive */
         @media (max-width: 768px) {
             .info-row {
                 flex-direction: column;
@@ -249,10 +76,6 @@
             }
             .info-label {
                 min-width: auto;
-            }
-            .download-btn a {
-                min-width: 240px;
-                padding: 10px 20px;
             }
         }
     </style>
@@ -284,10 +107,10 @@
 
         <!-- ===== FEATURED IMAGE ===== -->
         <div class="featured-image">
-            <img src="{{IMAGE_URL}}" alt="{{ITEM_TITLE}}" width="200" height="300" loading="lazy">
+            <img src="{{IMAGE_URL}}" alt="{{ITEM_TITLE}}" width="200" height="300" class="roundthumb" loading="lazy">
         </div>
 
-        <!-- ===== INFORMATION SECTION ===== -->
+        <!-- ===== INFORMATION SECTION (using existing .section-header) ===== -->
         <div class="section-header">
             <h2 class="section-title">
                 <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
@@ -295,53 +118,84 @@
             </h2>
         </div>
 
-        <!-- ===== INFO GRID ===== -->
-        <div class="info-grid">
-            <div class="info-row">
-                <span class="info-label">Name:</span>
-                <span class="info-value" style="color:#ff4e50;">{{ITEM_NAME}}</span>
+        <!-- ===== INFO GRID (using existing .music-item style) ===== -->
+        <div class="music-grid">
+            <!-- Each info row as a music-item -->
+            <div class="music-item">
+                <div class="item-container">
+                    <div class="item-data">
+                        <span class="track-title"><b>Name:</b> <span style="color:#ff4e50;">{{ITEM_NAME}}</span></span>
+                    </div>
+                </div>
             </div>
-            <div class="info-row">
-                <span class="info-label">Genre:</span>
-                <span class="info-value genre">{{GENRE}}</span>
+            <div class="music-item">
+                <div class="item-container">
+                    <div class="item-data">
+                        <span class="track-title"><b>Genre:</b> <span style="color:#33ccff;">{{GENRE}}</span></span>
+                    </div>
+                </div>
             </div>
-            <div class="info-row">
-                <span class="info-label">Duration:</span> 
-                <span class="info-value duration">{{DURATION}}</span>
+            <div class="music-item">
+                <div class="item-container">
+                    <div class="item-data">
+                        <span class="track-title"><b>Duration:</b> <span style="color:#1ABC9C;">{{DURATION}}</span></span>
+                    </div>
+                </div>
             </div>
-            <div class="info-row">
-                <span class="info-label">Release Date:</span> 
-                <span class="info-value date">{{RELEASE_DATE}}</span>
+            <div class="music-item">
+                <div class="item-container">
+                    <div class="item-data">
+                        <span class="track-title"><b>Release Date:</b> <span style="color:#F39C12;">{{RELEASE_DATE}}</span></span>
+                    </div>
+                </div>
             </div>
-            <div class="info-row">
-                <span class="info-label">Language:</span> 
-                <span class="info-value language">{{LANGUAGE}}</span>
+            <div class="music-item">
+                <div class="item-container">
+                    <div class="item-data">
+                        <span class="track-title"><b>Language:</b> <span style="color:#ff751a;">{{LANGUAGE}}</span></span>
+                    </div>
+                </div>
             </div>
-            <div class="info-row">
-                <span class="info-label">Artist / Director:</span> 
-                <span class="info-value artist">{{ARTIST}}</span>
+            <div class="music-item">
+                <div class="item-container">
+                    <div class="item-data">
+                        <span class="track-title"><b>Artist / Director:</b> <span style="color:#F1C40F;">{{ARTIST}}</span></span>
+                    </div>
+                </div>
             </div>
-            <div class="info-row">
-                <span class="info-label">Size:</span> 
-                <span class="info-value size">{{SIZE}}</span>
+            <div class="music-item">
+                <div class="item-container">
+                    <div class="item-data">
+                        <span class="track-title"><b>Size:</b> <span style="color:#2ECC71;">{{SIZE}}</span></span>
+                    </div>
+                </div>
             </div>
-            <div class="info-row">
-                <span class="info-label">Quality:</span> 
-                <span class="info-value quality">{{QUALITY}}</span>
+            <div class="music-item">
+                <div class="item-container">
+                    <div class="item-data">
+                        <span class="track-title"><b>Quality:</b> <span style="color:#ff0066;">{{QUALITY}}</span></span>
+                    </div>
+                </div>
             </div>
-            <div class="info-row">
-                <span class="info-label">Description:</span> 
-                <span class="info-value description">{{DESCRIPTION}}</span>
+            <div class="music-item">
+                <div class="item-container">
+                    <div class="item-data">
+                        <span class="track-title"><b>Description:</b> <span style="color:#3357FF;">{{DESCRIPTION}}</span></span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- ===== HOW TO DOWNLOAD ===== -->
-        <div class="how-to-download">
-            <strong>How To Download:</strong>
-            <a href="/how-to-download/" target="_blank">Click Here</a>
+        <!-- ===== HOW TO DOWNLOAD (using existing .music-item style) ===== -->
+        <div class="music-item" style="width:100%; max-width:100%; margin:15px 0;">
+            <div class="item-container">
+                <div class="item-data">
+                    <span class="track-title"><b>How To Download:</b> <a href="/how-to-download/" style="color: #E74C3C; margin-left: 10px;" target="_blank">Click Here</a></span>
+                </div>
+            </div>
         </div>
 
-        <!-- ===== SCREENSHOT SECTION ===== -->
+        <!-- ===== SCREENSHOT SECTION (using existing .section-header) ===== -->
         <div class="section-header section-spacing">
             <h2 class="section-title">
                 <i class="fas fa-camera" style="margin-right: 8px;"></i>
@@ -349,12 +203,12 @@
             </h2>
         </div>
 
-        <!-- ===== SCREENSHOT ===== -->
-        <div class="screenshot-container">
-            <img src="{{SCREENSHOT_URL}}" alt="Screenshot" loading="lazy" />
+        <!-- ===== SCREENSHOT (using existing .music-item style) ===== -->
+        <div class="music-item" style="width:100%; max-width:100%; text-align:center; padding:20px;">
+            <img src="{{SCREENSHOT_URL}}" alt="Screenshot" style="max-width:100%; border-radius:12px;" loading="lazy" />
         </div>
 
-        <!-- ===== DOWNLOAD SECTION ===== -->
+        <!-- ===== DOWNLOAD SECTION (using existing .section-header) ===== -->
         <div class="section-header section-spacing">
             <h2 class="section-title">
                 <i class="fas fa-download" style="margin-right: 8px;"></i>
@@ -362,35 +216,50 @@
             </h2>
         </div>
 
-        <!-- ===== TELEGRAM BUTTON ===== -->
-        <a class="telegram-btn" href="{{TELEGRAM_LINK}}" target="_blank">
-            <i class="fa-brands fa-telegram"></i> Join Telegram
-        </a>
+        <!-- ===== TELEGRAM BUTTON (using existing button style) ===== -->
+        <div style="text-align:center; margin:20px 0;">
+            <a href="{{TELEGRAM_LINK}}" target="_blank" style="display:inline-block; padding:12px 25px; background:#0088cc; color:white; border-radius:30px; text-decoration:none; font-weight:600; border:2px solid #005f8b;">
+                <i class="fa-brands fa-telegram"></i> Join Telegram
+            </a>
+        </div>
 
-        <!-- ===== DOWNLOAD BUTTONS ===== -->
+        <!-- ===== DOWNLOAD BUTTONS (using existing button style) ===== -->
         <div class="download-section">
-            <div class="download-btn">
-                <a href="{{DOWNLOAD_LINK_480P}}" target="_blank">Download 480p [{{SIZE_480P}}]</a>
+            <div style="text-align:center; margin:12px 0;">
+                <a href="{{DOWNLOAD_LINK_480P}}" target="_blank" style="display:inline-block; border-radius:30px; font-size:16px; padding:12px 30px; border:2px solid #ff2121; background-color:#424242; color:#fff; text-decoration:none; min-width:280px;">
+                    Download 480p [{{SIZE_480P}}]
+                </a>
             </div>
-            <div class="download-btn">
-                <a href="{{DOWNLOAD_LINK_720P}}" target="_blank">Download 720p [{{SIZE_720P}}]</a>
+            <div style="text-align:center; margin:12px 0;">
+                <a href="{{DOWNLOAD_LINK_720P}}" target="_blank" style="display:inline-block; border-radius:30px; font-size:16px; padding:12px 30px; border:2px solid #ff2121; background-color:#424242; color:#fff; text-decoration:none; min-width:280px;">
+                    Download 720p [{{SIZE_720P}}]
+                </a>
             </div>
-            <div class="download-btn">
-                <a href="{{DOWNLOAD_LINK_1080P}}" target="_blank">Download 1080p [{{SIZE_1080P}}]</a>
+            <div style="text-align:center; margin:12px 0;">
+                <a href="{{DOWNLOAD_LINK_1080P}}" target="_blank" style="display:inline-block; border-radius:30px; font-size:16px; padding:12px 30px; border:2px solid #ff2121; background-color:#424242; color:#fff; text-decoration:none; min-width:280px;">
+                    Download 1080p [{{SIZE_1080P}}]
+                </a>
             </div>
         </div>
 
-        <!-- ===== REQUEST BUTTON ===== -->
-        <a class="telegram-btn" href="/request/">
-            <i class="fas fa-envelope"></i> Request a Movie
-        </a>
-
-        <!-- ===== TAGS SECTION ===== -->
-        <div class="tags-section">
-            <span>Tag:</span>
-            <a href="/tag/{{TAG_SLUG}}/" class="tag-link">
-                <em>{{TAG_NAME}}</em>
+        <!-- ===== REQUEST BUTTON (using existing button style) ===== -->
+        <div style="text-align:center; margin:20px 0;">
+            <a href="/request/" style="display:inline-block; padding:12px 25px; background:#0088cc; color:white; border-radius:30px; text-decoration:none; font-weight:600; border:2px solid #005f8b;">
+                <i class="fas fa-envelope"></i> Request a Movie
             </a>
+        </div>
+
+        <!-- ===== TAGS SECTION (using existing .music-item style) ===== -->
+        <div class="music-item" style="width:100%; max-width:100%; margin:15px 0;">
+            <div class="item-container">
+                <div class="item-data">
+                    <span class="track-title"><b>Tag:</b> 
+                        <a href="/tag/{{TAG_SLUG}}/" style="display:inline-block; background:#f0f0f0; padding:6px 14px; border-radius:20px; color:#333; text-decoration:none; margin-left:10px; border:1px solid #ccc;">
+                            <em>{{TAG_NAME}}</em>
+                        </a>
+                    </span>
+                </div>
+            </div>
         </div>
 
     </main>
