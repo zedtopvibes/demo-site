@@ -1,5 +1,5 @@
 // ===== Zedtopvibes.com - Clean Main JavaScript =====
-// NO API CONTENT - Just core functionality
+// NO API CONTENT - Just core functionality with Coming Soon placeholders
 
 let currentPage = 1;
 let currentSearchTerm = '';
@@ -9,14 +9,87 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load header and footer
     loadHeaderAndFooter();
     
-    // Initialize components
-    initializeSidebar();
+    // Initialize components that don't depend on header
     initializeScrollButton();
     initializeLiveSearch();
     
-    // All sections start empty - ready for your real content!
-    // No API calls, no demo content, no placeholders
+    // Show coming soon in all sections immediately
+    showComingSoon();
 });
+
+// ===== SHOW COMING SOON IN ALL SECTIONS =====
+function showComingSoon() {
+    // Homepage sections
+    const sections = [
+        'trending-container',
+        'latest-container',
+        'playlists-container',
+        'albums-container',
+        'eps-container',
+        'artists-container',
+        'genres-container',
+        'playlists-main-grid',
+        'editors-picks-grid',
+        'recently-added-grid',
+        'popular-grid',
+        'albums-main-grid',
+        'eps-main-grid',
+        'artists-main-grid'
+    ];
+    
+    sections.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.innerHTML = getComingSoonHTML(id);
+        }
+    });
+}
+
+function getComingSoonHTML(sectionId) {
+    // Different messages for different sections
+    let message = 'Coming Soon';
+    let icon = '🎵';
+    
+    if (sectionId.includes('trending')) {
+        message = 'Trending tracks coming soon';
+        icon = '🔥';
+    } else if (sectionId.includes('latest')) {
+        message = 'Latest releases coming soon';
+        icon = '🆕';
+    } else if (sectionId.includes('playlist')) {
+        message = 'Playlists coming soon';
+        icon = '📋';
+    } else if (sectionId.includes('album')) {
+        message = 'Albums coming soon';
+        icon = '💿';
+    } else if (sectionId.includes('eps')) {
+        message = 'EPs coming soon';
+        icon = '🎼';
+    } else if (sectionId.includes('artist')) {
+        message = 'Artists coming soon';
+        icon = '🎤';
+    } else if (sectionId.includes('genre')) {
+        message = 'Genres coming soon';
+        icon = '🎸';
+    } else if (sectionId.includes('editor')) {
+        message = "Editor's picks coming soon";
+        icon = '⭐';
+    } else if (sectionId.includes('recent')) {
+        message = 'Recently added coming soon';
+        icon = '⏱️';
+    } else if (sectionId.includes('popular')) {
+        message = 'Popular items coming soon';
+        icon = '📈';
+    }
+    
+    return `
+        <div class="coming-soon">
+            <div class="coming-soon-icon">${icon}</div>
+            <div class="coming-soon-text">${message}</div>
+            <div class="coming-soon-subtext">Check back later for updates</div>
+        </div>
+    `;
+}
 
 // ===== HEADER & FOOTER LOADER =====
 function loadHeaderAndFooter() {
@@ -26,8 +99,11 @@ function loadHeaderAndFooter() {
     ]).then(([headerData, footerData]) => {
         document.getElementById('header-placeholder').innerHTML = headerData;
         document.getElementById('footer-placeholder').innerHTML = footerData;
-    }).catch(() => {
-        console.log('Header/footer files not found');
+        
+        // Initialize sidebar after header is loaded
+        setTimeout(initializeSidebar, 100);
+    }).catch(error => {
+        console.log('Header/footer files not found:', error);
     });
 }
 
@@ -39,15 +115,45 @@ function initializeSidebar() {
     const closeBtn = document.getElementById('closeSidebarBtn');
 
     if (hamburger && sidebar && overlay && closeBtn) {
-        hamburger.addEventListener('click', openSidebar);
-        closeBtn.addEventListener('click', closeSidebar);
-        overlay.addEventListener('click', closeSidebar);
+        // Remove any existing listeners
+        const newHamburger = hamburger.cloneNode(true);
+        const newCloseBtn = closeBtn.cloneNode(true);
+        const newOverlay = overlay.cloneNode(true);
+        
+        hamburger.parentNode.replaceChild(newHamburger, hamburger);
+        closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
+        overlay.parentNode.replaceChild(newOverlay, overlay);
+        
+        // Add new event listeners
+        newHamburger.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openSidebar();
+        });
+        
+        newCloseBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeSidebar();
+        });
+        
+        newOverlay.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeSidebar();
+        });
 
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-                closeSidebar();
+            if (e.key === 'Escape') {
+                const currentSidebar = document.getElementById('sidebar');
+                const currentOverlay = document.getElementById('sidebarOverlay');
+                if (currentSidebar && currentOverlay && currentSidebar.classList.contains('open')) {
+                    closeSidebar();
+                }
             }
         });
+    } else {
+        setTimeout(initializeSidebar, 100);
     }
 }
 
@@ -110,16 +216,26 @@ function initializeScrollButton() {
     handleScroll();
 }
 
-// ===== LIVE SEARCH (disabled until you have real data) =====
+// ===== LIVE SEARCH =====
 function initializeLiveSearch() {
     const searchInput = document.getElementById('searchInput');
     if (!searchInput) return;
     
-    // Search is disabled until you add real content
     searchInput.addEventListener('input', function(e) {
-        // Do nothing - no demo search results
-        document.getElementById('liveSearchResults').innerHTML = '';
+        // Show coming soon for search too
+        const results = document.getElementById('liveSearchResults');
+        if (results) {
+            results.innerHTML = '<div class="coming-soon-search">🔍 Search coming soon</div>';
+        }
     });
+    
+    const searchForm = document.getElementById('searchForm');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            searchMusic();
+        });
+    }
 }
 
 // ===== PAGE CONTENT LOADER =====
@@ -139,10 +255,9 @@ function loadPageContent() {
     }
 }
 
-// ===== EMPTY CONTENT LOADERS - Ready for your REAL data =====
+// ===== EMPTY CONTENT LOADERS =====
 function loadHomepageContent() {
-    // Leave all sections EMPTY
-    // When you have real data, add your loaders here
+    // Already showing coming soon via showComingSoon()
     console.log('Homepage ready for content');
 }
 
@@ -162,37 +277,23 @@ function loadArtistsPageContent() {
     console.log('Artists page ready for content');
 }
 
-// ===== SEARCH FUNCTIONS (disabled) =====
+// ===== SEARCH FUNCTIONS =====
 function searchMusic() {
-    alert('Search will be available when content is added');
+    const searchTerm = document.getElementById('searchInput')?.value;
+    if (!searchTerm) return;
+    alert(`🔍 Search for "${searchTerm}" - Coming soon!`);
     return false;
 }
 
 function searchByGenre(genre) {
-    alert(`Browse ${genre} music - coming soon!`);
+    alert(`🎵 Browse ${genre} music - Coming soon!`);
     closeSidebar();
     return false;
 }
 
 function loadMore(page) {
-    alert('More content coming soon!');
+    alert('📄 More content coming soon!');
     return false;
-}
-
-// Helper functions (keep for future use)
-function truncate(str, len) {
-    if (!str) return '';
-    return str.length > len ? str.substr(0, len) + '...' : str;
-}
-
-function escapeHtml(unsafe) {
-    if (!unsafe) return '';
-    return String(unsafe)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
 }
 
 // Make functions globally available
