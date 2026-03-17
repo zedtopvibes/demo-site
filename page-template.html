@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zedtopvibes · {{PAGE_TITLE}}</title>
+    
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Header (same for all pages) -->
+    <div id="header-placeholder"></div>
+
+    <!-- ===== PAGE TITLE ===== -->
+    <div class="section-header">
+        <h2 class="section-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5z"/>
+            </svg>
+            {{PAGE_TITLE}}
+        </h2>
+    </div>
+    
+    <!-- ===== MAIN CONTENT GRID ===== -->
+    <div class="corner">
+        <div class="music-grid" id="{{PAGE_ID}}-container">
+            <!-- Coming Soon will appear here automatically from main.js -->
+        </div>
+    </div>
+
+    <!-- Footer (same for all pages) -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Main JavaScript -->
+    <script src="/js/main.js"></script>
+</body>
+</html>
