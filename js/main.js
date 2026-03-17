@@ -1,98 +1,95 @@
 // ===== Zedtopvibes.com - Main JavaScript =====
-// NO API CONTENT - Just core functionality with universal Coming Soon
+// NO API CONTENT - Just core functionality with Coming Soon placeholders
 
 let currentPage = 1;
 let currentSearchTerm = '';
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded');
-    
     // Load header and footer
     loadHeaderAndFooter();
     
-    // Initialize components
+    // Initialize components that don't depend on header
     initializeScrollButton();
     initializeLiveSearch();
     
-    // Try multiple times to show coming soon
-    tryShowComingSoon();
+    // Show coming soon in all sections
+    showComingSoon();
 });
 
-// ===== TRY MULTIPLE TIMES TO SHOW COMING SOON =====
-function tryShowComingSoon() {
-    // Try immediately
-    showComingSoon();
-    
-    // Try again after header loads
-    setTimeout(showComingSoon, 300);
-    
-    // Try one more time to be sure
-    setTimeout(showComingSoon, 800);
-}
-
-// ===== UNIVERSAL COMING SOON =====
+// ===== SHOW COMING SOON IN ALL SECTIONS =====
 function showComingSoon() {
-    console.log('Checking for containers...');
-    
-    // Get ALL empty containers on the page
-    const containers = document.querySelectorAll('[id$="-container"]');
-    
-    console.log('Found containers:', containers.length);
-    
-    if (containers.length === 0) {
-        console.log('No containers found with IDs ending in -container');
-        return;
-    }
-    
-    containers.forEach(container => {
-        console.log('Container:', container.id, 'Children:', container.children.length);
+    // All possible container IDs across all pages
+    const containers = [
+        // Homepage
+        'trending-container',
+        'latest-container',
+        'playlists-container',
+        'albums-container',
+        'eps-container',
+        'artists-container',
+        'genres-container',
         
-        // Only add coming soon if container is empty
-        if (container && container.children.length === 0) {
-            console.log('Adding coming soon to:', container.id);
-            container.innerHTML = getComingSoonHTML(container.id);
-        } else {
-            console.log('Container already has content:', container.id);
+        // Playlists page
+        'playlists-main-container',
+        'editors-picks-container',
+        'recently-added-container',
+        'popular-playlists-container',
+        
+        // Albums page
+        'albums-main-container',
+        'popular-albums-container',
+        
+        // EPs page
+        'eps-main-container',
+        'popular-eps-container',
+        
+        // Artists page
+        'artists-main-container',
+        'popular-artists-container'
+    ];
+    
+    containers.forEach(id => {
+        const element = document.getElementById(id);
+        if (element && element.children.length === 0) {
+            element.innerHTML = getComingSoonHTML(id);
         }
     });
 }
 
-function getComingSoonHTML(containerId) {
-    // Default values
+function getComingSoonHTML(sectionId) {
     let message = 'Coming Soon';
     let icon = '🎵';
     
-    // Determine content based on container ID
-    if (containerId.includes('trending')) {
-        message = 'Trending Tracks';
+    if (sectionId.includes('trending')) {
+        message = 'Trending tracks coming soon';
         icon = '🔥';
-    } else if (containerId.includes('latest')) {
-        message = 'Latest Releases';
+    } else if (sectionId.includes('latest')) {
+        message = 'Latest releases coming soon';
         icon = '🆕';
-    } else if (containerId.includes('playlist')) {
-        message = 'Playlists';
+    } else if (sectionId.includes('playlist')) {
+        message = 'Playlists coming soon';
         icon = '📋';
-    } else if (containerId.includes('album')) {
-        message = 'Albums';
+    } else if (sectionId.includes('album')) {
+        message = 'Albums coming soon';
         icon = '💿';
-    } else if (containerId.includes('eps')) {
-        message = 'EPs';
+    } else if (sectionId.includes('eps')) {
+        message = 'EPs coming soon';
         icon = '🎼';
-    } else if (containerId.includes('artist')) {
-        message = 'Artists';
+    } else if (sectionId.includes('artist')) {
+        message = 'Artists coming soon';
         icon = '🎤';
-    } else if (containerId.includes('genre')) {
-        message = 'Genres';
+    } else if (sectionId.includes('genre')) {
+        message = 'Genres coming soon';
         icon = '🎸';
-    } else if (containerId.includes('editor')) {
-        message = "Editor's Picks";
+    } else if (sectionId.includes('editor')) {
+        message = "Editor's picks coming soon";
         icon = '⭐';
-    } else if (containerId.includes('recent')) {
-        message = 'Recently Added';
+    } else if (sectionId.includes('recent')) {
+        message = 'Recently added coming soon';
         icon = '⏱️';
-    } else if (containerId.includes('popular')) {
-        message = 'Popular';
+    } else if (sectionId.includes('popular')) {
+        message = 'Popular items coming soon';
         icon = '📈';
     }
     
@@ -100,7 +97,7 @@ function getComingSoonHTML(containerId) {
         <div class="coming-soon">
             <div class="coming-soon-icon">${icon}</div>
             <div class="coming-soon-text">${message}</div>
-            <div class="coming-soon-subtext">Check back later</div>
+            <div class="coming-soon-subtext">Check back later for updates</div>
         </div>
     `;
 }
@@ -129,7 +126,7 @@ function initializeSidebar() {
     const closeBtn = document.getElementById('closeSidebarBtn');
 
     if (hamburger && sidebar && overlay && closeBtn) {
-        // Remove any existing listeners by cloning
+        // Remove any existing listeners
         const newHamburger = hamburger.cloneNode(true);
         const newCloseBtn = closeBtn.cloneNode(true);
         const newOverlay = overlay.cloneNode(true);
@@ -157,7 +154,6 @@ function initializeSidebar() {
             closeSidebar();
         });
 
-        // Keyboard escape
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 const currentSidebar = document.getElementById('sidebar');
@@ -237,13 +233,10 @@ function initializeLiveSearch() {
     if (!searchInput) return;
     
     searchInput.addEventListener('input', function(e) {
+        // Show coming soon for search too
         const results = document.getElementById('liveSearchResults');
         if (results) {
-            results.innerHTML = `
-                <div class="coming-soon-search">
-                    <span>🔍</span> Search coming soon
-                </div>
-            `;
+            results.innerHTML = '<div class="coming-soon-search">🔍 Search coming soon</div>';
         }
     });
     
@@ -274,28 +267,28 @@ function loadPageContent() {
 }
 
 function loadHomepageContent() {
+    // Homepage sections already handled by showComingSoon()
     console.log('Homepage loaded');
-    // Add homepage-specific loading here later
 }
 
 function loadPlaylistsContent() {
     console.log('Playlists page loaded');
-    // Add playlist-specific loading here later
+    // You can add playlist-specific loading here later
 }
 
 function loadAlbumsContent() {
     console.log('Albums page loaded');
-    // Add album-specific loading here later
+    // You can add album-specific loading here later
 }
 
 function loadEPsContent() {
     console.log('EPs page loaded');
-    // Add EP-specific loading here later
+    // You can add EP-specific loading here later
 }
 
 function loadArtistsContent() {
     console.log('Artists page loaded');
-    // Add artist-specific loading here later
+    // You can add artist-specific loading here later
 }
 
 // ===== SEARCH FUNCTIONS =====
