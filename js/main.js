@@ -6,26 +6,54 @@ let currentSearchTerm = '';
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded');
+    
     // Load header and footer
     loadHeaderAndFooter();
     
-    // Initialize components that don't depend on header
+    // Initialize components
     initializeScrollButton();
     initializeLiveSearch();
     
-    // Show coming soon in all empty containers
-    setTimeout(showComingSoon, 200); // Small delay for header to load
+    // Try multiple times to show coming soon
+    tryShowComingSoon();
 });
+
+// ===== TRY MULTIPLE TIMES TO SHOW COMING SOON =====
+function tryShowComingSoon() {
+    // Try immediately
+    showComingSoon();
+    
+    // Try again after header loads
+    setTimeout(showComingSoon, 300);
+    
+    // Try one more time to be sure
+    setTimeout(showComingSoon, 800);
+}
 
 // ===== UNIVERSAL COMING SOON =====
 function showComingSoon() {
-    // Get ALL empty containers on the page (any element with ID ending in "-container")
+    console.log('Checking for containers...');
+    
+    // Get ALL empty containers on the page
     const containers = document.querySelectorAll('[id$="-container"]');
     
+    console.log('Found containers:', containers.length);
+    
+    if (containers.length === 0) {
+        console.log('No containers found with IDs ending in -container');
+        return;
+    }
+    
     containers.forEach(container => {
+        console.log('Container:', container.id, 'Children:', container.children.length);
+        
         // Only add coming soon if container is empty
         if (container && container.children.length === 0) {
+            console.log('Adding coming soon to:', container.id);
             container.innerHTML = getComingSoonHTML(container.id);
+        } else {
+            console.log('Container already has content:', container.id);
         }
     });
 }
