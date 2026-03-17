@@ -859,3 +859,34 @@ button:hover {
     margin: 0;
 }
 
+
+/* ===== ALPHABET NAVIGATION ===== */
+.alphabet-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    padding: 15px 10px;
+    background: #424242;
+    border-radius: 8px;
+    margin: 10px 0 20px;
+}
+
+.alphabet-nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.alphabet-nav a:hover {
+    background: #ff4b2b;
+    transform: translateY(-2px);
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
