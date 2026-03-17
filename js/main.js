@@ -8,47 +8,21 @@ let currentSearchTerm = '';
 
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
-    // Show loading spinners in all sections
-    showAllLoadingSpinners();
-    
     // Load header and footer first
     loadHeaderAndFooter().then(() => {
-        // Initialize components that depend on header
+        // Initialize sidebar (now that header exists)
         initializeSidebar();
+        
+        // Initialize scroll button
         initializeScrollButton();
+        
+        // Initialize live search
         initializeLiveSearch();
         
-        // Now load content (sections will replace spinners)
+        // Load content based on current page
         loadPageContent();
     });
 });
-
-// ===== LOADING SPINNERS =====
-function showAllLoadingSpinners() {
-    const containers = [
-        'trending-container',
-        'latest-container',
-        'playlists-container',
-        'albums-container',
-        'eps-container',
-        'artists-container',
-        'genres-container',
-        'playlists-main-grid',
-        'editors-picks-grid',
-        'recently-added-grid',
-        'popular-grid',
-        'albums-main-grid',
-        'eps-main-grid',
-        'artists-main-grid'
-    ];
-    
-    containers.forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.innerHTML = '<div class="loading">Loading...</div>';
-        }
-    });
-}
 
 // ===== HEADER & FOOTER LOADER =====
 function loadHeaderAndFooter() {
@@ -184,14 +158,13 @@ function loadPageContent() {
 
 // ===== HOMEPAGE CONTENT =====
 function loadHomepageContent() {
-    // Use setTimeout to simulate staggered loading (looks more dynamic)
-    setTimeout(() => loadTrending(), 100);
-    setTimeout(() => loadLatestReleases(), 200);
-    setTimeout(() => loadHomePlaylists(), 300);
-    setTimeout(() => loadHomeAlbums(), 400);
-    setTimeout(() => loadHomeEPs(), 500);
-    setTimeout(() => loadHomeArtists(), 600);
-    setTimeout(() => loadGenres(), 700);
+    loadTrending();
+    loadLatestReleases();
+    loadHomePlaylists();
+    loadHomeAlbums();
+    loadHomeEPs();
+    loadHomeArtists();
+    loadGenres();
 }
 
 function loadTrending() {
@@ -496,101 +469,121 @@ function loadGenres() {
 
 // ===== PLAYLISTS PAGE CONTENT =====
 function loadPlaylistsPageContent() {
+    // Load main playlist grid
     fetch(`${ITUNES_API}?term=playlist&limit=8&entity=playlist`)
         .then(response => response.json())
         .then(data => displayPlaylists(data.results, 'playlists-main-grid'))
         .catch(error => console.error('Error loading playlists:', error));
 
+    // Load editor's picks
     fetch(`${ITUNES_API}?term=editor&limit=4&entity=playlist`)
         .then(response => response.json())
         .then(data => displayPlaylists(data.results, 'editors-picks-grid'))
         .catch(error => console.error('Error loading editor picks:', error));
 
+    // Load recently added
     fetch(`${ITUNES_API}?term=new&limit=4&entity=playlist&sort=recent`)
         .then(response => response.json())
         .then(data => displayPlaylists(data.results, 'recently-added-grid'))
         .catch(error => console.error('Error loading recent playlists:', error));
 
+    // Load popular playlists
     fetch(`${ITUNES_API}?term=popular&limit=4&entity=playlist`)
         .then(response => response.json())
         .then(data => displayPlaylists(data.results, 'popular-grid'))
         .catch(error => console.error('Error loading popular playlists:', error));
 
+    // Load genres
     loadGenres();
 }
 
 // ===== ALBUMS PAGE CONTENT =====
 function loadAlbumsPageContent() {
+    // Load main album grid
     fetch(`${ITUNES_API}?term=album&limit=8&entity=album&sort=recent`)
         .then(response => response.json())
         .then(data => displayAlbums(data.results, 'albums-main-grid'))
         .catch(error => console.error('Error loading albums:', error));
 
+    // Load editor's picks
     fetch(`${ITUNES_API}?term=editor&limit=4&entity=album`)
         .then(response => response.json())
         .then(data => displayAlbums(data.results, 'editors-picks-grid'))
         .catch(error => console.error('Error loading editor picks:', error));
 
+    // Load recently added
     fetch(`${ITUNES_API}?term=new&limit=4&entity=album&sort=recent`)
         .then(response => response.json())
         .then(data => displayAlbums(data.results, 'recently-added-grid'))
         .catch(error => console.error('Error loading recent albums:', error));
 
+    // Load popular albums
     fetch(`${ITUNES_API}?term=popular&limit=4&entity=album`)
         .then(response => response.json())
         .then(data => displayAlbums(data.results, 'popular-grid'))
         .catch(error => console.error('Error loading popular albums:', error));
 
+    // Load genres
     loadGenres();
 }
 
 // ===== EPS PAGE CONTENT =====
 function loadEPsPageContent() {
+    // Load main EP grid
     fetch(`${ITUNES_API}?term=ep&limit=8&entity=album`)
         .then(response => response.json())
         .then(data => displayEPs(data.results, 'eps-main-grid'))
         .catch(error => console.error('Error loading EPs:', error));
 
+    // Load editor's picks
     fetch(`${ITUNES_API}?term=editor&limit=4&entity=album`)
         .then(response => response.json())
         .then(data => displayEPs(data.results, 'editors-picks-grid'))
         .catch(error => console.error('Error loading editor picks:', error));
 
+    // Load recently added
     fetch(`${ITUNES_API}?term=new&limit=4&entity=album&sort=recent`)
         .then(response => response.json())
         .then(data => displayEPs(data.results, 'recently-added-grid'))
         .catch(error => console.error('Error loading recent EPs:', error));
 
+    // Load popular EPs
     fetch(`${ITUNES_API}?term=popular&limit=4&entity=album`)
         .then(response => response.json())
         .then(data => displayEPs(data.results, 'popular-grid'))
         .catch(error => console.error('Error loading popular EPs:', error));
 
+    // Load genres
     loadGenres();
 }
 
 // ===== ARTISTS PAGE CONTENT =====
 function loadArtistsPageContent() {
+    // Load main artist grid
     fetch(`${ITUNES_API}?term=artist&limit=8&entity=musicArtist`)
         .then(response => response.json())
         .then(data => displayArtists(data.results, 'artists-main-grid'))
         .catch(error => console.error('Error loading artists:', error));
 
+    // Load editor's picks
     fetch(`${ITUNES_API}?term=editor&limit=4&entity=musicArtist`)
         .then(response => response.json())
         .then(data => displayArtists(data.results, 'editors-picks-grid'))
         .catch(error => console.error('Error loading editor picks:', error));
 
+    // Load recently added
     fetch(`${ITUNES_API}?term=new&limit=4&entity=musicArtist&sort=recent`)
         .then(response => response.json())
         .then(data => displayArtists(data.results, 'recently-added-grid'))
         .catch(error => console.error('Error loading recent artists:', error));
 
+    // Load popular artists
     fetch(`${ITUNES_API}?term=popular&limit=4&entity=musicArtist`)
         .then(response => response.json())
         .then(data => displayArtists(data.results, 'popular-grid'))
         .catch(error => console.error('Error loading popular artists:', error));
 
+    // Load genres
     loadGenres();
 }
 
