@@ -12,13 +12,13 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome for icons (optional) -->
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Main CSS - ONLY this! -->
+    <!-- Main CSS -->
     <link rel="stylesheet" href="/css/style.css">
     
-    <!-- Minimal inline styles for detail page layout (no new designs) -->
+    <!-- Minimal inline styles for detail page layout -->
     <style>
         /* ONLY layout styles - NO colors, NO borders, NO typography */
         .postbody {
@@ -110,7 +110,7 @@
             <img src="{{IMAGE_URL}}" alt="{{ITEM_TITLE}}" width="200" height="300" class="roundthumb" loading="lazy">
         </div>
 
-        <!-- ===== INFORMATION SECTION (using existing .section-header) ===== -->
+        <!-- ===== INFORMATION SECTION ===== -->
         <div class="section-header">
             <h2 class="section-title">
                 <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
@@ -118,9 +118,8 @@
             </h2>
         </div>
 
-        <!-- ===== INFO GRID (using existing .music-item style) ===== -->
+        <!-- ===== INFO GRID ===== -->
         <div class="music-grid">
-            <!-- Each info row as a music-item -->
             <div class="music-item">
                 <div class="item-container">
                     <div class="item-data">
@@ -186,7 +185,7 @@
             </div>
         </div>
 
-        <!-- ===== HOW TO DOWNLOAD (using existing .music-item style) ===== -->
+        <!-- ===== HOW TO DOWNLOAD ===== -->
         <div class="music-item" style="width:100%; max-width:100%; margin:15px 0;">
             <div class="item-container">
                 <div class="item-data">
@@ -195,7 +194,7 @@
             </div>
         </div>
 
-        <!-- ===== SCREENSHOT SECTION (using existing .section-header) ===== -->
+        <!-- ===== SCREENSHOT SECTION ===== -->
         <div class="section-header section-spacing">
             <h2 class="section-title">
                 <i class="fas fa-camera" style="margin-right: 8px;"></i>
@@ -203,12 +202,12 @@
             </h2>
         </div>
 
-        <!-- ===== SCREENSHOT (using existing .music-item style) ===== -->
+        <!-- ===== SCREENSHOT ===== -->
         <div class="music-item" style="width:100%; max-width:100%; text-align:center; padding:20px;">
             <img src="{{SCREENSHOT_URL}}" alt="Screenshot" style="max-width:100%; border-radius:12px;" loading="lazy" />
         </div>
 
-        <!-- ===== DOWNLOAD SECTION (using existing .section-header) ===== -->
+        <!-- ===== DOWNLOAD SECTION ===== -->
         <div class="section-header section-spacing">
             <h2 class="section-title">
                 <i class="fas fa-download" style="margin-right: 8px;"></i>
@@ -216,14 +215,14 @@
             </h2>
         </div>
 
-        <!-- ===== TELEGRAM BUTTON (using existing button style) ===== -->
+        <!-- ===== TELEGRAM BUTTON ===== -->
         <div style="text-align:center; margin:20px 0;">
             <a href="{{TELEGRAM_LINK}}" target="_blank" style="display:inline-block; padding:12px 25px; background:#0088cc; color:white; border-radius:30px; text-decoration:none; font-weight:600; border:2px solid #005f8b;">
                 <i class="fa-brands fa-telegram"></i> Join Telegram
             </a>
         </div>
 
-        <!-- ===== DOWNLOAD BUTTONS (using existing button style) ===== -->
+        <!-- ===== DOWNLOAD BUTTONS ===== -->
         <div class="download-section">
             <div style="text-align:center; margin:12px 0;">
                 <a href="{{DOWNLOAD_LINK_480P}}" target="_blank" style="display:inline-block; border-radius:30px; font-size:16px; padding:12px 30px; border:2px solid #ff2121; background-color:#424242; color:#fff; text-decoration:none; min-width:280px;">
@@ -242,14 +241,14 @@
             </div>
         </div>
 
-        <!-- ===== REQUEST BUTTON (using existing button style) ===== -->
+        <!-- ===== REQUEST BUTTON ===== -->
         <div style="text-align:center; margin:20px 0;">
             <a href="/request/" style="display:inline-block; padding:12px 25px; background:#0088cc; color:white; border-radius:30px; text-decoration:none; font-weight:600; border:2px solid #005f8b;">
                 <i class="fas fa-envelope"></i> Request a Movie
             </a>
         </div>
 
-        <!-- ===== TAGS SECTION (using existing .music-item style) ===== -->
+        <!-- ===== TAGS SECTION ===== -->
         <div class="music-item" style="width:100%; max-width:100%; margin:15px 0;">
             <div class="item-container">
                 <div class="item-data">
@@ -260,6 +259,94 @@
                     </span>
                 </div>
             </div>
+        </div>
+
+        <!-- ===== RELATED SONGS SECTION ===== -->
+        <div class="section-header section-spacing">
+            <h2 class="section-title">
+                <i class="fas fa-music" style="margin-right: 8px;"></i>
+                Related Songs
+            </h2>
+        </div>
+        <div class="corner">
+            <div class="music-grid" id="related-songs-container"></div>
+        </div>
+
+        <!-- ===== MORE FROM THIS ARTIST SECTION ===== -->
+        <div class="section-header section-spacing">
+            <h2 class="section-title">
+                <i class="fas fa-user" style="margin-right: 8px;"></i>
+                More From This Artist
+            </h2>
+        </div>
+        <div class="corner">
+            <div class="music-grid" id="more-artist-container"></div>
+        </div>
+
+        <!-- ===== FANS ALSO LIKED SECTION ===== -->
+        <div class="section-header section-spacing">
+            <h2 class="section-title">
+                <i class="fas fa-heart" style="margin-right: 8px;"></i>
+                Fans Also Liked
+            </h2>
+        </div>
+        <div class="corner">
+            <div class="music-grid" id="fans-also-liked-container"></div>
+        </div>
+
+        <!-- ===== RECOMMENDED FOR YOU SECTION ===== -->
+        <div class="section-header section-spacing">
+            <h2 class="section-title">
+                <i class="fas fa-star" style="margin-right: 8px;"></i>
+                Recommended For You
+            </h2>
+        </div>
+        <div class="corner">
+            <div class="music-grid" id="recommended-container"></div>
+        </div>
+
+        <!-- ===== TRENDING NOW SECTION ===== -->
+        <div class="section-header section-spacing">
+            <h2 class="section-title">
+                <i class="fas fa-fire" style="margin-right: 8px;"></i>
+                Trending Now
+            </h2>
+        </div>
+        <div class="corner">
+            <div class="music-grid" id="trending-container"></div>
+        </div>
+
+        <!-- ===== NEW RELEASES SECTION ===== -->
+        <div class="section-header section-spacing">
+            <h2 class="section-title">
+                <i class="fas fa-clock" style="margin-right: 8px;"></i>
+                New Releases
+            </h2>
+        </div>
+        <div class="corner">
+            <div class="music-grid" id="new-releases-container"></div>
+        </div>
+
+        <!-- ===== TOP CHARTS SECTION ===== -->
+        <div class="section-header section-spacing">
+            <h2 class="section-title">
+                <i class="fas fa-chart-line" style="margin-right: 8px;"></i>
+                Top Charts
+            </h2>
+        </div>
+        <div class="corner">
+            <div class="music-grid" id="top-charts-container"></div>
+        </div>
+
+        <!-- ===== EDITOR'S PICKS SECTION ===== -->
+        <div class="section-header section-spacing">
+            <h2 class="section-title">
+                <i class="fas fa-star" style="margin-right: 8px;"></i>
+                Editor's Picks
+            </h2>
+        </div>
+        <div class="corner">
+            <div class="music-grid" id="editors-picks-container"></div>
         </div>
 
     </main>
