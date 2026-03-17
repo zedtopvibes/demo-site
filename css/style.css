@@ -801,3 +801,60 @@ button:hover {
         right: 15px;
     }
 }
+
+
+/* ===== COMING SOON STYLES ===== */
+.coming-soon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #f8f8f8, #ffffff);
+    border-radius: 16px;
+    border: 2px dashed #ff2121;
+    margin: 10px;
+    text-align: center;
+    min-height: 200px;
+    width: calc(100% - 20px);
+}
+
+.coming-soon-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    animation: bounce 2s infinite;
+}
+
+.coming-soon-text {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ff2121;
+    margin-bottom: 8px;
+}
+
+.coming-soon-subtext {
+    font-size: 14px;
+    color: #666;
+}
+
+.coming-soon-search {
+    padding: 10px;
+    text-align: center;
+    color: #ff2121;
+    font-size: 14px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    margin-top: 5px;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Make sure it works in grid layout */
+.music-grid .coming-soon {
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+}
