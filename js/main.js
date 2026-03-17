@@ -437,6 +437,58 @@ function displayArtists(artists) {
     document.getElementById('artists-container').innerHTML = html;
 }
 
+// ===== NEW RECOMMENDED SECTION =====
+function loadRecommended() {
+    // Using a mix of different content to simulate recommendations
+    const url = `${ITUNES_API}?term=popular&limit=8&entity=song`;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            displayRecommended(data.results);
+        })
+        .catch(error => {
+            console.error('Error loading recommendations:', error);
+            document.getElementById('recommended-container').innerHTML = '<div class="error-message">Unable to load recommendations</div>';
+        });
+}
+
+function displayRecommended(items) {
+    if (!items || items.length === 0) {
+        document.getElementById('recommended-container').innerHTML = '<div class="error-message">No recommendations found</div>';
+        return;
+    }
+
+    let html = '';
+    items.slice(0, 8).forEach(item => {
+        const name = item.trackName || item.collectionName || 'Unknown';
+        const artist = item.artistName || 'Unknown Artist';
+        const image = item.artworkUrl100 || 'https://via.placeholder.com/80/ff9800/ffffff?text=HOT';
+        
+        html += `
+            <a class="music-item" href="${item.trackViewUrl || item.collectionViewUrl || '#'}" target="_blank">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="${image}" width="80" height="80" class="roundthumb" alt="${name}" onerror="this.src='https://via.placeholder.com/80/ff9800/ffffff?text=HOT'">
+                    </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>${name.length > 40 ? name.substr(0, 40) + '...' : name}</b> <span style="background:#ff9800; color:#fff; padding:2px 6px; border-radius:3px; font-size:10px; margin-left:5px;">Hot</span></span>
+                        <div class="artist-name">${artist}</div>
+                        <span class="item-meta">
+                            <b style="color:#ff0000">Recommended</b>
+                        </span>
+                    </div>
+                </div>
+            </a>
+        `;
+    });
+    document.getElementById('recommended-container').innerHTML = html;
+}
+
+function loadMoreRecommended() {
+    alert('Loading more recommendations...');
+    return false;
+}
+
 // Live search
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchInput');
