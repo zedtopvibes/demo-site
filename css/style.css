@@ -801,33 +801,3 @@ button:hover {
         right: 15px;
     }
 }
-
-/* ===== FIX LAYOUT SHIFTS ===== */
-.music-grid {
-    min-height: 100px; /* Reserve space for grids */
-    position: relative;
-}
-
-#genres-container {
-    min-height: 200px; /* Reserve space for genres section */
-}
-
-/* Reserve space for all section containers */
-#trending-container,
-#latest-container,
-#playlists-container,
-#albums-container,
-#eps-container,
-#artists-container,
-#genres-container {
-    min-height: 120px;
-    background: transparent;
-}
-
-/* If using API version with loaders */
-.loader {
-    min-height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
