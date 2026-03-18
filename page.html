@@ -59,41 +59,6 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Description card style */
-        .description-card {
-            background-color: #fff;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            padding: 20px;
-            width: 100%;
-            box-sizing: border-box;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .description-text {
-            margin: 0 0 15px 0;
-            line-height: 1.6;
-            color: #555;
-        }
-        
-        .tags-container {
-            margin-top: 10px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
-            line-height: 1.6;
-            color: #555;
-        }
-        
-        .tags-label {
-            color: #ff4b2b;
-            font-weight: 600;
-            margin-right: 8px;
-        }
-        
         /* ===== PAGINATION STYLES ===== */
         .page-navi {
             padding: 5px 6px 5px;
@@ -156,6 +121,15 @@
             align-items: center;
             justify-content: center;
             border-radius: 12px 0 0 12px;
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            border: 1px solid #ddd;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        
+        .album-image-column .music-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.12);
         }
         
         .album-image-column .item-container {
@@ -196,9 +170,71 @@
             font-size: 14px;
         }
         
-        /* Right column: description card (replacing album info) */
-        .album-details-column {
+        /* Right column: description card matching image card exactly */
+        .album-details-column .music-item {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
             height: 100%;
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            border: 1px solid #ddd;
+            border-radius: 0 12px 12px 0;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            cursor: default;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .album-details-column .music-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+        }
+        
+        .right-description-content {
+            padding: 25px 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .description-text {
+            margin: 0 0 15px 0;
+            line-height: 1.6;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .description-text:last-child {
+            margin-bottom: 0;
+        }
+        
+        .tags-container {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            line-height: 1.6;
+            color: #555;
+            font-size: 13px;
+        }
+        
+        .tags-label {
+            color: #ff4b2b;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        
+        /* Bottom description card (unchanged) */
+        .bottom-description {
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 15px 0;
         }
         
         /* Responsive */
@@ -212,7 +248,7 @@
                 border-radius: 12px 12px 0 0;
             }
             
-            .album-details-column .description-card {
+            .album-details-column .music-item {
                 border-radius: 0 0 12px 12px;
             }
             
@@ -239,7 +275,7 @@
         <strong id="breadcrumb-title">Album Details</strong>
     </div>
 
-    <!-- ===== IMAGE + DESCRIPTION GRID (Right column replaced with description) ===== -->
+    <!-- ===== IMAGE + DESCRIPTION GRID (both using same music-item class) ===== -->
     <div class="corner">
         <div class="album-detail-grid">
             <!-- Left Column: Image Card -->
@@ -257,31 +293,33 @@
                 </a>
             </div>
             
-            <!-- Right Column: Description Card (replacing album info) -->
+            <!-- Right Column: Description Card (using music-item class) -->
             <div class="album-details-column">
-                <div class="description-card">
-                    <p class="description-text">
-                        This amazing collection features the greatest hits from various artists.
-                        With 15 tracks spanning multiple genres, there's something for everyone.
-                        Perfect for your playlist rotation! The album showcases the best of pop and rock
-                        music from 2024, featuring both established artists and emerging talents.
-                    </p>
-                    
-                    <p class="description-text">
-                        Each track has been carefully selected to provide a diverse listening experience.
-                        From upbeat anthems to heartfelt ballads, this collection has it all.
-                    </p>
-                    
-                    <div class="tags-container">
-                        <span class="tags-label">Related Tags -</span> 
-                        Pop, Rock, 2024, Greatest Hits, Various Artists, Album Collection
+                <div class="music-item">
+                    <div class="right-description-content">
+                        <p class="description-text">
+                            This amazing collection features the greatest hits from various artists.
+                            With 15 tracks spanning multiple genres, there's something for everyone.
+                            Perfect for your playlist rotation! The album showcases the best of pop and rock
+                            music from 2024, featuring both established artists and emerging talents.
+                        </p>
+                        
+                        <p class="description-text">
+                            Each track has been carefully selected to provide a diverse listening experience.
+                            From upbeat anthems to heartfelt ballads, this collection has it all.
+                        </p>
+                        
+                        <div class="tags-container">
+                            <span class="tags-label">Related Tags -</span> 
+                            Pop, Rock, 2024, Greatest Hits, Various Artists, Album Collection
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ===== BOTTOM DESCRIPTION CARD (maintained with full content) ===== -->
+    <!-- ===== BOTTOM DESCRIPTION CARD (unchanged) ===== -->
     <div class="section-header section-spacing">
         <h2 class="section-title">
             <i class="fas fa-align-left" style="margin-right: 8px;"></i>
@@ -289,7 +327,7 @@
         </h2>
     </div>
     
-    <div class="description-item" style="background-color: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.08); border: 1px solid #ddd; border-radius: 12px; padding: 20px; width: 100%; box-sizing: border-box; margin: 15px 0;">
+    <div class="bottom-description">
         <p style="margin:0 0 15px 0; line-height:1.6; color:#555;">
             This amazing collection features the greatest hits from various artists.
             With 15 tracks spanning multiple genres, there's something for everyone.
@@ -322,7 +360,7 @@
     
     <div class="corner">
         <div class="music-grid" id="tracklist-container">
-            <!-- Track 1-8 (same as before) -->
+            <!-- Track 1-8 -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
@@ -432,7 +470,7 @@
         <a class="next page-numbers" href="#" onclick="loadTracklistPage(2); return false;">Next »</a>
     </div>
 
-    <!-- ===== YOU MIGHT ALSO LIKE SECTION (keeping all other sections) ===== -->
+    <!-- ===== YOU MIGHT ALSO LIKE SECTION ===== -->
     <div class="section-header section-spacing">
         <h2 class="section-title">
             <i class="fas fa-thumbs-up" style="margin-right: 8px;"></i>
@@ -486,6 +524,114 @@
                         <span class="track-title"><b>Rock Classics</b> <span class="playlist-badge">Playlist</span></span>
                         <div class="artist-name">Rock Legends</div>
                         <span class="item-meta"><b style="color:#ff0000">75 songs</b></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- ===== MORE FROM THIS ARTIST SECTION ===== -->
+    <div class="section-header section-spacing">
+        <h2 class="section-title">
+            <i class="fas fa-user" style="margin-right: 8px;"></i>
+            More From This Artist
+        </h2>
+    </div>
+    <div class="corner">
+        <div class="music-grid">
+            <a class="music-item" href="#" style="text-decoration:none;">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="https://via.placeholder.com/80/2196f3/ffffff?text=QUEEN" class="roundthumb" alt="Queen">
+                    </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>Queen</b> <span class="artist-badge">Artist</span></span>
+                        <div class="artist-name">Rock</div>
+                        <span class="item-meta"><b style="color:#ff0000">15 albums</b></span>
+                    </div>
+                </div>
+            </a>
+            <a class="music-item" href="#" style="text-decoration:none;">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="https://via.placeholder.com/80/4caf50/ffffff?text=NIGHT" class="roundthumb" alt="Album">
+                    </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>A Night at the Opera</b> <span class="album-badge">Album</span></span>
+                        <div class="artist-name">Queen</div>
+                        <span class="item-meta"><b style="color:#ff0000">12 tracks</b></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- ===== RANDOM SONGS SECTION ===== -->
+    <div class="section-header section-spacing">
+        <h2 class="section-title">
+            <i class="fas fa-random" style="margin-right: 8px;"></i>
+            Random Songs You Might Like
+        </h2>
+    </div>
+    <div class="corner">
+        <div class="music-grid">
+            <a class="music-item" href="#" style="text-decoration:none;">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="https://via.placeholder.com/80/ff9800/ffffff?text=RANDOM1" class="roundthumb" alt="Song">
+                    </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>Sweet Child O' Mine</b> <span class="ep-badge">Song</span></span>
+                        <div class="artist-name">Guns N' Roses · 5:56</div>
+                        <span class="item-meta"><b style="color:#ff0000">Rock</b></span>
+                    </div>
+                </div>
+            </a>
+            <a class="music-item" href="#" style="text-decoration:none;">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="https://via.placeholder.com/80/ff9800/ffffff?text=RANDOM2" class="roundthumb" alt="Song">
+                    </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>Uptown Funk</b> <span class="ep-badge">Song</span></span>
+                        <div class="artist-name">Bruno Mars · 4:30</div>
+                        <span class="item-meta"><b style="color:#ff0000">Funk</b></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- ===== POPULAR TRACKS SECTION ===== -->
+    <div class="section-header section-spacing">
+        <h2 class="section-title">
+            <i class="fas fa-fire" style="margin-right: 8px;"></i>
+            Popular Tracks
+        </h2>
+    </div>
+    <div class="corner">
+        <div class="music-grid">
+            <a class="music-item" href="#" style="text-decoration:none;">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="https://via.placeholder.com/80/ff5722/ffffff?text=HOT1" class="roundthumb" alt="Popular">
+                    </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>Despacito</b> <span class="ep-badge">Song</span></span>
+                        <div class="artist-name">Luis Fonsi · 4:41</div>
+                        <span class="item-meta"><b style="color:#ff0000">🔥 #1 Trending</b></span>
+                    </div>
+                </div>
+            </a>
+            <a class="music-item" href="#" style="text-decoration:none;">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="https://via.placeholder.com/80/ff5722/ffffff?text=HOT2" class="roundthumb" alt="Popular">
+                    </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>Shape of You</b> <span class="ep-badge">Song</span></span>
+                        <div class="artist-name">Ed Sheeran · 3:53</div>
+                        <span class="item-meta"><b style="color:#ff0000">🔥 #2 Trending</b></span>
                     </div>
                 </div>
             </a>
