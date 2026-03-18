@@ -107,7 +107,7 @@
         .album-detail-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 0px;
+            gap: 0px;  /* No gap between cards */
             margin: 10px 0;
         }
         
@@ -120,10 +120,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 12px 0 0 12px;
+            border-radius: 12px 0 0 12px;  /* Rounded left corners only */
             background-color: #fff;
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
             border: 1px solid #ddd;
+            border-right: none;  /* Remove right border so cards touch */
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
         
@@ -179,7 +180,8 @@
             background-color: #fff;
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
             border: 1px solid #ddd;
-            border-radius: 0 12px 12px 0;
+            border-left: none;  /* Remove left border so cards touch */
+            border-radius: 0 12px 12px 0;  /* Rounded right corners only */
             transition: transform 0.25s ease, box-shadow 0.25s ease;
             cursor: default;
             text-decoration: none;
@@ -241,15 +243,19 @@
         @media (max-width: 719px) {
             .album-detail-grid {
                 grid-template-columns: 1fr;
-                gap: 2px;
+                gap: 0px;  /* No gap on mobile either */
             }
             
             .album-image-column .music-item {
-                border-radius: 12px 12px 0 0;
+                border-radius: 12px 12px 0 0;  /* Rounded top corners only */
+                border-right: 1px solid #ddd;  /* Restore right border */
+                border-bottom: none;  /* Remove bottom border */
             }
             
             .album-details-column .music-item {
-                border-radius: 0 0 12px 12px;
+                border-radius: 0 0 12px 12px;  /* Rounded bottom corners only */
+                border-left: 1px solid #ddd;  /* Restore left border */
+                border-top: none;  /* Remove top border */
             }
             
             .page-numbers, a.page-numbers {
