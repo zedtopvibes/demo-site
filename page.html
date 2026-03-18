@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Zedtopvibes · {{ITEM_TITLE}}</title>
+    <title>Zedtopvibes · {{ITEM_NAME}} · Details</title>
     
     <!-- Resource Hints -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,88 +16,135 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Main CSS (our reusable stylesheet) -->
+    <!-- Main CSS -->
     <link rel="stylesheet" href="/css/style.css">
     
-    <!-- Page-Specific CSS (only what's not in style.css) -->
+    <!-- Detail page specific styles (maintaining same design language) -->
     <style>
-        /* Detail page layout styles */
-        .postbody {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
+        /* Breadcrumb - matches section-header styling */
         .breadcrumb {
-            padding: 10px 0;
+            background: #424242;
+            border-bottom: 1px solid #ff2121;
+            border-radius: 6px;
+            padding: 8px 12px;
             margin: 10px 0;
-            color: #666;
+            color: #fff;
+            font-size: 14px;
+            box-shadow: inset 0 -1px red;
         }
         .breadcrumb a {
-            color: #ff4b2b;
+            color: #ff9800;
             text-decoration: none;
         }
         .breadcrumb a:hover {
-            text-decoration: underline;
+            color: #ff4b2b;
+        }
+        .breadcrumb strong {
+            color: #fff;
         }
         
+        /* Featured image - uses roundthumb style */
         .featured-image {
             text-align: center;
             margin: 20px 0;
         }
-        
-        /* Article info grid */
-        .article {
-            background: #f9f9f9;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 15px 0;
-        }
-        .fname {
-            border-bottom: 1px solid #ccc;
-            padding: 10px 5px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-        }
-        .fname span:first-child {
-            min-width: 100px;
-            color: #555;
-            font-weight: 600;
-        }
-        
-        /* Colorful values */
-        .fname font[color="#33ccff"] { color: #33ccff; }
-        .fname font[color="#1ABC9C"] { color: #1ABC9C; }
-        .fname font[color="#F39C12"] { color: #F39C12; }
-        .fname font[color="#ff751a"] { color: #ff751a; }
-        .fname font[color="#F1C40F"] { color: #F1C40F; }
-        .fname font[color="#2ECC71"] { color: #2ECC71; }
-        .fname font[color="#ff0066"] { color: #ff0066; }
-        .fname font[color="#3357FF"] { color: #3357FF; }
-        
-        /* Screenshot */
-        .ss {
-            display: flex;
-            justify-content: center;
-            margin: 15px 0;
-        }
-        .ss img {
+        .featured-image img {
             max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 0 18px rgba(0, 255, 200, 0.15);
-            transition: transform 0.3s;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
         }
-        .ss img:hover {
+        .featured-image img:hover {
             transform: scale(1.02);
         }
         
-        /* Download buttons */
-        .dlbtn {
-            text-align: center;
-            margin: 12px 0;
+        /* Info grid - matches music-grid layout */
+        .info-grid {
+            margin: 15px 0;
         }
-        .dlbtn a {
+        .info-item {
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            display: inline-block;
+            padding: 12px 15px;
+            margin: 0;
+            border: 1px solid #ddd;
+            width: 50%;
+            max-width: 50%;
+            box-sizing: border-box;
+            float: left;
+            font-size: 14px;
+        }
+        .info-item:nth-child(odd) {
+            border-right: none;
+            clear: left;
+        }
+        .info-item:nth-child(even) {
+            border-left: none;
+        }
+        .info-item:nth-child(1) {
+            border-top-left-radius: 12px;
+            border-top-right-radius: 0;
+        }
+        .info-item:nth-child(2) {
+            border-top-left-radius: 0;
+            border-top-right-radius: 12px;
+        }
+        .info-item:last-child,
+        .info-item:nth-last-child(2) {
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+        .info-label {
+            color: #666;
+            font-weight: 600;
+            display: block;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+        .info-value {
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        /* Colorful values - using your existing badge colors */
+        .info-value.genre { color: #33ccff; }
+        .info-value.duration { color: #1ABC9C; }
+        .info-value.date { color: #F39C12; }
+        .info-value.language { color: #ff751a; }
+        .info-value.artist { color: #F1C40F; }
+        .info-value.size { color: #2ECC71; }
+        .info-value.quality { color: #ff0066; }
+        
+        /* Screenshot container */
+        .screenshot-item {
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 15px 0;
+        }
+        .screenshot-item img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        /* Action buttons - using your button style */
+        .action-buttons {
+            margin: 25px 0;
+        }
+        .action-btn {
+            text-align: center;
+            margin: 10px 0;
+        }
+        .action-btn a {
             display: inline-block;
             border-radius: 30px;
             font-size: 16px;
@@ -105,40 +153,26 @@
             background-color: #424242;
             color: #fff;
             text-decoration: none;
-            min-width: 280px;
+            min-width: 250px;
             transition: all 0.3s ease;
+            font-weight: 600;
         }
-        .dlbtn a:hover {
+        .action-btn a:hover {
             background-color: #ff2121;
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 33, 33, 0.3);
+            box-shadow: 0 4px 15px rgba(255,33,33,0.3);
         }
         
-        /* Telegram button */
-        .telegram-join-btn {
-            display: block;
-            width: max-content;
-            padding: 12px 25px;
-            color: #ffffff;
+        .action-btn.telegram a {
             background-color: #0088cc;
-            border-radius: 30px;
-            border: 2px solid #005f8b;
-            font-size: 16px;
-            font-weight: 600;
-            margin: 20px auto;
-            text-decoration: none;
-            transition: all 0.3s ease;
+            border-color: #005f8b;
         }
-        .telegram-join-btn:hover {
+        .action-btn.telegram a:hover {
             background-color: #005f8b;
-            transform: translateY(-2px);
         }
         
-        /* Tags */
-        .gtag {
-            font-weight: 600;
-            font-size: 16px;
-            color: #333;
+        /* Tags section - matches your gtag style */
+        .tags-section {
             margin: 30px 0;
             padding: 15px 0;
             border-top: 2px solid #eee;
@@ -148,61 +182,82 @@
             align-items: center;
             gap: 10px;
         }
-        .gtag a {
-            display: inline-block;
+        .tag-link {
             background-color: #f0f0f0;
             padding: 6px 14px;
             border-radius: 20px;
-            text-decoration: none;
             color: #333;
+            text-decoration: none;
             border: 1px solid #ccc;
             transition: all 0.3s ease;
+            font-size: 14px;
         }
-        .gtag a:hover {
+        .tag-link:hover {
             background-color: #ff2121;
             color: #fff;
             border-color: #ff2121;
         }
-        .taglist {
-            font-style: normal;
-            font-size: 14px;
-            color: #555;
+        
+        /* Track/Episode list - uses music-item style */
+        .track-list {
+            margin: 15px 0;
+        }
+        .track-item {
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.25s ease;
+        }
+        .track-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+            background-color: #f0f4ff;
+        }
+        .track-number {
+            width: 40px;
+            color: #ff4b2b;
             font-weight: 600;
         }
-        
-        /* Section headers */
-        .header7 {
-            background: #303030;
-            color: #fff;
-            margin: 15px 0 10px;
-            padding: 8px 18px;
-            border-radius: 6px;
-            font-size: 18px;
-            font-weight: 600;
-            border-left: 4px solid #ff2121;
+        .track-info {
+            flex: 1;
         }
-        
-        .bp-title {
-            background: #424242;
-            color: #fff;
-            padding: 8px 18px;
-            border-radius: 6px;
-            margin: 20px 0 10px;
-            border-bottom: 1px solid #ff2121;
+        .track-title {
+            font-weight: 600;
+            color: #333;
+        }
+        .track-duration {
+            color: #777;
+            font-size: 12px;
+            margin-left: 15px;
+        }
+        .track-play {
+            color: #ff4b2b;
+            cursor: pointer;
+            padding: 5px 10px;
         }
         
         /* Responsive */
-        @media (max-width: 768px) {
-            .fname {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
+        @media (max-width: 719px) {
+            .info-item {
+                width: 100%;
+                max-width: 100%;
+                border: 1px solid #ddd;
             }
-            .fname span:first-child {
-                min-width: auto;
+            .info-item:nth-child(odd),
+            .info-item:nth-child(even) {
+                border: 1px solid #ddd;
             }
-            .dlbtn a {
-                min-width: 240px;
+            .info-item:first-child {
+                border-top-left-radius: 12px;
+                border-top-right-radius: 12px;
+            }
+            .action-btn a {
+                min-width: 200px;
                 padding: 10px 20px;
             }
         }
@@ -212,108 +267,212 @@
     <!-- Header loads here -->
     <div id="header-placeholder"></div>
 
-    <!-- Main Content -->
-    <main class="postbody">
-        
-        <!-- ===== BREADCRUMBS ===== -->
-        <div class="breadcrumb">
-            <span><a href="/">Home</a></span> » 
-            <span class="breadcrumb_last"><strong>{{ITEM_TITLE}}</strong></span>
-        </div>
+    <!-- ===== BREADCRUMB NAVIGATION ===== -->
+    <div class="breadcrumb">
+        <a href="/">Home</a> » 
+        <a href="/playlists.html">Playlists</a> » 
+        <strong>{{ITEM_NAME}}</strong>
+    </div>
 
-        <!-- ===== PAGE META / CATEGORY ===== -->
-        <div class="page-meta">
-            <a href="/category/{{CATEGORY_SLUG}}/">
-                <em class="page-meta-text">{{CATEGORY_NAME}}</em>
+    <!-- ===== FEATURED IMAGE ===== -->
+    <div class="featured-image">
+        <img src="{{IMAGE_URL}}" alt="{{ITEM_NAME}}" width="300" height="300" class="roundthumb" loading="lazy">
+    </div>
+
+    <!-- ===== INFORMATION SECTION ===== -->
+    <div class="section-header">
+        <h2 class="section-title">
+            <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
+            Information
+        </h2>
+    </div>
+    
+    <div class="info-grid">
+        <div class="info-item">
+            <span class="info-label">Name</span>
+            <span class="info-value" style="color:#ff4e50;">{{ITEM_NAME}}</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Genre</span>
+            <span class="info-value genre">{{GENRE}}</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Duration</span>
+            <span class="info-value duration">{{DURATION}}</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Release Date</span>
+            <span class="info-value date">{{RELEASE_DATE}}</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Language</span>
+            <span class="info-value language">{{LANGUAGE}}</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Artist</span>
+            <span class="info-value artist">{{ARTIST}}</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Size</span>
+            <span class="info-value size">{{SIZE}}</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Quality</span>
+            <span class="info-value quality">{{QUALITY}}</span>
+        </div>
+    </div>
+
+    <!-- ===== DESCRIPTION SECTION ===== -->
+    <div class="section-header section-spacing">
+        <h2 class="section-title">
+            <i class="fas fa-align-left" style="margin-right: 8px;"></i>
+            Description
+        </h2>
+    </div>
+    
+    <div class="screenshot-item">
+        <p style="margin:0; line-height:1.6; color:#555;">{{DESCRIPTION}}</p>
+    </div>
+
+    <!-- ===== TRACKLIST SECTION (for albums/EPs) ===== -->
+    <div class="section-header section-spacing">
+        <h2 class="section-title">
+            <i class="fas fa-music" style="margin-right: 8px;"></i>
+            Tracklist
+        </h2>
+    </div>
+    
+    <div class="track-list" id="tracklist-container">
+        <!-- Track items will be populated by JavaScript -->
+        <div class="track-item">
+            <span class="track-number">01.</span>
+            <div class="track-info">
+                <span class="track-title">{{TRACK_1_TITLE}}</span>
+                <span class="track-duration">{{TRACK_1_DURATION}}</span>
+            </div>
+            <div class="track-play">
+                <i class="fas fa-play-circle"></i>
+            </div>
+        </div>
+        <div class="track-item">
+            <span class="track-number">02.</span>
+            <div class="track-info">
+                <span class="track-title">{{TRACK_2_TITLE}}</span>
+                <span class="track-duration">{{TRACK_2_DURATION}}</span>
+            </div>
+            <div class="track-play">
+                <i class="fas fa-play-circle"></i>
+            </div>
+        </div>
+        <div class="track-item">
+            <span class="track-number">03.</span>
+            <div class="track-info">
+                <span class="track-title">{{TRACK_3_TITLE}}</span>
+                <span class="track-duration">{{TRACK_3_DURATION}}</span>
+            </div>
+            <div class="track-play">
+                <i class="fas fa-play-circle"></i>
+            </div>
+        </div>
+        <div class="track-item">
+            <span class="track-number">04.</span>
+            <div class="track-info">
+                <span class="track-title">{{TRACK_4_TITLE}}</span>
+                <span class="track-duration">{{TRACK_4_DURATION}}</span>
+            </div>
+            <div class="track-play">
+                <i class="fas fa-play-circle"></i>
+            </div>
+        </div>
+        <div class="track-item">
+            <span class="track-number">05.</span>
+            <div class="track-info">
+                <span class="track-title">{{TRACK_5_TITLE}}</span>
+                <span class="track-duration">{{TRACK_5_DURATION}}</span>
+            </div>
+            <div class="track-play">
+                <i class="fas fa-play-circle"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== DOWNLOAD / LISTEN SECTION ===== -->
+    <div class="section-header section-spacing">
+        <h2 class="section-title">
+            <i class="fas fa-download" style="margin-right: 8px;"></i>
+            Download / Listen
+        </h2>
+    </div>
+    
+    <div class="action-buttons">
+        <div class="action-btn telegram">
+            <a href="{{TELEGRAM_LINK}}" target="_blank">
+                <i class="fa-brands fa-telegram"></i> Join Telegram
             </a>
         </div>
-
-        <!-- ===== FEATURED IMAGE ===== -->
-        <div class="featured-image">
-            <img src="{{IMAGE_URL}}" alt="{{ITEM_TITLE}}" width="200" height="300" class="roundthumb" loading="lazy">
+        <div class="action-btn">
+            <a href="{{DOWNLOAD_LINK_480P}}" target="_blank">Download 480p [{{SIZE_480P}}]</a>
         </div>
-
-        <!-- ===== INFORMATION SECTION ===== -->
-        <h3 class="header7" align="center">INFORMATION</h3>
-        
-        <div class="article">
-            <div class="fname"><span>Name:</span><span style="color:#ff4e50;">{{ITEM_NAME}}</span></div>
-            <div class="fname"><span>Genre:</span><font color="#33ccff">{{GENRE}}</font></div>
-            <div class="fname"><span>Duration:</span> <font color="#1ABC9C">{{DURATION}}</font></div>
-            <div class="fname"><span>Release Date:</span> <font color="#F39C12">{{RELEASE_DATE}}</font></div>
-            <div class="fname"><span>Language:</span> <font color="#ff751a">{{LANGUAGE}}</font></div>
-            <div class="fname"><span>Artist / Director:</span> <font color="#F1C40F">{{ARTIST}}</font></div>
-            <div class="fname"><span>Size:</span> <font color="#2ECC71">{{SIZE}}</font></div>
-            <div class="fname"><span>Quality:</span> <font color="#ff0066">{{QUALITY}}</font></div>
-            <div class="fname"><span>Description:</span> <font color="#3357FF">{{DESCRIPTION}}</font></div>
+        <div class="action-btn">
+            <a href="{{DOWNLOAD_LINK_720P}}" target="_blank">Download 720p [{{SIZE_720P}}]</a>
         </div>
-
-        <!-- ===== HOW TO DOWNLOAD ===== -->
-        <div class="fname"><strong>How To Download:</strong> <a href="/how-to-download/" style="color: #E74C3C;" target="_blank">Click Here</a></div>
-
-        <!-- ===== SCREENSHOT SECTION ===== -->
-        <h3 class="header7" align="center">SCREENSHOT</h3>
-        <div class="article">
-            <div class="ss"><img src="{{SCREENSHOT_URL}}" alt="Screenshot" loading="lazy" /></div>
+        <div class="action-btn">
+            <a href="{{DOWNLOAD_LINK_1080P}}" target="_blank">Download 1080p [{{SIZE_1080P}}]</a>
         </div>
-
-        <!-- ===== DOWNLOAD SECTION ===== -->
-        <h3 class="bp-title" align="center">DOWNLOAD LINK BELOW</h3>
-
-        <!-- ===== TELEGRAM BUTTON ===== -->
-        <a class="telegram-join-btn" href="{{TELEGRAM_LINK}}" target="_blank">
-            <i class="fa-brands fa-telegram"></i> Join Telegram
-        </a>
-
-        <!-- ===== DOWNLOAD BUTTONS ===== -->
-        <div class="dlbtn"><a href="{{DOWNLOAD_LINK_480P}}" target="_blank">Download 480p [{{SIZE_480P}}]</a></div>
-        <div class="dlbtn"><a href="{{DOWNLOAD_LINK_720P}}" target="_blank">Download 720p [{{SIZE_720P}}]</a></div>
-        <div class="dlbtn"><a href="{{DOWNLOAD_LINK_1080P}}" target="_blank">Download 1080p [{{SIZE_1080P}}]</a></div>
-
-        <!-- ===== REQUEST BUTTON ===== -->
-        <a class="telegram-join-btn" href="/request/">
-            <i class="fas fa-envelope"></i> Request a Movie
-        </a>
-
-        <!-- ===== TAGS SECTION ===== -->
-        <div class="gtag">
-            Tag: <a href="/tag/{{TAG_SLUG}}/"><em class="taglist">{{TAG_NAME}}</em></a>
+        <div class="action-btn">
+            <a href="{{STREAM_LINK}}" target="_blank">
+                <i class="fas fa-headphones"></i> Listen Online
+            </a>
         </div>
+    </div>
 
-        <!-- ===== RELATED POSTS SECTION ===== -->
-        <h2 class="bp-title orange"><i class="fa fa-tags" aria-hidden="true"></i> Related Posts</h2>
-        <div class="corner dtype">
-            <div class="music-grid" id="related-posts-container"></div>
-            <div class="clearfix"></div>
+    <!-- ===== TAGS SECTION ===== -->
+    <div class="tags-section">
+        <i class="fas fa-tags" style="margin-right: 8px; color:#ff4b2b;"></i>
+        <span style="font-weight:600;">Tags:</span>
+        <a href="/tag/{{TAG_SLUG_1}}/" class="tag-link">{{TAG_1}}</a>
+        <a href="/tag/{{TAG_SLUG_2}}/" class="tag-link">{{TAG_2}}</a>
+        <a href="/tag/{{TAG_SLUG_3}}/" class="tag-link">{{TAG_3}}</a>
+    </div>
+
+    <!-- ===== RELATED CONTENT SECTIONS (using your existing grid system) ===== -->
+    <div class="section-header section-spacing">
+        <h2 class="section-title">
+            <i class="fas fa-thumbs-up" style="margin-right: 8px;"></i>
+            You Might Also Like
+        </h2>
+    </div>
+    <div class="corner">
+        <div class="music-grid" id="related-container">
+            <!-- Related items will appear here from main.js -->
         </div>
+    </div>
 
-        <!-- ===== POPULAR MOVIES SECTION ===== -->
-        <h2 class="bp-title orange"><i class="fa fa-fire" aria-hidden="true"></i> Popular Movies</h2>
-        <div class="corner dtype">
-            <div class="music-grid" id="popular-movies-container"></div>
-            <div class="clearfix"></div>
+    <div class="section-header section-spacing">
+        <h2 class="section-title">
+            <i class="fas fa-user" style="margin-right: 8px;"></i>
+            More From This Artist
+        </h2>
+    </div>
+    <div class="corner">
+        <div class="music-grid" id="more-artist-container">
+            <!-- More from artist will appear here from main.js -->
         </div>
-
-        <!-- ===== LATEST MOVIES SECTION ===== -->
-        <h2 class="bp-title"><i class="fa fa-list-alt" aria-hidden="true"></i> Latest Movies</h2>
-        <div class="corner dtype">
-            <div class="music-grid" id="latest-movies-container"></div>
-            <div class="clearfix"></div>
-        </div>
-
-        <!-- ===== RANDOM POSTS SECTION ===== -->
-        <h2 class="bp-title"><i class="fa fa-random" aria-hidden="true"></i> Random Posts</h2>
-        <div class="corner dtype">
-            <div class="music-grid" id="random-posts-container"></div>
-            <div class="clearfix"></div>
-        </div>
-
-    </main>
+    </div>
 
     <!-- Footer loads here -->
     <div id="footer-placeholder"></div>
 
     <!-- Main JavaScript -->
     <script src="/js/main.js"></script>
+    
+    <!-- Page-specific JavaScript for dynamic content -->
+    <script>
+        // This would be replaced with actual API calls
+        document.addEventListener('DOMContentLoaded', function() {
+            // You can populate tracklist dynamically here
+            console.log('Detail page loaded');
+        });
+    </script>
 </body>
 </html>
