@@ -15,67 +15,195 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Main CSS -->
+    <!-- Main CSS (our reusable stylesheet) -->
     <link rel="stylesheet" href="/css/style.css">
     
-    <!-- Minimal inline styles for detail page layout -->
+    <!-- Page-Specific CSS (only what's not in style.css) -->
     <style>
-        /* ONLY layout styles - NO colors, NO borders, NO typography */
+        /* Detail page layout styles */
         .postbody {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
         }
+        
         .breadcrumb {
             padding: 10px 0;
             margin: 10px 0;
+            color: #666;
         }
+        .breadcrumb a {
+            color: #ff4b2b;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
         .featured-image {
             text-align: center;
             margin: 20px 0;
         }
-        .info-grid {
+        
+        /* Article info grid */
+        .article {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
             margin: 15px 0;
         }
-        .info-row {
-            padding: 12px 8px;
+        .fname {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 5px;
+            font-weight: 500;
             display: flex;
             align-items: center;
         }
-        .info-label {
-            min-width: 120px;
+        .fname span:first-child {
+            min-width: 100px;
+            color: #555;
+            font-weight: 600;
         }
-        .screenshot-container {
+        
+        /* Colorful values */
+        .fname font[color="#33ccff"] { color: #33ccff; }
+        .fname font[color="#1ABC9C"] { color: #1ABC9C; }
+        .fname font[color="#F39C12"] { color: #F39C12; }
+        .fname font[color="#ff751a"] { color: #ff751a; }
+        .fname font[color="#F1C40F"] { color: #F1C40F; }
+        .fname font[color="#2ECC71"] { color: #2ECC71; }
+        .fname font[color="#ff0066"] { color: #ff0066; }
+        .fname font[color="#3357FF"] { color: #3357FF; }
+        
+        /* Screenshot */
+        .ss {
+            display: flex;
+            justify-content: center;
             margin: 15px 0;
-            text-align: center;
         }
-        .download-section {
-            margin: 25px 0;
+        .ss img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 0 18px rgba(0, 255, 200, 0.15);
+            transition: transform 0.3s;
         }
-        .download-btn {
+        .ss img:hover {
+            transform: scale(1.02);
+        }
+        
+        /* Download buttons */
+        .dlbtn {
             text-align: center;
             margin: 12px 0;
         }
-        .how-to-download {
-            margin: 15px 0;
-            padding: 10px;
+        .dlbtn a {
+            display: inline-block;
+            border-radius: 30px;
+            font-size: 16px;
+            padding: 12px 30px;
+            border: 2px solid #ff2121;
+            background-color: #424242;
+            color: #fff;
+            text-decoration: none;
+            min-width: 280px;
+            transition: all 0.3s ease;
         }
-        .tags-section {
+        .dlbtn a:hover {
+            background-color: #ff2121;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 33, 33, 0.3);
+        }
+        
+        /* Telegram button */
+        .telegram-join-btn {
+            display: block;
+            width: max-content;
+            padding: 12px 25px;
+            color: #ffffff;
+            background-color: #0088cc;
+            border-radius: 30px;
+            border: 2px solid #005f8b;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px auto;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .telegram-join-btn:hover {
+            background-color: #005f8b;
+            transform: translateY(-2px);
+        }
+        
+        /* Tags */
+        .gtag {
+            font-weight: 600;
+            font-size: 16px;
+            color: #333;
             margin: 30px 0;
             padding: 15px 0;
+            border-top: 2px solid #eee;
+            border-bottom: 2px solid #eee;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: 10px;
         }
+        .gtag a {
+            display: inline-block;
+            background-color: #f0f0f0;
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: #333;
+            border: 1px solid #ccc;
+            transition: all 0.3s ease;
+        }
+        .gtag a:hover {
+            background-color: #ff2121;
+            color: #fff;
+            border-color: #ff2121;
+        }
+        .taglist {
+            font-style: normal;
+            font-size: 14px;
+            color: #555;
+            font-weight: 600;
+        }
+        
+        /* Section headers */
+        .header7 {
+            background: #303030;
+            color: #fff;
+            margin: 15px 0 10px;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 600;
+            border-left: 4px solid #ff2121;
+        }
+        
+        .bp-title {
+            background: #424242;
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 6px;
+            margin: 20px 0 10px;
+            border-bottom: 1px solid #ff2121;
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
-            .info-row {
+            .fname {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 5px;
             }
-            .info-label {
+            .fname span:first-child {
                 min-width: auto;
+            }
+            .dlbtn a {
+                min-width: 240px;
+                padding: 10px 20px;
             }
         }
     </style>
@@ -89,18 +217,13 @@
         
         <!-- ===== BREADCRUMBS ===== -->
         <div class="breadcrumb">
-            <span>
-                <a href="/">Home</a>
-            </span> 
-            » 
-            <span class="breadcrumb_last">
-                <strong>{{ITEM_TITLE}}</strong>
-            </span>
+            <span><a href="/">Home</a></span> » 
+            <span class="breadcrumb_last"><strong>{{ITEM_TITLE}}</strong></span>
         </div>
 
         <!-- ===== PAGE META / CATEGORY ===== -->
         <div class="page-meta">
-            <a href="/{{CATEGORY_URL}}/">
+            <a href="/category/{{CATEGORY_SLUG}}/">
                 <em class="page-meta-text">{{CATEGORY_NAME}}</em>
             </a>
         </div>
@@ -111,242 +234,78 @@
         </div>
 
         <!-- ===== INFORMATION SECTION ===== -->
-        <div class="section-header">
-            <h2 class="section-title">
-                <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
-                INFORMATION
-            </h2>
-        </div>
-
-        <!-- ===== INFO GRID ===== -->
-        <div class="music-grid">
-            <div class="music-item">
-                <div class="item-container">
-                    <div class="item-data">
-                        <span class="track-title"><b>Name:</b> <span style="color:#ff4e50;">{{ITEM_NAME}}</span></span>
-                    </div>
-                </div>
-            </div>
-            <div class="music-item">
-                <div class="item-container">
-                    <div class="item-data">
-                        <span class="track-title"><b>Genre:</b> <span style="color:#33ccff;">{{GENRE}}</span></span>
-                    </div>
-                </div>
-            </div>
-            <div class="music-item">
-                <div class="item-container">
-                    <div class="item-data">
-                        <span class="track-title"><b>Duration:</b> <span style="color:#1ABC9C;">{{DURATION}}</span></span>
-                    </div>
-                </div>
-            </div>
-            <div class="music-item">
-                <div class="item-container">
-                    <div class="item-data">
-                        <span class="track-title"><b>Release Date:</b> <span style="color:#F39C12;">{{RELEASE_DATE}}</span></span>
-                    </div>
-                </div>
-            </div>
-            <div class="music-item">
-                <div class="item-container">
-                    <div class="item-data">
-                        <span class="track-title"><b>Language:</b> <span style="color:#ff751a;">{{LANGUAGE}}</span></span>
-                    </div>
-                </div>
-            </div>
-            <div class="music-item">
-                <div class="item-container">
-                    <div class="item-data">
-                        <span class="track-title"><b>Artist / Director:</b> <span style="color:#F1C40F;">{{ARTIST}}</span></span>
-                    </div>
-                </div>
-            </div>
-            <div class="music-item">
-                <div class="item-container">
-                    <div class="item-data">
-                        <span class="track-title"><b>Size:</b> <span style="color:#2ECC71;">{{SIZE}}</span></span>
-                    </div>
-                </div>
-            </div>
-            <div class="music-item">
-                <div class="item-container">
-                    <div class="item-data">
-                        <span class="track-title"><b>Quality:</b> <span style="color:#ff0066;">{{QUALITY}}</span></span>
-                    </div>
-                </div>
-            </div>
-            <div class="music-item">
-                <div class="item-container">
-                    <div class="item-data">
-                        <span class="track-title"><b>Description:</b> <span style="color:#3357FF;">{{DESCRIPTION}}</span></span>
-                    </div>
-                </div>
-            </div>
+        <h3 class="header7" align="center">INFORMATION</h3>
+        
+        <div class="article">
+            <div class="fname"><span>Name:</span><span style="color:#ff4e50;">{{ITEM_NAME}}</span></div>
+            <div class="fname"><span>Genre:</span><font color="#33ccff">{{GENRE}}</font></div>
+            <div class="fname"><span>Duration:</span> <font color="#1ABC9C">{{DURATION}}</font></div>
+            <div class="fname"><span>Release Date:</span> <font color="#F39C12">{{RELEASE_DATE}}</font></div>
+            <div class="fname"><span>Language:</span> <font color="#ff751a">{{LANGUAGE}}</font></div>
+            <div class="fname"><span>Artist / Director:</span> <font color="#F1C40F">{{ARTIST}}</font></div>
+            <div class="fname"><span>Size:</span> <font color="#2ECC71">{{SIZE}}</font></div>
+            <div class="fname"><span>Quality:</span> <font color="#ff0066">{{QUALITY}}</font></div>
+            <div class="fname"><span>Description:</span> <font color="#3357FF">{{DESCRIPTION}}</font></div>
         </div>
 
         <!-- ===== HOW TO DOWNLOAD ===== -->
-        <div class="music-item" style="width:100%; max-width:100%; margin:15px 0;">
-            <div class="item-container">
-                <div class="item-data">
-                    <span class="track-title"><b>How To Download:</b> <a href="/how-to-download/" style="color: #E74C3C; margin-left: 10px;" target="_blank">Click Here</a></span>
-                </div>
-            </div>
-        </div>
+        <div class="fname"><strong>How To Download:</strong> <a href="/how-to-download/" style="color: #E74C3C;" target="_blank">Click Here</a></div>
 
         <!-- ===== SCREENSHOT SECTION ===== -->
-        <div class="section-header section-spacing">
-            <h2 class="section-title">
-                <i class="fas fa-camera" style="margin-right: 8px;"></i>
-                SCREENSHOT
-            </h2>
-        </div>
-
-        <!-- ===== SCREENSHOT ===== -->
-        <div class="music-item" style="width:100%; max-width:100%; text-align:center; padding:20px;">
-            <img src="{{SCREENSHOT_URL}}" alt="Screenshot" style="max-width:100%; border-radius:12px;" loading="lazy" />
+        <h3 class="header7" align="center">SCREENSHOT</h3>
+        <div class="article">
+            <div class="ss"><img src="{{SCREENSHOT_URL}}" alt="Screenshot" loading="lazy" /></div>
         </div>
 
         <!-- ===== DOWNLOAD SECTION ===== -->
-        <div class="section-header section-spacing">
-            <h2 class="section-title">
-                <i class="fas fa-download" style="margin-right: 8px;"></i>
-                DOWNLOAD LINKS
-            </h2>
-        </div>
+        <h3 class="bp-title" align="center">DOWNLOAD LINK BELOW</h3>
 
         <!-- ===== TELEGRAM BUTTON ===== -->
-        <div style="text-align:center; margin:20px 0;">
-            <a href="{{TELEGRAM_LINK}}" target="_blank" style="display:inline-block; padding:12px 25px; background:#0088cc; color:white; border-radius:30px; text-decoration:none; font-weight:600; border:2px solid #005f8b;">
-                <i class="fa-brands fa-telegram"></i> Join Telegram
-            </a>
-        </div>
+        <a class="telegram-join-btn" href="{{TELEGRAM_LINK}}" target="_blank">
+            <i class="fa-brands fa-telegram"></i> Join Telegram
+        </a>
 
         <!-- ===== DOWNLOAD BUTTONS ===== -->
-        <div class="download-section">
-            <div style="text-align:center; margin:12px 0;">
-                <a href="{{DOWNLOAD_LINK_480P}}" target="_blank" style="display:inline-block; border-radius:30px; font-size:16px; padding:12px 30px; border:2px solid #ff2121; background-color:#424242; color:#fff; text-decoration:none; min-width:280px;">
-                    Download 480p [{{SIZE_480P}}]
-                </a>
-            </div>
-            <div style="text-align:center; margin:12px 0;">
-                <a href="{{DOWNLOAD_LINK_720P}}" target="_blank" style="display:inline-block; border-radius:30px; font-size:16px; padding:12px 30px; border:2px solid #ff2121; background-color:#424242; color:#fff; text-decoration:none; min-width:280px;">
-                    Download 720p [{{SIZE_720P}}]
-                </a>
-            </div>
-            <div style="text-align:center; margin:12px 0;">
-                <a href="{{DOWNLOAD_LINK_1080P}}" target="_blank" style="display:inline-block; border-radius:30px; font-size:16px; padding:12px 30px; border:2px solid #ff2121; background-color:#424242; color:#fff; text-decoration:none; min-width:280px;">
-                    Download 1080p [{{SIZE_1080P}}]
-                </a>
-            </div>
-        </div>
+        <div class="dlbtn"><a href="{{DOWNLOAD_LINK_480P}}" target="_blank">Download 480p [{{SIZE_480P}}]</a></div>
+        <div class="dlbtn"><a href="{{DOWNLOAD_LINK_720P}}" target="_blank">Download 720p [{{SIZE_720P}}]</a></div>
+        <div class="dlbtn"><a href="{{DOWNLOAD_LINK_1080P}}" target="_blank">Download 1080p [{{SIZE_1080P}}]</a></div>
 
         <!-- ===== REQUEST BUTTON ===== -->
-        <div style="text-align:center; margin:20px 0;">
-            <a href="/request/" style="display:inline-block; padding:12px 25px; background:#0088cc; color:white; border-radius:30px; text-decoration:none; font-weight:600; border:2px solid #005f8b;">
-                <i class="fas fa-envelope"></i> Request a Movie
-            </a>
-        </div>
+        <a class="telegram-join-btn" href="/request/">
+            <i class="fas fa-envelope"></i> Request a Movie
+        </a>
 
         <!-- ===== TAGS SECTION ===== -->
-        <div class="music-item" style="width:100%; max-width:100%; margin:15px 0;">
-            <div class="item-container">
-                <div class="item-data">
-                    <span class="track-title"><b>Tag:</b> 
-                        <a href="/tag/{{TAG_SLUG}}/" style="display:inline-block; background:#f0f0f0; padding:6px 14px; border-radius:20px; color:#333; text-decoration:none; margin-left:10px; border:1px solid #ccc;">
-                            <em>{{TAG_NAME}}</em>
-                        </a>
-                    </span>
-                </div>
-            </div>
+        <div class="gtag">
+            Tag: <a href="/tag/{{TAG_SLUG}}/"><em class="taglist">{{TAG_NAME}}</em></a>
         </div>
 
-        <!-- ===== RELATED SONGS SECTION ===== -->
-        <div class="section-header section-spacing">
-            <h2 class="section-title">
-                <i class="fas fa-music" style="margin-right: 8px;"></i>
-                Related Songs
-            </h2>
-        </div>
-        <div class="corner">
-            <div class="music-grid" id="related-songs-container"></div>
+        <!-- ===== RELATED POSTS SECTION ===== -->
+        <h2 class="bp-title orange"><i class="fa fa-tags" aria-hidden="true"></i> Related Posts</h2>
+        <div class="corner dtype">
+            <div class="music-grid" id="related-posts-container"></div>
+            <div class="clearfix"></div>
         </div>
 
-        <!-- ===== MORE FROM THIS ARTIST SECTION ===== -->
-        <div class="section-header section-spacing">
-            <h2 class="section-title">
-                <i class="fas fa-user" style="margin-right: 8px;"></i>
-                More From This Artist
-            </h2>
-        </div>
-        <div class="corner">
-            <div class="music-grid" id="more-artist-container"></div>
+        <!-- ===== POPULAR MOVIES SECTION ===== -->
+        <h2 class="bp-title orange"><i class="fa fa-fire" aria-hidden="true"></i> Popular Movies</h2>
+        <div class="corner dtype">
+            <div class="music-grid" id="popular-movies-container"></div>
+            <div class="clearfix"></div>
         </div>
 
-        <!-- ===== FANS ALSO LIKED SECTION ===== -->
-        <div class="section-header section-spacing">
-            <h2 class="section-title">
-                <i class="fas fa-heart" style="margin-right: 8px;"></i>
-                Fans Also Liked
-            </h2>
-        </div>
-        <div class="corner">
-            <div class="music-grid" id="fans-also-liked-container"></div>
+        <!-- ===== LATEST MOVIES SECTION ===== -->
+        <h2 class="bp-title"><i class="fa fa-list-alt" aria-hidden="true"></i> Latest Movies</h2>
+        <div class="corner dtype">
+            <div class="music-grid" id="latest-movies-container"></div>
+            <div class="clearfix"></div>
         </div>
 
-        <!-- ===== RECOMMENDED FOR YOU SECTION ===== -->
-        <div class="section-header section-spacing">
-            <h2 class="section-title">
-                <i class="fas fa-star" style="margin-right: 8px;"></i>
-                Recommended For You
-            </h2>
-        </div>
-        <div class="corner">
-            <div class="music-grid" id="recommended-container"></div>
-        </div>
-
-        <!-- ===== TRENDING NOW SECTION ===== -->
-        <div class="section-header section-spacing">
-            <h2 class="section-title">
-                <i class="fas fa-fire" style="margin-right: 8px;"></i>
-                Trending Now
-            </h2>
-        </div>
-        <div class="corner">
-            <div class="music-grid" id="trending-container"></div>
-        </div>
-
-        <!-- ===== NEW RELEASES SECTION ===== -->
-        <div class="section-header section-spacing">
-            <h2 class="section-title">
-                <i class="fas fa-clock" style="margin-right: 8px;"></i>
-                New Releases
-            </h2>
-        </div>
-        <div class="corner">
-            <div class="music-grid" id="new-releases-container"></div>
-        </div>
-
-        <!-- ===== TOP CHARTS SECTION ===== -->
-        <div class="section-header section-spacing">
-            <h2 class="section-title">
-                <i class="fas fa-chart-line" style="margin-right: 8px;"></i>
-                Top Charts
-            </h2>
-        </div>
-        <div class="corner">
-            <div class="music-grid" id="top-charts-container"></div>
-        </div>
-
-        <!-- ===== EDITOR'S PICKS SECTION ===== -->
-        <div class="section-header section-spacing">
-            <h2 class="section-title">
-                <i class="fas fa-star" style="margin-right: 8px;"></i>
-                Editor's Picks
-            </h2>
-        </div>
-        <div class="corner">
-            <div class="music-grid" id="editors-picks-container"></div>
+        <!-- ===== RANDOM POSTS SECTION ===== -->
+        <h2 class="bp-title"><i class="fa fa-random" aria-hidden="true"></i> Random Posts</h2>
+        <div class="corner dtype">
+            <div class="music-grid" id="random-posts-container"></div>
+            <div class="clearfix"></div>
         </div>
 
     </main>
