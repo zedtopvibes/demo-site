@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
@@ -151,45 +150,64 @@
             font-weight: 600;
         }
         
-        /* ===== VERTICAL CARD STYLES (for ALL info cards) ===== */
-        .vertical-card .item-container {
+        /* ===== ALBUM DETAIL GRID STYLES ===== */
+        .album-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .album-image-card {
+            height: 100%;
+        }
+        
+        .album-image-card .music-item {
+            height: 100%;
             display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .album-image-card .item-container {
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            padding: 20px;
             text-align: center;
-            padding: 15px 10px;
         }
         
-        .vertical-card .item-thumb {
+        .album-image-card .item-thumb {
             margin-right: 0;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
         
-        .vertical-card .item-thumb i {
-            font-size: 40px;
-            color: #ff4b2b;
-        }
-        
-        .vertical-card .track-title {
-            font-size: 14px;
-            color: #666;
-            display: block;
-            margin-bottom: 5px;
-        }
-        
-        .vertical-card .artist-name {
-            font-size: 16px;
-            font-weight: 600;
-        }
-        
-        .vertical-card img {
-            width: 80px;
-            height: 80px;
+        .album-image-card img {
+            width: 180px;
+            height: 180px;
             border-radius: 16px;
+        }
+        
+        .album-image-card .track-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .album-image-card .artist-name {
+            font-size: 16px;
+        }
+        
+        .album-details-cards .music-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
         }
         
         /* Responsive */
         @media (max-width: 719px) {
+            .album-detail-grid {
+                grid-template-columns: 1fr;
+            }
             .page-numbers, a.page-numbers {
                 padding: 6px 10px;
                 font-size: 13px;
@@ -208,7 +226,7 @@
         <strong id="breadcrumb-title">Album Details</strong>
     </div>
 
-    <!-- ===== ALBUM DETAILS SECTION (All Vertical Cards) ===== -->
+    <!-- ===== ALBUM DETAILS SECTION (Image Left + Details Right) ===== -->
     <div class="section-header">
         <h2 class="section-title">
             <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
@@ -217,110 +235,106 @@
     </div>
     
     <div class="corner">
-        <div class="music-grid">
-            <!-- Image Card -->
-            <a class="music-item vertical-card" style="text-decoration:none; cursor:default;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/ff2121/ffffff?text=ALBUM" class="roundthumb" alt="Album Cover">
+        <div class="album-detail-grid">
+            <!-- Image Card (left column) -->
+            <div class="album-image-card">
+                <a class="music-item" style="cursor:default; text-decoration:none; display:block;">
+                    <div class="item-container">
+                        <div class="item-thumb">
+                            <img src="https://via.placeholder.com/180/ff2121/ffffff?text=ALBUM" alt="Album Cover">
+                        </div>
+                        <div class="item-data">
+                            <span class="track-title">Greatest Collection</span>
+                            <div class="artist-name" style="color:#ff4e50;">2024 · 15 tracks</div>
+                        </div>
                     </div>
-                    <div class="item-data">
-                        <span class="track-title">Album</span>
-                        <div class="artist-name" style="color:#ff4e50; font-weight:600;">Greatest Collection</div>
-                    </div>
-                </div>
-            </a>
+                </a>
+            </div>
             
-            <!-- Artist Card -->
-            <a class="music-item vertical-card" style="text-decoration:none; cursor:default;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title">Artist</span>
-                        <div class="artist-name" style="color:#F1C40F; font-weight:600;">Various Artists</div>
-                    </div>
+            <!-- Details Cards (right column) -->
+            <div class="album-details-cards">
+                <div class="music-grid">
+                    <!-- Album Name -->
+                    <a class="music-item" style="cursor:default; text-decoration:none;">
+                        <div class="item-container">
+                            <div class="item-data">
+                                <span class="track-title"><b>Album</b></span>
+                                <div class="artist-name" style="color:#ff4e50; font-weight:600;">Greatest Collection</div>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- Artist -->
+                    <a class="music-item" style="cursor:default; text-decoration:none;">
+                        <div class="item-container">
+                            <div class="item-data">
+                                <span class="track-title"><b>Artist</b></span>
+                                <div class="artist-name" style="color:#F1C40F; font-weight:600;">Various Artists</div>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- Genre -->
+                    <a class="music-item" style="cursor:default; text-decoration:none;">
+                        <div class="item-container">
+                            <div class="item-data">
+                                <span class="track-title"><b>Genre</b></span>
+                                <div class="artist-name" style="color:#33ccff; font-weight:600;">Pop / Rock</div>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- Released -->
+                    <a class="music-item" style="cursor:default; text-decoration:none;">
+                        <div class="item-container">
+                            <div class="item-data">
+                                <span class="track-title"><b>Released</b></span>
+                                <div class="artist-name" style="color:#F39C12; font-weight:600;">2024</div>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- Tracks -->
+                    <a class="music-item" style="cursor:default; text-decoration:none;">
+                        <div class="item-container">
+                            <div class="item-data">
+                                <span class="track-title"><b>Tracks</b></span>
+                                <div class="artist-name" style="color:#1ABC9C; font-weight:600;">15 songs</div>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- Price -->
+                    <a class="music-item" style="cursor:default; text-decoration:none;">
+                        <div class="item-container">
+                            <div class="item-data">
+                                <span class="track-title"><b>Price</b></span>
+                                <div class="artist-name" style="color:#2ECC71; font-weight:600;">$9.99</div>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- Quality -->
+                    <a class="music-item" style="cursor:default; text-decoration:none;">
+                        <div class="item-container">
+                            <div class="item-data">
+                                <span class="track-title"><b>Quality</b></span>
+                                <div class="artist-name" style="color:#ff0066; font-weight:600;">Hi-Res Audio</div>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- Label -->
+                    <a class="music-item" style="cursor:default; text-decoration:none;">
+                        <div class="item-container">
+                            <div class="item-data">
+                                <span class="track-title"><b>Label</b></span>
+                                <div class="artist-name" style="color:#666; font-weight:600;">Zedtopvibes Records</div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </a>
-            
-            <!-- Genre Card -->
-            <a class="music-item vertical-card" style="text-decoration:none; cursor:default;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <i class="fas fa-guitar"></i>
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title">Genre</span>
-                        <div class="artist-name" style="color:#33ccff; font-weight:600;">Pop / Rock</div>
-                    </div>
-                </div>
-            </a>
-            
-            <!-- Released Card -->
-            <a class="music-item vertical-card" style="text-decoration:none; cursor:default;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <i class="fas fa-calendar"></i>
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title">Released</span>
-                        <div class="artist-name" style="color:#F39C12; font-weight:600;">2024</div>
-                    </div>
-                </div>
-            </a>
-            
-            <!-- Tracks Card -->
-            <a class="music-item vertical-card" style="text-decoration:none; cursor:default;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <i class="fas fa-music"></i>
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title">Tracks</span>
-                        <div class="artist-name" style="color:#1ABC9C; font-weight:600;">15 songs</div>
-                    </div>
-                </div>
-            </a>
-            
-            <!-- Price Card -->
-            <a class="music-item vertical-card" style="text-decoration:none; cursor:default;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <i class="fas fa-tag"></i>
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title">Price</span>
-                        <div class="artist-name" style="color:#2ECC71; font-weight:600;">$9.99</div>
-                    </div>
-                </div>
-            </a>
-            
-            <!-- Quality Card -->
-            <a class="music-item vertical-card" style="text-decoration:none; cursor:default;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title">Quality</span>
-                        <div class="artist-name" style="color:#ff0066; font-weight:600;">Hi-Res Audio</div>
-                    </div>
-                </div>
-            </a>
-            
-            <!-- Label Card -->
-            <a class="music-item vertical-card" style="text-decoration:none; cursor:default;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <i class="fas fa-building"></i>
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title">Label</span>
-                        <div class="artist-name" style="color:#666; font-weight:600;">Zedtopvibes Records</div>
-                    </div>
-                </div>
-            </a>
+            </div>
         </div>
     </div>
 
@@ -484,39 +498,42 @@
     
     <div class="corner">
         <div class="music-grid">
-            <a class="music-item vertical-card" href="#" target="_blank" style="text-decoration:none;">
+            <!-- Spotify -->
+            <a class="music-item" href="#" target="_blank" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <i class="fab fa-spotify" style="color:#1DB954;"></i>
+                        <i class="fab fa-spotify" style="font-size:40px; color:#1DB954; margin:15px;"></i>
                     </div>
                     <div class="item-data">
-                        <span class="track-title">Spotify</span>
+                        <span class="track-title"><b>Spotify</b></span>
                         <div class="artist-name">Listen on Spotify</div>
                         <span class="item-meta"><b style="color:#ff0000">Free</b></span>
                     </div>
                 </div>
             </a>
             
-            <a class="music-item vertical-card" href="#" target="_blank" style="text-decoration:none;">
+            <!-- Apple Music -->
+            <a class="music-item" href="#" target="_blank" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <i class="fab fa-apple" style="color:#fa57c1;"></i>
+                        <i class="fab fa-apple" style="font-size:40px; color:#fa57c1; margin:15px;"></i>
                     </div>
                     <div class="item-data">
-                        <span class="track-title">Apple Music</span>
+                        <span class="track-title"><b>Apple Music</b></span>
                         <div class="artist-name">Listen on Apple Music</div>
                         <span class="item-meta"><b style="color:#ff0000">$9.99</b></span>
                     </div>
                 </div>
             </a>
             
-            <a class="music-item vertical-card" href="#" target="_blank" style="text-decoration:none;">
+            <!-- YouTube Music -->
+            <a class="music-item" href="#" target="_blank" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <i class="fab fa-youtube" style="color:#FF0000;"></i>
+                        <i class="fab fa-youtube" style="font-size:40px; color:#FF0000; margin:15px;"></i>
                     </div>
                     <div class="item-data">
-                        <span class="track-title">YouTube Music</span>
+                        <span class="track-title"><b>YouTube Music</b></span>
                         <div class="artist-name">Watch on YouTube</div>
                         <span class="item-meta"><b style="color:#ff0000">Free</b></span>
                     </div>
@@ -544,10 +561,11 @@
     </div>
     <div class="corner">
         <div class="music-grid">
+            <!-- Album 1 -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/4caf50/ffffff?text=ALBUM" class="roundthumb" alt="Album">
+                        <img src="https://via.placeholder.com/80/4caf50/ffffff?text=ALBUM1" class="roundthumb" alt="Album">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Greatest Hits Vol.2</b> <span class="album-badge">Album</span></span>
@@ -556,10 +574,12 @@
                     </div>
                 </div>
             </a>
+            
+            <!-- Artist 1 -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/2196f3/ffffff?text=ARTIST" class="roundthumb" alt="Artist">
+                        <img src="https://via.placeholder.com/80/2196f3/ffffff?text=QUEEN" class="roundthumb" alt="Artist">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Queen</b> <span class="artist-badge">Artist</span></span>
@@ -568,10 +588,12 @@
                     </div>
                 </div>
             </a>
+            
+            <!-- EP 1 -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/ff5722/ffffff?text=EP" class="roundthumb" alt="EP">
+                        <img src="https://via.placeholder.com/80/ff5722/ffffff?text=EP1" class="roundthumb" alt="EP">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Acoustic Sessions</b> <span class="ep-badge">EP</span></span>
@@ -580,6 +602,8 @@
                     </div>
                 </div>
             </a>
+            
+            <!-- Playlist 1 -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
@@ -604,6 +628,7 @@
     </div>
     <div class="corner">
         <div class="music-grid">
+            <!-- Artist -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
@@ -616,6 +641,8 @@
                     </div>
                 </div>
             </a>
+            
+            <!-- Album -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
@@ -625,78 +652,6 @@
                         <span class="track-title"><b>A Night at the Opera</b> <span class="album-badge">Album</span></span>
                         <div class="artist-name">Queen</div>
                         <span class="item-meta"><b style="color:#ff0000">12 tracks</b></span>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <!-- ===== RANDOM SONGS SECTION ===== -->
-    <div class="section-header section-spacing">
-        <h2 class="section-title">
-            <i class="fas fa-random" style="margin-right: 8px;"></i>
-            Random Songs You Might Like
-        </h2>
-    </div>
-    <div class="corner">
-        <div class="music-grid">
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/ff9800/ffffff?text=RANDOM1" class="roundthumb" alt="Song">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Sweet Child O' Mine</b> <span class="ep-badge">Song</span></span>
-                        <div class="artist-name">Guns N' Roses · 5:56</div>
-                        <span class="item-meta"><b style="color:#ff0000">Rock</b></span>
-                    </div>
-                </div>
-            </a>
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/ff9800/ffffff?text=RANDOM2" class="roundthumb" alt="Song">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Uptown Funk</b> <span class="ep-badge">Song</span></span>
-                        <div class="artist-name">Bruno Mars · 4:30</div>
-                        <span class="item-meta"><b style="color:#ff0000">Funk</b></span>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <!-- ===== POPULAR TRACKS SECTION ===== -->
-    <div class="section-header section-spacing">
-        <h2 class="section-title">
-            <i class="fas fa-fire" style="margin-right: 8px;"></i>
-            Popular Tracks
-        </h2>
-    </div>
-    <div class="corner">
-        <div class="music-grid">
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/ff5722/ffffff?text=HOT1" class="roundthumb" alt="Popular">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Despacito</b> <span class="ep-badge">Song</span></span>
-                        <div class="artist-name">Luis Fonsi · 4:41</div>
-                        <span class="item-meta"><b style="color:#ff0000">🔥 #1 Trending</b></span>
-                    </div>
-                </div>
-            </a>
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/ff5722/ffffff?text=HOT2" class="roundthumb" alt="Popular">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Shape of You</b> <span class="ep-badge">Song</span></span>
-                        <div class="artist-name">Ed Sheeran · 3:53</div>
-                        <span class="item-meta"><b style="color:#ff0000">🔥 #2 Trending</b></span>
                     </div>
                 </div>
             </a>
