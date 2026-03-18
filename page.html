@@ -146,11 +146,11 @@
         .album-detail-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin: 15px 0;
+            gap: 2px;  /* Minimal gap between cards */
+            margin: 10px 0;
         }
         
-        /* Left column: image card */
+        /* Left column: image card with centered larger image */
         .album-image-column .music-item {
             width: 100%;
             max-width: 100%;
@@ -158,6 +158,40 @@
             height: 100%;
             display: flex;
             align-items: center;
+            justify-content: center;
+            border-radius: 12px 0 0 12px;  /* Rounded left side only */
+        }
+        
+        .album-image-column .item-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px 10px;
+            width: 100%;
+        }
+        
+        .album-image-column .item-thumb {
+            margin-right: 0;
+            margin-bottom: 15px;
+        }
+        
+        .album-image-column .roundthumb {
+            width: 140px !important;  /* Larger image */
+            height: 140px !important;
+            border-radius: 16px;
+        }
+        
+        .album-image-column .track-title {
+            font-size: 18px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .album-image-column .artist-name {
+            font-size: 14px;
         }
         
         /* Right column: single details card */
@@ -169,7 +203,7 @@
             background-color: #fff;
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
             border: 1px solid #ddd;
-            border-radius: 12px;
+            border-radius: 0 12px 12px 0;  /* Rounded right side only */
             overflow: hidden;
         }
         
@@ -178,14 +212,14 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 15px;
+            padding: 20px;
         }
         
         .detail-row {
             display: flex;
             justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
         }
         
         .detail-row:last-child {
@@ -195,10 +229,12 @@
         .detail-label {
             color: #666;
             font-weight: 600;
+            font-size: 14px;
         }
         
         .detail-value {
             font-weight: 600;
+            font-size: 14px;
         }
         
         /* Colorful values */
@@ -211,15 +247,35 @@
         .detail-value.quality { color: #ff0066; }
         .detail-value.label { color: #666; }
         
+        /* Hover effect on detail rows */
+        .detail-row:hover {
+            background-color: #f9f9f9;
+            transition: background 0.2s ease;
+        }
+        
         /* Responsive */
         @media (max-width: 719px) {
             .album-detail-grid {
                 grid-template-columns: 1fr;
-                gap: 10px;
+                gap: 2px;
             }
+            
+            .album-image-column .music-item {
+                border-radius: 12px 12px 0 0;  /* Rounded top on mobile */
+            }
+            
+            .album-details-column .details-card {
+                border-radius: 0 0 12px 12px;  /* Rounded bottom on mobile */
+            }
+            
             .page-numbers, a.page-numbers {
                 padding: 6px 10px;
                 font-size: 13px;
+            }
+            
+            .album-image-column .roundthumb {
+                width: 120px !important;
+                height: 120px !important;
             }
         }
     </style>
@@ -245,12 +301,12 @@
     
     <div class="corner">
         <div class="album-detail-grid">
-            <!-- Left Column: Image Card -->
+            <!-- Left Column: Image Card (centered, larger image) -->
             <div class="album-image-column">
                 <a class="music-item" style="cursor:default; text-decoration:none; display:block; height:100%;">
                     <div class="item-container">
                         <div class="item-thumb">
-                            <img src="https://via.placeholder.com/80/ff2121/ffffff?text=ALBUM" class="roundthumb" alt="Album Cover">
+                            <img src="https://via.placeholder.com/140/ff2121/ffffff?text=ALBUM" class="roundthumb" alt="Album Cover">
                         </div>
                         <div class="item-data">
                             <span class="track-title"><b>Greatest Collection</b></span>
