@@ -141,11 +141,59 @@
         .info-value.artist { color: #F1C40F; }
         .info-value.price { color: #2ECC71; }
         
+        /* ===== PAGINATION STYLES (restored) ===== */
+        .page-navi {
+            padding: 20px 6px 10px;
+            margin: 10px 0;
+            text-align: center;
+            clear: both;
+        }
+        .page-numbers, a.page-numbers {
+            background: #424242;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 6px;
+            border: 1px solid #555;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            line-height: normal;
+            margin: 0 2px;
+        }
+        a.page-numbers:hover {
+            background: #ff4b2b;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .page-numbers.current {
+            background: #ff4b2b;
+            color: #fff;
+            border-color: #ff4b2b;
+        }
+        .page-numbers.dots {
+            background: transparent;
+            border: none;
+            color: #ff4b2b;
+            font-weight: 600;
+            box-shadow: none;
+            padding: 8px 4px;
+        }
+        .next.page-numbers, .prev.page-numbers {
+            font-weight: 600;
+        }
+        
         /* Responsive */
         @media (max-width: 719px) {
             .featured-item {
                 max-width: 100%;
                 margin: 20px 10px;
+            }
+            .page-numbers, a.page-numbers {
+                padding: 6px 10px;
+                font-size: 13px;
             }
         }
     </style>
@@ -246,7 +294,7 @@
         </p>
     </div>
 
-    <!-- ===== TRACKLIST SECTION - NOW USING MUSIC-ITEM CARDS ===== -->
+    <!-- ===== TRACKLIST SECTION ===== -->
     <div class="section-header section-spacing">
         <h2 class="section-title">
             <i class="fas fa-music" style="margin-right: 8px;"></i>
@@ -256,7 +304,7 @@
     
     <div class="corner">
         <div class="music-grid" id="tracklist-container">
-            <!-- Track 1 -->
+            <!-- Page 1 Tracks (Tracks 1-8) -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
@@ -269,8 +317,6 @@
                     </div>
                 </div>
             </a>
-            
-            <!-- Track 2 -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
@@ -283,8 +329,6 @@
                     </div>
                 </div>
             </a>
-            
-            <!-- Track 3 -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
@@ -297,8 +341,6 @@
                     </div>
                 </div>
             </a>
-            
-            <!-- Track 4 -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
@@ -311,8 +353,6 @@
                     </div>
                 </div>
             </a>
-            
-            <!-- Track 5 -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
@@ -325,8 +365,6 @@
                     </div>
                 </div>
             </a>
-            
-            <!-- Track 6 -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
@@ -339,8 +377,6 @@
                     </div>
                 </div>
             </a>
-            
-            <!-- Track 7 -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
@@ -353,8 +389,6 @@
                     </div>
                 </div>
             </a>
-            
-            <!-- Track 8 -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
@@ -368,6 +402,16 @@
                 </div>
             </a>
         </div>
+    </div>
+
+    <!-- ===== PAGINATION FOR TRACKLIST ===== -->
+    <div class="page-navi" align="center">
+        <span aria-current="page" class="page-numbers current">1</span>
+        <a class="page-numbers" href="#" onclick="loadTracklistPage(2); return false;">2</a>
+        <a class="page-numbers" href="#" onclick="loadTracklistPage(3); return false;">3</a>
+        <span class="page-numbers dots">…</span>
+        <a class="page-numbers" href="#" onclick="loadTracklistPage(10); return false;">10</a>
+        <a class="next page-numbers" href="#" onclick="loadTracklistPage(2); return false;">Next »</a>
     </div>
 
     <!-- ===== LISTEN ON SECTION ===== -->
@@ -489,118 +533,18 @@
         </div>
     </div>
 
-    <!-- ===== MORE FROM THIS ARTIST SECTION ===== -->
-    <div class="section-header section-spacing">
-        <h2 class="section-title">
-            <i class="fas fa-user" style="margin-right: 8px;"></i>
-            More From This Artist
-        </h2>
-    </div>
-    <div class="corner">
-        <div class="music-grid" id="more-artist-container">
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/2196f3/ffffff?text=QUEEN" class="roundthumb" alt="Queen">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Queen</b> <span class="artist-badge">Artist</span></span>
-                        <div class="artist-name">Rock</div>
-                        <span class="item-meta"><b style="color:#ff0000">15 albums</b></span>
-                    </div>
-                </div>
-            </a>
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/4caf50/ffffff?text=NIGHT" class="roundthumb" alt="Album">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>A Night at the Opera</b> <span class="album-badge">Album</span></span>
-                        <div class="artist-name">Queen</div>
-                        <span class="item-meta"><b style="color:#ff0000">12 tracks</b></span>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <!-- ===== RANDOM SONGS SECTION ===== -->
-    <div class="section-header section-spacing">
-        <h2 class="section-title">
-            <i class="fas fa-random" style="margin-right: 8px;"></i>
-            Random Songs You Might Like
-        </h2>
-    </div>
-    <div class="corner">
-        <div class="music-grid" id="random-songs-container">
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/ff9800/ffffff?text=RANDOM1" class="roundthumb" alt="Song">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Sweet Child O' Mine</b> <span class="ep-badge">Song</span></span>
-                        <div class="artist-name">Guns N' Roses · 5:56</div>
-                        <span class="item-meta"><b style="color:#ff0000">Rock</b></span>
-                    </div>
-                </div>
-            </a>
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/ff9800/ffffff?text=RANDOM2" class="roundthumb" alt="Song">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Uptown Funk</b> <span class="ep-badge">Song</span></span>
-                        <div class="artist-name">Bruno Mars · 4:30</div>
-                        <span class="item-meta"><b style="color:#ff0000">Funk</b></span>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <!-- ===== POPULAR TRACKS SECTION ===== -->
-    <div class="section-header section-spacing">
-        <h2 class="section-title">
-            <i class="fas fa-fire" style="margin-right: 8px;"></i>
-            Popular Tracks
-        </h2>
-    </div>
-    <div class="corner">
-        <div class="music-grid" id="popular-tracks-container">
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/ff5722/ffffff?text=HOT1" class="roundthumb" alt="Popular">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Despacito</b> <span class="ep-badge">Song</span></span>
-                        <div class="artist-name">Luis Fonsi · 4:41</div>
-                        <span class="item-meta"><b style="color:#ff0000">🔥 #1 Trending</b></span>
-                    </div>
-                </div>
-            </a>
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/ff5722/ffffff?text=HOT2" class="roundthumb" alt="Popular">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Shape of You</b> <span class="ep-badge">Song</span></span>
-                        <div class="artist-name">Ed Sheeran · 3:53</div>
-                        <span class="item-meta"><b style="color:#ff0000">🔥 #2 Trending</b></span>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-
     <!-- Footer loads here -->
     <div id="footer-placeholder"></div>
 
     <!-- Main JavaScript -->
     <script src="/js/main.js"></script>
+    
+    <!-- Simple pagination function -->
+    <script>
+        function loadTracklistPage(page) {
+            alert(`Loading page ${page} tracks... (This would load tracks ${(page-1)*8+1} to ${page*8})`);
+            // In a real implementation, this would fetch and display the next set of tracks
+        }
+    </script>
 </body>
 </html>
