@@ -158,49 +158,24 @@
             margin: 15px 0;
         }
         
-        .album-image-card {
-            height: 100%;
+        /* Left column: single card with image */
+        .album-image-column {
+            /* No extra styles needed, inherits grid */
         }
         
-        .album-image-card .music-item {
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .album-image-card .item-container {
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .album-image-card .item-thumb {
-            margin-right: 0;
-            margin-bottom: 15px;
-        }
-        
-        .album-image-card img {
-            width: 180px;
-            height: 180px;
-            border-radius: 16px;
-        }
-        
-        .album-image-card .track-title {
-            font-size: 18px;
-            font-weight: 700;
-        }
-        
-        .album-image-card .artist-name {
-            font-size: 16px;
-        }
-        
-        .album-details-cards .music-grid {
+        /* Right column: contains a 2-column grid of info cards */
+        .album-details-column .music-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
+        }
+        
+        /* Ensure all cards use the standard .music-item styling */
+        .album-image-column .music-item,
+        .album-details-column .music-item {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
         }
         
         /* Responsive */
@@ -236,23 +211,23 @@
     
     <div class="corner">
         <div class="album-detail-grid">
-            <!-- Image Card (left column) -->
-            <div class="album-image-card">
-                <a class="music-item" style="cursor:default; text-decoration:none; display:block;">
+            <!-- Left Column: Image Card (standard music-item) -->
+            <div class="album-image-column">
+                <a class="music-item" style="cursor:default; text-decoration:none;">
                     <div class="item-container">
                         <div class="item-thumb">
-                            <img src="https://via.placeholder.com/180/ff2121/ffffff?text=ALBUM" alt="Album Cover">
+                            <img src="https://via.placeholder.com/80/ff2121/ffffff?text=ALBUM" class="roundthumb" alt="Album Cover">
                         </div>
                         <div class="item-data">
-                            <span class="track-title">Greatest Collection</span>
+                            <span class="track-title"><b>Greatest Collection</b></span>
                             <div class="artist-name" style="color:#ff4e50;">2024 · 15 tracks</div>
                         </div>
                     </div>
                 </a>
             </div>
             
-            <!-- Details Cards (right column) -->
-            <div class="album-details-cards">
+            <!-- Right Column: Info Cards (2-column grid) -->
+            <div class="album-details-column">
                 <div class="music-grid">
                     <!-- Album Name -->
                     <a class="music-item" style="cursor:default; text-decoration:none;">
