@@ -42,20 +42,44 @@
             color: #fff;
         }
         
-        /* Featured image - uses roundthumb style */
-        .featured-image {
+        /* Featured image card - now matches info-item exactly */
+        .featured-card {
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 25px;
             text-align: center;
-            margin: 20px 0;
+            width: 50%;
+            margin: 20px auto;
+            box-sizing: border-box;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
-        .featured-image img {
+        .featured-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+        }
+        .featured-card img {
             max-width: 100%;
             height: auto;
             border-radius: 16px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             transition: transform 0.3s ease;
+            margin-bottom: 15px;
         }
-        .featured-image img:hover {
+        .featured-card img:hover {
             transform: scale(1.02);
+        }
+        .featured-caption {
+            color: #666;
+            font-size: 14px;
+            font-weight: 600;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+        .featured-caption i {
+            color: #ff4b2b;
+            margin-right: 5px;
         }
         
         /* Info grid - matches music-grid layout */
@@ -259,6 +283,10 @@
                 min-width: 200px;
                 padding: 10px 20px;
             }
+            .featured-card {
+                width: 100%;
+                margin: 20px 0;
+            }
         }
     </style>
 </head>
@@ -273,9 +301,12 @@
         <strong>{{ITEM_NAME}}</strong>
     </div>
 
-    <!-- ===== FEATURED IMAGE ===== -->
-    <div class="featured-image">
-        <img src="{{IMAGE_URL}}" alt="{{ITEM_NAME}}" width="300" height="300" class="roundthumb" loading="lazy">
+    <!-- ===== FEATURED IMAGE CARD - Now 50% width like info cards ===== -->
+    <div class="featured-card">
+        <img src="{{IMAGE_URL}}" alt="{{ITEM_NAME}}" loading="lazy">
+        <div class="featured-caption">
+            <i class="fas fa-music"></i> {{ITEM_NAME}} · {{RELEASE_YEAR}}
+        </div>
     </div>
 
     <!-- ===== INFORMATION SECTION ===== -->
