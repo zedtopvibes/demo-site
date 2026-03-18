@@ -98,14 +98,6 @@
             border-color: #ff2121;
         }
         
-        /* Colorful values */
-        .info-value.genre { color: #33ccff; }
-        .info-value.duration { color: #1ABC9C; }
-        .info-value.date { color: #F39C12; }
-        .info-value.language { color: #ff751a; }
-        .info-value.artist { color: #F1C40F; }
-        .info-value.price { color: #2ECC71; }
-        
         /* ===== PAGINATION STYLES ===== */
         .page-navi {
             padding: 5px 6px 5px;
@@ -158,30 +150,72 @@
             margin: 15px 0;
         }
         
-        /* Left column: single card with image */
-        .album-image-column {
-            /* No extra styles needed, inherits grid */
-        }
-        
-        /* Right column: contains a 2-column grid of info cards */
-        .album-details-column .music-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-        
-        /* Ensure all cards use the standard .music-item styling */
-        .album-image-column .music-item,
-        .album-details-column .music-item {
+        /* Left column: image card */
+        .album-image-column .music-item {
             width: 100%;
             max-width: 100%;
             margin: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
         }
+        
+        /* Right column: single details card */
+        .album-details-column .details-card {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .details-card-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 15px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-label {
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .detail-value {
+            font-weight: 600;
+        }
+        
+        /* Colorful values */
+        .detail-value.album-name { color: #ff4e50; }
+        .detail-value.artist { color: #F1C40F; }
+        .detail-value.genre { color: #33ccff; }
+        .detail-value.released { color: #F39C12; }
+        .detail-value.tracks { color: #1ABC9C; }
+        .detail-value.price { color: #2ECC71; }
+        .detail-value.quality { color: #ff0066; }
+        .detail-value.label { color: #666; }
         
         /* Responsive */
         @media (max-width: 719px) {
             .album-detail-grid {
                 grid-template-columns: 1fr;
+                gap: 10px;
             }
             .page-numbers, a.page-numbers {
                 padding: 6px 10px;
@@ -201,7 +235,7 @@
         <strong id="breadcrumb-title">Album Details</strong>
     </div>
 
-    <!-- ===== ALBUM DETAILS SECTION (Image Left + Details Right) ===== -->
+    <!-- ===== ALBUM DETAILS SECTION (Image Left + Single Details Card) ===== -->
     <div class="section-header">
         <h2 class="section-title">
             <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
@@ -211,9 +245,9 @@
     
     <div class="corner">
         <div class="album-detail-grid">
-            <!-- Left Column: Image Card (standard music-item) -->
+            <!-- Left Column: Image Card -->
             <div class="album-image-column">
-                <a class="music-item" style="cursor:default; text-decoration:none;">
+                <a class="music-item" style="cursor:default; text-decoration:none; display:block; height:100%;">
                     <div class="item-container">
                         <div class="item-thumb">
                             <img src="https://via.placeholder.com/80/ff2121/ffffff?text=ALBUM" class="roundthumb" alt="Album Cover">
@@ -226,88 +260,58 @@
                 </a>
             </div>
             
-            <!-- Right Column: Info Cards (2-column grid) -->
+            <!-- Right Column: Single Details Card -->
             <div class="album-details-column">
-                <div class="music-grid">
-                    <!-- Album Name -->
-                    <a class="music-item" style="cursor:default; text-decoration:none;">
-                        <div class="item-container">
-                            <div class="item-data">
-                                <span class="track-title"><b>Album</b></span>
-                                <div class="artist-name" style="color:#ff4e50; font-weight:600;">Greatest Collection</div>
-                            </div>
+                <div class="music-item details-card" style="cursor:default; text-decoration:none; height:100%;">
+                    <div class="details-card-content">
+                        <!-- Album Name -->
+                        <div class="detail-row">
+                            <span class="detail-label">Album:</span>
+                            <span class="detail-value album-name">Greatest Collection</span>
                         </div>
-                    </a>
-                    
-                    <!-- Artist -->
-                    <a class="music-item" style="cursor:default; text-decoration:none;">
-                        <div class="item-container">
-                            <div class="item-data">
-                                <span class="track-title"><b>Artist</b></span>
-                                <div class="artist-name" style="color:#F1C40F; font-weight:600;">Various Artists</div>
-                            </div>
+                        
+                        <!-- Artist -->
+                        <div class="detail-row">
+                            <span class="detail-label">Artist:</span>
+                            <span class="detail-value artist">Various Artists</span>
                         </div>
-                    </a>
-                    
-                    <!-- Genre -->
-                    <a class="music-item" style="cursor:default; text-decoration:none;">
-                        <div class="item-container">
-                            <div class="item-data">
-                                <span class="track-title"><b>Genre</b></span>
-                                <div class="artist-name" style="color:#33ccff; font-weight:600;">Pop / Rock</div>
-                            </div>
+                        
+                        <!-- Genre -->
+                        <div class="detail-row">
+                            <span class="detail-label">Genre:</span>
+                            <span class="detail-value genre">Pop / Rock</span>
                         </div>
-                    </a>
-                    
-                    <!-- Released -->
-                    <a class="music-item" style="cursor:default; text-decoration:none;">
-                        <div class="item-container">
-                            <div class="item-data">
-                                <span class="track-title"><b>Released</b></span>
-                                <div class="artist-name" style="color:#F39C12; font-weight:600;">2024</div>
-                            </div>
+                        
+                        <!-- Released -->
+                        <div class="detail-row">
+                            <span class="detail-label">Released:</span>
+                            <span class="detail-value released">2024</span>
                         </div>
-                    </a>
-                    
-                    <!-- Tracks -->
-                    <a class="music-item" style="cursor:default; text-decoration:none;">
-                        <div class="item-container">
-                            <div class="item-data">
-                                <span class="track-title"><b>Tracks</b></span>
-                                <div class="artist-name" style="color:#1ABC9C; font-weight:600;">15 songs</div>
-                            </div>
+                        
+                        <!-- Tracks -->
+                        <div class="detail-row">
+                            <span class="detail-label">Tracks:</span>
+                            <span class="detail-value tracks">15 songs</span>
                         </div>
-                    </a>
-                    
-                    <!-- Price -->
-                    <a class="music-item" style="cursor:default; text-decoration:none;">
-                        <div class="item-container">
-                            <div class="item-data">
-                                <span class="track-title"><b>Price</b></span>
-                                <div class="artist-name" style="color:#2ECC71; font-weight:600;">$9.99</div>
-                            </div>
+                        
+                        <!-- Price -->
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$9.99</span>
                         </div>
-                    </a>
-                    
-                    <!-- Quality -->
-                    <a class="music-item" style="cursor:default; text-decoration:none;">
-                        <div class="item-container">
-                            <div class="item-data">
-                                <span class="track-title"><b>Quality</b></span>
-                                <div class="artist-name" style="color:#ff0066; font-weight:600;">Hi-Res Audio</div>
-                            </div>
+                        
+                        <!-- Quality -->
+                        <div class="detail-row">
+                            <span class="detail-label">Quality:</span>
+                            <span class="detail-value quality">Hi-Res Audio</span>
                         </div>
-                    </a>
-                    
-                    <!-- Label -->
-                    <a class="music-item" style="cursor:default; text-decoration:none;">
-                        <div class="item-container">
-                            <div class="item-data">
-                                <span class="track-title"><b>Label</b></span>
-                                <div class="artist-name" style="color:#666; font-weight:600;">Zedtopvibes Records</div>
-                            </div>
+                        
+                        <!-- Label -->
+                        <div class="detail-row">
+                            <span class="detail-label">Label:</span>
+                            <span class="detail-value label">Zedtopvibes Records</span>
                         </div>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
