@@ -59,26 +59,16 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Description - now with plain text tags inside */
-        .description-section {
+        /* Description card - RESTORED */
+        .description-item {
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
             margin: 15px 0;
-        }
-        
-        .description-text {
-            margin: 0 0 15px 0;
-            line-height: 1.6;
-            color: #555;
-        }
-        
-        .tags-text {
-            margin: 0;
-            line-height: 1.6;
-            color: #555;
-        }
-        
-        .tags-label {
-            color: #ff4b2b;
-            font-weight: 600;
         }
         
         /* ===== PAGINATION STYLES ===== */
@@ -355,7 +345,7 @@
         </div>
     </div>
 
-    <!-- ===== DESCRIPTION SECTION with Gaana-style plain text tags ===== -->
+    <!-- ===== DESCRIPTION CARD with Gaana-style tags inside ===== -->
     <div class="section-header section-spacing">
         <h2 class="section-title">
             <i class="fas fa-align-left" style="margin-right: 8px;"></i>
@@ -363,24 +353,25 @@
         </h2>
     </div>
     
-    <div class="description-section">
-        <p class="description-text">
+    <!-- RESTORED description card with background, border, shadow -->
+    <div class="description-item">
+        <p style="margin:0 0 15px 0; line-height:1.6; color:#555;">
             This amazing collection features the greatest hits from various artists.
             With 15 tracks spanning multiple genres, there's something for everyone.
             Perfect for your playlist rotation! The album showcases the best of pop and rock
             music from 2024, featuring both established artists and emerging talents.
         </p>
         
-        <p class="description-text">
+        <p style="margin:0 0 15px 0; line-height:1.6; color:#555;">
             Each track has been carefully selected to provide a diverse listening experience.
             From upbeat anthems to heartfelt ballads, this collection has it all.
             Whether you're discovering these songs for the first time or revisiting old favorites,
             this album delivers quality music that stands the test of time.
         </p>
         
-        <!-- Gaana-style plain text tags (no links, no design) -->
-        <p class="tags-text">
-            <span class="tags-label">Related Tags -</span> 
+        <!-- Gaana-style plain text tags (inside the card, no links, no design) -->
+        <p style="margin:0; line-height:1.6; color:#555; border-top: 1px solid #eee; padding-top: 15px;">
+            <span style="color:#ff4b2b; font-weight:600;">Related Tags -</span> 
             Pop, Rock, 2024, Greatest Hits, Various Artists, Album Collection, 
             Best of 2024, Pop Rock, Music Album, New Releases, Top Hits, 
             Zedtopvibes, Streaming, Download, Playlist
