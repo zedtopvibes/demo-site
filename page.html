@@ -59,16 +59,38 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Description card - RESTORED */
+        /* Description card - now just description + tags */
         .description-item {
             background-color: #fff;
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
             border: 1px solid #ddd;
             border-radius: 12px;
-            padding: 20px;
+            padding: 25px;
             width: 100%;
             box-sizing: border-box;
-            margin: 15px 0;
+            margin: 20px 0;
+        }
+        
+        /* Description text */
+        .description-text {
+            margin: 0 0 15px 0;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        /* Tags section */
+        .tags-container {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .tags-label {
+            color: #ff4b2b;
+            font-weight: 600;
+            margin-right: 8px;
         }
         
         /* ===== PAGINATION STYLES ===== */
@@ -115,146 +137,66 @@
             font-weight: 600;
         }
         
-        /* ===== ALBUM DETAIL GRID STYLES ===== */
-        .album-detail-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2px;
-            margin: 10px 0;
+        /* Image card styles */
+        .image-container {
+            max-width: 400px;
+            margin: 0 auto 10px;
         }
         
-        /* Left column: image card with larger image */
-        .album-image-column .music-item {
+        .image-card {
             width: 100%;
-            max-width: 100%;
-            margin: 0;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px 0 0 12px;
+            cursor: default;
+            text-decoration: none;
+            display: block;
         }
         
-        .album-image-column .item-container {
+        .image-card .item-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 20px 10px;
-            width: 100%;
+            padding: 25px 15px;
         }
         
-        .album-image-column .item-thumb {
+        .image-card .item-thumb {
             margin-right: 0;
             margin-bottom: 15px;
         }
         
-        .album-image-column .roundthumb {
-            width: 180px !important;
-            height: 180px !important;
+        .image-card .roundthumb {
+            width: 200px !important;
+            height: 200px !important;
             border-radius: 16px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             transition: transform 0.3s ease;
         }
         
-        .album-image-column .roundthumb:hover {
+        .image-card .roundthumb:hover {
             transform: scale(1.05);
         }
         
-        .album-image-column .track-title {
-            font-size: 18px;
+        .image-card .track-title {
+            font-size: 20px;
             font-weight: 700;
             display: block;
             margin-bottom: 5px;
         }
         
-        .album-image-column .artist-name {
-            font-size: 14px;
-        }
-        
-        /* Right column: single details card */
-        .album-details-column .details-card {
-            width: 100%;
-            max-width: 100%;
-            margin: 0;
-            height: 100%;
-            background-color: #fff;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-            border: 1px solid #ddd;
-            border-radius: 0 12px 12px 0;
-            overflow: hidden;
-        }
-        
-        .details-card-content {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .detail-row:last-child {
-            border-bottom: none;
-        }
-        
-        .detail-label {
-            color: #666;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        
-        .detail-value {
-            font-weight: 600;
-            font-size: 14px;
-        }
-        
-        /* Colorful values */
-        .detail-value.album-name { color: #ff4e50; }
-        .detail-value.artist { color: #F1C40F; }
-        .detail-value.genre { color: #33ccff; }
-        .detail-value.released { color: #F39C12; }
-        .detail-value.tracks { color: #1ABC9C; }
-        .detail-value.price { color: #2ECC71; }
-        .detail-value.quality { color: #ff0066; }
-        .detail-value.label { color: #666; }
-        
-        /* Hover effect on detail rows */
-        .detail-row:hover {
-            background-color: #f9f9f9;
-            transition: background 0.2s ease;
+        .image-card .artist-name {
+            font-size: 15px;
         }
         
         /* Responsive */
         @media (max-width: 719px) {
-            .album-detail-grid {
-                grid-template-columns: 1fr;
-                gap: 2px;
-            }
-            
-            .album-image-column .music-item {
-                border-radius: 12px 12px 0 0;
-            }
-            
-            .album-details-column .details-card {
-                border-radius: 0 0 12px 12px;
+            .image-card .roundthumb {
+                width: 160px !important;
+                height: 160px !important;
             }
             
             .page-numbers, a.page-numbers {
                 padding: 6px 10px;
                 font-size: 13px;
-            }
-            
-            .album-image-column .roundthumb {
-                width: 150px !important;
-                height: 150px !important;
             }
         }
     </style>
@@ -270,112 +212,47 @@
         <strong id="breadcrumb-title">Album Details</strong>
     </div>
 
-    <!-- ===== ALBUM DETAILS GRID (Image + Info Card) ===== -->
+    <!-- ===== IMAGE CARD ONLY (centered) ===== -->
     <div class="corner">
-        <div class="album-detail-grid">
-            <!-- Left Column: Image Card (centered, 180px image) -->
-            <div class="album-image-column">
-                <a class="music-item" style="cursor:default; text-decoration:none; display:block; height:100%;">
-                    <div class="item-container">
-                        <div class="item-thumb">
-                            <img src="https://via.placeholder.com/180/ff2121/ffffff?text=ALBUM" class="roundthumb" alt="Album Cover">
-                        </div>
-                        <div class="item-data">
-                            <span class="track-title"><b>Greatest Collection</b></span>
-                            <div class="artist-name" style="color:#ff4e50;">2024 · 15 tracks</div>
-                        </div>
+        <div class="image-container">
+            <a class="music-item image-card" style="cursor:default; text-decoration:none;">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="https://via.placeholder.com/200/ff2121/ffffff?text=ALBUM" class="roundthumb" alt="Album Cover">
                     </div>
-                </a>
-            </div>
-            
-            <!-- Right Column: Single Details Card -->
-            <div class="album-details-column">
-                <div class="music-item details-card" style="cursor:default; text-decoration:none; height:100%;">
-                    <div class="details-card-content">
-                        <!-- Album Name -->
-                        <div class="detail-row">
-                            <span class="detail-label">Album:</span>
-                            <span class="detail-value album-name">Greatest Collection</span>
-                        </div>
-                        
-                        <!-- Artist -->
-                        <div class="detail-row">
-                            <span class="detail-label">Artist:</span>
-                            <span class="detail-value artist">Various Artists</span>
-                        </div>
-                        
-                        <!-- Genre -->
-                        <div class="detail-row">
-                            <span class="detail-label">Genre:</span>
-                            <span class="detail-value genre">Pop / Rock</span>
-                        </div>
-                        
-                        <!-- Released -->
-                        <div class="detail-row">
-                            <span class="detail-label">Released:</span>
-                            <span class="detail-value released">2024</span>
-                        </div>
-                        
-                        <!-- Tracks -->
-                        <div class="detail-row">
-                            <span class="detail-label">Tracks:</span>
-                            <span class="detail-value tracks">15 songs</span>
-                        </div>
-                        
-                        <!-- Price -->
-                        <div class="detail-row">
-                            <span class="detail-label">Price:</span>
-                            <span class="detail-value price">$9.99</span>
-                        </div>
-                        
-                        <!-- Quality -->
-                        <div class="detail-row">
-                            <span class="detail-label">Quality:</span>
-                            <span class="detail-value quality">Hi-Res Audio</span>
-                        </div>
-                        
-                        <!-- Label -->
-                        <div class="detail-row">
-                            <span class="detail-label">Label:</span>
-                            <span class="detail-value label">Zedtopvibes Records</span>
-                        </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>Greatest Collection</b></span>
+                        <div class="artist-name" style="color:#ff4e50;">2024 · 15 tracks</div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 
-    <!-- ===== DESCRIPTION CARD with Gaana-style tags inside ===== -->
-    <div class="section-header section-spacing">
-        <h2 class="section-title">
-            <i class="fas fa-align-left" style="margin-right: 8px;"></i>
-            Description
-        </h2>
-    </div>
-    
-    <!-- RESTORED description card with background, border, shadow -->
+    <!-- ===== DESCRIPTION CARD (just description + tags - NO album info, NO header) ===== -->
     <div class="description-item">
-        <p style="margin:0 0 15px 0; line-height:1.6; color:#555;">
+        <!-- Description text only -->
+        <p class="description-text">
             This amazing collection features the greatest hits from various artists.
             With 15 tracks spanning multiple genres, there's something for everyone.
             Perfect for your playlist rotation! The album showcases the best of pop and rock
             music from 2024, featuring both established artists and emerging talents.
         </p>
         
-        <p style="margin:0 0 15px 0; line-height:1.6; color:#555;">
+        <p class="description-text">
             Each track has been carefully selected to provide a diverse listening experience.
             From upbeat anthems to heartfelt ballads, this collection has it all.
             Whether you're discovering these songs for the first time or revisiting old favorites,
             this album delivers quality music that stands the test of time.
         </p>
         
-        <!-- Gaana-style plain text tags (inside the card, no links, no design) -->
-        <p style="margin:0; line-height:1.6; color:#555; border-top: 1px solid #eee; padding-top: 15px;">
-            <span style="color:#ff4b2b; font-weight:600;">Related Tags -</span> 
+        <!-- Tags only -->
+        <div class="tags-container">
+            <span class="tags-label">Related Tags -</span> 
             Pop, Rock, 2024, Greatest Hits, Various Artists, Album Collection, 
             Best of 2024, Pop Rock, Music Album, New Releases, Top Hits, 
             Zedtopvibes, Streaming, Download, Playlist
-        </p>
+        </div>
     </div>
 
     <!-- ===== TRACKLIST SECTION ===== -->
