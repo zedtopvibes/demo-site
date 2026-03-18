@@ -59,43 +59,26 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Description card */
-        .description-item {
-            background-color: #fff;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            padding: 20px;
-            width: 100%;
-            box-sizing: border-box;
+        /* Description - now with plain text tags inside */
+        .description-section {
             margin: 15px 0;
         }
         
-        /* Tags section */
-        .tags-section {
-            margin: 30px 0;
-            padding: 15px 0;
-            border-top: 2px solid #eee;
-            border-bottom: 2px solid #eee;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 10px;
+        .description-text {
+            margin: 0 0 15px 0;
+            line-height: 1.6;
+            color: #555;
         }
-        .tag-link {
-            background-color: #f0f0f0;
-            padding: 6px 14px;
-            border-radius: 20px;
-            color: #333;
-            text-decoration: none;
-            border: 1px solid #ccc;
-            transition: all 0.3s ease;
-            font-size: 14px;
+        
+        .tags-text {
+            margin: 0;
+            line-height: 1.6;
+            color: #555;
         }
-        .tag-link:hover {
-            background-color: #ff2121;
-            color: #fff;
-            border-color: #ff2121;
+        
+        .tags-label {
+            color: #ff4b2b;
+            font-weight: 600;
         }
         
         /* ===== PAGINATION STYLES ===== */
@@ -178,7 +161,7 @@
         }
         
         .album-image-column .roundthumb {
-            width: 180px !important;  /* Increased to 180px */
+            width: 180px !important;
             height: 180px !important;
             border-radius: 16px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -280,7 +263,7 @@
             }
             
             .album-image-column .roundthumb {
-                width: 150px !important;  /* Slightly smaller on mobile */
+                width: 150px !important;
                 height: 150px !important;
             }
         }
@@ -372,7 +355,7 @@
         </div>
     </div>
 
-    <!-- ===== DESCRIPTION SECTION ===== -->
+    <!-- ===== DESCRIPTION SECTION with Gaana-style plain text tags ===== -->
     <div class="section-header section-spacing">
         <h2 class="section-title">
             <i class="fas fa-align-left" style="margin-right: 8px;"></i>
@@ -380,11 +363,27 @@
         </h2>
     </div>
     
-    <div class="description-item">
-        <p style="margin:0; line-height:1.6; color:#555;">
+    <div class="description-section">
+        <p class="description-text">
             This amazing collection features the greatest hits from various artists.
             With 15 tracks spanning multiple genres, there's something for everyone.
-            Perfect for your playlist rotation!
+            Perfect for your playlist rotation! The album showcases the best of pop and rock
+            music from 2024, featuring both established artists and emerging talents.
+        </p>
+        
+        <p class="description-text">
+            Each track has been carefully selected to provide a diverse listening experience.
+            From upbeat anthems to heartfelt ballads, this collection has it all.
+            Whether you're discovering these songs for the first time or revisiting old favorites,
+            this album delivers quality music that stands the test of time.
+        </p>
+        
+        <!-- Gaana-style plain text tags (no links, no design) -->
+        <p class="tags-text">
+            <span class="tags-label">Related Tags -</span> 
+            Pop, Rock, 2024, Greatest Hits, Various Artists, Album Collection, 
+            Best of 2024, Pop Rock, Music Album, New Releases, Top Hits, 
+            Zedtopvibes, Streaming, Download, Playlist
         </p>
     </div>
 
@@ -520,16 +519,6 @@
         <span class="page-numbers dots">…</span>
         <a class="page-numbers" href="#" onclick="loadTracklistPage(10); return false;">10</a>
         <a class="next page-numbers" href="#" onclick="loadTracklistPage(2); return false;">Next »</a>
-    </div>
-
-    <!-- ===== TAGS SECTION ===== -->
-    <div class="tags-section">
-        <i class="fas fa-tags" style="margin-right: 8px; color:#ff4b2b;"></i>
-        <span style="font-weight:600;">Tags:</span>
-        <a href="#" class="tag-link">Pop</a>
-        <a href="#" class="tag-link">Rock</a>
-        <a href="#" class="tag-link">2024</a>
-        <a href="#" class="tag-link">Greatest Hits</a>
     </div>
 
     <!-- ===== YOU MIGHT ALSO LIKE SECTION ===== -->
