@@ -202,7 +202,7 @@
             flex-direction: column;
         }
         
-        /* ===== TABLE STYLES - FIXED ALIGNMENT ===== */
+        /* ===== TABLE STYLES - LEFT ALIGNED ICONS + TEXT ===== */
         .info-table {
             width: 100%;
             border-collapse: collapse;
@@ -221,17 +221,19 @@
             font-weight: 600;
             background: #f9f9f9;
             color: #666;
-            text-align: center;
+            text-align: left;  /* Changed from center to left */
             vertical-align: middle;
+            padding-left: 15px;  /* Consistent left padding */
             white-space: nowrap;
         }
         
         .info-table td:first-child i {
-            margin-right: 6px;
+            margin-right: 8px;  /* Increased for better spacing */
             color: #ff4b2b;
             width: 18px;
             display: inline-block;
             vertical-align: middle;
+            text-align: center;  /* Icon centered within its width */
         }
         
         .info-table td:last-child {
@@ -311,6 +313,11 @@
             
             .info-table td:first-child {
                 width: 110px;
+                padding-left: 10px;  /* Adjusted for mobile */
+            }
+            
+            .info-table td:first-child i {
+                margin-right: 6px;  /* Adjusted for mobile */
             }
             
             .page-numbers, a.page-numbers {
@@ -360,8 +367,8 @@
                             </div>
                         </div>
 
-                        <!-- Social share buttons - Moved further down with more spacing and larger icons -->
-                        <div class="share-buttons" style="display: flex; gap: 25px; justify-content: center; width: 100%; margin: 15px 0 10px;">
+                        <!-- Social share buttons - REDUCED BOTTOM SPACING (margin-bottom removed) -->
+                        <div class="share-buttons" style="display: flex; gap: 25px; justify-content: center; width: 100%; margin: 15px 0 0px;">
                             <a href="#" style="color: #4267B2; font-size: 22px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Facebook" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-facebook-f"></i></a>
                             <a href="#" style="color: #0088cc; font-size: 22px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Telegram" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-telegram-plane"></i></a>
                             <a href="#" style="color: #25D366; font-size: 22px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="WhatsApp" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-whatsapp"></i></a>
@@ -373,7 +380,7 @@
                 </div>
             </div>
             
-            <!-- Right Column: Table -->
+            <!-- Right Column: Table - NOW WITH LEFT-ALIGNED ICONS + TEXT -->
             <div class="album-details-column">
                 <div class="music-item">
                     <div class="table-wrapper">
