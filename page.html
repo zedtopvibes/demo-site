@@ -5,15 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Zedtopvibes · Album Details</title>
     
-    <!-- Resource Hints -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- ===== PERFORMANCE OPTIMIZATIONS ===== -->
+    <!-- Resource Hints & Preconnects - Faster mobile loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Preload hero image - Improves LCP -->
+    <link rel="preload" as="image" href="https://via.placeholder.com/200/ff2121/ffffff?text=ALBUM" fetchpriority="high">
     
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Font - Non-blocking loading -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    </noscript>
+    
+    <!-- Font Awesome - Non-blocking loading -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    </noscript>
     
     <!-- Main CSS -->
     <link rel="stylesheet" href="/css/style.css">
@@ -221,19 +235,19 @@
             font-weight: 600;
             background: #f9f9f9;
             color: #666;
-            text-align: left;  /* Changed from center to left */
+            text-align: left;
             vertical-align: middle;
-            padding-left: 15px;  /* Consistent left padding */
+            padding-left: 15px;
             white-space: nowrap;
         }
         
         .info-table td:first-child i {
-            margin-right: 8px;  /* Increased for better spacing */
+            margin-right: 8px;
             color: #ff4b2b;
             width: 18px;
             display: inline-block;
             vertical-align: middle;
-            text-align: center;  /* Icon centered within its width */
+            text-align: center;
         }
         
         .info-table td:last-child {
@@ -279,6 +293,11 @@
             margin-top: 0;
         }
         
+        /* Critical CSS for above-the-fold content */
+        .breadcrumb, .album-detail-grid, .album-image-column, .roundthumb {
+            contain: content;
+        }
+        
         /* Responsive */
         @media (max-width: 719px) {
             .album-detail-grid {
@@ -313,11 +332,11 @@
             
             .info-table td:first-child {
                 width: 110px;
-                padding-left: 10px;  /* Adjusted for mobile */
+                padding-left: 10px;
             }
             
             .info-table td:first-child i {
-                margin-right: 6px;  /* Adjusted for mobile */
+                margin-right: 6px;
             }
             
             .page-numbers, a.page-numbers {
@@ -341,14 +360,15 @@
     <!-- ===== ALBUM INFO GRID ===== -->
     <div class="corner">
         <div class="album-detail-grid">
-            <!-- Left Column: Image with thinner border, smaller corners, and stylish share section -->
+            <!-- Left Column: Image with width/height attributes and fetchpriority -->
             <div class="album-image-column">
                 <div class="music-item" style="cursor:default; text-decoration:none; display:block; height:100%;">
                     <div class="item-container" style="justify-content: space-between; height: 100%;">
                         <!-- Top section: Image and title -->
                         <div style="width: 100%;">
                             <div class="item-thumb">
-                                <img src="https://via.placeholder.com/200/ff2121/ffffff?text=ALBUM" class="roundthumb" alt="Album Cover">
+                                <!-- Added width, height and fetchpriority for LCP optimization -->
+                                <img src="https://via.placeholder.com/200/ff2121/ffffff?text=ALBUM" width="200" height="200" class="roundthumb" alt="Album Cover" fetchpriority="high">
                             </div>
                             <div class="item-data">
                                 <span class="track-title"><b>Greatest Collection</b></span>
@@ -356,7 +376,7 @@
                             </div>
                         </div>
                         
-                        <!-- Stylish Share Section - Moved down with decorative separator -->
+                        <!-- Stylish Share Section -->
                         <div style="width: 100%; margin-top: 25px; position: relative;">
                             <!-- Gradient line with "Share" label in the middle -->
                             <div style="position: relative; height: 1px; background: linear-gradient(90deg, transparent, #ff4b2b 20%, #ff4b2b 80%, transparent); opacity: 0.3; margin-bottom: 25px;"></div>
@@ -367,7 +387,7 @@
                             </div>
                         </div>
 
-                        <!-- Social share buttons - REDUCED BOTTOM SPACING (margin-bottom removed) -->
+                        <!-- Social share buttons - Reduced bottom margin -->
                         <div class="share-buttons" style="display: flex; gap: 25px; justify-content: center; width: 100%; margin: 15px 0 0px;">
                             <a href="#" style="color: #4267B2; font-size: 22px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Facebook" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-facebook-f"></i></a>
                             <a href="#" style="color: #0088cc; font-size: 22px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Telegram" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-telegram-plane"></i></a>
@@ -380,7 +400,7 @@
                 </div>
             </div>
             
-            <!-- Right Column: Table - NOW WITH LEFT-ALIGNED ICONS + TEXT -->
+            <!-- Right Column: Table -->
             <div class="album-details-column">
                 <div class="music-item">
                     <div class="table-wrapper">
@@ -465,11 +485,11 @@
     
     <div class="corner">
         <div class="music-grid" id="tracklist-container">
-            <!-- Track 1 -->
+            <!-- Track 1 - Added width, height, and loading="lazy" -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=01" class="roundthumb" alt="Track 1">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=01" width="80" height="80" class="roundthumb" alt="Track 1" loading="lazy">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Bohemian Rhapsody</b> <span class="ep-badge">Track</span></span>
@@ -482,7 +502,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=02" class="roundthumb" alt="Track 2">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=02" width="80" height="80" class="roundthumb" alt="Track 2" loading="lazy">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Stairway to Heaven</b> <span class="ep-badge">Track</span></span>
@@ -495,7 +515,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=03" class="roundthumb" alt="Track 3">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=03" width="80" height="80" class="roundthumb" alt="Track 3" loading="lazy">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Hotel California</b> <span class="ep-badge">Track</span></span>
@@ -508,7 +528,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=04" class="roundthumb" alt="Track 4">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=04" width="80" height="80" class="roundthumb" alt="Track 4" loading="lazy">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Imagine</b> <span class="ep-badge">Track</span></span>
@@ -521,7 +541,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=05" class="roundthumb" alt="Track 5">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=05" width="80" height="80" class="roundthumb" alt="Track 5" loading="lazy">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Smells Like Teen Spirit</b> <span class="ep-badge">Track</span></span>
@@ -534,7 +554,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=06" class="roundthumb" alt="Track 6">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=06" width="80" height="80" class="roundthumb" alt="Track 6" loading="lazy">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Billie Jean</b> <span class="ep-badge">Track</span></span>
@@ -547,7 +567,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=07" class="roundthumb" alt="Track 7">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=07" width="80" height="80" class="roundthumb" alt="Track 7" loading="lazy">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Like a Rolling Stone</b> <span class="ep-badge">Track</span></span>
@@ -560,7 +580,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=08" class="roundthumb" alt="Track 8">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=08" width="80" height="80" class="roundthumb" alt="Track 8" loading="lazy">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Sweet Child o' Mine</b> <span class="ep-badge">Track</span></span>
@@ -591,10 +611,11 @@
     </div>
     <div class="corner">
         <div class="music-grid">
+            <!-- Album 1 - Added loading="lazy" -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/4caf50/ffffff?text=ALBUM1" class="roundthumb" alt="Album">
+                        <img src="https://via.placeholder.com/80/4caf50/ffffff?text=ALBUM1" width="80" height="80" class="roundthumb" alt="Album" loading="lazy">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Greatest Hits Vol.2</b> <span class="album-badge">Album</span></span>
@@ -603,10 +624,11 @@
                     </div>
                 </div>
             </a>
+            <!-- Album 2 -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/2196f3/ffffff?text=ALBUM2" class="roundthumb" alt="Album">
+                        <img src="https://via.placeholder.com/80/2196f3/ffffff?text=ALBUM2" width="80" height="80" class="roundthumb" alt="Album" loading="lazy">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Summer Hits 2024</b> <span class="album-badge">Album</span></span>
@@ -615,10 +637,11 @@
                     </div>
                 </div>
             </a>
+            <!-- Album 3 -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/ff9800/ffffff?text=ALBUM3" class="roundthumb" alt="Album">
+                        <img src="https://via.placeholder.com/80/ff9800/ffffff?text=ALBUM3" width="80" height="80" class="roundthumb" alt="Album" loading="lazy">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Rock Classics</b> <span class="album-badge">Album</span></span>
@@ -627,10 +650,11 @@
                     </div>
                 </div>
             </a>
+            <!-- Album 4 -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=ALBUM4" class="roundthumb" alt="Album">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=ALBUM4" width="80" height="80" class="roundthumb" alt="Album" loading="lazy">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Chill Vibes</b> <span class="album-badge">Album</span></span>
@@ -645,10 +669,10 @@
     <!-- Footer loads here -->
     <div id="footer-placeholder"></div>
 
-    <!-- Main JavaScript -->
-    <script src="/js/main.js"></script>
+    <!-- Main JavaScript - Deferred for performance -->
+    <script src="/js/main.js" defer></script>
     
-    <!-- Simple pagination function -->
+    <!-- Simple pagination function - Inline and lightweight -->
     <script>
         function loadTracklistPage(page) {
             alert(`Loading page ${page} tracks... (This would load tracks ${(page-1)*8+1} to ${page*8})`);
