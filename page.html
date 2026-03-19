@@ -137,10 +137,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             text-align: center;
             padding: 25px 15px;
             width: 100%;
+            height: 100%;
+            box-sizing: border-box;
         }
         
         .album-image-column .item-thumb {
@@ -151,8 +153,8 @@
         .album-image-column .roundthumb {
             width: 200px !important;
             height: 200px !important;
-            border-radius: 16px;
-            border: 2px solid #ff4b2b;
+            border-radius: 8px;
+            border: 1px solid #ff4b2b;
             box-shadow: none;
             transition: none;
         }
@@ -166,6 +168,18 @@
         
         .album-image-column .artist-name {
             font-size: 14px;
+        }
+        
+        /* Share buttons container - aligns with last table row */
+        .album-image-column .share-buttons {
+            margin-top: 0;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            border-top: 1px solid #ff4b2b;
+            padding-top: 15px;
+            width: 100%;
+            align-self: flex-end;
         }
         
         /* Right column: table container */
@@ -221,15 +235,15 @@
             color: #666;
             text-align: center;
             vertical-align: middle;
-            white-space: nowrap; /* Prevents icon and text from wrapping */
+            white-space: nowrap;
         }
         
         .info-table td:first-child i {
             margin-right: 6px;
             color: #ff4b2b;
             width: 18px;
-            display: inline-block; /* Ensures icon stays inline */
-            vertical-align: middle; /* Aligns icon vertically with text */
+            display: inline-block;
+            vertical-align: middle;
         }
         
         .info-table td:last-child {
@@ -336,33 +350,35 @@
     <!-- ===== ALBUM INFO GRID ===== -->
     <div class="corner">
         <div class="album-detail-grid">
-            <!-- Left Column: Plain Image with Theme Border and Share Buttons -->
+            <!-- Left Column: Image with thinner border, smaller corners, and share buttons at bottom -->
             <div class="album-image-column">
                 <div class="music-item" style="cursor:default; text-decoration:none; display:block; height:100%;">
-                    <div class="item-container">
-                        <div class="item-thumb">
-                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDiuu5EI4s2nSoENBqPdKDbVs0dE0kx1hlVdzfbh1sjTkPXCjkEPpCH8QVwXnpzhyphenhyphengS8iuuLPwbK_XCzUaNB8pHM2d66qLDkmYr7UkNDnxAQAotiVSJ12SKeka2sGVAzVvFTmekpW8ZL9ipUc8VDvyxibiIAozDAcqNNiLWNSRnRPsjMDHK_QUxQjyO-IF/s300/Jae%20Cash%20-%20%20Voice%20Yo%20Dula%20Album%20(Www.ZedAlbums.Top).png
-" class="roundthumb" alt="Album Cover">
-                        </div>
-                        <div class="item-data">
-                            <span class="track-title"><b>Greatest Collection</b></span>
-                            <div class="artist-name" style="color:#ff4e50;">2024 · 15 tracks</div>
+                    <div class="item-container" style="justify-content: space-between; height: 100%;">
+                        <!-- Top section: Image and title -->
+                        <div style="width: 100%;">
+                            <div class="item-thumb">
+                                <img src="https://via.placeholder.com/200/ff2121/ffffff?text=ALBUM" class="roundthumb" alt="Album Cover">
+                            </div>
+                            <div class="item-data">
+                                <span class="track-title"><b>Greatest Collection</b></span>
+                                <div class="artist-name" style="color:#ff4e50;">2024 · 15 tracks</div>
+                            </div>
                         </div>
                         
-                        <!-- Social share buttons with original brand colors -->
-                        <div class="share-buttons" style="margin-top: 20px; display: flex; gap: 20px; justify-content: center; border-top: 1px solid #ff4b2b; padding-top: 20px; width: 100%;">
-                            <a href="#" style="color: #4267B2; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Share on Facebook" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" style="color: #0088cc; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Share on Telegram" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-telegram-plane"></i></a>
-                            <a href="#" style="color: #25D366; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Share on WhatsApp" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-whatsapp"></i></a>
-                            <a href="#" style="color: #E4405F; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Share on Instagram" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-instagram"></i></a>
-                            <a href="#" style="color: #BD081C; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Share on Pinterest" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-pinterest-p"></i></a>
-                            <a href="#" style="color: #ff4b2b; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Copy link" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fas fa-link"></i></a>
+                        <!-- Bottom section: Share buttons - aligns with last table row -->
+                        <div class="share-buttons" style="margin-top: 0; border-top: 1px solid #ff4b2b; padding-top: 15px; width: 100%;">
+                            <a href="#" style="color: #4267B2; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="Facebook" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" style="color: #0088cc; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="Telegram" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-telegram-plane"></i></a>
+                            <a href="#" style="color: #25D366; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="WhatsApp" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#" style="color: #E4405F; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="Instagram" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-instagram"></i></a>
+                            <a href="#" style="color: #BD081C; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="Pinterest" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-pinterest-p"></i></a>
+                            <a href="#" style="color: #ff4b2b; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="Copy link" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fas fa-link"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Right Column: Table - FIXED ALIGNMENT -->
+            <!-- Right Column: Table -->
             <div class="album-details-column">
                 <div class="music-item">
                     <div class="table-wrapper">
