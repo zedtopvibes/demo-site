@@ -18,6 +18,7 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="/css/style.css">
     
+    <!-- Detail page specific styles -->
     <style>
         /* Breadcrumb */
         .breadcrumb {
@@ -102,7 +103,7 @@
             font-weight: 600;
         }
         
-        /* ===== ALBUM DETAIL GRID ===== */
+        /* ===== ALBUM DETAIL GRID STYLES ===== */
         .album-detail-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -115,87 +116,64 @@
             overflow: hidden;
         }
         
-        /* ===== HERO CONTAINER (Left Column) ===== */
-        .hero-container {
-            position: relative;
+        /* Left column: image card */
+        .album-image-column .music-item {
             width: 100%;
+            max-width: 100%;
+            margin: 0;
             height: 100%;
-            min-height: 450px;
-            background-color: #1a1a1a;
-            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            background-color: #fff;
+            border: none;
+            box-shadow: none;
+            transition: transform 0.25s ease;
         }
         
-        /* Blurred Background Image */
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://via.placeholder.com/600/ff2121/ffffff?text=ALBUM+BG');
-            background-size: cover;
-            background-position: center;
-            filter: blur(15px) brightness(0.4);
-            transform: scale(1.1);
+        .album-image-column .music-item:hover {
+            transform: translateY(-2px);
         }
         
-        /* Foreground Card */
-        .foreground-card {
-            position: relative;
-            width: 220px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        .album-image-column .item-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            z-index: 10;
-            border: 1px solid rgba(255, 75, 43, 0.2);
-            animation: cardFloat 5s ease-in-out infinite;
-        }
-        
-        /* Clear Poster Image */
-        .foreground-card .poster-image {
-            width: 140px;
-            height: 140px;
-            margin: 0 auto 15px;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            border: 3px solid #fff;
-        }
-        
-        .foreground-card .poster-image img {
+            padding: 25px 15px;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
         }
         
-        .foreground-card .track-title {
+        .album-image-column .item-thumb {
+            margin-right: 0;
+            margin-bottom: 15px;
+        }
+        
+        .album-image-column .roundthumb {
+            width: 200px !important;
+            height: 200px !important;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+        
+        .album-image-column .roundthumb:hover {
+            transform: scale(1.05);
+        }
+        
+        .album-image-column .track-title {
             font-size: 18px;
             font-weight: 700;
             display: block;
             margin-bottom: 5px;
-            color: #333;
         }
         
-        .foreground-card .artist-name {
+        .album-image-column .artist-name {
             font-size: 14px;
-            color: #ff4e50;
-            font-weight: 600;
         }
         
-        @keyframes cardFloat {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
-        }
-        
-        /* Right column: table */
+        /* Right column: table container */
         .album-details-column {
             border-left: 1px solid #ddd;
             display: flex;
@@ -210,9 +188,14 @@
             background-color: #fff;
             border: none;
             box-shadow: none;
+            transition: transform 0.25s ease;
             cursor: default;
             text-decoration: none;
             display: block;
+        }
+        
+        .album-details-column .music-item:hover {
+            transform: translateY(-2px);
         }
         
         .table-wrapper {
@@ -222,7 +205,7 @@
             flex-direction: column;
         }
         
-        /* Table Styles */
+        /* ===== TABLE STYLES ===== */
         .info-table {
             width: 100%;
             border-collapse: collapse;
@@ -268,7 +251,7 @@
         .info-table .quality { color: #ff0066; }
         .info-table .label { color: #666; }
         
-        /* Bottom description */
+        /* Bottom description card */
         .bottom-description {
             background-color: #fff;
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
@@ -289,24 +272,27 @@
         @media (max-width: 719px) {
             .album-detail-grid {
                 grid-template-columns: 1fr;
+                gap: 0px;
+                border-radius: 12px;
+                overflow: hidden;
+                margin: 0;
             }
             
-            .hero-container {
-                min-height: 400px;
-            }
-            
-            .foreground-card {
-                width: 200px;
-                padding: 20px 15px;
-            }
-            
-            .foreground-card .poster-image {
-                width: 120px;
-                height: 120px;
+            .album-image-column .music-item {
+                border-bottom: 1px solid #eee;
             }
             
             .album-details-column {
                 border-left: none;
+            }
+            
+            .album-image-column .roundthumb {
+                width: 160px !important;
+                height: 160px !important;
+            }
+            
+            .album-image-column .item-container {
+                padding: 20px 15px;
             }
             
             .info-table td {
@@ -336,42 +322,61 @@
         <strong id="breadcrumb-title">Album Details</strong>
     </div>
 
-    <!-- ===== ALBUM INFO GRID ===== -->
+    <!-- ===== ALBUM INFO GRID (Image + Table) ===== -->
     <div class="corner">
         <div class="album-detail-grid">
-            <!-- Left Column: Hero Container with Blurred BG + Foreground Card -->
+            <!-- Left Column: Image Card -->
             <div class="album-image-column">
-                <div class="hero-container">
-                    <!-- Blurred Background (will be replaced with your image) -->
-                    <div class="hero-bg" style="background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDiuu5EI4s2nSoENBqPdKDbVs0dE0kx1hlVdzfbh1sjTkPXCjkEPpCH8QVwXnpzhyphenhyphengS8iuuLPwbK_XCzUaNB8pHM2d66qLDkmYr7UkNDnxAQAotiVSJ12SKeka2sGVAzVvFTmekpW8ZL9ipUc8VDvyxibiIAozDAcqNNiLWNSRnRPsjMDHK_QUxQjyO-IF/s300/Jae%20Cash%20-%20%20Voice%20Yo%20Dula%20Album%20(Www.ZedAlbums.Top).png
-');"></div>
-                    
-                    <!-- Foreground Card with Clear Poster -->
-                    <div class="foreground-card">
-                        <div class="poster-image">
-                            <!-- REPLACE THIS URL WITH YOUR ACTUAL IMAGE -->
-                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDiuu5EI4s2nSoENBqPdKDbVs0dE0kx1hlVdzfbh1sjTkPXCjkEPpCH8QVwXnpzhyphenhyphengS8iuuLPwbK_XCzUaNB8pHM2d66qLDkmYr7UkNDnxAQAotiVSJ12SKeka2sGVAzVvFTmekpW8ZL9ipUc8VDvyxibiIAozDAcqNNiLWNSRnRPsjMDHK_QUxQjyO-IF/s300/Jae%20Cash%20-%20%20Voice%20Yo%20Dula%20Album%20(Www.ZedAlbums.Top).png
-" alt="Album Cover">
+                <a class="music-item" style="cursor:default; text-decoration:none; display:block; height:100%;">
+                    <div class="item-container">
+                        <div class="item-thumb">
+                            <img src="https://via.placeholder.com/200/ff2121/ffffff?text=ALBUM" class="roundthumb" alt="Album Cover">
                         </div>
-                        <span class="track-title"><b>Voice Yo Dula</b></span>
-                        <div class="artist-name">Jae Cash · 2024 · 15 tracks</div>
+                        <div class="item-data">
+                            <span class="track-title"><b>Greatest Collection</b></span>
+                            <div class="artist-name" style="color:#ff4e50;">2024 · 15 tracks</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             
-            <!-- Right Column: Table (unchanged) -->
+            <!-- Right Column: Table -->
             <div class="album-details-column">
                 <div class="music-item">
                     <div class="table-wrapper">
                         <table class="info-table">
-                            <tr><td><i class="fas fa-compact-disc"></i> Album</td><td class="album-name">Voice Yo Dula</td></tr>
-                            <tr><td><i class="fas fa-user"></i> Artist</td><td class="artist">Jae Cash</td></tr>
-                            <tr><td><i class="fas fa-guitar"></i> Genre</td><td class="genre">Hip-Hop / Rap</td></tr>
-                            <tr><td><i class="fas fa-calendar"></i> Release Date</td><td class="released">2024</td></tr>
-                            <tr><td><i class="fas fa-music"></i> Total Tracks</td><td class="tracks">15 songs</td></tr>
-                            <tr><td><i class="fas fa-tag"></i> Price</td><td class="price">$9.99</td></tr>
-                            <tr><td><i class="fas fa-star"></i> Quality</td><td class="quality">Hi-Res Audio</td></tr>
-                            <tr><td><i class="fas fa-building"></i> Label</td><td class="label">Zedtopvibes Records</td></tr>
+                            <tr>
+                                <td><i class="fas fa-compact-disc"></i> Album</td>
+                                <td class="album-name">Greatest Collection</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-user"></i> Artist</td>
+                                <td class="artist">Various Artists</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-guitar"></i> Genre</td>
+                                <td class="genre">Pop / Rock</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-calendar"></i> Release Date</td>
+                                <td class="released">2024</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-music"></i> Total Tracks</td>
+                                <td class="tracks">15 songs</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-tag"></i> Price</td>
+                                <td class="price">$9.99</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-star"></i> Quality</td>
+                                <td class="quality">Hi-Res Audio</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-building"></i> Label</td>
+                                <td class="label">Zedtopvibes Records</td>
+                            </tr>
                         </table>
                     </div>
                 </div>
@@ -389,22 +394,66 @@
     
     <div class="bottom-description">
         <p style="margin:0 0 15px 0; line-height:1.6; color:#555;">
-            Voice Yo Dula is the latest album from Zambian artist Jae Cash, featuring a fusion of 
-            hip-hop and traditional Zambian sounds. With 15 tracks, this album showcases Jae Cash's 
-            unique style and lyrical prowess.
+            This amazing collection features the greatest hits from various artists.
+            With 15 tracks spanning multiple genres, there's something for everyone.
+            Perfect for your playlist rotation! The album showcases the best of pop and rock
+            music from 2024, featuring both established artists and emerging talents.
         </p>
+        
         <p style="margin:0; line-height:1.6; color:#555; border-top: 1px solid #eee; padding-top: 15px;">
             <span style="color:#ff4b2b; font-weight:600;">Related Tags -</span> 
-            Zambian Music, Hip-Hop, Rap, 2024, Jae Cash, Voice Yo Dula, 
-            Zedtopvibes, Streaming, Download
+            Pop, Rock, 2024, Greatest Hits, Various Artists, Album Collection, 
+            Best of 2024, Pop Rock, Music Album, New Releases, Top Hits, 
+            Zedtopvibes, Streaming, Download, Playlist
         </p>
     </div>
 
-    <!-- ===== TRACKLIST, PAGINATION, OTHER SECTIONS (keep as before) ===== -->
-    <!-- ... -->
+    <!-- ===== TRACKLIST SECTION ===== -->
+    <div class="section-header" style="margin-top:0;">
+        <h2 class="section-title">
+            <i class="fas fa-music" style="margin-right: 8px;"></i>
+            Tracklist
+        </h2>
+    </div>
+    
+    <div class="corner">
+        <div class="music-grid" id="tracklist-container">
+            <!-- Track 1 -->
+            <a class="music-item" href="#" style="text-decoration:none;">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=01" class="roundthumb" alt="Track 1">
+                    </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>Bohemian Rhapsody</b> <span class="ep-badge">Track</span></span>
+                        <div class="artist-name">Queen · 5:55</div>
+                        <span class="item-meta"><b style="color:#ff0000">Play →</b></span>
+                    </div>
+                </div>
+            </a>
+            <!-- Add more tracks as needed -->
+        </div>
+    </div>
+
+    <!-- ===== PAGINATION ===== -->
+    <div class="page-navi" align="center">
+        <span aria-current="page" class="page-numbers current">1</span>
+        <a class="page-numbers" href="#" onclick="loadTracklistPage(2); return false;">2</a>
+        <a class="page-numbers" href="#" onclick="loadTracklistPage(3); return false;">3</a>
+        <span class="page-numbers dots">…</span>
+        <a class="page-numbers" href="#" onclick="loadTracklistPage(10); return false;">10</a>
+        <a class="next page-numbers" href="#" onclick="loadTracklistPage(2); return false;">Next »</a>
+    </div>
 
     <!-- Footer -->
     <div id="footer-placeholder"></div>
     <script src="/js/main.js"></script>
+    
+    <!-- Simple pagination function -->
+    <script>
+        function loadTracklistPage(page) {
+            alert(`Loading page ${page} tracks... (This would load tracks ${(page-1)*8+1} to ${page*8})`);
+        }
+    </script>
 </body>
 </html>
