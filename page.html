@@ -26,7 +26,7 @@
             border-bottom: 1px solid #ff2121;
             border-radius: 6px;
             padding: 8px 12px;
-            margin: 0 0 0 0;
+            margin: 0 0 0 0;  /* Removed bottom margin */
             color: #fff;
             font-size: 14px;
             box-shadow: inset 0 -1px red;
@@ -108,7 +108,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 0px;
-            margin: 0;
+            margin: 0;  /* Removed margin */
             background-color: #fff;
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
             border: 1px solid #ddd;
@@ -137,12 +137,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             text-align: center;
             padding: 25px 15px;
             width: 100%;
-            height: 100%;
-            box-sizing: border-box;
         }
         
         .album-image-column .item-thumb {
@@ -153,8 +151,8 @@
         .album-image-column .roundthumb {
             width: 200px !important;
             height: 200px !important;
-            border-radius: 8px;
-            border: 1px solid #ff4b2b;
+            border-radius: 16px;
+            border: 2px solid #ff4b2b;  /* Theme border */
             box-shadow: none;
             transition: none;
         }
@@ -168,18 +166,6 @@
         
         .album-image-column .artist-name {
             font-size: 14px;
-        }
-        
-        /* Share buttons container - aligns with last table row */
-        .album-image-column .share-buttons {
-            margin-top: 0;
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            border-top: 1px solid #ff4b2b;
-            padding-top: 15px;
-            width: 100%;
-            align-self: flex-end;
         }
         
         /* Right column: table container */
@@ -214,7 +200,7 @@
             flex-direction: column;
         }
         
-        /* ===== TABLE STYLES - FIXED ALIGNMENT ===== */
+        /* ===== TABLE STYLES ===== */
         .info-table {
             width: 100%;
             border-collapse: collapse;
@@ -235,15 +221,12 @@
             color: #666;
             text-align: center;
             vertical-align: middle;
-            white-space: nowrap;
         }
         
         .info-table td:first-child i {
             margin-right: 6px;
             color: #ff4b2b;
             width: 18px;
-            display: inline-block;
-            vertical-align: middle;
         }
         
         .info-table td:last-child {
@@ -265,11 +248,11 @@
         
         /* Section headers - reduced spacing */
         .section-header {
-            margin: 0;
+            margin: 0;  /* Remove default margins */
         }
         
         .section-header.section-spacing {
-            margin-top: 0;
+            margin-top: 0;  /* Remove top margin */
         }
         
         /* Bottom description card - reduced margin */
@@ -281,7 +264,7 @@
             padding: 20px;
             width: 100%;
             box-sizing: border-box;
-            margin: 0;
+            margin: 0;  /* Removed margin */
         }
         
         /* Tracklist section - remove top spacing */
@@ -340,40 +323,35 @@
     <!-- Header loads here -->
     <div id="header-placeholder"></div>
 
-    <!-- ===== BREADCRUMB NAVIGATION ===== -->
+    <!-- ===== BREADCRUMB NAVIGATION (no bottom margin) ===== -->
     <div class="breadcrumb">
         <a href="/">Home</a> » 
         <a href="/music.html">Music</a> » 
         <strong id="breadcrumb-title">Album Details</strong>
     </div>
 
-    <!-- ===== ALBUM INFO GRID ===== -->
+    <!-- ===== ALBUM INFO GRID (Image + Table) - no top margin ===== -->
     <div class="corner">
         <div class="album-detail-grid">
-            <!-- Left Column: Image with thinner border, smaller corners, and share buttons at bottom -->
+            <!-- Left Column: Plain Image with Theme Border and Share Buttons - FIXED -->
             <div class="album-image-column">
                 <div class="music-item" style="cursor:default; text-decoration:none; display:block; height:100%;">
-                    <div class="item-container" style="justify-content: space-between; height: 100%;">
-                        <!-- Top section: Image and title -->
-                        <div style="width: 100%;">
-                            <div class="item-thumb">
-                                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDiuu5EI4s2nSoENBqPdKDbVs0dE0kx1hlVdzfbh1sjTkPXCjkEPpCH8QVwXnpzhyphenhyphengS8iuuLPwbK_XCzUaNB8pHM2d66qLDkmYr7UkNDnxAQAotiVSJ12SKeka2sGVAzVvFTmekpW8ZL9ipUc8VDvyxibiIAozDAcqNNiLWNSRnRPsjMDHK_QUxQjyO-IF/s300/Jae%20Cash%20-%20%20Voice%20Yo%20Dula%20Album%20(Www.ZedAlbums.Top).png
-" class="roundthumb" alt="Album Cover">
-                            </div>
-                            <div class="item-data">
-                                <span class="track-title"><b>Greatest Collection</b></span>
-                                <div class="artist-name" style="color:#ff4e50;">2024 · 15 tracks</div>
-                            </div>
+                    <div class="item-container">
+                        <div class="item-thumb">
+                            <img src="https://via.placeholder.com/200/ff2121/ffffff?text=ALBUM" class="roundthumb" alt="Album Cover">
+                        </div>
+                        <div class="item-data">
+                            <span class="track-title"><b>Greatest Collection</b></span>
+                            <div class="artist-name" style="color:#ff4e50;">2024 · 15 tracks</div>
                         </div>
                         
-                        <!-- Bottom section: Share buttons - aligns with last table row -->
-                        <div class="share-buttons" style="margin-top: 0; border-top: 1px solid #ff4b2b; padding-top: 15px; width: 100%;">
-                            <a href="#" style="color: #4267B2; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="Facebook" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" style="color: #0088cc; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="Telegram" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-telegram-plane"></i></a>
-                            <a href="#" style="color: #25D366; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="WhatsApp" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-whatsapp"></i></a>
-                            <a href="#" style="color: #E4405F; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="Instagram" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-instagram"></i></a>
-                            <a href="#" style="color: #BD081C; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="Pinterest" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-pinterest-p"></i></a>
-                            <a href="#" style="color: #ff4b2b; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="Copy link" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fas fa-link"></i></a>
+                        <!-- Theme-matching share buttons - NOW VISIBLE -->
+                        <div class="share-buttons" style="margin-top: 20px; display: flex; gap: 20px; justify-content: center; border-top: 1px solid #ff4b2b; padding-top: 20px; width: 100%;">
+                            <a href="#" style="color: #ff4b2b; font-size: 18px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Share on Facebook" onmouseover="this.style.color='#ff2121'; this.style.transform='scale(1.1)'" onmouseout="this.style.color='#ff4b2b'; this.style.transform='scale(1)'"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" style="color: #ff4b2b; font-size: 18px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Share on Twitter" onmouseover="this.style.color='#ff2121'; this.style.transform='scale(1.1)'" onmouseout="this.style.color='#ff4b2b'; this.style.transform='scale(1)'"><i class="fab fa-twitter"></i></a>
+                            <a href="#" style="color: #ff4b2b; font-size: 18px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Share on WhatsApp" onmouseover="this.style.color='#ff2121'; this.style.transform='scale(1.1)'" onmouseout="this.style.color='#ff4b2b'; this.style.transform='scale(1)'"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#" style="color: #ff4b2b; font-size: 18px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Share on Pinterest" onmouseover="this.style.color='#ff2121'; this.style.transform='scale(1.1)'" onmouseout="this.style.color='#ff4b2b'; this.style.transform='scale(1)'"><i class="fab fa-pinterest-p"></i></a>
+                            <a href="#" style="color: #ff4b2b; font-size: 18px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Copy link" onmouseover="this.style.color='#ff2121'; this.style.transform='scale(1.1)'" onmouseout="this.style.color='#ff4b2b'; this.style.transform='scale(1)'"><i class="fas fa-link"></i></a>
                         </div>
                     </div>
                 </div>
@@ -423,7 +401,7 @@
         </div>
     </div>
 
-    <!-- ===== DESCRIPTION SECTION ===== -->
+    <!-- ===== BOTTOM DESCRIPTION CARD - directly attached (no spacing) ===== -->
     <div class="section-header" style="margin-top:0;">
         <h2 class="section-title">
             <i class="fas fa-align-left" style="margin-right: 8px;"></i>
@@ -454,7 +432,7 @@
         </p>
     </div>
 
-    <!-- ===== TRACKLIST SECTION ===== -->
+    <!-- ===== TRACKLIST SECTION - directly attached (no spacing) ===== -->
     <div class="section-header" style="margin-top:0;">
         <h2 class="section-title">
             <i class="fas fa-music" style="margin-right: 8px;"></i>
@@ -571,7 +549,7 @@
         </div>
     </div>
 
-    <!-- ===== PAGINATION ===== -->
+    <!-- ===== PAGINATION FOR TRACKLIST ===== -->
     <div class="page-navi" align="center">
         <span aria-current="page" class="page-numbers current">1</span>
         <a class="page-numbers" href="#" onclick="loadTracklistPage(2); return false;">2</a>
@@ -581,7 +559,7 @@
         <a class="next page-numbers" href="#" onclick="loadTracklistPage(2); return false;">Next »</a>
     </div>
 
-    <!-- ===== YOU MIGHT ALSO LIKE ===== -->
+    <!-- ===== YOU MIGHT ALSO LIKE SECTION ===== -->
     <div class="section-header" style="margin-top:0;">
         <h2 class="section-title">
             <i class="fas fa-thumbs-up" style="margin-right: 8px;"></i>
