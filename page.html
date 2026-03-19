@@ -18,15 +18,15 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="/css/style.css">
     
-    <!-- Detail page specific styles - CLEANED -->
+    <!-- Detail page specific styles -->
     <style>
-        /* Breadcrumb */
+        /* Breadcrumb - no bottom margin */
         .breadcrumb {
             background: #424242;
             border-bottom: 1px solid #ff2121;
             border-radius: 6px;
             padding: 8px 12px;
-            margin: 0;
+            margin: 0 0 0 0;  /* Removed bottom margin */
             color: #fff;
             font-size: 14px;
             box-shadow: inset 0 -1px red;
@@ -103,12 +103,159 @@
             font-weight: 600;
         }
         
-        /* Section headers */
-        .section-header {
-            margin: 0;
+        /* ===== ALBUM DETAIL GRID STYLES ===== */
+        .album-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0px;
+            margin: 0;  /* Removed margin */
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            overflow: hidden;
         }
         
-        /* Bottom description card */
+        /* Left column: image - PLAIN, NO CARD EFFECTS */
+        .album-image-column .music-item {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            border: none;
+            box-shadow: none;
+            transition: none;
+            cursor: default;
+            text-decoration: none;
+        }
+        
+        .album-image-column .item-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 25px 15px;
+            width: 100%;
+        }
+        
+        .album-image-column .item-thumb {
+            margin-right: 0;
+            margin-bottom: 15px;
+        }
+        
+        .album-image-column .roundthumb {
+            width: 200px !important;
+            height: 200px !important;
+            border-radius: 16px;
+            border: 2px solid #ff4b2b;  /* Theme border */
+            box-shadow: none;
+            transition: none;
+        }
+        
+        .album-image-column .track-title {
+            font-size: 18px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .album-image-column .artist-name {
+            font-size: 14px;
+        }
+        
+        /* Right column: table container */
+        .album-details-column {
+            border-left: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .album-details-column .music-item {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            height: 100%;
+            background-color: #fff;
+            border: none;
+            box-shadow: none;
+            transition: transform 0.25s ease;
+            cursor: default;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .album-details-column .music-item:hover {
+            transform: translateY(-2px);
+        }
+        
+        .table-wrapper {
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* ===== TABLE STYLES ===== */
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            height: 100%;
+        }
+        
+        .info-table td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .info-table td:first-child {
+            width: 130px;
+            font-weight: 600;
+            background: #f9f9f9;
+            color: #666;
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        .info-table td:first-child i {
+            margin-right: 6px;
+            color: #ff4b2b;
+            width: 18px;
+        }
+        
+        .info-table td:last-child {
+            font-weight: 600;
+            text-align: left;
+            vertical-align: middle;
+            padding-left: 20px;
+        }
+        
+        /* Colorful values */
+        .info-table .album-name { color: #ff4e50; }
+        .info-table .artist { color: #F1C40F; }
+        .info-table .genre { color: #33ccff; }
+        .info-table .released { color: #F39C12; }
+        .info-table .tracks { color: #1ABC9C; }
+        .info-table .price { color: #2ECC71; }
+        .info-table .quality { color: #ff0066; }
+        .info-table .label { color: #666; }
+        
+        /* Section headers - reduced spacing */
+        .section-header {
+            margin: 0;  /* Remove default margins */
+        }
+        
+        .section-header.section-spacing {
+            margin-top: 0;  /* Remove top margin */
+        }
+        
+        /* Bottom description card - reduced margin */
         .bottom-description {
             background-color: #fff;
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
@@ -117,85 +264,48 @@
             padding: 20px;
             width: 100%;
             box-sizing: border-box;
-            margin: 0;
+            margin: 0;  /* Removed margin */
         }
         
-        /* Music grid for tracklist and recommendations */
-        .music-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 15px;
-        }
-        
-        .music-item {
-            text-decoration: none;
-            display: block;
-            background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid #eee;
-            transition: transform 0.25s ease;
-        }
-        
-        .music-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-        }
-        
-        .item-container {
-            display: flex;
-            padding: 12px;
-        }
-        
-        .item-thumb {
-            margin-right: 12px;
-        }
-        
-        .roundthumb {
-            width: 60px;
-            height: 60px;
-            border-radius: 6px;
-            object-fit: cover;
-        }
-        
-        .track-title {
-            font-weight: 600;
-            margin-bottom: 4px;
-            display: block;
-        }
-        
-        .artist-name {
-            font-size: 13px;
-            color: #666;
-        }
-        
-        .ep-badge, .album-badge {
-            display: inline-block;
-            background: #ff4b2b;
-            color: white;
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-left: 6px;
-            vertical-align: middle;
-        }
-        
-        .album-badge {
-            background: #555;
-        }
-        
-        .item-meta {
-            font-size: 12px;
-            color: #ff4b2b;
-            margin-top: 5px;
-            display: block;
+        /* Tracklist section - remove top spacing */
+        .tracklist-section {
+            margin-top: 0;
         }
         
         /* Responsive */
         @media (max-width: 719px) {
-            .breadcrumb {
+            .album-detail-grid {
+                grid-template-columns: 1fr;
+                gap: 0px;
+                border-radius: 12px;
+                overflow: hidden;
+                margin: 0;
+            }
+            
+            .album-image-column .music-item {
+                border-bottom: 1px solid #eee;
+            }
+            
+            .album-details-column {
+                border-left: none;
+            }
+            
+            .album-image-column .roundthumb {
+                width: 160px !important;
+                height: 160px !important;
+            }
+            
+            .album-image-column .item-container {
+                padding: 20px 15px;
+            }
+            
+            .info-table td {
+                padding: 10px;
                 font-size: 13px;
-                padding: 6px 10px;
+            }
+            
+            .info-table td:first-child {
+                width: 110px;
             }
             
             .page-numbers, a.page-numbers {
@@ -203,13 +313,8 @@
                 font-size: 13px;
             }
             
-            .music-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .roundthumb {
-                width: 50px;
-                height: 50px;
+            .share-buttons {
+                gap: 15px !important;
             }
         }
     </style>
@@ -218,14 +323,13 @@
     <!-- Header loads here -->
     <div id="header-placeholder"></div>
 
-    <!-- ===== BREADCRUMB NAVIGATION ===== -->
+    <!-- ===== BREADCRUMB NAVIGATION (no bottom margin) ===== -->
     <div class="breadcrumb">
         <a href="/">Home</a> » 
         <a href="/music.html">Music</a> » 
         <strong id="breadcrumb-title">Album Details</strong>
     </div>    
-    
-    <!-- ===== BOTTOM DESCRIPTION CARD ===== -->
+    <!-- ===== BOTTOM DESCRIPTION CARD - directly attached (no spacing) ===== -->
     <div class="section-header" style="margin-top:0;">
         <h2 class="section-title">
             <i class="fas fa-align-left" style="margin-right: 8px;"></i>
@@ -256,7 +360,7 @@
         </p>
     </div>
 
-    <!-- ===== TRACKLIST SECTION ===== -->
+    <!-- ===== TRACKLIST SECTION - directly attached (no spacing) ===== -->
     <div class="section-header" style="margin-top:0;">
         <h2 class="section-title">
             <i class="fas fa-music" style="margin-right: 8px;"></i>
@@ -270,7 +374,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/60/9c27b0/ffffff?text=01" class="roundthumb" alt="Track 1">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=01" class="roundthumb" alt="Track 1">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Bohemian Rhapsody</b> <span class="ep-badge">Track</span></span>
@@ -283,7 +387,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/60/9c27b0/ffffff?text=02" class="roundthumb" alt="Track 2">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=02" class="roundthumb" alt="Track 2">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Stairway to Heaven</b> <span class="ep-badge">Track</span></span>
@@ -296,7 +400,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/60/9c27b0/ffffff?text=03" class="roundthumb" alt="Track 3">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=03" class="roundthumb" alt="Track 3">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Hotel California</b> <span class="ep-badge">Track</span></span>
@@ -309,7 +413,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/60/9c27b0/ffffff?text=04" class="roundthumb" alt="Track 4">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=04" class="roundthumb" alt="Track 4">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Imagine</b> <span class="ep-badge">Track</span></span>
@@ -322,7 +426,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/60/9c27b0/ffffff?text=05" class="roundthumb" alt="Track 5">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=05" class="roundthumb" alt="Track 5">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Smells Like Teen Spirit</b> <span class="ep-badge">Track</span></span>
@@ -335,7 +439,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/60/9c27b0/ffffff?text=06" class="roundthumb" alt="Track 6">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=06" class="roundthumb" alt="Track 6">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Billie Jean</b> <span class="ep-badge">Track</span></span>
@@ -348,7 +452,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/60/9c27b0/ffffff?text=07" class="roundthumb" alt="Track 7">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=07" class="roundthumb" alt="Track 7">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Like a Rolling Stone</b> <span class="ep-badge">Track</span></span>
@@ -361,7 +465,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/60/9c27b0/ffffff?text=08" class="roundthumb" alt="Track 8">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=08" class="roundthumb" alt="Track 8">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Sweet Child o' Mine</b> <span class="ep-badge">Track</span></span>
@@ -373,7 +477,7 @@
         </div>
     </div>
 
-    <!-- ===== PAGINATION ===== -->
+    <!-- ===== PAGINATION FOR TRACKLIST ===== -->
     <div class="page-navi" align="center">
         <span aria-current="page" class="page-numbers current">1</span>
         <a class="page-numbers" href="#" onclick="loadTracklistPage(2); return false;">2</a>
@@ -383,7 +487,7 @@
         <a class="next page-numbers" href="#" onclick="loadTracklistPage(2); return false;">Next »</a>
     </div>
 
-    <!-- ===== YOU MIGHT ALSO LIKE ===== -->
+    <!-- ===== YOU MIGHT ALSO LIKE SECTION ===== -->
     <div class="section-header" style="margin-top:0;">
         <h2 class="section-title">
             <i class="fas fa-thumbs-up" style="margin-right: 8px;"></i>
@@ -395,7 +499,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/60/4caf50/ffffff?text=ALBUM1" class="roundthumb" alt="Album">
+                        <img src="https://via.placeholder.com/80/4caf50/ffffff?text=ALBUM1" class="roundthumb" alt="Album">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Greatest Hits Vol.2</b> <span class="album-badge">Album</span></span>
@@ -407,7 +511,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/60/2196f3/ffffff?text=ALBUM2" class="roundthumb" alt="Album">
+                        <img src="https://via.placeholder.com/80/2196f3/ffffff?text=ALBUM2" class="roundthumb" alt="Album">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Summer Hits 2024</b> <span class="album-badge">Album</span></span>
@@ -419,7 +523,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/60/ff9800/ffffff?text=ALBUM3" class="roundthumb" alt="Album">
+                        <img src="https://via.placeholder.com/80/ff9800/ffffff?text=ALBUM3" class="roundthumb" alt="Album">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Rock Classics</b> <span class="album-badge">Album</span></span>
@@ -431,7 +535,7 @@
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
-                        <img src="https://via.placeholder.com/60/9c27b0/ffffff?text=ALBUM4" class="roundthumb" alt="Album">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=ALBUM4" class="roundthumb" alt="Album">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>Chill Vibes</b> <span class="album-badge">Album</span></span>
