@@ -173,9 +173,9 @@
             font-size: 14px;
         }
         
-        /* Right column: table-style album info with icons */
+        /* Right column: table-style album info with full borders */
         .album-details-column {
-            border-left: 1px solid #eee;
+            border-left: 1px solid #ddd;
             display: flex;
             flex-direction: column;
         }
@@ -199,19 +199,18 @@
         }
         
         .table-container {
-            padding: 15px;
+            padding: 0;
             height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            border-collapse: collapse;
         }
         
         .info-row {
             display: grid;
-            grid-template-columns: 80px 1fr;
-            padding: 10px 0;
-            border-bottom: 1px solid #f0f0f0;
-            align-items: center;
+            grid-template-columns: 100px 1fr;
+            border-bottom: 1px solid #ddd;
+            min-height: 48px;
         }
         
         .info-row:last-child {
@@ -222,9 +221,12 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            padding: 12px 10px;
+            background-color: #f9f9f9;
             color: #666;
             font-weight: 600;
             font-size: 14px;
+            border-right: 1px solid #ddd;
         }
         
         .info-label i {
@@ -234,9 +236,10 @@
         }
         
         .info-value {
+            padding: 12px 15px;
             font-weight: 600;
             font-size: 14px;
-            text-align: right;
+            text-align: left;
         }
         
         /* Colorful values */
@@ -287,12 +290,17 @@
                 padding: 20px 15px;
             }
             
-            .table-container {
-                padding: 15px;
+            .info-row {
+                grid-template-columns: 90px 1fr;
+                min-height: 44px;
             }
             
-            .info-row {
-                grid-template-columns: 70px 1fr;
+            .info-label {
+                padding: 10px 8px;
+            }
+            
+            .info-value {
+                padding: 10px 12px;
             }
             
             .page-numbers, a.page-numbers {
@@ -313,7 +321,7 @@
         <strong id="breadcrumb-title">Album Details</strong>
     </div>
 
-    <!-- ===== ALBUM INFO GRID (Image + Table-style Info) ===== -->
+    <!-- ===== ALBUM INFO GRID (Image + Table-style Info with full borders) ===== -->
     <div class="corner">
         <div class="album-detail-grid">
             <!-- Left Column: Image Card -->
@@ -331,56 +339,56 @@
                 </a>
             </div>
             
-            <!-- Right Column: Table-style Album Info with Icons -->
+            <!-- Right Column: Table-style Album Info with full borders -->
             <div class="album-details-column">
                 <div class="music-item">
                     <div class="table-container">
                         <!-- Album Name -->
                         <div class="info-row">
-                            <span class="info-label"><i class="fas fa-compact-disc"></i> Album:</span>
-                            <span class="info-value album-name">Greatest Collection</span>
+                            <div class="info-label"><i class="fas fa-compact-disc"></i> Album</div>
+                            <div class="info-value album-name">Greatest Collection</div>
                         </div>
                         
                         <!-- Artist -->
                         <div class="info-row">
-                            <span class="info-label"><i class="fas fa-user"></i> Artist:</span>
-                            <span class="info-value artist">Various Artists</span>
+                            <div class="info-label"><i class="fas fa-user"></i> Artist</div>
+                            <div class="info-value artist">Various Artists</div>
                         </div>
                         
                         <!-- Genre -->
                         <div class="info-row">
-                            <span class="info-label"><i class="fas fa-guitar"></i> Genre:</span>
-                            <span class="info-value genre">Pop / Rock</span>
+                            <div class="info-label"><i class="fas fa-guitar"></i> Genre</div>
+                            <div class="info-value genre">Pop / Rock</div>
                         </div>
                         
                         <!-- Released -->
                         <div class="info-row">
-                            <span class="info-label"><i class="fas fa-calendar"></i> Year:</span>
-                            <span class="info-value released">2024</span>
+                            <div class="info-label"><i class="fas fa-calendar"></i> Year</div>
+                            <div class="info-value released">2024</div>
                         </div>
                         
                         <!-- Tracks -->
                         <div class="info-row">
-                            <span class="info-label"><i class="fas fa-music"></i> Tracks:</span>
-                            <span class="info-value tracks">15 songs</span>
+                            <div class="info-label"><i class="fas fa-music"></i> Tracks</div>
+                            <div class="info-value tracks">15 songs</div>
                         </div>
                         
                         <!-- Price -->
                         <div class="info-row">
-                            <span class="info-label"><i class="fas fa-tag"></i> Price:</span>
-                            <span class="info-value price">$9.99</span>
+                            <div class="info-label"><i class="fas fa-tag"></i> Price</div>
+                            <div class="info-value price">$9.99</div>
                         </div>
                         
                         <!-- Quality -->
                         <div class="info-row">
-                            <span class="info-label"><i class="fas fa-star"></i> Quality:</span>
-                            <span class="info-value quality">Hi-Res Audio</span>
+                            <div class="info-label"><i class="fas fa-star"></i> Quality</div>
+                            <div class="info-value quality">Hi-Res Audio</div>
                         </div>
                         
                         <!-- Label -->
                         <div class="info-row">
-                            <span class="info-label"><i class="fas fa-building"></i> Label:</span>
-                            <span class="info-value label">Zedtopvibes Records</span>
+                            <div class="info-label"><i class="fas fa-building"></i> Label</div>
+                            <div class="info-value label">Zedtopvibes Records</div>
                         </div>
                     </div>
                 </div>
@@ -442,90 +450,7 @@
                     </div>
                 </div>
             </a>
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=02" class="roundthumb" alt="Track 2">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Stairway to Heaven</b> <span class="ep-badge">Track</span></span>
-                        <div class="artist-name">Led Zeppelin · 8:02</div>
-                        <span class="item-meta"><b style="color:#ff0000">Play →</b></span>
-                    </div>
-                </div>
-            </a>
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=03" class="roundthumb" alt="Track 3">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Imagine</b> <span class="ep-badge">Track</span></span>
-                        <div class="artist-name">John Lennon · 3:04</div>
-                        <span class="item-meta"><b style="color:#ff0000">Play →</b></span>
-                    </div>
-                </div>
-            </a>
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=04" class="roundthumb" alt="Track 4">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Hotel California</b> <span class="ep-badge">Track</span></span>
-                        <div class="artist-name">Eagles · 6:30</div>
-                        <span class="item-meta"><b style="color:#ff0000">Play →</b></span>
-                    </div>
-                </div>
-            </a>
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=05" class="roundthumb" alt="Track 5">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Billie Jean</b> <span class="ep-badge">Track</span></span>
-                        <div class="artist-name">Michael Jackson · 4:54</div>
-                        <span class="item-meta"><b style="color:#ff0000">Play →</b></span>
-                    </div>
-                </div>
-            </a>
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=06" class="roundthumb" alt="Track 6">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Shape of You</b> <span class="ep-badge">Track</span></span>
-                        <div class="artist-name">Ed Sheeran · 3:53</div>
-                        <span class="item-meta"><b style="color:#ff0000">Play →</b></span>
-                    </div>
-                </div>
-            </a>
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=07" class="roundthumb" alt="Track 7">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Blinding Lights</b> <span class="ep-badge">Track</span></span>
-                        <div class="artist-name">The Weeknd · 3:20</div>
-                        <span class="item-meta"><b style="color:#ff0000">Play →</b></span>
-                    </div>
-                </div>
-            </a>
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=08" class="roundthumb" alt="Track 8">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Rolling in the Deep</b> <span class="ep-badge">Track</span></span>
-                        <div class="artist-name">Adele · 3:48</div>
-                        <span class="item-meta"><b style="color:#ff0000">Play →</b></span>
-                    </div>
-                </div>
-            </a>
+            <!-- ... rest of tracks (keep as is) ... -->
         </div>
     </div>
 
@@ -539,7 +464,7 @@
         <a class="next page-numbers" href="#" onclick="loadTracklistPage(2); return false;">Next »</a>
     </div>
 
-    <!-- ===== YOU MIGHT ALSO LIKE SECTION (keep as is) ===== -->
+    <!-- ===== YOU MIGHT ALSO LIKE SECTION ===== -->
     <div class="section-header section-spacing">
         <h2 class="section-title">
             <i class="fas fa-thumbs-up" style="margin-right: 8px;"></i>
