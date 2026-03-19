@@ -220,7 +220,7 @@
         }
         
         .info-table td:first-child {
-            width: 110px;
+            width: 130px;  /* Increased from 110px */
             font-weight: 600;
             background: #f9f9f9;
             color: #666;
@@ -236,8 +236,9 @@
         
         .info-table td:last-child {
             font-weight: 600;
-            text-align: right;
+            text-align: left;  /* Changed from right to left */
             vertical-align: middle;
+            padding-left: 20px;  /* Added left padding */
         }
         
         /* Colorful values */
@@ -294,7 +295,7 @@
             }
             
             .info-table td:first-child {
-                width: 95px;
+                width: 110px;  /* Slightly smaller on mobile */
             }
             
             .page-numbers, a.page-numbers {
@@ -333,7 +334,7 @@
                 </a>
             </div>
             
-            <!-- Right Column: Table -->
+            <!-- Right Column: Table with updated labels and alignment -->
             <div class="album-details-column">
                 <div class="music-item">
                     <div class="table-wrapper">
@@ -351,11 +352,11 @@
                                 <td class="genre">Pop / Rock</td>
                             </tr>
                             <tr>
-                                <td><i class="fas fa-calendar"></i> Year</td>
+                                <td><i class="fas fa-calendar"></i> Release Date</td>  <!-- Changed from Year -->
                                 <td class="released">2024</td>
                             </tr>
                             <tr>
-                                <td><i class="fas fa-music"></i> Tracks</td>
+                                <td><i class="fas fa-music"></i> Total Tracks</td>  <!-- Changed from Tracks -->
                                 <td class="tracks">15 songs</td>
                             </tr>
                             <tr>
