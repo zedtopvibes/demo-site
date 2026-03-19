@@ -1,3 +1,6 @@
+https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDiuu5EI4s2nSoENBqPdKDbVs0dE0kx1hlVdzfbh1sjTkPXCjkEPpCH8QVwXnpzhyphenhyphengS8iuuLPwbK_XCzUaNB8pHM2d66qLDkmYr7UkNDnxAQAotiVSJ12SKeka2sGVAzVvFTmekpW8ZL9ipUc8VDvyxibiIAozDAcqNNiLWNSRnRPsjMDHK_QUxQjyO-IF/s300/Jae%20Cash%20-%20%20Voice%20Yo%20Dula%20Album%20(Www.ZedAlbums.Top).png
+
+
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
@@ -26,7 +29,7 @@
             border-bottom: 1px solid #ff2121;
             border-radius: 6px;
             padding: 8px 12px;
-            margin: 0 0 0 0;  /* Removed bottom margin */
+            margin: 0 0 0 0;
             color: #fff;
             font-size: 14px;
             box-shadow: inset 0 -1px red;
@@ -108,7 +111,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 0px;
-            margin: 0;  /* Removed margin */
+            margin: 0;
             background-color: #fff;
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
             border: 1px solid #ddd;
@@ -116,61 +119,99 @@
             overflow: hidden;
         }
         
-        /* Left column: image card - LARGER IMAGE */
-        .album-image-column .music-item {
+        /* ===== HERO CARD DESIGN (Left Column) ===== */
+        .hero-card {
+            position: relative;
             width: 100%;
-            max-width: 100%;
-            margin: 0;
             height: 100%;
+            min-height: 350px;
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #fff;
-            border: none;
-            box-shadow: none;
-            transition: transform 0.25s ease;
         }
         
-        .album-image-column .music-item:hover {
-            transform: translateY(-2px);
-        }
-        
-        .album-image-column .item-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 25px 15px;
-            width: 100%;
-        }
-        
-        .album-image-column .item-thumb {
-            margin-right: 0;
-            margin-bottom: 15px;
-        }
-        
-        .album-image-column .roundthumb {
-            width: 200px !important;  /* Increased from 160px */
-            height: 200px !important;  /* Increased from 160px */
+        /* Floating image */
+        .floating-image {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 120px;
+            height: 120px;
             border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            animation: float 6s ease-in-out infinite;
+            z-index: 5;
         }
         
-        .album-image-column .roundthumb:hover {
-            transform: scale(1.05);
+        .floating-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
         
-        .album-image-column .track-title {
-            font-size: 18px;
+        /* Floating text at bottom */
+        .floating-text {
+            position: absolute;
+            bottom: 25px;
+            left: 25px;
+            right: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            z-index: 10;
+            border-left: 4px solid #ff4b2b;
+        }
+        
+        .floating-text .track-title {
+            font-size: 20px;
             font-weight: 700;
             display: block;
             margin-bottom: 5px;
+            color: #333;
         }
         
-        .album-image-column .artist-name {
+        .floating-text .artist-name {
             font-size: 14px;
+            color: #ff4e50;
+            font-weight: 600;
+        }
+        
+        /* Decorative elements */
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 75, 43, 0.1);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .hero-card::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 33, 33, 0.1);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        /* Floating animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
         
         /* Right column: table container */
@@ -253,11 +294,11 @@
         
         /* Section headers - reduced spacing */
         .section-header {
-            margin: 0;  /* Remove default margins */
+            margin: 0;
         }
         
         .section-header.section-spacing {
-            margin-top: 0;  /* Remove top margin */
+            margin-top: 0;
         }
         
         /* Bottom description card - reduced margin */
@@ -269,12 +310,7 @@
             padding: 20px;
             width: 100%;
             box-sizing: border-box;
-            margin: 0;  /* Removed margin */
-        }
-        
-        /* Tracklist section - remove top spacing */
-        .tracklist-section {
-            margin-top: 0;
+            margin: 0;
         }
         
         /* Responsive */
@@ -287,21 +323,30 @@
                 margin: 0;
             }
             
-            .album-image-column .music-item {
-                border-bottom: 1px solid #eee;
+            .hero-card {
+                min-height: 300px;
+            }
+            
+            .floating-image {
+                width: 100px;
+                height: 100px;
+                top: 20px;
+                left: 20px;
+            }
+            
+            .floating-text {
+                bottom: 20px;
+                left: 20px;
+                right: 20px;
+                padding: 12px 15px;
+            }
+            
+            .floating-text .track-title {
+                font-size: 18px;
             }
             
             .album-details-column {
                 border-left: none;
-            }
-            
-            .album-image-column .roundthumb {
-                width: 160px !important;  /* Larger on mobile too */
-                height: 160px !important;
-            }
-            
-            .album-image-column .item-container {
-                padding: 20px 15px;
             }
             
             .info-table td {
@@ -324,29 +369,31 @@
     <!-- Header loads here -->
     <div id="header-placeholder"></div>
 
-    <!-- ===== BREADCRUMB NAVIGATION (no bottom margin) ===== -->
+    <!-- ===== BREADCRUMB NAVIGATION ===== -->
     <div class="breadcrumb">
         <a href="/">Home</a> » 
         <a href="/music.html">Music</a> » 
         <strong id="breadcrumb-title">Album Details</strong>
     </div>
 
-    <!-- ===== ALBUM INFO GRID (Image + Table) - no top margin ===== -->
+    <!-- ===== ALBUM INFO GRID (Hero Card + Table) ===== -->
     <div class="corner">
         <div class="album-detail-grid">
-            <!-- Left Column: Image Card with LARGER image -->
+            <!-- Left Column: Hero Card with floating elements -->
             <div class="album-image-column">
-                <a class="music-item" style="cursor:default; text-decoration:none; display:block; height:100%;">
-                    <div class="item-container">
-                        <div class="item-thumb">
-                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDiuu5EI4s2nSoENBqPdKDbVs0dE0kx1hlVdzfbh1sjTkPXCjkEPpCH8QVwXnpzhyphenhyphengS8iuuLPwbK_XCzUaNB8pHM2d66qLDkmYr7UkNDnxAQAotiVSJ12SKeka2sGVAzVvFTmekpW8ZL9ipUc8VDvyxibiIAozDAcqNNiLWNSRnRPsjMDHK_QUxQjyO-IF/s300/Jae%20Cash%20-%20%20Voice%20Yo%20Dula%20Album%20(Www.ZedAlbums.Top).png" class="roundthumb" alt="Album Cover">
-                        </div>
-                        <div class="item-data">
-                            <span class="track-title"><b>Greatest Collection</b></span>
-                            <div class="artist-name" style="color:#ff4e50;">2024 · 15 tracks</div>
-                        </div>
+                <div class="hero-card">
+                    <!-- Floating image -->
+                    <div class="floating-image">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDiuu5EI4s2nSoENBqPdKDbVs0dE0kx1hlVdzfbh1sjTkPXCjkEPpCH8QVwXnpzhyphenhyphengS8iuuLPwbK_XCzUaNB8pHM2d66qLDkmYr7UkNDnxAQAotiVSJ12SKeka2sGVAzVvFTmekpW8ZL9ipUc8VDvyxibiIAozDAcqNNiLWNSRnRPsjMDHK_QUxQjyO-IF/s300/Jae%20Cash%20-%20%20Voice%20Yo%20Dula%20Album%20(Www.ZedAlbums.Top).png
+" alt="Album Cover">
                     </div>
-                </a>
+                    
+                    <!-- Floating text at bottom -->
+                    <div class="floating-text">
+                        <span class="track-title"><b>Greatest Collection</b></span>
+                        <div class="artist-name">2024 · 15 tracks</div>
+                    </div>
+                </div>
             </div>
             
             <!-- Right Column: Table -->
@@ -393,7 +440,7 @@
         </div>
     </div>
 
-    <!-- ===== BOTTOM DESCRIPTION CARD - directly attached (no spacing) ===== -->
+    <!-- ===== BOTTOM DESCRIPTION CARD ===== -->
     <div class="section-header" style="margin-top:0;">
         <h2 class="section-title">
             <i class="fas fa-align-left" style="margin-right: 8px;"></i>
@@ -424,7 +471,7 @@
         </p>
     </div>
 
-    <!-- ===== TRACKLIST SECTION - directly attached (no spacing) ===== -->
+    <!-- ===== TRACKLIST SECTION ===== -->
     <div class="section-header" style="margin-top:0;">
         <h2 class="section-title">
             <i class="fas fa-music" style="margin-right: 8px;"></i>
@@ -443,18 +490,6 @@
                     <div class="item-data">
                         <span class="track-title"><b>Bohemian Rhapsody</b> <span class="ep-badge">Track</span></span>
                         <div class="artist-name">Queen · 5:55</div>
-                        <span class="item-meta"><b style="color:#ff0000">Play →</b></span>
-                    </div>
-                </div>
-            </a>
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=02" class="roundthumb" alt="Track 2">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Stairway to Heaven</b> <span class="ep-badge">Track</span></span>
-                        <div class="artist-name">Led Zeppelin · 8:02</div>
                         <span class="item-meta"><b style="color:#ff0000">Play →</b></span>
                     </div>
                 </div>
@@ -482,19 +517,7 @@
     </div>
     <div class="corner">
         <div class="music-grid">
-            <a class="music-item" href="#" style="text-decoration:none;">
-                <div class="item-container">
-                    <div class="item-thumb">
-                        <img src="https://via.placeholder.com/80/4caf50/ffffff?text=ALBUM1" class="roundthumb" alt="Album">
-                    </div>
-                    <div class="item-data">
-                        <span class="track-title"><b>Greatest Hits Vol.2</b> <span class="album-badge">Album</span></span>
-                        <div class="artist-name">Various Artists</div>
-                        <span class="item-meta"><b style="color:#ff0000">12 tracks</b></span>
-                    </div>
-                </div>
-            </a>
-            <!-- ... rest of items ... -->
+            <!-- Items here -->
         </div>
     </div>
 
