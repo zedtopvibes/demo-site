@@ -5,174 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Zedtopvibes · Album Details</title>
     
-    <!-- ===== CRITICAL CSS INLINE (Above the fold) ===== -->
-    <style>
-        /* Critical CSS - Only what's needed for initial render */
-        body { 
-            margin: 0; 
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background: #f5f5f5; 
-            line-height: 1.5;
-        }
-        .breadcrumb {
-            background: #424242;
-            border-bottom: 1px solid #ff2121;
-            border-radius: 6px;
-            padding: 8px 12px;
-            margin: 0;
-            color: #fff;
-            font-size: 14px;
-            box-shadow: inset 0 -1px red;
-        }
-        .breadcrumb a { 
-            color: #ff9800; 
-            text-decoration: none; 
-        }
-        .album-detail-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-        }
-        .album-image-column .roundthumb {
-            width: 200px;
-            height: 200px;
-            border-radius: 8px;
-            border: 1px solid #ff4b2b;
-        }
-        .album-image-column .track-title {
-            font-size: 18px;
-            font-weight: 700;
-            display: block;
-            margin-bottom: 5px;
-        }
-        .album-image-column .artist-name {
-            font-size: 14px;
-        }
-        .info-table td:first-child i {
-            color: #ff4b2b;
-            margin-right: 8px;
-            width: 18px;
-            display: inline-block;
-            vertical-align: middle;
-        }
-        @media (max-width: 719px) {
-            .album-detail-grid { grid-template-columns: 1fr; }
-            .album-image-column .roundthumb { width: 160px; height: 160px; }
-        }
-    </style>
-    
-    <!-- ===== CLS PREVENTION STYLES ===== -->
-    <style>
-        /* Reserve space for table column */
-        .album-details-column {
-            min-height: 400px;
-            border-left: 1px solid #ddd;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* Reserve space for table */
-        .info-table {
-            table-layout: fixed;
-            width: 100%;
-            border-collapse: collapse;
-            min-height: 350px;
-        }
-        
-        /* Fixed row heights */
-        .info-table td {
-            height: 45px;
-            padding: 12px 15px;
-            font-size: 14px;
-            line-height: 1.5;
-            box-sizing: border-box;
-        }
-        
-        .info-table td:first-child {
-            width: 130px;
-            font-weight: 600;
-            background: #f9f9f9;
-            color: #666;
-            text-align: left;
-            vertical-align: middle;
-            padding-left: 15px;
-            white-space: nowrap;
-        }
-        
-        .info-table td:last-child {
-            font-weight: 600;
-            text-align: left;
-            vertical-align: middle;
-            padding-left: 20px;
-        }
-        
-        /* Reserve space for corner container */
-        .corner {
-            min-height: 500px;
-        }
-        
-        /* Reserve space for images */
-        .roundthumb {
-            aspect-ratio: 1/1;
-            background: #f0f0f0;
-            display: block;
-        }
-        
-        /* Reserve space for share buttons */
-        .share-buttons {
-            min-height: 50px;
-            display: flex;
-            gap: 25px;
-            justify-content: center;
-            width: 100%;
-            margin: 15px 0 0px;
-            visibility: visible;
-        }
-        
-        /* Reserve space for icons */
-        .fa, .fas, .far, .fab {
-            min-width: 1em;
-            display: inline-block;
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 719px) {
-            .album-details-column {
-                min-height: 350px;
-            }
-            
-            .info-table td {
-                height: 40px;
-                padding: 8px 10px;
-                font-size: 13px;
-            }
-            
-            .info-table td:first-child {
-                width: 110px;
-                padding-left: 10px;
-            }
-            
-            .info-table td:first-child i {
-                margin-right: 6px;
-            }
-            
-            .corner {
-                min-height: 400px;
-            }
-            
-            .share-buttons {
-                min-height: 40px;
-                gap: 15px;
-            }
-        }
-    </style>
-    
-    <!-- ===== RESOURCE HINTS ===== -->
+    <!-- Resource Hints & Preconnects -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -180,46 +13,57 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     
-    <!-- ===== PRELOADS ===== -->
+    <!-- Preload hero image -->
     <link rel="preload" as="image" href="https://via.placeholder.com/200/ff2121/ffffff?text=ALBUM" fetchpriority="high">
-    <link rel="preload" href="/css/style.css" as="style" fetchpriority="high">
     
-    <!-- ===== CSS WITH MEDIA OPTIMIZATION ===== -->
-    <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all'">
+    <!-- Google Font - Optimized -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
-    
     <noscript>
-        <link rel="stylesheet" href="/css/style.css">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    </noscript>
+    
+    <!-- Font Awesome - Optimized -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </noscript>
     
-    <!-- ===== FONT LOADING OPTIMIZATION ===== -->
-    <script>
-        // Load fonts with minimal layout shift
-        if ('fonts' in document) {
-            Promise.all([
-                document.fonts.load('400 1em Inter'),
-                document.fonts.load('600 1em Inter'),
-                document.fonts.load('700 1em Inter')
-            ]).then(() => {
-                document.documentElement.classList.add('fonts-loaded');
-            });
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <!-- Detail page specific styles -->
+    <style>
+        /* ===== MINIMAL CLS FIX ===== */
+        .corner {
+            min-height: 500px;
         }
         
-        // Remove print media styles after load
-        window.addEventListener('load', function() {
-            document.querySelectorAll('link[media="print"]').forEach(link => {
-                if (link.media === 'print') {
-                    link.media = 'all';
-                }
-            });
-        });
-    </script>
-    
-    <!-- ===== DETAIL PAGE STYLES (Full CSS - Non-critical) ===== -->
-    <style>
+        .album-detail-grid {
+            min-height: 450px;
+        }
+        
+        /* Breadcrumb - no bottom margin */
+        .breadcrumb {
+            background: #424242;
+            border-bottom: 1px solid #ff2121;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin: 0 0 0 0;
+            color: #fff;
+            font-size: 14px;
+            box-shadow: inset 0 -1px red;
+        }
+        .breadcrumb a {
+            color: #ff9800;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            color: #ff4b2b;
+        }
+        .breadcrumb strong {
+            color: #fff;
+        }
+        
         /* Loading state */
         .loading {
             text-align: center;
@@ -348,7 +192,19 @@
             font-size: 14px;
         }
         
-        /* Right column: table container */
+        /* Share buttons container */
+        .album-image-column .share-buttons {
+            margin-top: 0;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            border-top: 1px solid #ff4b2b;
+            padding-top: 15px;
+            width: 100%;
+            align-self: flex-end;
+        }
+        
+        /* Right column: description container */
         .album-details-column {
             border-left: 1px solid #ddd;
             display: flex;
@@ -367,69 +223,13 @@
             cursor: default;
             text-decoration: none;
             display: block;
+            padding: 30px;
+            box-sizing: border-box;
         }
         
         .album-details-column .music-item:hover {
             transform: translateY(-2px);
         }
-        
-        .table-wrapper {
-            padding: 0;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* ===== TABLE STYLES - LEFT ALIGNED ICONS + TEXT ===== */
-        .info-table {
-            width: 100%;
-            border-collapse: collapse;
-            height: 100%;
-        }
-        
-        .info-table td {
-            border: 1px solid #ddd;
-            padding: 12px 15px;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        .info-table td:first-child {
-            width: 130px;
-            font-weight: 600;
-            background: #f9f9f9;
-            color: #666;
-            text-align: left;
-            vertical-align: middle;
-            padding-left: 15px;
-            white-space: nowrap;
-        }
-        
-        .info-table td:first-child i {
-            margin-right: 8px;
-            color: #ff4b2b;
-            width: 18px;
-            display: inline-block;
-            vertical-align: middle;
-            text-align: center;
-        }
-        
-        .info-table td:last-child {
-            font-weight: 600;
-            text-align: left;
-            vertical-align: middle;
-            padding-left: 20px;
-        }
-        
-        /* Colorful values */
-        .info-table .album-name { color: #ff4e50; }
-        .info-table .artist { color: #F1C40F; }
-        .info-table .genre { color: #33ccff; }
-        .info-table .released { color: #F39C12; }
-        .info-table .tracks { color: #1ABC9C; }
-        .info-table .price { color: #2ECC71; }
-        .info-table .quality { color: #ff0066; }
-        .info-table .label { color: #666; }
         
         /* Section headers - reduced spacing */
         .section-header {
@@ -459,6 +259,28 @@
         
         /* Responsive */
         @media (max-width: 719px) {
+            /* MOBILE CLS FIX - Remove forced heights */
+            .corner {
+                min-height: auto;
+                height: auto;
+            }
+            
+            .album-detail-grid {
+                min-height: auto;
+                height: auto;
+            }
+            
+            .album-image-column .item-container {
+                height: auto;
+                min-height: auto;
+            }
+            
+            .album-details-column {
+                min-height: auto;
+                height: auto;
+            }
+            
+            /* Original mobile styles continue below */
             .album-detail-grid {
                 grid-template-columns: 1fr;
                 gap: 0px;
@@ -473,7 +295,6 @@
             
             .album-details-column {
                 border-left: none;
-                min-height: 350px;
             }
             
             .album-image-column .roundthumb {
@@ -485,18 +306,8 @@
                 padding: 20px 15px;
             }
             
-            .info-table td {
-                padding: 10px;
-                font-size: 13px;
-            }
-            
-            .info-table td:first-child {
-                width: 110px;
-                padding-left: 10px;
-            }
-            
-            .info-table td:first-child i {
-                margin-right: 6px;
+            .album-details-column .music-item {
+                padding: 20px;
             }
             
             .page-numbers, a.page-numbers {
@@ -505,18 +316,13 @@
             }
             
             .share-buttons {
-                min-height: 40px;
-                gap: 15px;
-            }
-            
-            .corner {
-                min-height: 400px;
+                gap: 15px !important;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header loads here - Deferred -->
+    <!-- Header loads here -->
     <div id="header-placeholder"></div>
 
     <!-- ===== BREADCRUMB NAVIGATION ===== -->
@@ -527,16 +333,15 @@
     </div>
 
     <!-- ===== ALBUM INFO GRID ===== -->
-    <div class="corner" style="min-height: 500px;">
+    <div class="corner">
         <div class="album-detail-grid">
-            <!-- Left Column: Image with optimized attributes -->
+            <!-- Left Column: Image with share buttons -->
             <div class="album-image-column">
                 <div class="music-item" style="cursor:default; text-decoration:none; display:block; height:100%;">
                     <div class="item-container" style="justify-content: space-between; height: 100%;">
                         <!-- Top section: Image and title -->
                         <div style="width: 100%;">
                             <div class="item-thumb">
-                                <!-- Optimized image with width, height, fetchpriority and decoding -->
                                 <img src="https://via.placeholder.com/200/ff2121/ffffff?text=ALBUM" 
                                      width="200" 
                                      height="200" 
@@ -551,9 +356,8 @@
                             </div>
                         </div>
                         
-                        <!-- Stylish Share Section -->
+                        <!-- Share Section -->
                         <div style="width: 100%; margin-top: 25px; position: relative;">
-                            <!-- Gradient line with "Share" label in the middle -->
                             <div style="position: relative; height: 1px; background: linear-gradient(90deg, transparent, #ff4b2b 20%, #ff4b2b 80%, transparent); opacity: 0.3; margin-bottom: 25px;"></div>
                             <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: white; padding: 0 15px;">
                                 <span style="color: #ff4b2b; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
@@ -562,8 +366,8 @@
                             </div>
                         </div>
 
-                        <!-- Social share buttons - With reserved space -->
-                        <div class="share-buttons" style="display: flex; gap: 25px; justify-content: center; width: 100%; margin: 15px 0 0px; min-height: 50px;">
+                        <!-- Social share buttons -->
+                        <div class="share-buttons" style="display: flex; gap: 25px; justify-content: center; width: 100%; margin: 15px 0 0px;">
                             <a href="#" style="color: #4267B2; font-size: 22px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Facebook" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-facebook-f"></i></a>
                             <a href="#" style="color: #0088cc; font-size: 22px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Telegram" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-telegram-plane"></i></a>
                             <a href="#" style="color: #25D366; font-size: 22px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="WhatsApp" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-whatsapp"></i></a>
@@ -575,44 +379,27 @@
                 </div>
             </div>
             
-            <!-- Right Column: Table - WITH RESERVED SPACE -->
-            <div class="album-details-column" style="min-height: 400px;">
-                <div class="music-item" style="height: 100%;">
-                    <div class="table-wrapper" style="height: 100%;">
-                        <table class="info-table" style="table-layout: fixed; min-height: 350px;">
-                            <tr>
-                                <td><i class="fas fa-compact-disc"></i> Album</td>
-                                <td class="album-name">Greatest Collection</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-user"></i> Artist</td>
-                                <td class="artist">Various Artists</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-guitar"></i> Genre</td>
-                                <td class="genre">Pop / Rock</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-calendar"></i> Release Date</td>
-                                <td class="released">2024</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-music"></i> Total Tracks</td>
-                                <td class="tracks">15 songs</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-tag"></i> Price</td>
-                                <td class="price">$9.99</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-star"></i> Quality</td>
-                                <td class="quality">Hi-Res Audio</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-building"></i> Label</td>
-                                <td class="label">Zedtopvibes Records</td>
-                            </tr>
-                        </table>
+            <!-- Right Column: Clean Description Only (Table Removed) -->
+            <div class="album-details-column">
+                <div class="music-item" style="height: 100%; padding: 30px; display: flex; align-items: center;">
+                    <div style="font-family: 'Inter', sans-serif; line-height: 1.8; width: 100%;">
+                        <p style="margin: 0 0 20px 0; font-size: 16px; color: #333;">
+                            <span style="font-weight: 700; color: #ff4b2b;">Greatest Collection</span> brings together the most iconic tracks from various artists, spanning pop and rock genres. This carefully curated album features 15 timeless hits that have shaped music history.
+                        </p>
+                        
+                        <p style="margin: 0 0 20px 0; font-size: 15px; color: #555;">
+                            From Queen's anthemic "Bohemian Rhapsody" to Nirvana's grunge masterpiece "Smells Like Teen Spirit," each track has been remastered in high-resolution audio for the ultimate listening experience. Whether you're a longtime fan or discovering these classics for the first time, this collection offers something special for everyone.
+                        </p>
+                        
+                        <p style="margin: 0 0 20px 0; font-size: 15px; color: #555;">
+                            Released in 2024 under Zedtopvibes Records, this album captures the essence of generations of music. Available now in digital format and limited edition vinyl.
+                        </p>
+                        
+                        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px dashed #ff4b2b; display: flex; flex-wrap: wrap; gap: 8px;">
+                            <span style="background: #ff4b2b; color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px;">HI-RES AUDIO</span>
+                            <span style="background: #333; color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">24-BIT MASTERED</span>
+                            <span style="background: #555; color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">VINYL AVAILABLE</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -660,7 +447,7 @@
     
     <div class="corner">
         <div class="music-grid" id="tracklist-container">
-            <!-- Track 1 - Added width, height, loading="lazy" -->
+            <!-- Track 1 -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
@@ -826,7 +613,7 @@
     </div>
     <div class="corner">
         <div class="music-grid">
-            <!-- Album 1 - Added loading="lazy" -->
+            <!-- Album 1 -->
             <a class="music-item" href="#" style="text-decoration:none;">
                 <div class="item-container">
                     <div class="item-thumb">
@@ -904,10 +691,10 @@
     <!-- Footer loads here -->
     <div id="footer-placeholder"></div>
 
-    <!-- Main JavaScript - Deferred for performance -->
+    <!-- Main JavaScript -->
     <script src="/js/main.js" defer></script>
     
-    <!-- Simple pagination function - Inline and lightweight -->
+    <!-- Simple pagination function -->
     <script>
         function loadTracklistPage(page) {
             alert(`Loading page ${page} tracks... (This would load tracks ${(page-1)*8+1} to ${page*8})`);
