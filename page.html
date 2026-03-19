@@ -170,18 +170,6 @@
             font-size: 14px;
         }
         
-        /* Share buttons container - aligns with last table row */
-        .album-image-column .share-buttons {
-            margin-top: 0;
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            border-top: 1px solid #ff4b2b;
-            padding-top: 15px;
-            width: 100%;
-            align-self: flex-end;
-        }
-        
         /* Right column: table container */
         .album-details-column {
             border-left: 1px solid #ddd;
@@ -329,10 +317,6 @@
                 padding: 6px 10px;
                 font-size: 13px;
             }
-            
-            .share-buttons {
-                gap: 15px !important;
-            }
         }
     </style>
 </head>
@@ -350,7 +334,7 @@
     <!-- ===== ALBUM INFO GRID ===== -->
     <div class="corner">
         <div class="album-detail-grid">
-            <!-- Left Column: Image with thinner border, smaller corners, and share buttons at bottom -->
+            <!-- Left Column: Image with thinner border, smaller corners, and stylish share section -->
             <div class="album-image-column">
                 <div class="music-item" style="cursor:default; text-decoration:none; display:block; height:100%;">
                     <div class="item-container" style="justify-content: space-between; height: 100%;">
@@ -365,14 +349,25 @@
                             </div>
                         </div>
                         
-                        <!-- Bottom section: Share buttons - aligns with last table row -->
-                        <div class="share-buttons" style="margin-top: 0; border-top: 1px solid #ff4b2b; padding-top: 15px; width: 100%;">
-                            <a href="#" style="color: #4267B2; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="Facebook" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" style="color: #0088cc; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="Telegram" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-telegram-plane"></i></a>
-                            <a href="#" style="color: #25D366; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="WhatsApp" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-whatsapp"></i></a>
-                            <a href="#" style="color: #E4405F; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="Instagram" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-instagram"></i></a>
-                            <a href="#" style="color: #BD081C; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="Pinterest" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-pinterest-p"></i></a>
-                            <a href="#" style="color: #ff4b2b; font-size: 20px; transition: all 0.2s ease; display: inline-block; text-decoration: none; margin: 0 8px;" title="Copy link" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fas fa-link"></i></a>
+                        <!-- Stylish Share Section - Moved down with decorative separator -->
+                        <div style="width: 100%; margin-top: 25px; position: relative;">
+                            <!-- Gradient line with "Share" label in the middle -->
+                            <div style="position: relative; height: 1px; background: linear-gradient(90deg, transparent, #ff4b2b 20%, #ff4b2b 80%, transparent); opacity: 0.3; margin-bottom: 25px;"></div>
+                            <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: white; padding: 0 15px;">
+                                <span style="color: #ff4b2b; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
+                                    <i class="fas fa-share-alt" style="margin-right: 5px;"></i> Share This Album
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Social share buttons - Moved further down with more spacing and larger icons -->
+                        <div class="share-buttons" style="display: flex; gap: 25px; justify-content: center; width: 100%; margin: 15px 0 10px;">
+                            <a href="#" style="color: #4267B2; font-size: 22px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Facebook" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" style="color: #0088cc; font-size: 22px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Telegram" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-telegram-plane"></i></a>
+                            <a href="#" style="color: #25D366; font-size: 22px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="WhatsApp" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#" style="color: #E4405F; font-size: 22px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Instagram" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-instagram"></i></a>
+                            <a href="#" style="color: #BD081C; font-size: 22px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Pinterest" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-pinterest-p"></i></a>
+                            <a href="#" style="color: #ff4b2b; font-size: 22px; transition: all 0.2s ease; display: inline-block; text-decoration: none;" title="Copy link" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fas fa-link"></i></a>
                         </div>
                     </div>
                 </div>
