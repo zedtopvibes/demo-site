@@ -312,6 +312,10 @@
                 padding: 6px 10px;
                 font-size: 13px;
             }
+            
+            .share-buttons {
+                gap: 15px !important;
+            }
         }
     </style>
 </head>
@@ -329,17 +333,25 @@
     <!-- ===== ALBUM INFO GRID (Image + Table) - no top margin ===== -->
     <div class="corner">
         <div class="album-detail-grid">
-            <!-- Left Column: Plain Image with Theme Border -->
+            <!-- Left Column: Plain Image with Theme Border and Share Buttons -->
             <div class="album-image-column">
                 <a class="music-item" style="cursor:default; text-decoration:none; display:block; height:100%;">
                     <div class="item-container">
                         <div class="item-thumb">
-                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDiuu5EI4s2nSoENBqPdKDbVs0dE0kx1hlVdzfbh1sjTkPXCjkEPpCH8QVwXnpzhyphenhyphengS8iuuLPwbK_XCzUaNB8pHM2d66qLDkmYr7UkNDnxAQAotiVSJ12SKeka2sGVAzVvFTmekpW8ZL9ipUc8VDvyxibiIAozDAcqNNiLWNSRnRPsjMDHK_QUxQjyO-IF/s300/Jae%20Cash%20-%20%20Voice%20Yo%20Dula%20Album%20(Www.ZedAlbums.Top).png
-" class="roundthumb" alt="Album Cover">
+                            <img src="https://via.placeholder.com/200/ff2121/ffffff?text=ALBUM" class="roundthumb" alt="Album Cover">
                         </div>
                         <div class="item-data">
                             <span class="track-title"><b>Greatest Collection</b></span>
                             <div class="artist-name" style="color:#ff4e50;">2024 · 15 tracks</div>
+                        </div>
+                        
+                        <!-- Theme-matching share buttons -->
+                        <div class="share-buttons" style="margin-top: 20px; display: flex; gap: 20px; justify-content: center; border-top: 1px solid #ff4b2b; padding-top: 20px; width: 100%;">
+                            <a href="#" style="color: #ff4b2b; font-size: 18px; transition: all 0.2s ease; display: inline-block;" title="Share on Facebook" onmouseover="this.style.color='#ff2121'; this.style.transform='scale(1.1)'" onmouseout="this.style.color='#ff4b2b'; this.style.transform='scale(1)'"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" style="color: #ff4b2b; font-size: 18px; transition: all 0.2s ease; display: inline-block;" title="Share on Twitter" onmouseover="this.style.color='#ff2121'; this.style.transform='scale(1.1)'" onmouseout="this.style.color='#ff4b2b'; this.style.transform='scale(1)'"><i class="fab fa-twitter"></i></a>
+                            <a href="#" style="color: #ff4b2b; font-size: 18px; transition: all 0.2s ease; display: inline-block;" title="Share on WhatsApp" onmouseover="this.style.color='#ff2121'; this.style.transform='scale(1.1)'" onmouseout="this.style.color='#ff4b2b'; this.style.transform='scale(1)'"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#" style="color: #ff4b2b; font-size: 18px; transition: all 0.2s ease; display: inline-block;" title="Share on Pinterest" onmouseover="this.style.color='#ff2121'; this.style.transform='scale(1.1)'" onmouseout="this.style.color='#ff4b2b'; this.style.transform='scale(1)'"><i class="fab fa-pinterest-p"></i></a>
+                            <a href="#" style="color: #ff4b2b; font-size: 18px; transition: all 0.2s ease; display: inline-block;" title="Copy link" onmouseover="this.style.color='#ff2121'; this.style.transform='scale(1.1)'" onmouseout="this.style.color='#ff4b2b'; this.style.transform='scale(1)'"><i class="fas fa-link"></i></a>
                         </div>
                     </div>
                 </a>
