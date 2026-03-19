@@ -20,13 +20,13 @@
     
     <!-- Detail page specific styles -->
     <style>
-        /* Breadcrumb */
+        /* Breadcrumb - no bottom margin */
         .breadcrumb {
             background: #424242;
             border-bottom: 1px solid #ff2121;
             border-radius: 6px;
             padding: 8px 12px;
-            margin: 0;
+            margin: 0 0 0 0;  /* Removed bottom margin */
             color: #fff;
             font-size: 14px;
             box-shadow: inset 0 -1px red;
@@ -108,7 +108,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 0px;
-            margin: 0;
+            margin: 0;  /* Removed margin */
             background-color: #fff;
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
             border: 1px solid #ddd;
@@ -116,43 +116,61 @@
             overflow: hidden;
         }
         
-        /* Left column: SINGLE CARD (no double carding) */
-        .album-image-column {
+        /* Left column: image card - LARGER IMAGE */
+        .album-image-column .music-item {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background-color: #fff;
-            padding: 30px 20px;
+            border: none;
+            box-shadow: none;
+            transition: transform 0.25s ease;
+        }
+        
+        .album-image-column .music-item:hover {
+            transform: translateY(-2px);
+        }
+        
+        .album-image-column .item-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            height: 100%;
+            padding: 25px 15px;
+            width: 100%;
         }
         
-        .album-image-column .album-art {
-            width: 200px;
-            height: 200px;
+        .album-image-column .item-thumb {
+            margin-right: 0;
+            margin-bottom: 15px;
+        }
+        
+        .album-image-column .roundthumb {
+            width: 200px !important;  /* Increased from 160px */
+            height: 200px !important;  /* Increased from 160px */
             border-radius: 16px;
-            object-fit: cover;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             transition: transform 0.3s ease;
-            margin-bottom: 20px;
         }
         
-        .album-image-column .album-art:hover {
+        .album-image-column .roundthumb:hover {
             transform: scale(1.05);
         }
         
-        .album-image-column .album-title {
-            font-size: 20px;
+        .album-image-column .track-title {
+            font-size: 18px;
             font-weight: 700;
-            color: #333;
+            display: block;
             margin-bottom: 5px;
         }
         
-        .album-image-column .album-meta {
+        .album-image-column .artist-name {
             font-size: 14px;
-            color: #ff4e50;
-            font-weight: 600;
         }
         
         /* Right column: table container */
@@ -160,6 +178,24 @@
             border-left: 1px solid #ddd;
             display: flex;
             flex-direction: column;
+        }
+        
+        .album-details-column .music-item {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            height: 100%;
+            background-color: #fff;
+            border: none;
+            box-shadow: none;
+            transition: transform 0.25s ease;
+            cursor: default;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .album-details-column .music-item:hover {
+            transform: translateY(-2px);
         }
         
         .table-wrapper {
@@ -215,7 +251,16 @@
         .info-table .quality { color: #ff0066; }
         .info-table .label { color: #666; }
         
-        /* Bottom description card */
+        /* Section headers - reduced spacing */
+        .section-header {
+            margin: 0;  /* Remove default margins */
+        }
+        
+        .section-header.section-spacing {
+            margin-top: 0;  /* Remove top margin */
+        }
+        
+        /* Bottom description card - reduced margin */
         .bottom-description {
             background-color: #fff;
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
@@ -224,32 +269,39 @@
             padding: 20px;
             width: 100%;
             box-sizing: border-box;
-            margin: 0;
+            margin: 0;  /* Removed margin */
         }
         
-        /* Section headers */
-        .section-header {
-            margin: 0;
+        /* Tracklist section - remove top spacing */
+        .tracklist-section {
+            margin-top: 0;
         }
         
         /* Responsive */
         @media (max-width: 719px) {
             .album-detail-grid {
                 grid-template-columns: 1fr;
+                gap: 0px;
+                border-radius: 12px;
+                overflow: hidden;
+                margin: 0;
             }
             
-            .album-image-column {
+            .album-image-column .music-item {
                 border-bottom: 1px solid #eee;
-                padding: 25px 15px;
-            }
-            
-            .album-image-column .album-art {
-                width: 160px;
-                height: 160px;
             }
             
             .album-details-column {
                 border-left: none;
+            }
+            
+            .album-image-column .roundthumb {
+                width: 160px !important;  /* Larger on mobile too */
+                height: 160px !important;
+            }
+            
+            .album-image-column .item-container {
+                padding: 20px 15px;
             }
             
             .info-table td {
@@ -272,66 +324,76 @@
     <!-- Header loads here -->
     <div id="header-placeholder"></div>
 
-    <!-- ===== BREADCRUMB ===== -->
+    <!-- ===== BREADCRUMB NAVIGATION (no bottom margin) ===== -->
     <div class="breadcrumb">
         <a href="/">Home</a> » 
         <a href="/music.html">Music</a> » 
         <strong id="breadcrumb-title">Album Details</strong>
     </div>
 
-    <!-- ===== ALBUM INFO GRID (Single Card Image + Table) ===== -->
+    <!-- ===== ALBUM INFO GRID (Image + Table) - no top margin ===== -->
     <div class="corner">
         <div class="album-detail-grid">
-            <!-- Left Column: SINGLE CARD (no double carding) -->
+            <!-- Left Column: Image Card with LARGER image -->
             <div class="album-image-column">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDiuu5EI4s2nSoENBqPdKDbVs0dE0kx1hlVdzfbh1sjTkPXCjkEPpCH8QVwXnpzhyphenhyphengS8iuuLPwbK_XCzUaNB8pHM2d66qLDkmYr7UkNDnxAQAotiVSJ12SKeka2sGVAzVvFTmekpW8ZL9ipUc8VDvyxibiIAozDAcqNNiLWNSRnRPsjMDHK_QUxQjyO-IF/s300/Jae%20Cash%20-%20%20Voice%20Yo%20Dula%20Album%20(Www.ZedAlbums.Top).png" alt="Album Cover" class="album-art">
-                <div class="album-title">Greatest Collection</div>
-                <div class="album-meta">2024 · 15 tracks</div>
+                <a class="music-item" style="cursor:default; text-decoration:none; display:block; height:100%;">
+                    <div class="item-container">
+                        <div class="item-thumb">
+                            <img src="https://via.placeholder.com/200/ff2121/ffffff?text=ALBUM" class="roundthumb" alt="Album Cover">
+                        </div>
+                        <div class="item-data">
+                            <span class="track-title"><b>Greatest Collection</b></span>
+                            <div class="artist-name" style="color:#ff4e50;">2024 · 15 tracks</div>
+                        </div>
+                    </div>
+                </a>
             </div>
             
             <!-- Right Column: Table -->
             <div class="album-details-column">
-                <div class="table-wrapper">
-                    <table class="info-table">
-                        <tr>
-                            <td><i class="fas fa-compact-disc"></i> Album</td>
-                            <td class="album-name">Greatest Collection</td>
-                        </tr>
-                        <tr>
-                            <td><i class="fas fa-user"></i> Artist</td>
-                            <td class="artist">Various Artists</td>
-                        </tr>
-                        <tr>
-                            <td><i class="fas fa-guitar"></i> Genre</td>
-                            <td class="genre">Pop / Rock</td>
-                        </tr>
-                        <tr>
-                            <td><i class="fas fa-calendar"></i> Release Date</td>
-                            <td class="released">2024</td>
-                        </tr>
-                        <tr>
-                            <td><i class="fas fa-music"></i> Total Tracks</td>
-                            <td class="tracks">15 songs</td>
-                        </tr>
-                        <tr>
-                            <td><i class="fas fa-tag"></i> Price</td>
-                            <td class="price">$9.99</td>
-                        </tr>
-                        <tr>
-                            <td><i class="fas fa-star"></i> Quality</td>
-                            <td class="quality">Hi-Res Audio</td>
-                        </tr>
-                        <tr>
-                            <td><i class="fas fa-building"></i> Label</td>
-                            <td class="label">Zedtopvibes Records</td>
-                        </tr>
-                    </table>
+                <div class="music-item">
+                    <div class="table-wrapper">
+                        <table class="info-table">
+                            <tr>
+                                <td><i class="fas fa-compact-disc"></i> Album</td>
+                                <td class="album-name">Greatest Collection</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-user"></i> Artist</td>
+                                <td class="artist">Various Artists</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-guitar"></i> Genre</td>
+                                <td class="genre">Pop / Rock</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-calendar"></i> Release Date</td>
+                                <td class="released">2024</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-music"></i> Total Tracks</td>
+                                <td class="tracks">15 songs</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-tag"></i> Price</td>
+                                <td class="price">$9.99</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-star"></i> Quality</td>
+                                <td class="quality">Hi-Res Audio</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-building"></i> Label</td>
+                                <td class="label">Zedtopvibes Records</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ===== BOTTOM DESCRIPTION ===== -->
+    <!-- ===== BOTTOM DESCRIPTION CARD - directly attached (no spacing) ===== -->
     <div class="section-header" style="margin-top:0;">
         <h2 class="section-title">
             <i class="fas fa-align-left" style="margin-right: 8px;"></i>
@@ -347,6 +409,13 @@
             music from 2024, featuring both established artists and emerging talents.
         </p>
         
+        <p style="margin:0 0 15px 0; line-height:1.6; color:#555;">
+            Each track has been carefully selected to provide a diverse listening experience.
+            From upbeat anthems to heartfelt ballads, this collection has it all.
+            Whether you're discovering these songs for the first time or revisiting old favorites,
+            this album delivers quality music that stands the test of time.
+        </p>
+        
         <p style="margin:0; line-height:1.6; color:#555; border-top: 1px solid #eee; padding-top: 15px;">
             <span style="color:#ff4b2b; font-weight:600;">Related Tags -</span> 
             Pop, Rock, 2024, Greatest Hits, Various Artists, Album Collection, 
@@ -355,7 +424,7 @@
         </p>
     </div>
 
-    <!-- ===== TRACKLIST SECTION ===== -->
+    <!-- ===== TRACKLIST SECTION - directly attached (no spacing) ===== -->
     <div class="section-header" style="margin-top:0;">
         <h2 class="section-title">
             <i class="fas fa-music" style="margin-right: 8px;"></i>
@@ -378,11 +447,23 @@
                     </div>
                 </div>
             </a>
-            <!-- Add more tracks as needed -->
+            <a class="music-item" href="#" style="text-decoration:none;">
+                <div class="item-container">
+                    <div class="item-thumb">
+                        <img src="https://via.placeholder.com/80/9c27b0/ffffff?text=02" class="roundthumb" alt="Track 2">
+                    </div>
+                    <div class="item-data">
+                        <span class="track-title"><b>Stairway to Heaven</b> <span class="ep-badge">Track</span></span>
+                        <div class="artist-name">Led Zeppelin · 8:02</div>
+                        <span class="item-meta"><b style="color:#ff0000">Play →</b></span>
+                    </div>
+                </div>
+            </a>
+            <!-- ... rest of tracks ... -->
         </div>
     </div>
 
-    <!-- ===== PAGINATION ===== -->
+    <!-- ===== PAGINATION FOR TRACKLIST ===== -->
     <div class="page-navi" align="center">
         <span aria-current="page" class="page-numbers current">1</span>
         <a class="page-numbers" href="#" onclick="loadTracklistPage(2); return false;">2</a>
@@ -392,7 +473,7 @@
         <a class="next page-numbers" href="#" onclick="loadTracklistPage(2); return false;">Next »</a>
     </div>
 
-    <!-- ===== YOU MIGHT ALSO LIKE ===== -->
+    <!-- ===== YOU MIGHT ALSO LIKE SECTION ===== -->
     <div class="section-header" style="margin-top:0;">
         <h2 class="section-title">
             <i class="fas fa-thumbs-up" style="margin-right: 8px;"></i>
@@ -413,11 +494,14 @@
                     </div>
                 </div>
             </a>
+            <!-- ... rest of items ... -->
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer loads here -->
     <div id="footer-placeholder"></div>
+
+    <!-- Main JavaScript -->
     <script src="/js/main.js"></script>
     
     <!-- Simple pagination function -->
