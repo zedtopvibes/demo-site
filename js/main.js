@@ -2,6 +2,7 @@
 // Connected to: https://zedtopvibes.pages.dev/api
 
 const API_BASE = 'https://zedtopvibes.pages.dev/api';
+const IMAGE_BASE = 'https://zedtopvibes.pages.dev';
 
 // Prevent multiple initialization
 let isInitialized = false;
@@ -12,6 +13,10 @@ let contentLoaded = false;
 // Stable image fallback - prevents layout shifts and glitching
 function getAlbumImage(album) {
     if (album.cover_url && album.cover_url !== 'null' && album.cover_url !== '') {
+        // Convert relative path to absolute URL from main site
+        if (album.cover_url.startsWith('/')) {
+            return `${IMAGE_BASE}${album.cover_url}`;
+        }
         return album.cover_url;
     }
     // SVG placeholder with emoji
@@ -25,6 +30,10 @@ function getAlbumImage(album) {
 
 function getPlaylistImage(playlist) {
     if (playlist.cover_url && playlist.cover_url !== 'null' && playlist.cover_url !== '') {
+        // Convert relative path to absolute URL from main site
+        if (playlist.cover_url.startsWith('/')) {
+            return `${IMAGE_BASE}${playlist.cover_url}`;
+        }
         return playlist.cover_url;
     }
     if (playlist.cover_emoji) {
