@@ -3,39 +3,48 @@
 
 const API_BASE = 'https://zedtopvibes.pages.dev/api';
 
-// Helper: Get album image with fallbacks
+// Prevent multiple initialization
+let isInitialized = false;
+let contentLoaded = false;
+
+// ===== HELPER FUNCTIONS =====
+
+// Stable image fallback - prevents layout shifts and glitching
 function getAlbumImage(album) {
-    if (album.cover_url) return album.cover_url;
+    if (album.cover_url && album.cover_url !== 'null' && album.cover_url !== '') {
+        return album.cover_url;
+    }
+    // SVG placeholder with emoji
     if (album.cover_emoji) {
-        // Use emoji as fallback image via a service or placeholder
-        return `https://emojicdn.elk.sh/${album.cover_emoji}?style=twemoji`;
+        const encodedEmoji = encodeURIComponent(album.cover_emoji);
+        return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ff5500'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E${encodedEmoji}%3C/text%3E%3C/svg%3E`;
     }
-    return '/images/default-album.jpg';
+    // Default music note placeholder
+    return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23333'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E🎵%3C/text%3E%3C/svg%3E";
 }
 
-// Helper: Get playlist image
 function getPlaylistImage(playlist) {
-    if (playlist.cover_url) return playlist.cover_url;
-    if (playlist.cover_emoji) {
-        return `https://emojicdn.elk.sh/${playlist.cover_emoji}?style=twemoji`;
+    if (playlist.cover_url && playlist.cover_url !== 'null' && playlist.cover_url !== '') {
+        return playlist.cover_url;
     }
-    return '/images/default-playlist.jpg';
+    if (playlist.cover_emoji) {
+        const encodedEmoji = encodeURIComponent(playlist.cover_emoji);
+        return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%239c27b0'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E${encodedEmoji}%3C/text%3E%3C/svg%3E`;
+    }
+    return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%239c27b0'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E📋%3C/text%3E%3C/svg%3E";
 }
 
-// Helper: Get artist image (using placeholder for now)
 function getArtistImage(artist) {
-    return `/images/default-artist.jpg`;
+    return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%232196f3'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E🎤%3C/text%3E%3C/svg%3E";
 }
 
-// Format numbers (K, M)
 function formatNumber(num) {
-    if (!num) return '0';
+    if (!num || num === 0) return '0';
     if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
     if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
     return num.toString();
 }
 
-// Escape HTML to prevent XSS
 function escapeHtml(str) {
     if (!str) return '';
     return String(str)
@@ -46,9 +55,22 @@ function escapeHtml(str) {
         .replace(/'/g, '&#39;');
 }
 
+// Handle image loading errors
+function handleImageError(img) {
+    if (img.dataset.fallbackUsed) return;
+    img.dataset.fallbackUsed = 'true';
+    const type = img.dataset.type || 'default';
+    if (type === 'playlist') {
+        img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%239c27b0'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E📋%3C/text%3E%3C/svg%3E";
+    } else if (type === 'artist') {
+        img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%232196f3'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E🎤%3C/text%3E%3C/svg%3E";
+    } else {
+        img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ff5500'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E🎵%3C/text%3E%3C/svg%3E";
+    }
+}
+
 // ===== RENDER FUNCTIONS =====
 
-// Albums section
 async function loadAlbums() {
     const container = document.getElementById('albums-container');
     if (!container) return;
@@ -72,7 +94,8 @@ async function loadAlbums() {
                              width="80" height="80" 
                              class="roundthumb" 
                              alt="${escapeHtml(album.title)}"
-                             onerror="this.src='/images/default-album.jpg'">
+                             data-type="album"
+                             onerror="handleImageError(this)">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>${escapeHtml(album.title)}</b></span>
@@ -92,7 +115,6 @@ async function loadAlbums() {
     }
 }
 
-// Latest Releases (sorted by release date)
 async function loadLatestReleases() {
     const container = document.getElementById('latest-container');
     if (!container) return;
@@ -121,7 +143,8 @@ async function loadLatestReleases() {
                              width="80" height="80" 
                              class="roundthumb" 
                              alt="${escapeHtml(album.title)}"
-                             onerror="this.src='/images/default-album.jpg'">
+                             data-type="album"
+                             onerror="handleImageError(this)">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>${escapeHtml(album.title)}</b></span>
@@ -141,7 +164,6 @@ async function loadLatestReleases() {
     }
 }
 
-// Trending (sorted by plays)
 async function loadTrending() {
     const container = document.getElementById('trending-container');
     if (!container) return;
@@ -169,7 +191,8 @@ async function loadTrending() {
                              width="80" height="80" 
                              class="roundthumb" 
                              alt="${escapeHtml(album.title)}"
-                             onerror="this.src='/images/default-album.jpg'">
+                             data-type="album"
+                             onerror="handleImageError(this)">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>${escapeHtml(album.title)}</b></span>
@@ -189,7 +212,6 @@ async function loadTrending() {
     }
 }
 
-// Playlists
 async function loadPlaylists() {
     const container = document.getElementById('playlists-container');
     if (!container) return;
@@ -213,7 +235,8 @@ async function loadPlaylists() {
                              width="80" height="80" 
                              class="roundthumb" 
                              alt="${escapeHtml(playlist.name)}"
-                             onerror="this.src='/images/default-playlist.jpg'">
+                             data-type="playlist"
+                             onerror="handleImageError(this)">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>${escapeHtml(playlist.name)}</b> <span class="playlist-badge">Playlist</span></span>
@@ -230,7 +253,6 @@ async function loadPlaylists() {
     }
 }
 
-// EPs (albums with 6 or fewer tracks)
 async function loadEPs() {
     const container = document.getElementById('eps-container');
     if (!container) return;
@@ -241,7 +263,7 @@ async function loadEPs() {
         const response = await fetch(`${API_BASE}/albums`);
         const albums = await response.json();
         
-        const eps = albums.filter(album => album.track_count <= 6).slice(0, 6);
+        const eps = albums.filter(album => album.track_count <= 6 && album.track_count > 0).slice(0, 6);
         
         if (!eps || eps.length === 0) {
             container.innerHTML = '<div class="error-message">No EPs found</div>';
@@ -256,7 +278,8 @@ async function loadEPs() {
                              width="80" height="80" 
                              class="roundthumb" 
                              alt="${escapeHtml(ep.title)}"
-                             onerror="this.src='/images/default-ep.jpg'">
+                             data-type="album"
+                             onerror="handleImageError(this)">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>${escapeHtml(ep.title)}</b> <span class="ep-badge">EP</span></span>
@@ -273,7 +296,6 @@ async function loadEPs() {
     }
 }
 
-// Artists
 async function loadArtists() {
     const container = document.getElementById('artists-container');
     if (!container) return;
@@ -297,11 +319,12 @@ async function loadArtists() {
                              width="80" height="80" 
                              class="roundthumb" 
                              alt="${escapeHtml(artist.name)}"
-                             onerror="this.src='/images/default-artist.jpg'">
+                             data-type="artist"
+                             onerror="handleImageError(this)">
                     </div>
                     <div class="item-data">
                         <span class="track-title"><b>${escapeHtml(artist.name)}</b> <span class="artist-badge">Artist</span></span>
-                        <div class="artist-name">${artist.track_count} tracks</div>
+                        <div class="artist-name">${artist.track_count || 0} tracks</div>
                         <span class="item-meta"><b style="color:#ff0000">${artist.genres?.[0] || 'Artist'}</b></span>
                     </div>
                 </div>
@@ -314,7 +337,6 @@ async function loadArtists() {
     }
 }
 
-// Genres (extracted from albums)
 async function loadGenres() {
     const container = document.getElementById('genres-container');
     if (!container) return;
@@ -325,10 +347,9 @@ async function loadGenres() {
         const response = await fetch(`${API_BASE}/albums`);
         const albums = await response.json();
         
-        // Extract unique genres
         const genreMap = new Map();
         albums.forEach(album => {
-            if (album.genre) {
+            if (album.genre && album.genre !== 'null') {
                 const count = genreMap.get(album.genre) || 0;
                 genreMap.set(album.genre, count + 1);
             }
@@ -359,8 +380,15 @@ async function loadGenres() {
     }
 }
 
-// ===== LOAD ALL SECTIONS =====
 async function loadAllContent() {
+    if (contentLoaded) {
+        console.log('Content already loaded, skipping...');
+        return;
+    }
+    
+    contentLoaded = true;
+    console.log('Loading content...');
+    
     await Promise.all([
         loadTrending(),
         loadLatestReleases(),
@@ -492,7 +520,6 @@ function initializeLiveSearch() {
             resultsDiv.innerHTML = '<div class="loading-small">Searching...</div>';
             
             try {
-                // Search across albums
                 const albumsRes = await fetch(`${API_BASE}/albums`);
                 const albums = await albumsRes.json();
                 
@@ -550,8 +577,18 @@ function searchMusic() {
     return false;
 }
 
+// Make handleImageError globally available for inline onerror
+window.handleImageError = handleImageError;
+
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', async function() {
+    if (isInitialized) {
+        console.log('Already initialized, skipping...');
+        return;
+    }
+    isInitialized = true;
+    
+    console.log('DOM ready - initializing...');
     await loadHeaderAndFooter();
     initializeScrollButton();
     initializeLiveSearch();
