@@ -228,6 +228,7 @@
                 <span class="album-stats"><i class="fas fa-calendar-alt"></i> <span id="album-release">---</span></span>
                 <span class="album-stats"><i class="fas fa-music"></i> <span id="album-tracks-count">---</span> tracks</span>
                 <span class="album-stats"><i class="fas fa-clock"></i> <span id="album-duration">---</span></span>
+                <span class="album-stats"><i class="fas fa-headphones"></i> <span id="album-plays">---</span> plays</span>
             </div>
             <p class="album-description" id="album-description">Loading album description...</p>
         </div>
@@ -302,10 +303,6 @@
                 }
                 return album.cover_url;
             }
-            if (album.cover_emoji) {
-                const encodedEmoji = encodeURIComponent(album.cover_emoji);
-                return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ff5500'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E${encodedEmoji}%3C/text%3E%3C/svg%3E`;
-            }
             return '/images/default-album.jpg';
         }
         
@@ -314,7 +311,6 @@
             if (!tracks || tracks.length === 0) return '0 min';
             const totalSeconds = tracks.reduce((sum, track) => sum + (track.duration || 0), 0);
             const minutes = Math.floor(totalSeconds / 60);
-            const seconds = totalSeconds % 60;
             if (minutes > 60) {
                 const hours = Math.floor(minutes / 60);
                 const remainingMinutes = minutes % 60;
@@ -323,10 +319,12 @@
             return `${minutes} min`;
         }
         
-        // Get album slug from URL (clean URL: /album/neon-dreams)
+        // Get album slug from URL path (clean URL: /album/neon-dreams)
         function getAlbumSlug() {
             const path = window.location.pathname;
-            const match = path.match(/\/album\/([^\/]+)/);
+            // Remove trailing slash if exists
+            const cleanPath = path.replace(/\/$/, '');
+            const match = cleanPath.match(/\/album\/([^\/]+)/);
             return match ? match[1] : null;
         }
         
@@ -345,7 +343,7 @@
                     <div class="item-container">
                         <div class="item-thumb">
                             <div class="track-number-badge">
-                                ${String(index + 1).padStart(2, '0')}
+                                ${String(track.track_number || index + 1).padStart(2, '0')}
                             </div>
                         </div>
                         <div class="item-data">
@@ -373,7 +371,7 @@
                 // Filter out current album
                 let recommendations = albumList.filter(album => album.id != currentAlbumId);
                 
-                // Optional: prioritize same artist
+                // Prioritize same artist
                 if (currentArtist) {
                     const sameArtist = recommendations.filter(album => album.artist === currentArtist);
                     if (sameArtist.length > 0) {
@@ -429,7 +427,8 @@
             }
             
             try {
-                const apiUrl = `${API_BASE}/albums/by-slug/${albumSlug}`;
+                // CORRECT API ENDPOINT - matches your worker
+                const apiUrl = `${API_BASE}/album/by-slug/${albumSlug}`;
                 const response = await fetch(apiUrl);
                 
                 if (!response.ok) {
@@ -444,7 +443,7 @@
                 // Populate album header
                 document.getElementById('album-title').textContent = album.title || 'Untitled';
                 document.getElementById('album-artist').textContent = album.artist || 'Unknown Artist';
-                document.getElementById('album-artist').href = `/artist/${album.artist_slug || album.artist?.toLowerCase().replace(/\s+/g, '-') || '#'}`;
+                document.getElementById('album-artist').setAttribute('data-artist', album.artist || '');
                 document.getElementById('breadcrumb-title').textContent = album.title || 'Album Details';
                 
                 // Release date
@@ -452,12 +451,16 @@
                 document.getElementById('album-release').textContent = releaseYear;
                 
                 // Track count
-                const trackCount = album.tracks?.length || album.track_count || 0;
+                const trackCount = album.tracks?.length || album.stats?.track_count || 0;
                 document.getElementById('album-tracks-count').textContent = trackCount;
                 
                 // Duration
                 const totalDuration = calculateTotalDuration(album.tracks || []);
                 document.getElementById('album-duration').textContent = totalDuration;
+                
+                // Plays
+                const totalPlays = album.stats?.total_plays || album.plays || 0;
+                document.getElementById('album-plays').textContent = formatNumber(totalPlays);
                 
                 // Description
                 document.getElementById('album-description').textContent = album.description || 'No description available.';
@@ -467,9 +470,8 @@
                 if (album.cover_url) {
                     const coverUrl = album.cover_url.startsWith('/') ? `${IMAGE_BASE}${album.cover_url}` : album.cover_url;
                     coverImg.src = coverUrl;
-                } else if (album.cover_emoji) {
-                    const encodedEmoji = encodeURIComponent(album.cover_emoji);
-                    coverImg.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ff5500'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E${encodedEmoji}%3C/text%3E%3C/svg%3E`;
+                } else {
+                    coverImg.src = '/images/default-album.jpg';
                 }
                 
                 // Render tracklist
@@ -512,7 +514,7 @@
             if (artistLink) {
                 e.preventDefault();
                 const artistName = artistLink.textContent;
-                if (artistName && artistName !== 'Loading...') {
+                if (artistName && artistName !== 'Loading...' && artistName !== 'Unknown Artist') {
                     const slug = artistName.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
                     window.location.href = `/artist/${slug}`;
                 }
