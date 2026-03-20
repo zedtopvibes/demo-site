@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zedtopvibes · Album Details</title>
+    
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <style>
+        /* Additional styles for album page - matches simple theme */
+        .album-header {
+            display: flex;
+            gap: 30px;
+            padding: 25px 20px;
+            background: #fff;
+            border-radius: 12px;
+            margin: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e8e8e8;
+        }
+        
+        .album-artwork {
+            flex-shrink: 0;
+        }
+        
+        .album-artwork img {
+            width: 200px;
+            height: 200px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .album-info-header {
+            flex: 1;
+        }
+        
+        .album-title-header {
+            font-size: 28px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 8px;
+        }
+        
+        .album-artist-link {
+            font-size: 18px;
+            color: #ff4b2b;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        
+        .album-artist-link:hover {
+            text-decoration: underline;
+        }
+        
+        .album-meta-header {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .album-stats {
+            color: #666;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .album-stats i {
+            color: #ff4b2b;
+            width: 16px;
+        }
+        
+        .album-description {
+            color: #555;
+            line-height: 1.6;
+            margin-top: 12px;
+        }
+        
+        .breadcrumb {
+            padding: 15px 20px 5px 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .breadcrumb a {
+            color: #ff4b2b;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .album-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .album-artwork img {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .album-title-header {
+                font-size: 24px;
+            }
+            
+            .album-meta-header {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .album-header {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .album-artwork img {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .album-title-header {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header loads here -->
+    <div id="header-placeholder"></div>
+
+    <!-- ===== BREADCRUMB NAVIGATION ===== -->
+    <div class="breadcrumb">
+        <a href="/">Home</a> » 
+        <a href="/music.html">Music</a> » 
+        <strong id="breadcrumb-title">Album Details</strong>
+    </div>
+    
+    <!-- ===== ALBUM HEADER - Artwork & Metadata ===== -->
+    <div class="album-header">
+        <div class="album-artwork">
+            <img id="album-cover" src="/images/default-album.jpg" alt="Album cover">
+        </div>
+        <div class="album-info-header">
+            <h1 class="album-title-header" id="album-title">Loading...</h1>
+            <a class="album-artist-link" id="album-artist">Loading...</a>
+            <div class="album-meta-header">
+                <span class="album-stats"><i class="fas fa-calendar-alt"></i> <span id="album-release">---</span></span>
+                <span class="album-stats"><i class="fas fa-music"></i> <span id="album-tracks-count">---</span> tracks</span>
+                <span class="album-stats"><i class="fas fa-clock"></i> <span id="album-duration">---</span></span>
+            </div>
+            <p class="album-description" id="album-description">Loading album description...</p>
+        </div>
+    </div>
+
+    <!-- ===== TRACKLIST SECTION ===== -->
+    <div class="section-header" style="margin-top:0;">
+        <h2 class="section-title">
+            <i class="fas fa-align-left" style="margin-right: 8px;"></i>
+            Tracklist
+        </h2>
+    </div>
+    
+    <div class="corner">
+        <div class="music-grid" id="tracklist-container">
+            <div class="loading">Loading tracks...</div>
+        </div>
+    </div>
+
+    <!-- ===== RECOMMENDED ALBUMS SECTION ===== -->
+    <div class="section-header section-spacing">
+        <h2 class="section-title">
+            <i class="fas fa-thumbs-up" style="margin-right: 8px;"></i>
+            Recommended Albums
+        </h2>
+    </div>
+    
+    <div class="corner">
+        <div class="music-grid" id="recommended-container">
+            <div class="loading">Loading recommendations...</div>
+        </div>
+    </div>
+
+    <!-- Footer loads here -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Main JavaScript -->
+    <script src="/js/main.js"></script>
+    
+    <!-- Album Page JavaScript -->
+    <script>
+        // API Base - using main site
+        const API_BASE = 'https://zedtopvibes.pages.dev/api';
+        
+        // Helper functions
+        function formatDuration(seconds) {
+            if (!seconds) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        function formatNumber(num) {
+            if (!num) return '0';
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+            return num.toString();
+        }
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+        
+        function getAlbumImage(album) {
+            if (album.cover_url && album.cover_url !== 'null' && album.cover_url !== '') {
+                if (album.cover_url.startsWith('/')) {
+                    return `https://zedtopvibes.pages.dev${album.cover_url}`;
+                }
+                return album.cover_url;
+            }
+            if (album.cover_emoji) {
+                const encodedEmoji = encodeURIComponent(album.cover_emoji);
+                return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ff5500'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E${encodedEmoji}%3C/text%3E%3C/svg%3E`;
+            }
+            return '/images/default-album.jpg';
+        }
+        
+        // Calculate total duration from tracks
+        function calculateTotalDuration(tracks) {
+            if (!tracks || tracks.length === 0) return '0 min';
+            const totalSeconds = tracks.reduce((sum, track) => sum + (track.duration || 0), 0);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            if (minutes > 60) {
+                const hours = Math.floor(minutes / 60);
+                const remainingMinutes = minutes % 60;
+                return `${hours} hr ${remainingMinutes} min`;
+            }
+            return `${minutes} min`;
+        }
+        
+        // Get album ID/slug from URL
+        function getAlbumIdentifier() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('id')) return { type: 'id', value: urlParams.get('id') };
+            if (urlParams.has('slug')) return { type: 'slug', value: urlParams.get('slug') };
+            
+            const path = window.location.pathname;
+            const pathMatch = path.match(/\/album\/([^\/]+)/);
+            if (pathMatch) return { type: 'slug', value: pathMatch[1] };
+            
+            return null;
+        }
+        
+        // Load tracklist
+        function renderTracklist(tracks) {
+            const container = document.getElementById('tracklist-container');
+            if (!container) return;
+            
+            if (!tracks || tracks.length === 0) {
+                container.innerHTML = '<div class="error-message">No tracks found for this album</div>';
+                return;
+            }
+            
+            container.innerHTML = tracks.map((track, index) => `
+                <a href="/song/${track.slug || track.id}" class="music-item">
+                    <div class="item-container">
+                        <div class="item-thumb">
+                            <div class="roundthumb" style="background: #ff5500; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                                ${String(index + 1).padStart(2, '0')}
+                            </div>
+                        </div>
+                        <div class="item-data">
+                            <span class="track-title"><b>${escapeHtml(track.title)}</b></span>
+                            <div class="artist-name">${escapeHtml(track.artist || 'Unknown Artist')}</div>
+                            <span class="item-meta">
+                                <b style="color:#ff0000">${formatDuration(track.duration)}</b>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+        }
+        
+        // Load recommended albums
+        async function loadRecommendedAlbums(currentAlbumId, currentArtist) {
+            const container = document.getElementById('recommended-container');
+            if (!container) return;
+            
+            try {
+                const response = await fetch(`${API_BASE}/albums`);
+                const albums = await response.json();
+                const albumList = Array.isArray(albums) ? albums : (albums.results || []);
+                
+                // Filter out current album and get random recommendations
+                let recommendations = albumList.filter(album => album.id != currentAlbumId);
+                
+                // Optional: prioritize same artist
+                if (currentArtist) {
+                    const sameArtist = recommendations.filter(album => album.artist === currentArtist);
+                    if (sameArtist.length > 0) {
+                        recommendations = [...sameArtist, ...recommendations.filter(a => a.artist !== currentArtist)];
+                    }
+                }
+                
+                recommendations = recommendations.slice(0, 6);
+                
+                if (!recommendations || recommendations.length === 0) {
+                    container.innerHTML = '<div class="error-message">No recommendations available</div>';
+                    return;
+                }
+                
+                container.innerHTML = recommendations.map(album => `
+                    <a href="/album?id=${album.id}" class="music-item">
+                        <div class="item-container">
+                            <div class="item-thumb">
+                                <img src="${getAlbumImage(album)}" 
+                                     width="80" height="80" 
+                                     class="roundthumb" 
+                                     alt="${escapeHtml(album.title)}"
+                                     onerror="this.src='/images/default-album.jpg'">
+                            </div>
+                            <div class="item-data">
+                                <span class="track-title"><b>${escapeHtml(album.title)}</b></span>
+                                <div class="artist-name">${escapeHtml(album.artist || 'Unknown Artist')}</div>
+                                <span class="item-meta">
+                                    <b style="color:#ff0000">${album.track_count || 0} tracks</b>
+                                    ${album.release_date ? `<span style="margin-left:8px">${new Date(album.release_date).getFullYear()}</span>` : ''}
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Error loading recommendations:', error);
+                container.innerHTML = '<div class="error-message">Failed to load recommendations</div>';
+            }
+        }
+        
+        // Load album details
+        async function loadAlbumDetails() {
+            const identifier = getAlbumIdentifier();
+            if (!identifier) {
+                document.getElementById('album-title').textContent = 'Album not specified';
+                document.getElementById('album-description').textContent = 'No album ID or slug provided in URL.';
+                return;
+            }
+            
+            try {
+                let apiUrl;
+                if (identifier.type === 'id') {
+                    apiUrl = `${API_BASE}/albums/${identifier.value}`;
+                } else {
+                    apiUrl = `${API_BASE}/albums/by-slug/${identifier.value}`;
+                }
+                
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error('Album not found');
+                
+                const album = await response.json();
+                
+                // Populate album header
+                document.getElementById('album-title').textContent = album.title || 'Untitled';
+                document.getElementById('album-artist').textContent = album.artist || 'Unknown Artist';
+                document.getElementById('album-artist').href = `/artist/${album.artist_slug || album.artist?.toLowerCase().replace(/\s+/g, '-') || '#'}`;
+                document.getElementById('breadcrumb-title').textContent = album.title || 'Album Details';
+                
+                // Release date
+                const releaseYear = album.release_date ? new Date(album.release_date).getFullYear() : 'TBA';
+                document.getElementById('album-release').textContent = releaseYear;
+                
+                // Track count
+                const trackCount = album.tracks?.length || album.track_count || 0;
+                document.getElementById('album-tracks-count').textContent = trackCount;
+                
+                // Duration
+                const totalDuration = calculateTotalDuration(album.tracks || []);
+                document.getElementById('album-duration').textContent = totalDuration;
+                
+                // Description
+                document.getElementById('album-description').textContent = album.description || 'No description available.';
+                
+                // Album cover
+                const coverImg = document.getElementById('album-cover');
+                if (album.cover_url) {
+                    const coverUrl = album.cover_url.startsWith('/') ? `https://zedtopvibes.pages.dev${album.cover_url}` : album.cover_url;
+                    coverImg.src = coverUrl;
+                } else if (album.cover_emoji) {
+                    const encodedEmoji = encodeURIComponent(album.cover_emoji);
+                    coverImg.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ff5500'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E${encodedEmoji}%3C/text%3E%3C/svg%3E`;
+                }
+                
+                // Render tracklist
+                renderTracklist(album.tracks || []);
+                
+                // Load recommended albums
+                await loadRecommendedAlbums(album.id, album.artist);
+                
+            } catch (error) {
+                console.error('Error loading album:', error);
+                document.getElementById('album-title').textContent = 'Error loading album';
+                document.getElementById('album-description').textContent = error.message;
+                document.getElementById('tracklist-container').innerHTML = '<div class="error-message">Failed to load tracks</div>';
+                document.getElementById('recommended-container').innerHTML = '<div class="error-message">Failed to load recommendations</div>';
+            }
+        }
+        
+        // Artist click handler
+        document.getElementById('album-artist')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            const artistName = this.textContent;
+            if (artistName && artistName !== 'Loading...') {
+                const slug = artistName.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                window.location.href = `/artist/${slug}`;
+            }
+        });
+        
+        // Load when page is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait a moment for header/footer to load
+            setTimeout(loadAlbumDetails, 100);
+        });
+    </script>
+</body>
+</html>
