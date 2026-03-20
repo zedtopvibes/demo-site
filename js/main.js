@@ -96,7 +96,7 @@ async function loadAlbums() {
         }
         
         container.innerHTML = albums.slice(0, 6).map(album => `
-            <a href="/album/${album.slug || album.id}" class="music-item">
+            <a href="/album/${album.slug}" class="music-item">
                 <div class="item-container">
                     <div class="item-thumb">
                         <img src="${getAlbumImage(album)}" 
@@ -145,7 +145,7 @@ async function loadLatestReleases() {
         }
         
         container.innerHTML = latest.map(album => `
-            <a href="/album/${album.slug || album.id}" class="music-item">
+            <a href="/album/${album.slug}" class="music-item">
                 <div class="item-container">
                     <div class="item-thumb">
                         <img src="${getAlbumImage(album)}" 
@@ -193,7 +193,7 @@ async function loadTrending() {
         }
         
         container.innerHTML = trending.map(album => `
-            <a href="/album/${album.slug || album.id}" class="music-item">
+            <a href="/album/${album.slug}" class="music-item">
                 <div class="item-container">
                     <div class="item-thumb">
                         <img src="${getAlbumImage(album)}" 
@@ -237,7 +237,7 @@ async function loadPlaylists() {
         }
         
         container.innerHTML = playlists.slice(0, 6).map(playlist => `
-            <a href="/playlist/${playlist.slug || playlist.id}" class="music-item">
+            <a href="/playlist/${playlist.slug}" class="music-item">
                 <div class="item-container">
                     <div class="item-thumb">
                         <img src="${getPlaylistImage(playlist)}" 
@@ -280,7 +280,7 @@ async function loadEPs() {
         }
         
         container.innerHTML = eps.map(ep => `
-            <a href="/album/${ep.slug || ep.id}" class="music-item">
+            <a href="/album/${ep.slug}" class="music-item">
                 <div class="item-container">
                     <div class="item-thumb">
                         <img src="${getAlbumImage(ep)}" 
@@ -542,7 +542,7 @@ function initializeLiveSearch() {
                         <ul class="live-search-list">
                             ${results.map(item => `
                                 <li>
-                                    <a href="/album/${item.slug || item.id}">
+                                    <a href="/album/${item.slug}">
                                         ${escapeHtml(item.title)} - ${escapeHtml(item.artist || '')}
                                     </a>
                                 </li>
