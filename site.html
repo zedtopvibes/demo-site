@@ -3,51 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZedTopVibes | 80x80 No Shift</title>
+    <title>Zero-Shift 80x80</title>
     <style>
         :root {
             --bg: #0f172a;
-            --card: #1e293b;
+            --card-bg: #1e293b;
             --text-main: #f8fafc;
             --text-dim: #94a3b8;
             --skeleton: #334155;
         }
 
         body {
-            font-family: system-ui, -apple-system, sans-serif;
             background-color: var(--bg);
             color: var(--text-main);
+            font-family: system-ui, -apple-system, sans-serif;
             margin: 0;
-            padding: 1rem;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
         }
 
-        .container { max-width: 600px; margin: 0 auto; }
-
-        /* KEY: Define the exact height of the row container */
-        .album-list {
+        #app-container {
+            width: 100%;
+            max-width: 600px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
         }
 
+        /* Core Layout Constraints */
         .album-card {
+            height: 96px; /* Constraint 1 */
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 0 8px;
             display: flex;
             align-items: center;
-            background: var(--card);
-            border-radius: 8px;
-            padding: 8px;
             gap: 12px;
-            /* This locks the height so it never moves */
-            height: 96px; 
-            box-sizing: border-box;
             overflow: hidden;
         }
 
         .img-box {
-            width: 80px;
-            height: 80px;
+            width: 80px;  /* Constraint 2 */
+            height: 80px; /* Constraint 2 */
             flex-shrink: 0;
-            background-color: var(--skeleton);
+            background: var(--skeleton);
             border-radius: 4px;
             overflow: hidden;
         }
@@ -56,80 +56,111 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
         }
 
-        .info {
+        .info-box {
             flex-grow: 1;
-            min-width: 0; /* Keeps text from pushing the box wider */
+            min-width: 0; /* Ensures ellipsis works in flex */
         }
 
-        .title {
-            font-weight: 700;
-            margin: 0 0 4px 0;
+        .title, .artist {
+            height: 1.2em; /* Constraint 3 */
+            line-height: 1.2em;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            height: 1.2em; /* Lock text height */
-        }
-
-        .artist {
-            color: var(--text-dim);
-            font-size: 0.9rem;
             margin: 0;
-            height: 1.2em; /* Lock text height */
         }
 
+        .title { font-weight: 600; font-size: 1rem; color: var(--text-main); }
+        .artist { font-size: 0.875rem; color: var(--text-dim); margin-top: 4px; }
+
+        /* Skeleton State */
         .skeleton-pulse {
             animation: pulse 1.5s infinite ease-in-out;
             background-color: var(--skeleton);
         }
 
+        .skeleton-text {
+            width: 60%;
+            height: 12px;
+            border-radius: 4px;
+        }
+
+        .skeleton-text.short { width: 40%; }
+
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div id="album-grid" class="album-list">
-        <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:70%"></div><div class="artist skeleton-pulse" style="width:40%"></div></div></div>
-        <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:70%"></div><div class="artist skeleton-pulse" style="width:40%"></div></div></div>
-        <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:70%"></div><div class="artist skeleton-pulse" style="width:40%"></div></div></div>
-    </div>
-</div>
+    <main id="app-container">
+        <div class="album-card">
+            <div class="img-box skeleton-pulse"></div>
+            <div class="info-box">
+                <div class="skeleton-text skeleton-pulse" style="margin-bottom: 8px;"></div>
+                <div class="skeleton-text short skeleton-pulse"></div>
+            </div>
+        </div>
+        <div class="album-card">
+            <div class="img-box skeleton-pulse"></div>
+            <div class="info-box">
+                <div class="skeleton-text skeleton-pulse" style="margin-bottom: 8px;"></div>
+                <div class="skeleton-text short skeleton-pulse"></div>
+            </div>
+        </div>
+        <div class="album-card">
+            <div class="img-box skeleton-pulse"></div>
+            <div class="info-box">
+                <div class="skeleton-text skeleton-pulse" style="margin-bottom: 8px;"></div>
+                <div class="skeleton-text short skeleton-pulse"></div>
+            </div>
+        </div>
+    </main>
 
-<script>
-    const API_URL = 'https://zedtopvibes.com/api/albums';
-    const grid = document.getElementById('album-grid');
+    <script>
+        async function fetchAlbums() {
+            const container = document.getElementById('app-container');
+            
+            try {
+                // Replace URL with your actual Cloudflare Worker endpoint
+                const response = await fetch('/api/albums'); 
+                const data = await response.json();
 
-    async function load() {
-        try {
-            const res = await fetch(API_URL);
-            const data = await res.json();
-            
-            // Optimization: Build the string first, then swap once.
-            // This reduces the time the screen is "blank" to zero.
-            let html = '';
-            data.forEach(album => {
-                html += `
-                <div class="album-card">
-                    <div class="img-box">
-                        <img src="${album.cover_url}" alt="${album.title}" loading="lazy">
-                    </div>
-                    <div class="info">
-                        <div class="title">${album.title}</div>
-                        <div class="artist">${album.artist || 'Unknown'}</div>
-                    </div>
-                </div>`;
-            });
-            
-            grid.innerHTML = html;
-        } catch (e) { console.error(e); }
-    }
-    load();
-</script>
+                if (!Array.isArray(data)) throw new Error("Invalid Data");
+
+                // Atomic Injection: Build full string in memory
+                let htmlBuffer = "";
+                
+                data.forEach(album => {
+                    htmlBuffer += `
+                        <div class="album-card">
+                            <div class="img-box">
+                                <img src="${album.cover_url}" alt="${album.title}" loading="lazy">
+                            </div>
+                            <div class="info-box">
+                                <h2 class="title">${album.title}</h2>
+                                <p class="artist">${album.artist}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                // Single DOM update
+                container.innerHTML = htmlBuffer;
+
+            } catch (error) {
+                console.error("Fetch failed:", error);
+                // Optional: Render error state inside the container
+            }
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', fetchAlbums);
+    </script>
 </body>
 </html>
