@@ -196,7 +196,7 @@
             const statsDiv = document.getElementById('stats');
             
             try {
-                const response = await fetch('/api/albums');
+                const response = await fetch('https://zedtopvibes.com/api/albums');
                 
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
