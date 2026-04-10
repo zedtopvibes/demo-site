@@ -128,7 +128,7 @@
             
             try {
                 // Replace URL with your actual Cloudflare Worker endpoint
-                const response = await fetch('/api/albums'); 
+                const response = await fetch('https://zedtopvibes.com/api/albums'); 
                 const data = await response.json();
 
                 if (!Array.isArray(data)) throw new Error("Invalid Data");
