@@ -148,7 +148,7 @@
     </div>
 
     <script>
-        // Show skeleton loaders
+        // Show exact number of skeletons
         function showSkeletons(count) {
             const container = document.getElementById('albums-container');
             container.innerHTML = Array(count).fill(`
@@ -166,9 +166,6 @@
             const container = document.getElementById('albums-container');
             const statsDiv = document.getElementById('stats');
             
-            // Show 8 skeletons while loading
-            showSkeletons(0);
-            
             try {
                 const response = await fetch('https://zedtopvibes.com/api/albums');
                 
@@ -183,35 +180,40 @@
                     return;
                 }
                 
-                // Replace skeletons with real albums
-                container.innerHTML = albums.map(album => `
-                    <div class="album-card">
-                        <img 
-                            class="album-cover" 
-                            src="${album.cover_url || ''}" 
-                            alt="${escapeHtml(album.title)}"
-                            loading="lazy"
-                            onerror="this.style.background='#dc2626'"
-                        >
-                        <div class="album-info">
-                            <div class="album-title" title="${escapeHtml(album.title)}">
-                                ${escapeHtml(album.title)}
-                            </div>
-                            <div class="album-artist" title="${escapeHtml(album.artist)}">
-                                ${escapeHtml(album.artist)}
-                            </div>
-                            <div class="album-meta">
-                                🎵 ${album.plays?.toLocaleString() || 0} plays
+                // ✅ Show EXACT number of skeletons as albums
+                showSkeletons(albums.length);
+                
+                // Small delay to ensure skeletons render, then replace with real content
+                setTimeout(() => {
+                    container.innerHTML = albums.map(album => `
+                        <div class="album-card">
+                            <img 
+                                class="album-cover" 
+                                src="${album.cover_url || ''}" 
+                                alt="${escapeHtml(album.title)}"
+                                loading="lazy"
+                                onerror="this.style.background='#dc2626'"
+                            >
+                            <div class="album-info">
+                                <div class="album-title" title="${escapeHtml(album.title)}">
+                                    ${escapeHtml(album.title)}
+                                </div>
+                                <div class="album-artist" title="${escapeHtml(album.artist)}">
+                                    ${escapeHtml(album.artist)}
+                                </div>
+                                <div class="album-meta">
+                                    🎵 ${album.plays?.toLocaleString() || 0} plays
+                                </div>
                             </div>
                         </div>
-                    </div>
-                `).join('');
-                
-                // Show stats
-                statsDiv.style.display = 'block';
-                statsDiv.innerHTML = `✅ Loaded ${albums.length} album${albums.length !== 1 ? 's' : ''} | No layout shift`;
-                
-                console.log('Albums loaded:', albums.length);
+                    `).join('');
+                    
+                    // Show stats
+                    statsDiv.style.display = 'block';
+                    statsDiv.innerHTML = `✅ Loaded ${albums.length} album${albums.length !== 1 ? 's' : ''} | No layout shift`;
+                    
+                    console.log('Albums loaded:', albums.length);
+                }, 50); // Small delay for smoother transition
                 
             } catch (error) {
                 console.error('Failed to load albums:', error);
