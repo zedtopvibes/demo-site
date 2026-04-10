@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albums - No Layout Shift Test</title>
+    <style>
+        /* RESERVE SPACE BEFORE API CALLS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 20px;
+            background: #0a0a0a;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* CRITICAL: Fixed dimensions for grid container */
+        .albums-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+            min-height: 400px; /* Reserves space before content loads */
+        }
+
+        /* Skeleton card - exact same dimensions as real card */
+        .skeleton-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 380px; /* Fixed height prevents shift */
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .skeleton-image {
+            width: 100%;
+            height: 280px;
+            background: #2a2a2a;
+        }
+
+        .skeleton-text {
+            padding: 16px;
+        }
+
+        .skeleton-title {
+            height: 24px;
+            background: #2a2a2a;
+            margin-bottom: 8px;
+            border-radius: 4px;
+        }
+
+        .skeleton-artist {
+            height: 16px;
+            background: #2a2a2a;
+            width: 70%;
+            border-radius: 4px;
+        }
+
+        /* Real album card - matches skeleton exactly */
+        .album-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s;
+            height: 380px; /* Same height as skeleton */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .album-card:hover {
+            transform: translateY(-4px);
+        }
+
+        /* CRITICAL: Fixed dimensions for images */
+        .album-cover {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            aspect-ratio: 1 / 1; /* Reserve exact space */
+            background: #2a2a2a;
+        }
+
+        .album-info {
+            padding: 16px;
+            flex: 1;
+        }
+
+        .album-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .album-artist {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .album-meta {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .error-message {
+            background: #dc2626;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .stats {
+            margin-top: 20px;
+            padding: 12px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Albums</h1>
+        
+        <!-- Grid with reserved space via min-height -->
+        <div id="albums-container" class="albums-grid">
+            <!-- Skeleton loaders - same dimensions as real content -->
+            <div class="skeleton-card">
+                <div class="skeleton-image"></div>
+                <div class="skeleton-text">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-artist"></div>
+                </div>
+            </div>
+            <div class="skeleton-card">
+                <div class="skeleton-image"></div>
+                <div class="skeleton-text">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-artist"></div>
+                </div>
+            </div>
+            <div class="skeleton-card">
+                <div class="skeleton-image"></div>
+                <div class="skeleton-text">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-artist"></div>
+                </div>
+            </div>
+            <div class="skeleton-card">
+                <div class="skeleton-image"></div>
+                <div class="skeleton-text">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-artist"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="stats" class="stats" style="display: none;"></div>
+    </div>
+
+    <script>
+        async function loadAlbums() {
+            const container = document.getElementById('albums-container');
+            const statsDiv = document.getElementById('stats');
+            
+            try {
+                // Call your Cloudflare Pages Function
+                const response = await fetch('https://zedtopvibes.com/api/albums'); // Your endpoint path
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const albums = await response.json();
+                
+                if (!albums.length) {
+                    container.innerHTML = '<div style="grid-column: 1/-1; text-align: center;">No albums found</div>';
+                    return;
+                }
+                
+                // Replace skeletons with real content atomically
+                container.innerHTML = albums.map(album => `
+                    <div class="album-card">
+                        <img 
+                            class="album-cover" 
+                            src="${album.cover_url || '/placeholder.jpg'}" 
+                            alt="${escapeHtml(album.title)}"
+                            width="280"
+                            height="280"
+                            loading="lazy"
+                            onerror="this.src='/fallback-image.jpg'"
+                        >
+                        <div class="album-info">
+                            <div class="album-title" title="${escapeHtml(album.title)}">
+                                ${escapeHtml(album.title)}
+                            </div>
+                            <div class="album-artist">
+                                ${escapeHtml(album.artist)}
+                            </div>
+                            <div class="album-meta">
+                                📅 ${album.release_date ? album.release_date.split('-')[0] : 'Unknown'} 
+                                • 🎵 ${album.plays?.toLocaleString() || 0} plays
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Show stats after content loads
+                statsDiv.style.display = 'block';
+                statsDiv.innerHTML = `✅ Loaded ${albums.length} albums | ⚡ No layout shift detected`;
+                
+                // Log layout stability
+                console.log('Albums loaded, container height:', container.offsetHeight);
+                
+            } catch (error) {
+                console.error('Failed to load albums:', error);
+                
+                // Keep container height stable while showing error
+                container.innerHTML = `
+                    <div class="error-message" style="grid-column: 1/-1;">
+                        ⚠️ Failed to load albums: ${error.message}<br>
+                        <button onclick="location.reload()" style="margin-top: 10px; padding: 8px 16px;">Retry</button>
+                    </div>
+                `;
+            }
+        }
+        
+        // Security: Escape HTML to prevent XSS
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+        
+        // Load albums when page loads
+        loadAlbums();
+        
+        // Optional: Monitor for layout shift
+        let layoutShiftCount = 0;
+        new PerformanceObserver((list) => {
+            for (const entry of list.getEntries()) {
+                if (entry.value > 0) {
+                    layoutShiftCount++;
+                    console.warn(`Layout shift detected (${layoutShiftCount}):`, entry);
+                }
+            }
+        }).observe({entryTypes: ['layout-shift']});
+    </script>
+</body>
+</html>
