@@ -3,180 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZedTopVibes | Premium Feed</title>
+    <title>ZedTopVibes | Grid Concept</title>
     <style>
         :root {
-            --bg: #05070a;
-            --surface: rgba(255, 255, 255, 0.03);
-            --surface-hover: rgba(255, 255, 255, 0.07);
-            --accent: #3b82f6;
-            --text-main: #ffffff;
-            --text-dim: #94a3b8;
-            --border: rgba(255, 255, 255, 0.1);
+            --bg: #020617;
+            --card: #0f172a;
+            --text-main: #f1f5f9;
+            --text-dim: #64748b;
             --skeleton: #1e293b;
+            --grid-gap: 16px;
         }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', system-ui, sans-serif;
             background-color: var(--bg);
-            background-image: radial-gradient(circle at top right, #1e1b4b, transparent);
             color: var(--text-main);
             margin: 0;
-            padding: 2rem 1rem;
-            min-height: 100vh;
+            padding: 20px;
         }
 
-        .container { 
-            max-width: 550px; 
-            margin: 0 auto; 
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        /* HEADER: Fixed height to prevent shift */
+        header { height: 60px; margin-bottom: 20px; }
+
+        /* THE GRID: The magic happens here */
+        .album-grid {
+            display: grid;
+            /* Creates 80px wide columns. Adjust minmax for larger tiles */
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: var(--grid-gap);
         }
 
-        h1 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.025em;
-        }
-
-        .album-list {
+        .album-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 10px;
+            /* RIGID HEIGHT: (Width is fluid, but we lock the vertical footprint) */
             display: flex;
             flex-direction: column;
-            gap: 16px;
-        }
-
-        /* Fixed height container to prevent Layout Shift */
-        .album-card {
-            display: flex;
-            align-items: center;
-            background: var(--surface);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 8px;
-            gap: 16px;
-            height: 100px; /* Locked height */
+            height: 210px; 
             box-sizing: border-box;
-            transition: transform 0.2s ease, background 0.2s ease;
-            cursor: pointer;
+            transition: transform 0.2s;
         }
 
-        .album-card:hover {
-            background: var(--surface-hover);
-            transform: translateY(-2px);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .img-box {
-            width: 84px;
-            height: 84px;
-            flex-shrink: 0;
+        /* 1:1 Aspect Ratio Box - Pre-books the space */
+        .img-wrapper {
+            width: 100%;
+            aspect-ratio: 1 / 1;
             background-color: var(--skeleton);
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
         }
 
-        .img-box img {
+        .img-wrapper img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .info {
-            flex-grow: 1;
-            min-width: 0;
-        }
+        .img-wrapper img.loaded { opacity: 1; }
+
+        .info { min-width: 0; }
 
         .title {
+            font-size: 0.9rem;
             font-weight: 600;
-            font-size: 1.05rem;
-            margin: 0 0 4px 0;
+            margin: 0;
+            height: 1.2em; /* Lock */
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            height: 1.3em;
         }
 
         .artist {
+            font-size: 0.8rem;
             color: var(--text-dim);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin: 0;
-            height: 1.2em;
+            margin-top: 4px;
+            height: 1.2em; /* Lock */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        /* Enhanced Skeleton UI */
-        .skeleton {
-            background: linear-gradient(
-                90deg,
-                var(--skeleton) 25%,
-                #2d3748 50%,
-                var(--skeleton) 75%
-            );
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite linear;
-            border-radius: 4px;
+        /* Skeleton Animation */
+        .pulse {
+            animation: pulse-bg 1.5s infinite ease-in-out;
+            background-color: var(--skeleton);
         }
 
-        @keyframes shimmer {
-            from { background-position: -200% 0; }
-            to { background-position: 200% 0; }
+        @keyframes pulse-bg {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Latest Releases</h1>
-    <div id="album-grid" class="album-list">
-        <div class="album-card">
-            <div class="img-box skeleton"></div>
-            <div class="info">
-                <div class="title skeleton" style="width:60%; height: 18px;"></div>
-                <div class="artist skeleton" style="width:30%; height: 14px; margin-top: 8px;"></div>
-            </div>
-        </div>
-        <div class="album-card">
-            <div class="img-box skeleton"></div>
-            <div class="info">
-                <div class="title skeleton" style="width:75%; height: 18px;"></div>
-                <div class="artist skeleton" style="width:40%; height: 14px; margin-top: 8px;"></div>
-            </div>
-        </div>
+    <header><h1>Trending</h1></header>
+
+    <div id="main-grid" class="album-grid">
+        <div class="album-card"><div class="img-wrapper pulse"></div><div class="title pulse" style="width:80%"></div><div class="artist pulse" style="width:50%"></div></div>
+        <div class="album-card"><div class="img-wrapper pulse"></div><div class="title pulse" style="width:80%"></div><div class="artist pulse" style="width:50%"></div></div>
+        <div class="album-card"><div class="img-wrapper pulse"></div><div class="title pulse" style="width:80%"></div><div class="artist pulse" style="width:50%"></div></div>
+        <div class="album-card"><div class="img-wrapper pulse"></div><div class="title pulse" style="width:80%"></div><div class="artist pulse" style="width:50%"></div></div>
+        <div class="album-card"><div class="img-wrapper pulse"></div><div class="title pulse" style="width:80%"></div><div class="artist pulse" style="width:50%"></div></div>
     </div>
 </div>
 
 <script>
-    const API_URL = 'https://zedtopvibes.com/api/albums';
-    const grid = document.getElementById('album-grid');
+    const API = 'https://zedtopvibes.com/api/albums';
+    const grid = document.getElementById('main-grid');
 
     async function load() {
         try {
-            const res = await fetch(API_URL);
+            const res = await fetch(API);
             const data = await res.json();
             
-            // Map data to the new structure
-            const html = data.map(album => `
+            let html = '';
+            data.forEach(item => {
+                html += `
                 <div class="album-card">
-                    <div class="img-box">
-                        <img src="${album.cover_url}" alt="${album.title}" loading="lazy">
+                    <div class="img-wrapper">
+                        <img src="${item.cover_url}" 
+                             onload="this.classList.add('loaded')" 
+                             loading="lazy">
                     </div>
                     <div class="info">
-                        <div class="title">${album.title}</div>
-                        <div class="artist">${album.artist || 'Unknown Artist'}</div>
+                        <div class="title">${item.title}</div>
+                        <div class="artist">${item.artist || 'Unknown'}</div>
                     </div>
-                </div>
-            `).join('');
+                </div>`;
+            });
             
             grid.innerHTML = html;
-        } catch (e) { 
-            console.error("Failed to load albums:", e);
-            grid.innerHTML = '<p style="color: #ef4444;">Unable to load feed. Please try again later.</p>';
-        }
+        } catch (e) { console.error(e); }
     }
-
     load();
 </script>
+
 </body>
 </html>
