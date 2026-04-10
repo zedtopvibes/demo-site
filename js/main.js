@@ -1,8 +1,8 @@
 // ===== Zedtopvibes.com - Main JavaScript with Live API Integration =====
 // Connected to: https://zedtopvibes.pages.dev/api
 
-const API_BASE = 'https://zedtopvibes.pages.dev/api';
-const IMAGE_BASE = 'https://zedtopvibes.pages.dev';
+const API_BASE = 'https://zedtopvibes.com/api';
+const IMAGE_BASE = 'https://files.zedtopvibes.com';
 
 // Prevent multiple initialization
 let isInitialized = false;
