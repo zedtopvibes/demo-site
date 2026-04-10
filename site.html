@@ -159,8 +159,8 @@
             const container = document.getElementById('albums-container');
             const statsDiv = document.getElementById('stats');
             
-            // Show 8 skeletons initially (safe number)
-            showSkeletons(8);
+            // Show minimal initial loading state
+            showSkeletons(1);
             
             try {
                 const response = await fetch('https://zedtopvibes.com/api/albums');
@@ -176,7 +176,13 @@
                     return;
                 }
                 
-                // Replace with EXACT number of albums - no height difference!
+                // ✅ SOLUTION: Show exact number of skeletons matching content
+                showSkeletons(albums.length);
+                
+                // Brief delay for smooth rendering
+                await new Promise(resolve => setTimeout(resolve, 10));
+                
+                // Replace with actual content
                 container.innerHTML = albums.map(album => `
                     <div class="album-card">
                         <img 
@@ -202,7 +208,7 @@
                 `).join('');
                 
                 statsDiv.style.display = 'block';
-                statsDiv.innerHTML = `✅ 2 Loaded ${albums.length} albums | No layout shift`;
+                statsDiv.innerHTML = `✅ Loaded ${albums.length} albums | No layout shift`;
                 
             } catch (error) {
                 console.error('Failed to load albums:', error);
