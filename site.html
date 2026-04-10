@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZedTopVibes | No Shift Layout</title>
+<title>ZedTopVibes | Grid No Shift</title>
 
 <style>
 :root {
@@ -19,9 +19,6 @@ body {
     font-family: system-ui;
     background: var(--bg);
     color: var(--text-main);
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
 }
 
 /* ================= HEADER ================= */
@@ -29,7 +26,6 @@ body {
     height: 64px; /* LOCKED */
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: 0 16px;
     background: var(--card);
     box-sizing: border-box;
@@ -37,25 +33,17 @@ body {
 
 .logo {
     font-weight: 700;
-}
-
-.nav {
-    display: flex;
-    gap: 12px;
-}
-
-.nav-item {
-    width: 60px;
-    height: 14px;
-    border-radius: 4px;
+    font-size: 1rem;
 }
 
 /* ================= MAIN ================= */
-.main {
-    flex: 1;
-    padding: 16px;
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem;
 }
 
+/* GRID */
 .album-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -67,46 +55,68 @@ body {
     background: var(--card);
     border-radius: 10px;
     overflow: hidden;
-    height: 220px;
+
+    height: 220px; /* LOCKED */
     display: flex;
     flex-direction: column;
 }
 
+/* IMAGE */
 .img-box {
-    height: 140px;
+    width: 100%;
+    height: 140px; /* LOCKED */
     background: var(--skeleton);
+    flex-shrink: 0;
 }
 
 .img-box img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block; /* prevents tiny shifts */
 }
 
+/* TEXT */
 .info {
     padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
-.title, .artist {
-    height: 1.2em;
+.title {
+    font-weight: 700;
+    font-size: 0.9rem;
+
+    white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
+
+    height: 1.2em; /* LOCKED */
+}
+
+.artist {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+
+    height: 1.2em; /* LOCKED */
 }
 
 /* ================= FOOTER ================= */
 .footer {
     height: 56px; /* LOCKED */
-    background: var(--card);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.85rem;
+    background: var(--card);
     color: var(--text-dim);
+    font-size: 0.85rem;
 }
 
 /* ================= SKELETON ================= */
 .skeleton {
-    background: var(--skeleton);
     animation: pulse 1.5s infinite ease-in-out;
+    background: var(--skeleton);
 }
 
 @keyframes pulse {
@@ -121,18 +131,13 @@ body {
 <!-- HEADER -->
 <header class="header">
     <div class="logo">ZedTopVibes</div>
-    <div class="nav">
-        <div class="nav-item skeleton"></div>
-        <div class="nav-item skeleton"></div>
-        <div class="nav-item skeleton"></div>
-    </div>
 </header>
 
 <!-- MAIN -->
-<main class="main">
+<div class="container">
     <div id="grid" class="album-grid">
 
-        <!-- Skeleton cards -->
+        <!-- Skeleton Cards -->
         <div class="album-card">
             <div class="img-box skeleton"></div>
             <div class="info">
@@ -158,7 +163,7 @@ body {
         </div>
 
     </div>
-</main>
+</div>
 
 <!-- FOOTER -->
 <footer class="footer">
@@ -189,6 +194,7 @@ async function load() {
             </div>`;
         });
 
+        // Single swap → no layout shift
         grid.innerHTML = html;
 
     } catch (e) {
