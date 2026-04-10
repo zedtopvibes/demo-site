@@ -23,7 +23,7 @@ body {
 
 /* ================= HEADER ================= */
 .header {
-    height: 64px; /* LOCKED */
+    height: 64px;
     display: flex;
     align-items: center;
     padding: 0 16px;
@@ -55,8 +55,7 @@ body {
     background: var(--card);
     border-radius: 10px;
     overflow: hidden;
-
-    height: 220px; /* LOCKED */
+    height: 220px;
     display: flex;
     flex-direction: column;
 }
@@ -64,7 +63,7 @@ body {
 /* IMAGE */
 .img-box {
     width: 100%;
-    height: 140px; /* LOCKED */
+    height: 140px;
     background: var(--skeleton);
     flex-shrink: 0;
 }
@@ -73,7 +72,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block; /* prevents tiny shifts */
+    display: block;
 }
 
 /* TEXT */
@@ -87,24 +86,21 @@ body {
 .title {
     font-weight: 700;
     font-size: 0.9rem;
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
-    height: 1.2em; /* LOCKED */
+    height: 1.2em;
 }
 
 .artist {
     font-size: 0.8rem;
     color: var(--text-dim);
-
-    height: 1.2em; /* LOCKED */
+    height: 1.2em;
 }
 
 /* ================= FOOTER ================= */
 .footer {
-    height: 56px; /* LOCKED */
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -113,15 +109,9 @@ body {
     font-size: 0.85rem;
 }
 
-/* ================= SKELETON ================= */
+/* ================= STATIC SKELETON ================= */
 .skeleton {
-    animation: pulse 1.5s infinite ease-in-out;
     background: var(--skeleton);
-}
-
-@keyframes pulse {
-    0%,100% { opacity:1; }
-    50% { opacity:0.5; }
 }
 </style>
 </head>
@@ -194,7 +184,6 @@ async function load() {
             </div>`;
         });
 
-        // Single swap → no layout shift
         grid.innerHTML = html;
 
     } catch (e) {
