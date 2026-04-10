@@ -1,185 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZedTopVibes | Static Performance</title>
-    <style>
-        :root {
-            --bg: #000000;
-            --card: #0a0a0a;
-            --text-main: #ffffff;
-            --text-dim: #666666;
-            --skeleton: #1a1a1a;
-            --border-glow: #00ff88;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZedTopVibes | Grid No Shift</title>
 
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            margin: 0;
-            padding: 2rem 1rem;
-        }
+<style>
+:root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text-main: #f8fafc;
+    --text-dim: #94a3b8;
+    --skeleton: #334155;
+}
 
-        .container { 
-            max-width: 700px; 
-            margin: 0 auto; 
-        }
+body {
+    margin: 0;
+    padding: 1rem;
+    font-family: system-ui;
+    background: var(--bg);
+    color: var(--text-main);
+}
 
-        /* Header section */
-        .header {
-            margin-bottom: 2rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border-glow);
-            padding-bottom: 1rem;
-        }
+.container {
+    max-width: 900px;
+    margin: auto;
+}
 
-        .header h1 {
-            font-size: 2rem;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #fff, var(--border-glow));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
+/* GRID LAYOUT */
+.album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+}
 
-        .header p {
-            color: var(--text-dim);
-            font-size: 0.85rem;
-        }
+/* CARD */
+.album-card {
+    background: var(--card);
+    border-radius: 10px;
+    overflow: hidden;
 
-        .album-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
+    /* KEY: lock full height */
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+}
 
-        .album-card {
-            display: flex;
-            align-items: center;
-            background: var(--card);
-            border-radius: 12px;
-            padding: 12px;
-            gap: 16px;
-            height: 100px; /* RIGID HEIGHT LOCK */
-            box-sizing: border-box;
-            overflow: hidden;
-            border: 1px solid #1a1a1a;
-            transition: border-color 0.2s ease;
-        }
+/* IMAGE */
+.img-box {
+    width: 100%;
+    height: 140px; /* fixed */
+    background: var(--skeleton);
+    flex-shrink: 0;
+}
 
-        .album-card:hover {
-            border-color: var(--border-glow);
-        }
+.img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-        .img-box {
-            width: 76px;
-            height: 76px;
-            flex-shrink: 0;
-            background-color: var(--skeleton);
-            border-radius: 8px;
-            overflow: hidden;
-        }
+/* TEXT */
+.info {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
 
-        .img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
+.title {
+    font-weight: 700;
+    font-size: 0.9rem;
 
-        .info {
-            flex-grow: 1;
-            min-width: 0;
-        }
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
-        .title {
-            font-weight: 600;
-            margin: 0 0 6px 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            height: 1.3em;
-            font-size: 1rem;
-        }
+    height: 1.2em;
+}
 
-        .artist {
-            color: var(--text-dim);
-            font-size: 0.85rem;
-            margin: 0;
-            height: 1.2em;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+.artist {
+    font-size: 0.8rem;
+    color: var(--text-dim);
 
-        /* STATIC skeleton - NO PULSE */
-        .skeleton-static {
-            background-color: var(--skeleton);
-            border-radius: 4px;
-        }
+    height: 1.2em;
+}
 
-        /* Counter badge */
-        .count-badge {
-            margin-top: 2rem;
-            text-align: center;
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            font-family: monospace;
-        }
-    </style>
+/* SKELETON */
+.skeleton {
+    animation: pulse 1.5s infinite ease-in-out;
+    background: var(--skeleton);
+}
+
+@keyframes pulse {
+    0%,100% { opacity:1; }
+    50% { opacity:0.5; }
+}
+</style>
 </head>
+
 <body>
 
 <div class="container">
-    <div class="header">
-        <h1>ZEDTOP VIBES</h1>
-        <p>◢ vertical flow • static skeleton • instant swap</p>
-    </div>
+    <div id="grid" class="album-grid">
 
-    <div id="album-grid" class="album-list">
-        <div class="album-card"><div class="img-box skeleton-static"></div><div class="info"><div class="title skeleton-static" style="width:70%"></div><div class="artist skeleton-static" style="width:40%"></div></div></div>
-        <div class="album-card"><div class="img-box skeleton-static"></div><div class="info"><div class="title skeleton-static" style="width:70%"></div><div class="artist skeleton-static" style="width:40%"></div></div></div>
-        <div class="album-card"><div class="img-box skeleton-static"></div><div class="info"><div class="title skeleton-static" style="width:70%"></div><div class="artist skeleton-static" style="width:40%"></div></div></div>
-    </div>
+        <!-- Skeleton Cards -->
+        <div class="album-card">
+            <div class="img-box skeleton"></div>
+            <div class="info">
+                <div class="title skeleton" style="width:80%"></div>
+                <div class="artist skeleton" style="width:50%"></div>
+            </div>
+        </div>
 
-    <div class="count-badge" id="count-badge">— ALBUMS —</div>
+        <div class="album-card">
+            <div class="img-box skeleton"></div>
+            <div class="info">
+                <div class="title skeleton" style="width:80%"></div>
+                <div class="artist skeleton" style="width:50%"></div>
+            </div>
+        </div>
+
+        <div class="album-card">
+            <div class="img-box skeleton"></div>
+            <div class="info">
+                <div class="title skeleton" style="width:80%"></div>
+                <div class="artist skeleton" style="width:50%"></div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 <script>
-    const API_URL = 'https://zedtopvibes.com/api/albums';
-    const grid = document.getElementById('album-grid');
-    const badge = document.getElementById('count-badge');
+const API_URL = 'https://zedtopvibes.com/api/albums';
+const grid = document.getElementById('grid');
 
-    async function load() {
-        try {
-            const res = await fetch(API_URL);
-            const data = await res.json();
-            
-            let html = '';
-            data.forEach(album => {
-                html += `
-                <div class="album-card">
-                    <div class="img-box">
-                        <img src="${album.cover_url}" alt="${album.title}" loading="lazy">
-                    </div>
-                    <div class="info">
-                        <div class="title">${album.title}</div>
-                        <div class="artist">${album.artist || 'Unknown'}</div>
-                    </div>
-                </div>`;
-            });
-            
-            // ATOMIC SWAP - identical to original approach
-            grid.innerHTML = html;
-            badge.textContent = `${data.length} ALBUMS • STATIC LOADED`;
-        } catch (e) { 
-            console.error(e);
-            badge.textContent = 'ERROR LOADING';
-        }
+async function load() {
+    try {
+        const res = await fetch(API_URL);
+        const data = await res.json();
+
+        let html = '';
+
+        data.forEach(album => {
+            html += `
+            <div class="album-card">
+                <div class="img-box">
+                    <img src="${album.cover_url}" alt="${album.title}" loading="lazy">
+                </div>
+                <div class="info">
+                    <div class="title">${album.title}</div>
+                    <div class="artist">${album.artist || 'Unknown'}</div>
+                </div>
+            </div>`;
+        });
+
+        // ONE swap → no flicker, no shift
+        grid.innerHTML = html;
+
+    } catch (e) {
+        console.error(e);
     }
-    load();
+}
+
+load();
 </script>
+
 </body>
 </html>
