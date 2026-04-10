@@ -3,27 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZedTopVibes | 80x80 No Shift</title>
+    <title>ZedTopVibes | Professional Stream</title>
     <style>
         :root {
-            --bg: #0f172a;
-            --card: #1e293b;
-            --text-main: #f8fafc;
+            --bg: #05070a;
+            --card: #111827;
+            --accent: #3b82f6;
+            --text-main: #ffffff;
             --text-dim: #94a3b8;
-            --skeleton: #334155;
+            --skeleton: #1f2937;
+            --header-height: 70px;
+            --footer-height: 60px;
         }
 
+        /* Essential: Body is a grid that fills the screen height */
         body {
             font-family: system-ui, -apple-system, sans-serif;
             background-color: var(--bg);
             color: var(--text-main);
             margin: 0;
-            padding: 1rem;
+            display: grid;
+            grid-template-rows: var(--header-height) 1fr var(--footer-height);
+            min-height: 100vh;
         }
 
-        .container { max-width: 600px; margin: 0 auto; }
+        /* HEADER: Fixed height prevents "content jumping" */
+        header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--skeleton);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-        /* KEY: Define the exact height of the row container */
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--accent);
+        }
+
+        /* MAIN CONTENT AREA */
+        main {
+            padding: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
         .album-list {
             display: flex;
             flex-direction: column;
@@ -34,13 +67,12 @@
             display: flex;
             align-items: center;
             background: var(--card);
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 8px;
-            gap: 12px;
-            /* This locks the height so it never moves */
-            height: 96px; 
+            gap: 16px;
+            height: 96px; /* Shift Prevention */
             box-sizing: border-box;
-            overflow: hidden;
+            border: 1px solid transparent;
         }
 
         .img-box {
@@ -48,7 +80,7 @@
             height: 80px;
             flex-shrink: 0;
             background-color: var(--skeleton);
-            border-radius: 4px;
+            border-radius: 8px;
             overflow: hidden;
         }
 
@@ -61,7 +93,7 @@
 
         .info {
             flex-grow: 1;
-            min-width: 0; /* Keeps text from pushing the box wider */
+            min-width: 0;
         }
 
         .title {
@@ -70,66 +102,92 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            height: 1.2em; /* Lock text height */
+            height: 1.2em;
         }
 
         .artist {
             color: var(--text-dim);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             margin: 0;
-            height: 1.2em; /* Lock text height */
+            height: 1.2em;
         }
 
+        /* FOOTER: Fixed height */
+        footer {
+            border-top: 1px solid var(--skeleton);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            background: var(--bg);
+        }
+
+        /* Skeleton System */
         .skeleton-pulse {
             animation: pulse 1.5s infinite ease-in-out;
             background-color: var(--skeleton);
+            border-radius: 4px;
         }
 
         @keyframes pulse {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            50% { opacity: 0.4; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div id="album-grid" class="album-list">
-        <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:70%"></div><div class="artist skeleton-pulse" style="width:40%"></div></div></div>
-        <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:70%"></div><div class="artist skeleton-pulse" style="width:40%"></div></div></div>
-        <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:70%"></div><div class="artist skeleton-pulse" style="width:40%"></div></div></div>
-    </div>
-</div>
+    <header>
+        <div class="logo">ZEDVIBES</div>
+        <nav style="font-size: 0.9rem; font-weight: 500;">Latest</nav>
+    </header>
 
-<script>
-    const API_URL = 'https://zedtopvibes.com/api/albums';
-    const grid = document.getElementById('album-grid');
+    <main>
+        <div id="album-grid" class="album-list">
+            <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:60%"></div><div class="artist skeleton-pulse" style="width:35%"></div></div></div>
+            <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:60%"></div><div class="artist skeleton-pulse" style="width:35%"></div></div></div>
+            <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:60%"></div><div class="artist skeleton-pulse" style="width:35%"></div></div></div>
+        </div>
+    </main>
 
-    async function load() {
-        try {
-            const res = await fetch(API_URL);
-            const data = await res.json();
-            
-            // Optimization: Build the string first, then swap once.
-            // This reduces the time the screen is "blank" to zero.
-            let html = '';
-            data.forEach(album => {
-                html += `
-                <div class="album-card">
-                    <div class="img-box">
-                        <img src="${album.cover_url}" alt="${album.title}" loading="lazy">
-                    </div>
-                    <div class="info">
-                        <div class="title">${album.title}</div>
-                        <div class="artist">${album.artist || 'Unknown'}</div>
-                    </div>
-                </div>`;
-            });
-            
-            grid.innerHTML = html;
-        } catch (e) { console.error(e); }
-    }
-    load();
-</script>
+    <footer>
+        &copy; 2026 ZedTopVibes. All Rights Reserved.
+    </footer>
+
+    <script>
+        const API_URL = 'https://zedtopvibes.com/api/albums';
+        const grid = document.getElementById('album-grid');
+
+        async function loadData() {
+            try {
+                const res = await fetch(API_URL);
+                const data = await res.json();
+                
+                // Build HTML fragment in memory
+                let html = '';
+                data.forEach(album => {
+                    html += `
+                    <div class="album-card">
+                        <div class="img-box">
+                            <img src="${album.cover_url}" alt="${album.title}" loading="lazy">
+                        </div>
+                        <div class="info">
+                            <div class="title">${album.title}</div>
+                            <div class="artist">${album.artist || 'Unknown Artist'}</div>
+                        </div>
+                    </div>`;
+                });
+                
+                // One-time DOM update prevents flickering/shifting
+                grid.innerHTML = html;
+            } catch (e) {
+                console.error("Fetch Error:", e);
+                grid.innerHTML = '<p style="text-align:center">Failed to load. Swipe down to refresh.</p>';
+            }
+        }
+
+        loadData();
+    </script>
 </body>
 </html>
