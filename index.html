@@ -36,6 +36,98 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     
     <link rel="stylesheet" href="/css/style.css">
+    
+    <style>
+        /* ===== SKELETON LOADER STYLES ===== */
+        .skeleton-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        
+        .skeleton-item {
+            background: #fff;
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: skeleton-pulse 1.2s ease-in-out infinite;
+        }
+        
+        .skeleton-thumb {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+            background-size: 200% 100%;
+            border-radius: 8px;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        
+        .skeleton-data {
+            flex: 1;
+        }
+        
+        .skeleton-title {
+            height: 18px;
+            width: 70%;
+            background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+            background-size: 200% 100%;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        
+        .skeleton-artist {
+            height: 14px;
+            width: 50%;
+            background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+            background-size: 200% 100%;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        
+        .skeleton-meta {
+            height: 12px;
+            width: 40%;
+            background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+            background-size: 200% 100%;
+            border-radius: 4px;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        
+        @keyframes skeleton-loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+        
+        @keyframes skeleton-pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+        
+        /* Hide skeleton when content loads */
+        .music-grid:not(.skeleton-mode) .skeleton-item {
+            display: none;
+        }
+        
+        .music-grid.skeleton-mode .skeleton-item {
+            display: flex;
+        }
+        
+        .music-grid.skeleton-mode > a:not(.skeleton-item) {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <!-- Header loads here -->
@@ -47,7 +139,15 @@
         <a href="#" class="see-all-btn" onclick="searchByGenre('trending'); return false;">See All</a>
     </div>
     <div class="corner">
-        <div class="music-grid" id="trending-container"></div>
+        <div class="music-grid skeleton-mode" id="trending-container">
+            <!-- Hardcoded skeleton loaders -->
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+        </div>
     </div>
 
     <!-- ===== LATEST RELEASES SECTION ===== -->
@@ -56,7 +156,14 @@
         <a href="#" class="see-all-btn" onclick="loadMore(2); return false;">See All</a>
     </div>
     <div class="corner">
-        <div class="music-grid" id="latest-container"></div>
+        <div class="music-grid skeleton-mode" id="latest-container">
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+        </div>
     </div>
     
     <!-- ===== PLAYLISTS SECTION ===== -->
@@ -65,7 +172,14 @@
         <a href="/playlists.html" class="see-all-btn">See All</a>
     </div>
     <div class="corner">
-        <div class="music-grid" id="playlists-container"></div>
+        <div class="music-grid skeleton-mode" id="playlists-container">
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+        </div>
     </div>
     
     <!-- ===== ALBUMS SECTION ===== -->
@@ -74,7 +188,14 @@
         <a href="/albums.html" class="see-all-btn">See All</a>
     </div>
     <div class="corner">
-        <div class="music-grid" id="albums-container"></div>
+        <div class="music-grid skeleton-mode" id="albums-container">
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+        </div>
     </div>
     
     <!-- ===== EPS SECTION ===== -->
@@ -83,7 +204,14 @@
         <a href="/eps.html" class="see-all-btn">See All</a>
     </div>
     <div class="corner">
-        <div class="music-grid" id="eps-container"></div>
+        <div class="music-grid skeleton-mode" id="eps-container">
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+        </div>
     </div>
     
     <!-- ===== ARTISTS SECTION ===== -->
@@ -92,7 +220,14 @@
         <a href="/artists.html" class="see-all-btn">See All</a>
     </div>
     <div class="corner">
-        <div class="music-grid" id="artists-container"></div>
+        <div class="music-grid skeleton-mode" id="artists-container">
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+        </div>
     </div>
     
     <!-- ===== MUSIC GENRES SECTION ===== -->
@@ -101,7 +236,14 @@
         <a href="#" class="see-all-btn" onclick="searchByGenre('all'); return false;">See All</a>
     </div>
     <div class="corner">
-        <div class="music-grid" id="genres-container"></div>
+        <div class="music-grid skeleton-mode" id="genres-container">
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+            <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
+        </div>
     </div>
 
     <!-- Footer loads here -->
