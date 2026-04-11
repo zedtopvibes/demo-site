@@ -1,142 +1,774 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Compilations</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZEDTOPVIBES — ZAMBIAN MUSIC ARCHIVE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <link rel="preconnect" href="https://zedtopvibes.com">
-  <link rel="dns-prefetch" href="https://zedtopvibes.com">
+        :root {
+            --bg: #E5E5E0;
+            --text: #1A1A1A;
+            --accent: #FF3300;
+            --secondary: #0066FF;
+            --muted: #999999;
+        }
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #0f0f0f;
-      color: #fff;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.2;
+            overflow-x: hidden;
+        }
 
-    header {
-      padding: 20px;
-      text-align: center;
-      background: #1a1a1a;
-    }
+        /* Noise Texture */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
-      padding: 20px;
-    }
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            mix-blend-mode: difference;
+            color: white;
+        }
 
-    .card {
-      background: #1e1e1e;
-      border-radius: 10px;
-      overflow: hidden;
-      min-height: 250px;
-    }
+        .brand {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 0.05em;
+            z-index: 101;
+        }
 
-    .card img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      background: #2a2a2a;
-    }
+        .menu-btn {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: inherit;
+            z-index: 101;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+        }
 
-    .card-content {
-      padding: 10px;
-    }
+        .menu-btn:hover {
+            color: var(--accent);
+        }
 
-    .title {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
+        /* Navigation Overlay */
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--text);
+            z-index: 99;
+            transform: translateY(-100%);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem;
+        }
 
-    .meta {
-      font-size: 12px;
-      color: #aaa;
-    }
+        .nav-overlay.active {
+            transform: translateY(0);
+        }
 
-    .desc {
-      font-size: 13px;
-      margin-top: 8px;
-      color: #ccc;
-    }
-  </style>
+        .nav-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: var(--bg);
+            padding: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-close:hover {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            list-style: none;
+            max-width: 800px;
+        }
+
+        .nav-item {
+            border-bottom: 1px solid rgba(229, 229, 224, 0.2);
+            overflow: hidden;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            padding: 2rem 0;
+            text-decoration: none;
+            color: var(--bg);
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(2rem, 8vw, 5rem);
+            text-transform: uppercase;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            transition: all 0.3s ease;
+            transform: translateY(100%);
+            opacity: 0;
+        }
+
+        .nav-overlay.active .nav-link {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .nav-overlay.active .nav-item:nth-child(1) .nav-link { transition-delay: 0.1s; }
+        .nav-overlay.active .nav-item:nth-child(2) .nav-link { transition-delay: 0.15s; }
+        .nav-overlay.active .nav-item:nth-child(3) .nav-link { transition-delay: 0.2s; }
+        .nav-overlay.active .nav-item:nth-child(4) .nav-link { transition-delay: 0.25s; }
+        .nav-overlay.active .nav-item:nth-child(5) .nav-link { transition-delay: 0.3s; }
+
+        .nav-link:hover {
+            color: var(--accent);
+            padding-left: 2rem;
+        }
+
+        .nav-link-number {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--muted);
+            letter-spacing: 0;
+        }
+
+        .nav-footer {
+            position: absolute;
+            bottom: 4rem;
+            left: 4rem;
+            right: 4rem;
+            display: flex;
+            justify-content: space-between;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease 0.4s;
+        }
+
+        .nav-overlay.active .nav-footer {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-footer a {
+            color: var(--bg);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-footer a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr;
+            position: relative;
+            padding: 6rem 2rem 2rem;
+        }
+
+        .hero-main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-title {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(4rem, 15vw, 12rem);
+            line-height: 0.85;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title .line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .hero-title .line span {
+            display: block;
+            transform: translateY(100%);
+            animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero-title .line:nth-child(1) span { animation-delay: 0.1s; }
+        .hero-title .line:nth-child(2) span { animation-delay: 0.2s; }
+        .hero-title .line:nth-child(3) span { animation-delay: 0.3s; }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); }
+        }
+
+        .hero-title .highlight {
+            color: var(--accent);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-title .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0.1em;
+            left: 0;
+            width: 100%;
+            height: 0.2em;
+            background: var(--accent);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            animation: underline 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+        }
+
+        @keyframes underline {
+            to { transform: scaleX(1); transform-origin: left; }
+        }
+
+        .hero-meta {
+            margin-top: 3rem;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .hero-meta-label {
+            color: var(--muted);
+        }
+
+        .hero-meta-value {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        /* Sticky Label */
+        .sticky-label {
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%) rotate(90deg);
+            transform-origin: right center;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        /* Grid Section */
+        .grid-section {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1px;
+            background: var(--text);
+            border-top: 1px solid var(--text);
+        }
+
+        .grid-cell {
+            background: var(--bg);
+            min-height: 300px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .grid-cell:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
+
+        .grid-cell:hover .cell-number {
+            color: var(--accent);
+        }
+
+        .cell-number {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--muted);
+            transition: color 0.3s ease;
+        }
+
+        .cell-content {
+            margin-top: auto;
+        }
+
+        .cell-title {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+        .cell-desc {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            opacity: 0.7;
+        }
+
+        .cell-link {
+            margin-top: 1.5rem;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+        }
+
+        .cell-link::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+
+        .grid-cell:hover .cell-link::after {
+            transform: translateX(5px);
+        }
+
+        /* Cell Sizes */
+        .cell-youtube { grid-column: span 6; }
+        .cell-tiktok { grid-column: span 6; }
+        .cell-email { grid-column: span 4; }
+        .cell-about { grid-column: span 8; }
+
+        @media (max-width: 768px) {
+            .cell-youtube, .cell-tiktok, .cell-email, .cell-about {
+                grid-column: span 12;
+            }
+
+            .nav-overlay {
+                padding: 6rem 2rem 2rem;
+            }
+
+            .nav-footer {
+                left: 2rem;
+                right: 2rem;
+                bottom: 2rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-close {
+                right: 1.5rem;
+            }
+        }
+
+        /* Marquee Strip */
+        .marquee-strip {
+            background: var(--accent);
+            color: white;
+            padding: 1rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-content {
+            display: flex;
+            animation: scroll 15s linear infinite;
+            white-space: nowrap;
+        }
+
+        .marquee-item {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2rem;
+            text-transform: uppercase;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .marquee-divider {
+            width: 8px;
+            height: 8px;
+            background: white;
+            transform: rotate(45deg);
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--text);
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+        }
+
+        .footer-col {
+            grid-column: span 3;
+        }
+
+        .footer-col.wide {
+            grid-column: span 6;
+        }
+
+        .footer-label {
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .footer-content {
+            line-height: 1.6;
+        }
+
+        .footer-content a {
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 1px solid var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .footer-content a:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
+
+        @media (max-width: 768px) {
+            .footer-col, .footer-col.wide {
+                grid-column: span 12;
+            }
+        }
+
+        /* Glitch Effect on Hover */
+        .glitch-hover {
+            position: relative;
+        }
+
+        .glitch-hover:hover {
+            animation: glitch 0.3s ease;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        /* Large Background Text */
+        .bg-text {
+            position: fixed;
+            bottom: -10vh;
+            left: -5vw;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 30vw;
+            color: var(--text);
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 0;
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        /* Prevent scroll when menu open */
+        body.menu-open {
+            overflow: hidden;
+        }
+    </style>
 </head>
-
 <body>
+    <div class="noise"></div>
+    <div class="bg-text">ZED</div>
 
-<header>
-  <h1>Compilations</h1>
-</header>
+    <header>
+        <div class="brand">ZEDTOPVIBES</div>
+        <button class="menu-btn" onclick="openMenu()">[ Menu ]</button>
+    </header>
 
-<div id="content" class="grid"></div>
+    <!-- Navigation Overlay -->
+    <nav class="nav-overlay" id="navOverlay">
+        <button class="nav-close" onclick="closeMenu()">[ Close ]</button>
 
-<script>
-  const API_URL = "https://zedtopvibes.com/api/compilations-home";
-  const BASE_URL = "https://zedtopvibes.com";
+        <ul class="nav-links">
+            <li class="nav-item">
+                <a href="#" class="nav-link" onclick="closeMenu()">
+                    <span>Home</span>
+                    <span class="nav-link-number">01</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="https://youtube.com/@zedtopvibes" target="_blank" class="nav-link" onclick="closeMenu()">
+                    <span>YouTube</span>
+                    <span class="nav-link-number">02</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="https://tiktok.com/@zedtopvibes" target="_blank" class="nav-link" onclick="closeMenu()">
+                    <span>TikTok</span>
+                    <span class="nav-link-number">03</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="mailto:hello@zedtopvibes.com" class="nav-link" onclick="closeMenu()">
+                    <span>Contact</span>
+                    <span class="nav-link-number">04</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#footer" class="nav-link" onclick="closeMenu(); setTimeout(() => document.getElementById('footer').scrollIntoView({behavior: 'smooth'}), 300)">
+                    <span>Info</span>
+                    <span class="nav-link-number">05</span>
+                </a>
+            </li>
+        </ul>
 
-  function getImg(url) {
-    if (!url) return "https://via.placeholder.com/300";
-    return url.startsWith("http") ? url : BASE_URL + url;
-  }
-
-  function render(data) {
-    const content = document.getElementById("content");
-
-    content.innerHTML = data.map(item => `
-      <div class="card">
-        <img 
-          src="${getImg(item.cover_url)}"
-          loading="eager"
-          fetchpriority="${item.is_featured ? 'high' : 'low'}"
-          decoding="async"
-          onerror="this.src='https://via.placeholder.com/300'"
-        />
-        <div class="card-content">
-          <div class="title">${item.title || "No Title"}</div>
-          <div class="meta">
-            ${item.type || "N/A"} • ${item.views || 0} views • ${item.item_count || 0} items
-          </div>
-          <div class="desc">${item.description || ""}</div>
+        <div class="nav-footer">
+            <div>
+                <a href="mailto:hello@zedtopvibes.com">hello@zedtopvibes.com</a>
+            </div>
+            <div>
+                © 2026 ZedTopVibes
+            </div>
+            <div>
+                <a href="https://youtube.com/@zedtopvibes" target="_blank">YT</a> / 
+                <a href="https://tiktok.com/@zedtopvibes" target="_blank">TT</a>
+            </div>
         </div>
-      </div>
-    `).join("");
-  }
+    </nav>
 
-  async function loadData() {
-    const content = document.getElementById("content");
+    <section class="hero">
+        <div class="hero-main">
+            <h1 class="hero-title">
+                <span class="line"><span>ZAMBIA'S</span></span>
+                <span class="line"><span class="highlight">FINEST</span></span>
+                <span class="line"><span>SOUNDS</span></span>
+            </h1>
 
-    // ⚡ STEP 1: instant render from cache (NO LOADING STATE)
-    const cached = localStorage.getItem("home_cache");
+            <div class="hero-meta">
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">Platform</span>
+                    <span class="hero-meta-value">YouTube + TikTok</span>
+                </div>
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">Handle</span>
+                    <span class="hero-meta-value">@zedtopvibes</span>
+                </div>
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">Est.</span>
+                    <span class="hero-meta-value">2026</span>
+                </div>
+            </div>
+        </div>
 
-    if (cached) {
-      try {
-        const parsed = JSON.parse(cached);
-        render(parsed.data);
-      } catch (e) {}
-    }
+        <div class="sticky-label">Scroll to explore ↓</div>
+    </section>
 
-    // ⚡ STEP 2: background refresh (silent)
-    try {
-      const res = await fetch(API_URL);
-      const json = await res.json();
+    <div class="marquee-strip">
+        <div class="marquee-content">
+            <div class="marquee-item">
+                AFROBEATS <span class="marquee-divider"></span> 
+                ZAMBIAN MUSIC <span class="marquee-divider"></span> 
+                CUZZ <span class="marquee-divider"></span> 
+                AFROBEATS <span class="marquee-divider"></span> 
+                ZAMBIAN MUSIC <span class="marquee-divider"></span> 
+                CUZZ
+            </div>
+            <div class="marquee-item">
+                AFROBEATS <span class="marquee-divider"></span> 
+                ZAMBIAN MUSIC <span class="marquee-divider"></span> 
+                CUZZ <span class="marquee-divider"></span> 
+                AFROBEATS <span class="marquee-divider"></span> 
+                ZAMBIAN MUSIC <span class="marquee-divider"></span> 
+                CUZZ
+            </div>
+        </div>
+    </div>
 
-      render(json.data);
+    <section class="grid-section">
+        <div class="grid-cell cell-youtube glitch-hover">
+            <span class="cell-number">01</span>
+            <div class="cell-content">
+                <h3 class="cell-title">YouTube</h3>
+                <p class="cell-desc">Full-length music videos, curated playlists, and exclusive artist interviews. The home of Zambian music discovery.</p>
+                <a href="https://youtube.com/@zedtopvibes" target="_blank" class="cell-link">@zedtopvibes</a>
+            </div>
+        </div>
 
-      // update cache silently
-      localStorage.setItem("home_cache", JSON.stringify(json));
+        <div class="grid-cell cell-tiktok glitch-hover">
+            <span class="cell-number">02</span>
+            <div class="cell-content">
+                <h3 class="cell-title">TikTok</h3>
+                <p class="cell-desc">Short-form content, trending sounds, and viral moments. Daily drops of the freshest Zambian tracks.</p>
+                <a href="https://tiktok.com/@zedtopvibes" target="_blank" class="cell-link">@zedtopvibes</a>
+            </div>
+        </div>
 
-    } catch (err) {
-      console.error("API error:", err);
-      // no UI changes (no loading state)
-    }
-  }
+        <div class="grid-cell cell-email glitch-hover">
+            <span class="cell-number">03</span>
+            <div class="cell-content">
+                <h3 class="cell-title">Email</h3>
+                <p class="cell-desc">Submissions & inquiries</p>
+                <a href="mailto:hello@zedtopvibes.com" class="cell-link">hello@zedtopvibes.com</a>
+            </div>
+        </div>
 
-  loadData();
-</script>
+        <div class="grid-cell cell-about glitch-hover">
+            <span class="cell-number">04</span>
+            <div class="cell-content">
+                <h3 class="cell-title">About The Archive</h3>
+                <p class="cell-desc">ZedTopVibes is a digital archive dedicated to documenting and promoting Zambian music culture. From established legends to underground breakthroughs, we curate the sounds that define Zambia's sonic landscape.</p>
+            </div>
+        </div>
+    </section>
 
+    <footer id="footer">
+        <div class="footer-col wide">
+            <div class="footer-label">Project</div>
+            <div class="footer-content">
+                ZedTopVibes is an independent music curation project focused on Zambian sounds. 
+                We operate across YouTube and TikTok to bring local music to global audiences.
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <div class="footer-label">Social</div>
+            <div class="footer-content">
+                <a href="https://youtube.com/@zedtopvibes" target="_blank">YouTube</a><br>
+                <a href="https://tiktok.com/@zedtopvibes" target="_blank">TikTok</a>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <div class="footer-label">Contact</div>
+            <div class="footer-content">
+                <a href="mailto:hello@zedtopvibes.com">hello@zedtopvibes.com</a><br>
+                zedtopvibes.com
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <div class="footer-label">Legal</div>
+            <div class="footer-content">
+                © 2026<br>
+                All rights reserved
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu Functions
+        function openMenu() {
+            document.getElementById('navOverlay').classList.add('active');
+            document.body.classList.add('menu-open');
+        }
+
+        function closeMenu() {
+            document.getElementById('navOverlay').classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMenu();
+        });
+
+        // Intersection Observer for grid cells
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.grid-cell').forEach((cell, index) => {
+            cell.style.opacity = '0';
+            cell.style.transform = 'translateY(30px)';
+            cell.style.transition = `all 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.1}s`;
+            observer.observe(cell);
+        });
+
+        // Parallax for background text
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const bgText = document.querySelector('.bg-text');
+            bgText.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+    </script>
 </body>
 </html>
