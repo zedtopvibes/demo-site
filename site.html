@@ -1,35 +1,275 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZEDTOPVIBES — ZAMBIAN MUSIC ARCHIVE</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>ZEDTOPVIBES | Curated Music Videos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         :root {
-            --bg: #E5E5E0;
-            --text: #1A1A1A;
-            --accent: #FF3300;
-            --secondary: #0066FF;
-            --muted: #999999;
+            --neon-purple: #b026ff;
+            --neon-cyan: #00f3ff;
+            --neon-pink: #ff006e;
+            --deep-black: #0a0a0a;
+            --grid-color: rgba(176, 38, 255, 0.1);
         }
-
+        
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.2;
+            background-color: var(--deep-black);
+            color: white;
             overflow-x: hidden;
         }
-
-        /* Noise Texture */
+        
+        h1, h2, h3, .brand-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        /* Animated Grid Background */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+            animation: gridMove 20s linear infinite;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(50px) translateZ(-200px); }
+        }
+        
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+            animation: glitch-skew 1s infinite linear alternate-reverse;
+        }
+        
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--neon-cyan);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--neon-purple);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+        
+        @keyframes glitch-anim {
+            0% { clip: rect(12px, 9999px, 52px, 0); }
+            20% { clip: rect(65px, 9999px, 11px, 0); }
+            40% { clip: rect(26px, 9999px, 89px, 0); }
+            60% { clip: rect(78px, 9999px, 14px, 0); }
+            80% { clip: rect(33px, 9999px, 66px, 0); }
+            100% { clip: rect(55px, 9999px, 99px, 0); }
+        }
+        
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 99px, 0); }
+            20% { clip: rect(12px, 9999px, 52px, 0); }
+            40% { clip: rect(78px, 9999px, 14px, 0); }
+            60% { clip: rect(26px, 9999px, 89px, 0); }
+            80% { clip: rect(55px, 9999px, 99px, 0); }
+            100% { clip: rect(33px, 9999px, 66px, 0); }
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-strong {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--deep-black);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--neon-purple);
+            border-radius: 4px;
+        }
+        
+        /* Video Container Styles */
+        .video-container {
+            position: relative;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .video-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(176, 38, 255, 0.2);
+        }
+        
+        /* TikTok Embed Responsive */
+        .tiktok-embed-container {
+            position: relative;
+            padding-bottom: 177.77%; /* 9:16 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
+        .tiktok-embed-container iframe,
+        .tiktok-embed-container blockquote {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            min-width: 100% !important;
+        }
+        
+        /* YouTube Shorts Responsive */
+        .youtube-shorts-container {
+            position: relative;
+            padding-bottom: 177.77%; /* 9:16 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #000;
+        }
+        
+        .youtube-shorts-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+        }
+        
+        /* Video Grid Layouts */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+        }
+        
+        /* Platform Tabs */
+        .platform-tab {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .platform-tab.active {
+            color: var(--neon-cyan);
+        }
+        
+        .platform-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            border-radius: 2px;
+        }
+        
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Hover Card Effect */
+        .platform-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .platform-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(176, 38, 255, 0.3);
+        }
+        
+        /* Button Glow */
+        .glow-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .glow-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+            opacity: 0;
+        }
+        .glow-btn:hover::before {
+            animation: shine 0.5s ease-in-out;
+        }
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
+        }
+        
+        /* Noise Texture Overlay */
         .noise {
             position: fixed;
             top: 0;
@@ -37,737 +277,676 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 9999;
-            opacity: 0.04;
+            opacity: 0.05;
+            z-index: 50;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
-
-        /* Header */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            mix-blend-mode: difference;
-            color: white;
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .brand {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 1.2rem;
-            letter-spacing: 0.05em;
-            z-index: 101;
+        .mobile-menu.active {
+            transform: translateX(0);
         }
-
-        .menu-btn {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            cursor: pointer;
-            border: none;
-            background: none;
-            color: inherit;
-            z-index: 101;
-            padding: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .menu-btn:hover {
-            color: var(--accent);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--text);
-            z-index: 99;
-            transform: translateY(-100%);
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 4rem;
-        }
-
-        .nav-overlay.active {
-            transform: translateY(0);
-        }
-
-        .nav-close {
-            position: absolute;
-            top: 1.5rem;
-            right: 2rem;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            cursor: pointer;
-            border: none;
-            background: none;
-            color: var(--bg);
-            padding: 0.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .nav-close:hover {
-            color: var(--accent);
-        }
-
-        .nav-links {
-            list-style: none;
-            max-width: 800px;
-        }
-
-        .nav-item {
-            border-bottom: 1px solid rgba(229, 229, 224, 0.2);
-            overflow: hidden;
-        }
-
+        
+        /* Navigation Link Hover Effect */
         .nav-link {
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            padding: 2rem 0;
-            text-decoration: none;
-            color: var(--bg);
-            font-family: 'Archivo Black', sans-serif;
-            font-size: clamp(2rem, 8vw, 5rem);
-            text-transform: uppercase;
-            line-height: 1;
-            letter-spacing: -0.02em;
-            transition: all 0.3s ease;
-            transform: translateY(100%);
-            opacity: 0;
-        }
-
-        .nav-overlay.active .nav-link {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .nav-overlay.active .nav-item:nth-child(1) .nav-link { transition-delay: 0.1s; }
-        .nav-overlay.active .nav-item:nth-child(2) .nav-link { transition-delay: 0.15s; }
-        .nav-overlay.active .nav-item:nth-child(3) .nav-link { transition-delay: 0.2s; }
-        .nav-overlay.active .nav-item:nth-child(4) .nav-link { transition-delay: 0.25s; }
-        .nav-overlay.active .nav-item:nth-child(5) .nav-link { transition-delay: 0.3s; }
-
-        .nav-link:hover {
-            color: var(--accent);
-            padding-left: 2rem;
-        }
-
-        .nav-link-number {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.9rem;
-            color: var(--muted);
-            letter-spacing: 0;
-        }
-
-        .nav-footer {
-            position: absolute;
-            bottom: 4rem;
-            left: 4rem;
-            right: 4rem;
-            display: flex;
-            justify-content: space-between;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--muted);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease 0.4s;
-        }
-
-        .nav-overlay.active .nav-footer {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .nav-footer a {
-            color: var(--bg);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .nav-footer a:hover {
-            color: var(--accent);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: grid;
-            grid-template-columns: 1fr;
             position: relative;
-            padding: 6rem 2rem 2rem;
-        }
-
-        .hero-main {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-        }
-
-        .hero-title {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: clamp(4rem, 15vw, 12rem);
-            line-height: 0.85;
-            letter-spacing: -0.03em;
-            text-transform: uppercase;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-title .line {
-            display: block;
             overflow: hidden;
         }
-
-        .hero-title .line span {
-            display: block;
-            transform: translateY(100%);
-            animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .hero-title .line:nth-child(1) span { animation-delay: 0.1s; }
-        .hero-title .line:nth-child(2) span { animation-delay: 0.2s; }
-        .hero-title .line:nth-child(3) span { animation-delay: 0.3s; }
-
-        @keyframes slideUp {
-            to { transform: translateY(0); }
-        }
-
-        .hero-title .highlight {
-            color: var(--accent);
-            position: relative;
-            display: inline-block;
-        }
-
-        .hero-title .highlight::after {
+        .nav-link::after {
             content: '';
             position: absolute;
-            bottom: 0.1em;
+            bottom: -2px;
             left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
             width: 100%;
-            height: 0.2em;
-            background: var(--accent);
-            z-index: -1;
-            transform: scaleX(0);
-            transform-origin: right;
-            animation: underline 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
         }
-
-        @keyframes underline {
-            to { transform: scaleX(1); transform-origin: left; }
+        
+        /* Active Nav State */
+        .nav-active {
+            color: var(--neon-cyan) !important;
         }
-
-        .hero-meta {
-            margin-top: 3rem;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            display: flex;
-            gap: 3rem;
-            flex-wrap: wrap;
+        .nav-active::after {
+            width: 100% !important;
         }
-
-        .hero-meta-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .hero-meta-label {
-            color: var(--muted);
-        }
-
-        .hero-meta-value {
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        /* Sticky Label */
-        .sticky-label {
-            position: absolute;
-            right: 2rem;
-            top: 50%;
-            transform: translateY(-50%) rotate(90deg);
-            transform-origin: right center;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--muted);
-            white-space: nowrap;
-        }
-
-        /* Grid Section */
-        .grid-section {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 1px;
-            background: var(--text);
-            border-top: 1px solid var(--text);
-        }
-
-        .grid-cell {
-            background: var(--bg);
-            min-height: 300px;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            overflow: hidden;
+        
+        /* Hamburger Animation */
+        .hamburger span {
             transition: all 0.3s ease;
         }
-
-        .grid-cell:hover {
-            background: var(--text);
-            color: var(--bg);
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
         }
-
-        .grid-cell:hover .cell-number {
-            color: var(--accent);
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
         }
-
-        .cell-number {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--muted);
-            transition: color 0.3s ease;
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
         }
-
-        .cell-content {
-            margin-top: auto;
+        
+        /* Video Loading State */
+        .video-skeleton {
+            background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
         }
-
-        .cell-title {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            line-height: 1;
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
-
-        .cell-desc {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            opacity: 0.7;
+        
+        /* Follow Button Pulse */
+        .follow-pulse {
+            animation: pulse 2s infinite;
         }
-
-        .cell-link {
-            margin-top: 1.5rem;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            color: inherit;
-            position: relative;
-        }
-
-        .cell-link::after {
-            content: '→';
-            transition: transform 0.3s ease;
-        }
-
-        .grid-cell:hover .cell-link::after {
-            transform: translateX(5px);
-        }
-
-        /* Cell Sizes */
-        .cell-youtube { grid-column: span 6; }
-        .cell-tiktok { grid-column: span 6; }
-        .cell-email { grid-column: span 4; }
-        .cell-about { grid-column: span 8; }
-
-        @media (max-width: 768px) {
-            .cell-youtube, .cell-tiktok, .cell-email, .cell-about {
-                grid-column: span 12;
-            }
-
-            .nav-overlay {
-                padding: 6rem 2rem 2rem;
-            }
-
-            .nav-footer {
-                left: 2rem;
-                right: 2rem;
-                bottom: 2rem;
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-close {
-                right: 1.5rem;
-            }
-        }
-
-        /* Marquee Strip */
-        .marquee-strip {
-            background: var(--accent);
-            color: white;
-            padding: 1rem 0;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .marquee-content {
-            display: flex;
-            animation: scroll 15s linear infinite;
-            white-space: nowrap;
-        }
-
-        .marquee-item {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 2rem;
-            text-transform: uppercase;
-            padding: 0 2rem;
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .marquee-divider {
-            width: 8px;
-            height: 8px;
-            background: white;
-            transform: rotate(45deg);
-        }
-
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* Footer */
-        footer {
-            padding: 4rem 2rem;
-            border-top: 1px solid var(--text);
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 2rem;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.8rem;
-        }
-
-        .footer-col {
-            grid-column: span 3;
-        }
-
-        .footer-col.wide {
-            grid-column: span 6;
-        }
-
-        .footer-label {
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 1rem;
-        }
-
-        .footer-content {
-            line-height: 1.6;
-        }
-
-        .footer-content a {
-            color: var(--text);
-            text-decoration: none;
-            border-bottom: 1px solid var(--text);
-            transition: all 0.3s ease;
-        }
-
-        .footer-content a:hover {
-            background: var(--text);
-            color: var(--bg);
-        }
-
-        @media (max-width: 768px) {
-            .footer-col, .footer-col.wide {
-                grid-column: span 12;
-            }
-        }
-
-        /* Glitch Effect on Hover */
-        .glitch-hover {
-            position: relative;
-        }
-
-        .glitch-hover:hover {
-            animation: glitch 0.3s ease;
-        }
-
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
-        }
-
-        /* Large Background Text */
-        .bg-text {
-            position: fixed;
-            bottom: -10vh;
-            left: -5vw;
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 30vw;
-            color: var(--text);
-            opacity: 0.03;
-            pointer-events: none;
-            z-index: 0;
-            white-space: nowrap;
-            line-height: 1;
-        }
-
-        /* Prevent scroll when menu open */
-        body.menu-open {
-            overflow: hidden;
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(176, 38, 255, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(176, 38, 255, 0); }
         }
     </style>
 </head>
-<body>
+<body class="antialiased">
+
+    <!-- Noise Overlay -->
     <div class="noise"></div>
-    <div class="bg-text">ZED</div>
+    
+    <!-- Animated Grid Background -->
+    <div class="grid-bg"></div>
 
-    <header>
-        <div class="brand">ZEDTOPVIBES</div>
-        <button class="menu-btn" onclick="openMenu()">[ Menu ]</button>
-    </header>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-strong px-6 py-4 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#home" class="text-2xl font-bold brand-font tracking-tighter hover:scale-105 transition-transform">
+                <span class="gradient-text">ZED</span>TOP<span class="text-white">VIBES</span>
+            </a>
 
-    <!-- Navigation Overlay -->
-    <nav class="nav-overlay" id="navOverlay">
-        <button class="nav-close" onclick="closeMenu()">[ Close ]</button>
-
-        <ul class="nav-links">
-            <li class="nav-item">
-                <a href="#" class="nav-link" onclick="closeMenu()">
-                    <span>Home</span>
-                    <span class="nav-link-number">01</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="https://youtube.com/@zedtopvibes" target="_blank" class="nav-link" onclick="closeMenu()">
-                    <span>YouTube</span>
-                    <span class="nav-link-number">02</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="https://tiktok.com/@zedtopvibes" target="_blank" class="nav-link" onclick="closeMenu()">
-                    <span>TikTok</span>
-                    <span class="nav-link-number">03</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="mailto:hello@zedtopvibes.com" class="nav-link" onclick="closeMenu()">
-                    <span>Contact</span>
-                    <span class="nav-link-number">04</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#footer" class="nav-link" onclick="closeMenu(); setTimeout(() => document.getElementById('footer').scrollIntoView({behavior: 'smooth'}), 300)">
-                    <span>Info</span>
-                    <span class="nav-link-number">05</span>
-                </a>
-            </li>
-        </ul>
-
-        <div class="nav-footer">
-            <div>
-                <a href="mailto:hello@zedtopvibes.com">hello@zedtopvibes.com</a>
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="#home" class="nav-link text-sm font-medium tracking-widest hover:text-[#b026ff] transition-colors py-2" data-section="home">HOME</a>
+                <a href="#videos" class="nav-link text-sm font-medium tracking-widest hover:text-[#b026ff] transition-colors py-2" data-section="videos">WATCH</a>
+                <a href="#platforms" class="nav-link text-sm font-medium tracking-widest hover:text-[#b026ff] transition-colors py-2" data-section="platforms">PLATFORMS</a>
+                <a href="#about" class="nav-link text-sm font-medium tracking-widest hover:text-[#b026ff] transition-colors py-2" data-section="about">ABOUT</a>
+                <a href="#contact" class="nav-link text-sm font-medium tracking-widest hover:text-[#b026ff] transition-colors py-2" data-section="contact">CONTACT</a>
             </div>
-            <div>
-                © 2026 ZedTopVibes
+
+            <!-- CTA Button Desktop -->
+            <div class="hidden lg:block">
+                <a href="https://tiktok.com/@zedtopvibes" target="_blank" class="glow-btn px-6 py-2 bg-gradient-to-r from-[#b026ff] to-[#00f3ff] text-white font-bold rounded-full text-sm tracking-wider hover:shadow-[0_0_20px_rgba(176,38,255,0.5)] transition-all follow-pulse">
+                    FOLLOW +
+                </a>
             </div>
-            <div>
-                <a href="https://youtube.com/@zedtopvibes" target="_blank">YT</a> / 
-                <a href="https://tiktok.com/@zedtopvibes" target="_blank">TT</a>
+
+            <!-- Mobile Hamburger -->
+            <button class="lg:hidden hamburger flex flex-col gap-1.5 p-2 z-50" id="hamburger" onclick="toggleMobileMenu()">
+                <span class="w-6 h-0.5 bg-white block"></span>
+                <span class="w-6 h-0.5 bg-white block"></span>
+                <span class="w-6 h-0.5 bg-white block"></span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu fixed top-0 right-0 w-full h-screen glass-strong lg:hidden flex flex-col justify-center items-center space-y-8" id="mobile-menu">
+            <a href="#home" class="text-2xl font-bold tracking-widest hover:text-[#b026ff] transition-colors" onclick="closeMobileMenu()">HOME</a>
+            <a href="#videos" class="text-2xl font-bold tracking-widest hover:text-[#b026ff] transition-colors" onclick="closeMobileMenu()">WATCH</a>
+            <a href="#platforms" class="text-2xl font-bold tracking-widest hover:text-[#b026ff] transition-colors" onclick="closeMobileMenu()">PLATFORMS</a>
+            <a href="#about" class="text-2xl font-bold tracking-widest hover:text-[#b026ff] transition-colors" onclick="closeMobileMenu()">ABOUT</a>
+            <a href="#contact" class="text-2xl font-bold tracking-widest hover:text-[#b026ff] transition-colors" onclick="closeMobileMenu()">CONTACT</a>
+            
+            <div class="flex gap-4 mt-8">
+                <a href="https://tiktok.com/@zedtopvibes" target="_blank" class="w-12 h-12 rounded-full bg-[#00f3ff] text-black flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                </a>
+                <a href="https://youtube.com/@zedtopvibes" target="_blank" class="w-12 h-12 rounded-full bg-[#ff006e] text-white flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
             </div>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-main">
-            <h1 class="hero-title">
-                <span class="line"><span>ZAMBIA'S</span></span>
-                <span class="line"><span class="highlight">FINEST</span></span>
-                <span class="line"><span>SOUNDS</span></span>
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center px-6 pt-20">
+        <div class="max-w-6xl mx-auto text-center relative z-10">
+            <h1 class="text-6xl md:text-8xl lg:text-9xl font-bold mb-6 leading-none tracking-tighter">
+                <span class="glitch block mb-2" data-text="CURATED">CURATED</span>
+                <span class="block gradient-text">SOUNDS</span>
             </h1>
-
-            <div class="hero-meta">
-                <div class="hero-meta-item">
-                    <span class="hero-meta-label">Platform</span>
-                    <span class="hero-meta-value">YouTube + TikTok</span>
-                </div>
-                <div class="hero-meta-item">
-                    <span class="hero-meta-label">Handle</span>
-                    <span class="hero-meta-value">@zedtopvibes</span>
-                </div>
-                <div class="hero-meta-item">
-                    <span class="hero-meta-label">Est.</span>
-                    <span class="hero-meta-value">2026</span>
-                </div>
+            
+            <p class="text-xl md:text-2xl text-gray-400 mb-12 max-w-2xl mx-auto font-light tracking-wide">
+                Short-form music video curation. <br>
+                <span class="text-white">Watch the best vibes. Right here.</span>
+            </p>
+            
+            <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+                <a href="#videos" class="group relative px-8 py-4 bg-[#b026ff] text-white font-bold rounded-full overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(176,38,255,0.5)]">
+                    <span class="relative z-10 flex items-center gap-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        WATCH NOW
+                    </span>
+                </a>
+                
+                <a href="https://tiktok.com/@zedtopvibes" target="_blank" 
+                   class="group relative px-8 py-4 border border-[#00f3ff] text-[#00f3ff] font-bold rounded-full overflow-hidden transition-all hover:scale-105 hover:bg-[#00f3ff] hover:text-black">
+                    <span class="relative z-10 flex items-center gap-2">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                        FOLLOW @zedtopvibes
+                    </span>
+                </a>
             </div>
         </div>
-
-        <div class="sticky-label">Scroll to explore ↓</div>
-    </section>
-
-    <div class="marquee-strip">
-        <div class="marquee-content">
-            <div class="marquee-item">
-                AFROBEATS <span class="marquee-divider"></span> 
-                ZAMBIAN MUSIC <span class="marquee-divider"></span> 
-                CUZZ <span class="marquee-divider"></span> 
-                AFROBEATS <span class="marquee-divider"></span> 
-                ZAMBIAN MUSIC <span class="marquee-divider"></span> 
-                CUZZ
-            </div>
-            <div class="marquee-item">
-                AFROBEATS <span class="marquee-divider"></span> 
-                ZAMBIAN MUSIC <span class="marquee-divider"></span> 
-                CUZZ <span class="marquee-divider"></span> 
-                AFROBEATS <span class="marquee-divider"></span> 
-                ZAMBIAN MUSIC <span class="marquee-divider"></span> 
-                CUZZ
-            </div>
-        </div>
-    </div>
-
-    <section class="grid-section">
-        <div class="grid-cell cell-youtube glitch-hover">
-            <span class="cell-number">01</span>
-            <div class="cell-content">
-                <h3 class="cell-title">YouTube</h3>
-                <p class="cell-desc">Full-length music videos, curated playlists, and exclusive artist interviews. The home of Zambian music discovery.</p>
-                <a href="https://youtube.com/@zedtopvibes" target="_blank" class="cell-link">@zedtopvibes</a>
-            </div>
-        </div>
-
-        <div class="grid-cell cell-tiktok glitch-hover">
-            <span class="cell-number">02</span>
-            <div class="cell-content">
-                <h3 class="cell-title">TikTok</h3>
-                <p class="cell-desc">Short-form content, trending sounds, and viral moments. Daily drops of the freshest Zambian tracks.</p>
-                <a href="https://tiktok.com/@zedtopvibes" target="_blank" class="cell-link">@zedtopvibes</a>
-            </div>
-        </div>
-
-        <div class="grid-cell cell-email glitch-hover">
-            <span class="cell-number">03</span>
-            <div class="cell-content">
-                <h3 class="cell-title">Email</h3>
-                <p class="cell-desc">Submissions & inquiries</p>
-                <a href="mailto:hello@zedtopvibes.com" class="cell-link">hello@zedtopvibes.com</a>
-            </div>
-        </div>
-
-        <div class="grid-cell cell-about glitch-hover">
-            <span class="cell-number">04</span>
-            <div class="cell-content">
-                <h3 class="cell-title">About The Archive</h3>
-                <p class="cell-desc">ZedTopVibes is a digital archive dedicated to documenting and promoting Zambian music culture. From established legends to underground breakthroughs, we curate the sounds that define Zambia's sonic landscape.</p>
-            </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-[#b026ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
         </div>
     </section>
 
-    <footer id="footer">
-        <div class="footer-col wide">
-            <div class="footer-label">Project</div>
-            <div class="footer-content">
-                ZedTopVibes is an independent music curation project focused on Zambian sounds. 
-                We operate across YouTube and TikTok to bring local music to global audiences.
+    <!-- Videos Section with Embeds -->
+    <section id="videos" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-6xl font-bold mb-4 brand-font">LATEST <span class="gradient-text">VIBES</span></h2>
+                <p class="text-gray-400 text-lg mb-8">Watch the freshest drops embedded below</p>
+                
+                <!-- Platform Tabs -->
+                <div class="flex justify-center gap-8 mb-12 border-b border-white/10 pb-4">
+                    <button class="platform-tab active text-lg font-bold tracking-wider flex items-center gap-2" onclick="switchTab('mixed')">
+                        <span class="gradient-text">ALL</span>
+                    </button>
+                    <button class="platform-tab text-lg font-bold tracking-wider flex items-center gap-2 text-gray-400 hover:text-white" onclick="switchTab('tiktok')">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                        TIKTOK
+                    </button>
+                    <button class="platform-tab text-lg font-bold tracking-wider flex items-center gap-2 text-gray-400 hover:text-white" onclick="switchTab('youtube')">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        YOUTUBE SHORTS
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mixed Content Tab -->
+            <div id="mixed" class="tab-content active">
+                <div class="video-grid">
+                    <!-- TikTok Embed 1 -->
+                    <div class="video-container">
+                        <div class="tiktok-embed-container">
+                            <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@zedtopvibes/video/1234567890" data-video-id="1234567890" data-embed-from="oembed" style="max-width: 605px;min-width: 325px;">
+                                <section>
+                                    <a target="_blank" href="https://www.tiktok.com/@zedtopvibes">@zedtopvibes</a>
+                                    <p>Loading TikTok...</p>
+                                    <a target="_blank" href="https://www.tiktok.com/@zedtopvibes/video/1234567890">Watch on TikTok</a>
+                                </section>
+                            </blockquote>
+                            <script async src="https://www.tiktok.com/embed.js"></script>
+                        </div>
+                        <div class="p-4 glass">
+                            <h3 class="font-bold mb-1">TikTok Vibe #1</h3>
+                            <p class="text-sm text-gray-400">@zedtopvibes</p>
+                        </div>
+                    </div>
+
+                    <!-- YouTube Shorts Embed 1 -->
+                    <div class="video-container">
+                        <div class="youtube-shorts-container">
+                            <iframe 
+                                src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                                title="YouTube Shorts" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="p-4 glass">
+                            <h3 class="font-bold mb-1">YouTube Short #1</h3>
+                            <p class="text-sm text-gray-400">@zedtopvibes</p>
+                        </div>
+                    </div>
+
+                    <!-- TikTok Embed 2 -->
+                    <div class="video-container">
+                        <div class="tiktok-embed-container">
+                            <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@zedtopvibes/video/0987654321" data-video-id="0987654321" style="max-width: 605px;min-width: 325px;">
+                                <section>
+                                    <a target="_blank" href="https://www.tiktok.com/@zedtopvibes">@zedtopvibes</a>
+                                    <p>Loading TikTok...</p>
+                                </section>
+                            </blockquote>
+                        </div>
+                        <div class="p-4 glass">
+                            <h3 class="font-bold mb-1">TikTok Vibe #2</h3>
+                            <p class="text-sm text-gray-400">@zedtopvibes</p>
+                        </div>
+                    </div>
+
+                    <!-- YouTube Shorts Embed 2 -->
+                    <div class="video-container">
+                        <div class="youtube-shorts-container">
+                            <iframe 
+                                src="https://www.youtube.com/embed/another_video_id" 
+                                title="YouTube Shorts" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="p-4 glass">
+                            <h3 class="font-bold mb-1">YouTube Short #2</h3>
+                            <p class="text-sm text-gray-400">@zedtopvibes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TikTok Only Tab -->
+            <div id="tiktok" class="tab-content">
+                <div class="video-grid">
+                    <div class="video-container">
+                        <div class="tiktok-embed-container">
+                            <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@zedtopvibes/video/1234567890" data-video-id="1234567890" style="max-width: 605px;min-width: 325px;">
+                                <section>
+                                    <a target="_blank" href="https://www.tiktok.com/@zedtopvibes">@zedtopvibes</a>
+                                    <p>Loading TikTok...</p>
+                                </section>
+                            </blockquote>
+                        </div>
+                        <div class="p-4 glass">
+                            <h3 class="font-bold mb-1">Latest TikTok</h3>
+                            <p class="text-sm text-gray-400">@zedtopvibes</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Add more TikTok embeds here -->
+                    <div class="video-container">
+                        <div class="tiktok-embed-container video-skeleton flex items-center justify-center">
+                            <p class="text-gray-500">Add more TikTok embeds</p>
+                        </div>
+                        <div class="p-4 glass">
+                            <h3 class="font-bold mb-1">More TikTok Content</h3>
+                            <p class="text-sm text-gray-400">Replace with real embeds</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <a href="https://tiktok.com/@zedtopvibes" target="_blank" class="inline-flex items-center gap-2 px-8 py-4 bg-[#00f3ff] text-black font-bold rounded-full hover:scale-105 transition-transform">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                        View All on TikTok
+                    </a>
+                </div>
+            </div>
+
+            <!-- YouTube Only Tab -->
+            <div id="youtube" class="tab-content">
+                <div class="video-grid">
+                    <div class="video-container">
+                        <div class="youtube-shorts-container">
+                            <iframe 
+                                src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                                title="YouTube Shorts" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="p-4 glass">
+                            <h3 class="font-bold mb-1">Latest Short</h3>
+                            <p class="text-sm text-gray-400">@zedtopvibes</p>
+                        </div>
+                    </div>
+                    
+                    <div class="video-container">
+                        <div class="youtube-shorts-container">
+                            <iframe 
+                                src="https://www.youtube.com/embed/another_video_id" 
+                                title="YouTube Shorts" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="p-4 glass">
+                            <h3 class="font-bold mb-1">Previous Short</h3>
+                            <p class="text-sm text-gray-400">@zedtopvibes</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <a href="https://youtube.com/@zedtopvibes" target="_blank" class="inline-flex items-center gap-2 px-8 py-4 bg-[#ff006e] text-white font-bold rounded-full hover:scale-105 transition-transform">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        View All on YouTube
+                    </a>
+                </div>
+            </div>
+
+            <div class="mt-12 p-6 glass rounded-2xl text-center">
+                <p class="text-gray-400 text-sm mb-4">💡 <span class="text-white">Pro Tip:</span> Replace the placeholder video IDs in the code with your actual TikTok and YouTube Shorts URLs</p>
+                <div class="flex flex-wrap justify-center gap-4 text-xs text-gray-500">
+                    <span class="px-3 py-1 bg-white/5 rounded-full">TikTok: Copy embed code from share menu</span>
+                    <span class="px-3 py-1 bg-white/5 rounded-full">YouTube: Click Share → Embed → Copy ID</span>
+                </div>
             </div>
         </div>
+    </section>
 
-        <div class="footer-col">
-            <div class="footer-label">Social</div>
-            <div class="footer-content">
-                <a href="https://youtube.com/@zedtopvibes" target="_blank">YouTube</a><br>
-                <a href="https://tiktok.com/@zedtopvibes" target="_blank">TikTok</a>
+    <!-- Platforms Section -->
+    <section id="platforms" class="py-32 px-6 relative bg-black/30">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl md:text-6xl font-bold mb-4 brand-font">FOLLOW THE <span class="gradient-text">VIBES</span></h2>
+                <p class="text-gray-400 text-lg">Subscribe for daily curated content</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- TikTok Card -->
+                <a href="https://tiktok.com/@zedtopvibes" target="_blank" 
+                   class="platform-card glass rounded-3xl p-8 md:p-12 relative overflow-hidden group cursor-pointer">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-[#00f3ff] opacity-10 rounded-full blur-3xl group-hover:opacity-20 transition-opacity"></div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 bg-[#00f3ff] rounded-2xl flex items-center justify-center mb-6 text-black">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-2 brand-font">TikTok</h3>
+                        <p class="text-gray-400 mb-4">@zedtopvibes</p>
+                        <div class="flex items-center text-[#00f3ff] font-semibold group-hover:translate-x-2 transition-transform">
+                            Follow for daily drops 
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- YouTube Card -->
+                <a href="https://youtube.com/@zedtopvibes" target="_blank" 
+                   class="platform-card glass rounded-3xl p-8 md:p-12 relative overflow-hidden group cursor-pointer">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-[#ff006e] opacity-10 rounded-full blur-3xl group-hover:opacity-20 transition-opacity"></div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 bg-[#ff006e] rounded-2xl flex items-center justify-center mb-6 text-white">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-2 brand-font">YouTube</h3>
+                        <p class="text-gray-400 mb-4">@zedtopvibes</p>
+                        <div class="flex items-center text-[#ff006e] font-semibold group-hover:translate-x-2 transition-transform">
+                            Subscribe for shorts 
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
+    </section>
 
-        <div class="footer-col">
-            <div class="footer-label">Contact</div>
-            <div class="footer-content">
-                <a href="mailto:hello@zedtopvibes.com">hello@zedtopvibes.com</a><br>
-                zedtopvibes.com
+    <!-- About Section -->
+    <section id="about" class="py-32 px-6 relative">
+        <div class="max-w-5xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 brand-font">THE <span class="gradient-text">CURATOR</span></h2>
+                    <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                        ZEDTOPVIBES is a digital sanctuary for music discovery. We scour the internet for the most compelling short-form music content, bringing you curated selections that span genres, eras, and emotions.
+                    </p>
+                    <p class="text-gray-400 mb-8">
+                        Every video is handpicked to deliver maximum impact. No fluff. Just pure vibes.
+                    </p>
+                    
+                    <div class="grid grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold gradient-text mb-1">Daily</div>
+                            <div class="text-xs text-gray-500 uppercase tracking-wider">Drops</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold gradient-text mb-1">∞</div>
+                            <div class="text-xs text-gray-500 uppercase tracking-wider">Genres</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold gradient-text mb-1">100%</div>
+                            <div class="text-xs text-gray-500 uppercase tracking-wider">Vibes</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="aspect-square rounded-3xl bg-gradient-to-br from-[#b026ff] via-[#00f3ff] to-[#ff006e] p-1">
+                        <div class="w-full h-full rounded-[22px] bg-black flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-6xl mb-4">🎵</div>
+                                <div class="text-2xl font-bold brand-font">EST. 2024</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -top-4 -right-4 w-24 h-24 bg-[#b026ff] rounded-full blur-2xl opacity-30"></div>
+                    <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-[#00f3ff] rounded-full blur-2xl opacity-20"></div>
+                </div>
             </div>
         </div>
+    </section>
 
-        <div class="footer-col">
-            <div class="footer-label">Legal</div>
-            <div class="footer-content">
-                © 2026<br>
-                All rights reserved
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 px-6 relative bg-black/30">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-4xl md:text-6xl font-bold mb-8 brand-font">LET'S <span class="gradient-text">CONNECT</span></h2>
+            <p class="text-gray-400 mb-12 text-lg">For submissions, collaborations, or just to say hi</p>
+            
+            <a href="mailto:hello@zedtopvibes.com" 
+               class="inline-block text-2xl md:text-4xl font-bold hover:text-[#b026ff] transition-colors duration-300 border-b-2 border-[#b026ff] pb-2">
+                hello@zedtopvibes.com
+            </a>
+            
+            <div class="mt-16 flex justify-center space-x-6">
+                <a href="https://tiktok.com/@zedtopvibes" target="_blank" class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-[#00f3ff] hover:text-black transition-all duration-300">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                </a>
+                <a href="https://youtube.com/@zedtopvibes" target="_blank" class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-[#ff006e] hover:text-white transition-all duration-300">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+                <a href="mailto:hello@zedtopvibes.com" class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-6 border-t border-white/10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-xl font-bold brand-font">
+                <span class="gradient-text">ZED</span>TOP<span class="text-white">VIBES</span>
+            </div>
+            <div class="flex gap-6 text-sm text-gray-500">
+                <a href="#home" class="hover:text-white transition-colors">Home</a>
+                <a href="#videos" class="hover:text-white transition-colors">Watch</a>
+                <a href="#platforms" class="hover:text-white transition-colors">Platforms</a>
+                <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+            </div>
+            <div class="text-gray-500 text-sm">
+                © 2026 ZEDTOPVIBES. All vibes reserved.
             </div>
         </div>
     </footer>
 
     <script>
-        // Menu Functions
-        function openMenu() {
-            document.getElementById('navOverlay').classList.add('active');
-            document.body.classList.add('menu-open');
+        // Register GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Mobile Menu Functions
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const hamburger = document.getElementById('hamburger');
+            menu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
         }
-
-        function closeMenu() {
-            document.getElementById('navOverlay').classList.remove('active');
-            document.body.classList.remove('menu-open');
+        
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const hamburger = document.getElementById('hamburger');
+            menu.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = '';
         }
-
-        // Close menu on escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeMenu();
-        });
-
-        // Intersection Observer for grid cells
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+        
+        // Tab Switching Function
+        function switchTab(tabName) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.platform-tab').forEach(tab => {
+                tab.classList.remove('active');
+                tab.classList.add('text-gray-400');
+            });
+            
+            // Add active class to clicked tab
+            event.target.closest('.platform-tab').classList.add('active');
+            event.target.closest('.platform-tab').classList.remove('text-gray-400');
+            
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Refresh TikTok embeds if switching to TikTok tab
+            if (tabName === 'tiktok' || tabName === 'mixed') {
+                if (window.tiktokEmbed) {
+                    window.tiktokEmbed.reload();
+                }
+            }
+        }
+        
+        // Active Navigation State on Scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
                 }
             });
-        }, observerOptions);
-
-        document.querySelectorAll('.grid-cell').forEach((cell, index) => {
-            cell.style.opacity = '0';
-            cell.style.transform = 'translateY(30px)';
-            cell.style.transition = `all 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.1}s`;
-            observer.observe(cell);
+            
+            navLinks.forEach(link => {
+                link.classList.remove('nav-active');
+                if (link.getAttribute('data-section') === current) {
+                    link.classList.add('nav-active');
+                }
+            });
         });
-
-        // Parallax for background text
+        
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const bgText = document.querySelector('.bg-text');
-            bgText.style.transform = `translateY(${scrolled * 0.5}px)`;
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
+        });
+        
+        // Hero animations
+        gsap.from("h1", {
+            duration: 1.5,
+            y: 100,
+            opacity: 0,
+            ease: "power4.out",
+            delay: 0.2
+        });
+        
+        gsap.from("p", {
+            duration: 1,
+            y: 30,
+            opacity: 0,
+            ease: "power2.out",
+            delay: 0.8
+        });
+        
+        // Video containers animation
+        gsap.utils.toArray(".video-container").forEach((container, i) => {
+            gsap.from(container, {
+                scrollTrigger: {
+                    trigger: container,
+                    start: "top 85%",
+                },
+                duration: 0.6,
+                y: 40,
+                opacity: 0,
+                delay: i * 0.1,
+                ease: "power2.out"
+            });
+        });
+        
+        // Platform cards reveal
+        gsap.utils.toArray(".platform-card").forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%",
+                    toggleActions: "play none none reverse"
+                },
+                duration: 0.8,
+                y: 60,
+                opacity: 0,
+                rotation: i % 2 === 0 ? -2 : 2,
+                ease: "power3.out"
+            });
+        });
+        
+        // Glitch effect randomization
+        setInterval(() => {
+            const glitch = document.querySelector('.glitch');
+            if (Math.random() > 0.9) {
+                glitch.style.animation = 'none';
+                setTimeout(() => {
+                    glitch.style.animation = 'glitch-skew 1s infinite linear alternate-reverse';
+                }, 100);
+            }
+        }, 3000);
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Reload TikTok embeds on window resize
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (window.tiktokEmbed) {
+                    window.tiktokEmbed.reload();
+                }
+            }, 250);
         });
     </script>
 </body>
