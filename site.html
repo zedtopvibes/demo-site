@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Compilations</title>
 
-  <!-- 🚀 LCP BOOST -->
   <link rel="preconnect" href="https://zedtopvibes.com">
   <link rel="dns-prefetch" href="https://zedtopvibes.com">
 
@@ -23,25 +22,6 @@
       background: #1a1a1a;
     }
 
-    .controls {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      padding: 15px;
-    }
-
-    select, button {
-      padding: 10px;
-      border-radius: 6px;
-      border: none;
-    }
-
-    button {
-      cursor: pointer;
-      background: #ff3b7b;
-      color: white;
-    }
-
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -53,6 +33,7 @@
       background: #1e1e1e;
       border-radius: 10px;
       overflow: hidden;
+      min-height: 250px;
     }
 
     .card img {
@@ -82,12 +63,6 @@
       margin-top: 8px;
       color: #ccc;
     }
-
-    .loading {
-      padding: 20px;
-      color: #aaa;
-      text-align: center;
-    }
   </style>
 </head>
 
@@ -97,21 +72,10 @@
   <h1>Compilations</h1>
 </header>
 
-<div class="controls">
-  <select id="type">
-    <option value="">All Types</option>
-    <option value="music">Music</option>
-    <option value="video">Video</option>
-    <option value="playlist">Playlist</option>
-  </select>
-
-  <button onclick="loadData()">Reload</button>
-</div>
-
 <div id="content" class="grid"></div>
 
 <script>
-  const API_URL = "https://zedtopvibes.com/api/compilations";
+  const API_URL = "https://zedtopvibes.com/api/compilations-home";
   const BASE_URL = "https://zedtopvibes.com";
 
   function getImg(url) {
@@ -119,50 +83,15 @@
     return url.startsWith("http") ? url : BASE_URL + url;
   }
 
-  // ⚡ FAST FIRST PAINT (LCP OPTIMIZED)
-  function renderFirstCard(item) {
+  function render(data) {
     const content = document.getElementById("content");
 
-    const imgSrc = getImg(item.cover_url);
-
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <img 
-        src="${imgSrc}" 
-        fetchpriority="high"
-        loading="eager"
-        decoding="async"
-        onerror="this.src='https://via.placeholder.com/300'"
-      />
-      <div class="card-content">
-        <div class="title">${item.title || "No Title"}</div>
-        <div class="meta">
-          ${item.type || "N/A"} • ${item.views || 0} views • ${item.item_count || 0} items
-        </div>
-        <div class="desc">${item.description || ""}</div>
-      </div>
-    `;
-
-    content.innerHTML = "";
-    content.appendChild(card);
-  }
-
-  // ⚡ REST ITEMS (lazy load)
-  function renderRest(data) {
-    const content = document.getElementById("content");
-
-    data.slice(1).forEach(item => {
-      const imgSrc = getImg(item.cover_url);
-
-      const card = document.createElement("div");
-      card.className = "card";
-
-      card.innerHTML = `
+    content.innerHTML = data.map(item => `
+      <div class="card">
         <img 
-          src="${imgSrc}" 
-          loading="lazy"
+          src="${getImg(item.cover_url)}"
+          loading="eager"
+          fetchpriority="${item.is_featured ? 'high' : 'low'}"
           decoding="async"
           onerror="this.src='https://via.placeholder.com/300'"
         />
@@ -173,45 +102,36 @@
           </div>
           <div class="desc">${item.description || ""}</div>
         </div>
-      `;
-
-      content.appendChild(card);
-    });
+      </div>
+    `).join("");
   }
 
   async function loadData() {
-    const type = document.getElementById("type").value;
     const content = document.getElementById("content");
 
-    content.innerHTML = "<div class='loading'>Loading...</div>";
+    // ⚡ STEP 1: instant render from cache (NO LOADING STATE)
+    const cached = localStorage.getItem("home_cache");
 
+    if (cached) {
+      try {
+        const parsed = JSON.parse(cached);
+        render(parsed.data);
+      } catch (e) {}
+    }
+
+    // ⚡ STEP 2: background refresh (silent)
     try {
-      let url = API_URL + "?limit=12";
-      if (type) url += "&type=" + encodeURIComponent(type);
+      const res = await fetch(API_URL);
+      const json = await res.json();
 
-      const res = await fetch(url);
-      const data = await res.json();
+      render(json.data);
 
-      if (!Array.isArray(data) || data.length === 0) {
-        content.innerHTML = "<div class='loading'>No data found</div>";
-        return;
-      }
-
-      // ⚡ LCP OPTIMIZATION: render FIRST ITEM immediately
-      renderFirstCard(data[0]);
-
-      // preload LCP image
-      const img = new Image();
-      img.src = getImg(data[0].cover_url);
-
-      // render rest after paint
-      requestAnimationFrame(() => {
-        renderRest(data);
-      });
+      // update cache silently
+      localStorage.setItem("home_cache", JSON.stringify(json));
 
     } catch (err) {
-      console.error(err);
-      content.innerHTML = "<div class='loading'>Failed to load</div>";
+      console.error("API error:", err);
+      // no UI changes (no loading state)
     }
   }
 
