@@ -1,29 +1,15 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZedTopVibes</title>
     
-    <!-- ===== SEO META TAGS ===== -->
-    <title>Zedtopvibes · Discover New Music, Playlists & Artists</title>
-    <meta name="description" content="Zedtopvibes - Your ultimate destination for discovering new music, artists, playlists, albums and EPs. Stream and explore the best music from around the world.">
-    <meta name="keywords" content="music, playlists, albums, artists, EPs, streaming, discover music, new releases, trending songs">
-    <meta name="author" content="Zedtopvibes">
-    <meta name="robots" content="index, follow">
+    <meta name="description" content="ZedTopVibes - Coming Soon">
+    <meta property="og:title" content="ZedTopVibes">
+    <meta property="og:description" content="Coming Soon">
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://zedtopvibes.com">
-    <meta property="og:title" content="Zedtopvibes - Music Discovery">
-    <meta property="og:description" content="Discover new music, artists, and playlists from around the world">
-    <meta property="og:image" content="https://zedtopvibes.com/og-image.jpg">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://zedtopvibes.com">
-    <meta property="twitter:title" content="Zedtopvibes - Music Discovery">
-    <meta property="twitter:description" content="Discover new music, artists, and playlists from around the world">
-    <meta property="twitter:image" content="https://zedtopvibes.com/og-image.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -31,1060 +17,276 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #f5f5f5;
-            color: #333;
-        }
-        
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        
-        .logo {
-            cursor: pointer;
-        }
-        
-        .logo h1 {
-            font-size: 1.5rem;
-        }
-        
-        .logo p {
-            font-size: 0.8rem;
-            opacity: 0.9;
-        }
-        
-        .search-bar {
-            flex: 1;
-            max-width: 400px;
-            position: relative;
-        }
-        
-        .search-bar input {
-            width: 100%;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 25px;
-            font-size: 0.9rem;
-        }
-        
-        .live-search-results {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border-radius: 8px;
-            margin-top: 5px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            z-index: 1000;
-        }
-        
-        .hamburger {
-            cursor: pointer;
-            font-size: 1.5rem;
-            background: rgba(255,255,255,0.2);
-            padding: 0.5rem;
-            border-radius: 8px;
-            transition: background 0.3s;
-        }
-        
-        .hamburger:hover {
-            background: rgba(255,255,255,0.3);
-        }
-        
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 300px;
-            height: 100%;
-            background: white;
-            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-            z-index: 1000;
-            transition: right 0.3s ease;
-            padding: 2rem;
-        }
-        
-        .sidebar.open {
-            right: 0;
-        }
-        
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 999;
-            display: none;
-        }
-        
-        .sidebar-overlay.active {
-            display: block;
-        }
-        
-        .close-sidebar {
-            float: right;
-            cursor: pointer;
-            font-size: 1.5rem;
-        }
-        
-        /* Main Content */
-        .main-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 2rem 0 1rem 0;
-        }
-        
-        .section-title {
-            font-size: 1.5rem;
-            color: #333;
-        }
-        
-        .see-all-btn {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .section-spacing {
-            margin-top: 3rem;
-        }
-        
-        .corner {
-            margin-bottom: 2rem;
-        }
-        
-        .music-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1rem;
-        }
-        
-        .music-item {
-            text-decoration: none;
-            color: inherit;
-            background: white;
-            border-radius: 8px;
-            padding: 1rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: block;
-        }
-        
-        .music-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        
-        .item-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .item-thumb img {
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
-            object-fit: cover;
-        }
-        
-        .item-data {
-            flex: 1;
-        }
-        
-        .track-title {
-            font-size: 1rem;
-            display: block;
-            margin-bottom: 0.25rem;
-        }
-        
-        .artist-name {
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 0.25rem;
-        }
-        
-        .item-meta {
-            font-size: 0.75rem;
-            color: #999;
-        }
-        
-        .error-message {
-            text-align: center;
-            padding: 2rem;
-            color: #666;
-        }
-        
-        /* Footer */
-        .footer {
-            background: #2d3748;
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-        }
-        
-        /* SKELETON LOADER STYLES - Hardcoded for immediate display */
-        .skeleton-item {
-            background: white;
-            border-radius: 8px;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .skeleton-thumb {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
-            background-size: 200% 100%;
-            border-radius: 8px;
-            animation: skeleton-loading 1.5s infinite;
-        }
-        
-        .skeleton-data {
-            flex: 1;
-        }
-        
-        .skeleton-title {
-            height: 18px;
-            width: 70%;
-            background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
-            background-size: 200% 100%;
-            border-radius: 4px;
-            margin-bottom: 8px;
-            animation: skeleton-loading 1.5s infinite;
-        }
-        
-        .skeleton-artist {
-            height: 14px;
-            width: 50%;
-            background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
-            background-size: 200% 100%;
-            border-radius: 4px;
-            margin-bottom: 8px;
-            animation: skeleton-loading 1.5s infinite;
-        }
-        
-        .skeleton-meta {
-            height: 12px;
-            width: 40%;
-            background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
-            background-size: 200% 100%;
-            border-radius: 4px;
-            animation: skeleton-loading 1.5s infinite;
-        }
-        
-        @keyframes skeleton-loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        
-        /* Scroll Button */
-        .scroll-btn {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #667eea;
-            color: white;
-            border: none;
-            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            height: 100vh;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            transition: transform 0.2s;
-            z-index: 99;
         }
-        
-        .scroll-btn:hover {
-            transform: scale(1.1);
+
+        /* Minimal Background */
+        .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, rgba(255,59,48,0.08) 0%, transparent 60%),
+                        radial-gradient(circle at 80% 80%, rgba(0,255,200,0.06) 0%, transparent 60%);
+            z-index: 0;
         }
-        
-        @media (max-width: 768px) {
-            .main-content {
-                padding: 1rem;
+
+        /* Main Container - Keep original sizing */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* Logo */
+        .logo {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #ffffff;
+            margin-bottom: 2rem;
+            opacity: 0.6;
+        }
+
+        /* Main Message */
+        .message {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: 3rem;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .message span {
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 0%, #00ffc8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Social Links - Keep exact sizing */
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            width: 100%;
+            margin-bottom: 3rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 260px;
+            padding: 0.9rem 1.5rem;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .social-link:hover {
+            border-color: #00ffc8;
+            transform: translateX(5px);
+        }
+
+        .social-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .social-icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .email-icon {
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .social-arrow {
+            font-size: 1rem;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-link:hover .social-arrow {
+            opacity: 1;
+        }
+
+        /* Footer - Keep exact styling */
+        .footer {
+            position: relative;
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-domain {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #888888;
+            margin-bottom: 0.35rem;
+        }
+
+        .footer-tagline {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #888888;
+        }
+
+        /* Simple Fade In */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
             }
-            .music-grid {
-                grid-template-columns: 1fr;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
-            .header-container {
-                flex-direction: column;
+        }
+
+        .logo, .message, .social-links, .footer {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .message { animation-delay: 0.1s; opacity: 0; }
+        .social-links { animation-delay: 0.2s; opacity: 0; }
+        .footer { animation-delay: 0.3s; opacity: 0; }
+
+        /* Mobile - Keep original 280px buttons */
+        @media (max-width: 640px) {
+            .container {
+                padding: 1.5rem;
             }
-            .search-bar {
-                max-width: 100%;
-                width: 100%;
+            
+            .social-link {
+                max-width: 280px;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+
+        /* Desktop - Center perfectly on larger screens */
+        @media (min-width: 1200px) {
+            body {
+                background: #000000;
+            }
+            
+            .container {
+                max-width: 400px;
+                padding: 2rem;
+            }
+            
+            /* Keep buttons at original width on desktop too */
+            .social-link {
+                max-width: 260px;
+            }
+        }
+
+        /* For very short screens */
+        @media (max-height: 650px) {
+            .logo {
+                margin-bottom: 1rem;
+            }
+            .message {
+                margin-bottom: 1.5rem;
+            }
+            .social-links {
+                margin-bottom: 1.5rem;
+                gap: 0.5rem;
+            }
+            .social-link {
+                padding: 0.6rem 1.5rem;
+            }
+            .footer {
+                padding-top: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="header">
-        <div class="header-container">
-            <div class="logo" onclick="location.href='/'">
-                <h1>🎵 Zedtopvibes</h1>
-                <p>Discover New Music</p>
-            </div>
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search albums, artists...">
-                <div id="liveSearchResults" class="live-search-results"></div>
-            </div>
-            <div class="hamburger" id="hamburgerBtn">☰</div>
-        </div>
-    </div>
+    <div class="bg"></div>
     
-    <!-- Sidebar -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-    <div class="sidebar" id="sidebar">
-        <div class="close-sidebar" id="closeSidebarBtn">✕</div>
-        <h3>Menu</h3>
-        <ul style="list-style: none; margin-top: 2rem;">
-            <li style="margin-bottom: 1rem;"><a href="/" style="text-decoration: none; color: #333;">Home</a></li>
-            <li style="margin-bottom: 1rem;"><a href="/playlists.html" style="text-decoration: none; color: #333;">Playlists</a></li>
-            <li style="margin-bottom: 1rem;"><a href="/albums.html" style="text-decoration: none; color: #333;">Albums</a></li>
-            <li style="margin-bottom: 1rem;"><a href="/artists.html" style="text-decoration: none; color: #333;">Artists</a></li>
-        </ul>
-    </div>
-    
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- TRENDING NOW SECTION - Hardcoded Skeletons -->
-        <div class="section-header" id="trending">
-            <h2 class="section-title">Trending Now</h2>
-            <a href="#" class="see-all-btn" onclick="searchByGenre('trending'); return false;">See All</a>
+    <div class="container">
+        <div class="logo">ZEDTOPVIBES</div>
+        
+        <div class="message">
+            Follow <span>the Vibes</span>
         </div>
-        <div class="corner">
-            <div class="music-grid" id="trending-container">
-                <!-- 6 Hardcoded skeleton placeholders - drawn immediately by browser -->
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-            </div>
+        
+        <div class="social-links">
+            <a href="https://youtube.com/@zedtopvibes" target="_blank" rel="noopener noreferrer" class="social-link">
+                <div class="social-left">
+                    <svg class="social-icon" viewBox="0 0 24 24">
+                        <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 0 0 .5 6.19 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.12 2.14c1.88.55 9.38.55 9.38.55s7.5 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.81zM9.55 15.5V8.5l6.27 3.5-6.27 3.5z"/>
+                    </svg>
+                    <span>YouTube</span>
+                </div>
+                <div class="social-arrow">→</div>
+            </a>
+
+            <a href="https://tiktok.com/@zedtopvibes" target="_blank" rel="noopener noreferrer" class="social-link">
+                <div class="social-left">
+                    <svg class="social-icon" viewBox="0 0 24 24">
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                    </svg>
+                    <span>TikTok</span>
+                </div>
+                <div class="social-arrow">→</div>
+            </a>
+
+            <a href="mailto:hello@zedtopvibes.com" class="social-link">
+                <div class="social-left">
+                    <svg class="social-icon email-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="5" width="20" height="14" rx="2"/>
+                        <polyline points="2,5 12,13 22,5"/>
+                    </svg>
+                    <span>Email</span>
+                </div>
+                <div class="social-arrow">→</div>
+            </a>
         </div>
 
-        <!-- LATEST RELEASES SECTION - Hardcoded Skeletons -->
-        <div class="section-header section-spacing" id="latest">
-            <h2 class="section-title">Latest Releases</h2>
-            <a href="#" class="see-all-btn" onclick="loadMore(2); return false;">See All</a>
-        </div>
-        <div class="corner">
-            <div class="music-grid" id="latest-container">
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-            </div>
-        </div>
-        
-        <!-- PLAYLISTS SECTION - Hardcoded Skeletons -->
-        <div class="section-header section-spacing" id="playlists">
-            <h2 class="section-title">Playlists</h2>
-            <a href="/playlists.html" class="see-all-btn">See All</a>
-        </div>
-        <div class="corner">
-            <div class="music-grid" id="playlists-container">
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-            </div>
-        </div>
-        
-        <!-- ALBUMS SECTION - Hardcoded Skeletons -->
-        <div class="section-header section-spacing" id="albums">
-            <h2 class="section-title">Albums</h2>
-            <a href="/albums.html" class="see-all-btn">See All</a>
-        </div>
-        <div class="corner">
-            <div class="music-grid" id="albums-container">
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-            </div>
-        </div>
-        
-        <!-- EPS SECTION - Hardcoded Skeletons -->
-        <div class="section-header section-spacing" id="eps">
-            <h2 class="section-title">EPs</h2>
-            <a href="/eps.html" class="see-all-btn">See All</a>
-        </div>
-        <div class="corner">
-            <div class="music-grid" id="eps-container">
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-            </div>
-        </div>
-        
-        <!-- ARTISTS SECTION - Hardcoded Skeletons -->
-        <div class="section-header section-spacing" id="artists">
-            <h2 class="section-title">Artists</h2>
-            <a href="/artists.html" class="see-all-btn">See All</a>
-        </div>
-        <div class="corner">
-            <div class="music-grid" id="artists-container">
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-            </div>
-        </div>
-        
-        <!-- GENRES SECTION - Hardcoded Skeletons -->
-        <div class="section-header section-spacing" id="genres">
-            <h2 class="section-title">Music Genres</h2>
-            <a href="#" class="see-all-btn" onclick="searchByGenre('all'); return false;">See All</a>
-        </div>
-        <div class="corner">
-            <div class="music-grid" id="genres-container">
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-                <div class="skeleton-item"><div class="skeleton-thumb"></div><div class="skeleton-data"><div class="skeleton-title"></div><div class="skeleton-artist"></div><div class="skeleton-meta"></div></div></div>
-            </div>
+        <div class="footer">
+            <div class="footer-domain">ZEDTOPVIBES.COM © <span id="currentYear"></span></div>
+            <div class="footer-tagline">ALL VIBES RESERVED</div>
         </div>
     </div>
-    
-    <!-- Footer -->
-    <div class="footer">
-        <p>&copy; 2024 Zedtopvibes. All rights reserved.</p>
-        <p style="margin-top: 0.5rem; font-size: 0.8rem;">Discover new music from around the world</p>
-    </div>
-    
-    <!-- Scroll Button -->
-    <button class="scroll-btn" id="scrollBtn" title="Scroll to top/bottom">⬇️</button>
-    
+
     <script>
-        // ===== Zedtopvibes.com - Static Site with Skeleton Loaders & Atomic Injection =====
-        
-        const API_BASE = 'https://zedtopvibes.com/api';
-        const IMAGE_BASE = 'https://files.zedtopvibes.com';
-        
-        // ===== HELPER FUNCTIONS =====
-        function getAlbumImage(album) {
-            if (album.cover_url && album.cover_url !== 'null' && album.cover_url !== '') {
-                if (album.cover_url.startsWith('/')) {
-                    return `${IMAGE_BASE}${album.cover_url}`;
-                }
-                return album.cover_url;
-            }
-            if (album.cover_emoji) {
-                const encodedEmoji = encodeURIComponent(album.cover_emoji);
-                return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ff5500'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E${encodedEmoji}%3C/text%3E%3C/svg%3E`;
-            }
-            return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23333'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E🎵%3C/text%3E%3C/svg%3E";
-        }
-        
-        function getPlaylistImage(playlist) {
-            if (playlist.cover_url && playlist.cover_url !== 'null' && playlist.cover_url !== '') {
-                if (playlist.cover_url.startsWith('/')) {
-                    return `${IMAGE_BASE}${playlist.cover_url}`;
-                }
-                return playlist.cover_url;
-            }
-            if (playlist.cover_emoji) {
-                const encodedEmoji = encodeURIComponent(playlist.cover_emoji);
-                return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%239c27b0'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E${encodedEmoji}%3C/text%3E%3C/svg%3E`;
-            }
-            return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%239c27b0'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E📋%3C/text%3E%3C/svg%3E";
-        }
-        
-        function getArtistImage() {
-            return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%232196f3'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E🎤%3C/text%3E%3C/svg%3E";
-        }
-        
-        function formatNumber(num) {
-            if (!num || num === 0) return '0';
-            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
-            return num.toString();
-        }
-        
-        function escapeHtml(str) {
-            if (!str) return '';
-            return String(str)
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#39;');
-        }
-        
-        function handleImageError(img) {
-            if (img.dataset.fallbackUsed) return;
-            img.dataset.fallbackUsed = 'true';
-            img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ff5500'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E🎵%3C/text%3E%3C/svg%3E";
-        }
-        
-        // ===== ATOMIC INJECTION FUNCTIONS - Build HTML string, then single DOM update =====
-        
-        async function loadTrending() {
-            const container = document.getElementById('trending-container');
-            if (!container) return;
-            
-            try {
-                const response = await fetch(`${API_BASE}/albums`);
-                const albums = await response.json();
-                
-                const trending = [...albums]
-                    .sort((a, b) => (b.plays || 0) - (a.plays || 0))
-                    .slice(0, 6);
-                
-                if (!trending || trending.length === 0) {
-                    container.innerHTML = '<div class="error-message">No trending content</div>';
-                    return;
-                }
-                
-                // Build HTML string in memory
-                let htmlString = '';
-                for (const album of trending) {
-                    htmlString += `
-                        <a href="/album/${album.slug}" class="music-item">
-                            <div class="item-container">
-                                <div class="item-thumb">
-                                    <img src="${getAlbumImage(album)}" 
-                                         width="80" height="80" 
-                                         class="roundthumb" 
-                                         alt="${escapeHtml(album.title)}"
-                                         data-type="album"
-                                         onerror="handleImageError(this)">
-                                </div>
-                                <div class="item-data">
-                                    <span class="track-title"><b>${escapeHtml(album.title)}</b></span>
-                                    <div class="artist-name">${escapeHtml(album.artist || 'Unknown Artist')}</div>
-                                    <span class="item-meta">
-                                        <b style="color:#ff0000">${album.plays ? formatNumber(album.plays) + ' plays' : 'Trending'}</b>
-                                        <span style="background:#ff9800; color:#fff; padding:2px 6px; margin-left:5px; border-radius:3px; font-size:11px;">🔥 Hot</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </a>
-                    `;
-                }
-                
-                // Single DOM update - atomic injection
-                container.innerHTML = htmlString;
-                
-            } catch (error) {
-                console.error('Error loading trending:', error);
-                container.innerHTML = '<div class="error-message">Failed to load trending</div>';
-            }
-        }
-        
-        async function loadLatestReleases() {
-            const container = document.getElementById('latest-container');
-            if (!container) return;
-            
-            try {
-                const response = await fetch(`${API_BASE}/albums`);
-                const albums = await response.json();
-                
-                const latest = [...albums]
-                    .filter(a => a.release_date)
-                    .sort((a, b) => new Date(b.release_date) - new Date(a.release_date))
-                    .slice(0, 6);
-                
-                if (!latest || latest.length === 0) {
-                    container.innerHTML = '<div class="error-message">No releases found</div>';
-                    return;
-                }
-                
-                // Build HTML string in memory
-                let htmlString = '';
-                for (const album of latest) {
-                    htmlString += `
-                        <a href="/album/${album.slug}" class="music-item">
-                            <div class="item-container">
-                                <div class="item-thumb">
-                                    <img src="${getAlbumImage(album)}" 
-                                         width="80" height="80" 
-                                         class="roundthumb" 
-                                         alt="${escapeHtml(album.title)}"
-                                         data-type="album"
-                                         onerror="handleImageError(this)">
-                                </div>
-                                <div class="item-data">
-                                    <span class="track-title"><b>${escapeHtml(album.title)}</b></span>
-                                    <div class="artist-name">${escapeHtml(album.artist || 'Unknown Artist')}</div>
-                                    <span class="item-meta">
-                                        <b style="color:#ff0000">Released:</b> ${album.release_date ? new Date(album.release_date).getFullYear() : 'TBA'}
-                                        <span style="background:#4caf50; color:#fff; padding:2px 6px; margin-left:5px; border-radius:3px; font-size:11px;">New</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </a>
-                    `;
-                }
-                
-                // Single DOM update - atomic injection
-                container.innerHTML = htmlString;
-                
-            } catch (error) {
-                console.error('Error loading latest releases:', error);
-                container.innerHTML = '<div class="error-message">Failed to load latest releases</div>';
-            }
-        }
-        
-        async function loadPlaylists() {
-            const container = document.getElementById('playlists-container');
-            if (!container) return;
-            
-            try {
-                const response = await fetch(`${API_BASE}/playlists`);
-                const playlists = await response.json();
-                
-                if (!playlists || playlists.length === 0) {
-                    container.innerHTML = '<div class="error-message">No playlists found</div>';
-                    return;
-                }
-                
-                // Build HTML string in memory
-                let htmlString = '';
-                for (const playlist of playlists.slice(0, 6)) {
-                    htmlString += `
-                        <a href="/playlist/${playlist.slug}" class="music-item">
-                            <div class="item-container">
-                                <div class="item-thumb">
-                                    <img src="${getPlaylistImage(playlist)}" 
-                                         width="80" height="80" 
-                                         class="roundthumb" 
-                                         alt="${escapeHtml(playlist.name)}"
-                                         data-type="playlist"
-                                         onerror="handleImageError(this)">
-                                </div>
-                                <div class="item-data">
-                                    <span class="track-title"><b>${escapeHtml(playlist.name)}</b> <span style="background:#9c27b0; color:#fff; padding:2px 6px; border-radius:3px; font-size:10px;">Playlist</span></span>
-                                    <div class="artist-name">${escapeHtml(playlist.created_by || 'Various Artists')}</div>
-                                    <span class="item-meta"><b style="color:#ff0000">${playlist.track_count || 0} songs</b></span>
-                                </div>
-                            </div>
-                        </a>
-                    `;
-                }
-                
-                // Single DOM update - atomic injection
-                container.innerHTML = htmlString;
-                
-            } catch (error) {
-                console.error('Error loading playlists:', error);
-                container.innerHTML = '<div class="error-message">Playlists unavailable</div>';
-            }
-        }
-        
-        async function loadAlbums() {
-            const container = document.getElementById('albums-container');
-            if (!container) return;
-            
-            try {
-                const response = await fetch(`${API_BASE}/albums`);
-                const albums = await response.json();
-                
-                if (!albums || albums.length === 0) {
-                    container.innerHTML = '<div class="error-message">No albums found</div>';
-                    return;
-                }
-                
-                // Build HTML string in memory
-                let htmlString = '';
-                for (const album of albums.slice(0, 6)) {
-                    htmlString += `
-                        <a href="/album/${album.slug}" class="music-item">
-                            <div class="item-container">
-                                <div class="item-thumb">
-                                    <img src="${getAlbumImage(album)}" 
-                                         width="80" height="80" 
-                                         class="roundthumb" 
-                                         alt="${escapeHtml(album.title)}"
-                                         data-type="album"
-                                         onerror="handleImageError(this)">
-                                </div>
-                                <div class="item-data">
-                                    <span class="track-title"><b>${escapeHtml(album.title)}</b></span>
-                                    <div class="artist-name">${escapeHtml(album.artist || 'Unknown Artist')}</div>
-                                    <span class="item-meta">
-                                        <b style="color:#ff0000">${album.track_count || 0} tracks</b>
-                                        ${album.release_date ? `<span style="margin-left:8px">${new Date(album.release_date).getFullYear()}</span>` : ''}
-                                    </span>
-                                </div>
-                            </div>
-                        </a>
-                    `;
-                }
-                
-                // Single DOM update - atomic injection
-                container.innerHTML = htmlString;
-                
-            } catch (error) {
-                console.error('Error loading albums:', error);
-                container.innerHTML = '<div class="error-message">Failed to load albums</div>';
-            }
-        }
-        
-        async function loadEPs() {
-            const container = document.getElementById('eps-container');
-            if (!container) return;
-            
-            try {
-                const response = await fetch(`${API_BASE}/albums`);
-                const albums = await response.json();
-                
-                const eps = albums.filter(album => album.track_count <= 6 && album.track_count > 0).slice(0, 6);
-                
-                if (!eps || eps.length === 0) {
-                    container.innerHTML = '<div class="error-message">No EPs found</div>';
-                    return;
-                }
-                
-                // Build HTML string in memory
-                let htmlString = '';
-                for (const ep of eps) {
-                    htmlString += `
-                        <a href="/album/${ep.slug}" class="music-item">
-                            <div class="item-container">
-                                <div class="item-thumb">
-                                    <img src="${getAlbumImage(ep)}" 
-                                         width="80" height="80" 
-                                         class="roundthumb" 
-                                         alt="${escapeHtml(ep.title)}"
-                                         data-type="album"
-                                         onerror="handleImageError(this)">
-                                </div>
-                                <div class="item-data">
-                                    <span class="track-title"><b>${escapeHtml(ep.title)}</b> <span style="background:#2196f3; color:#fff; padding:2px 6px; border-radius:3px; font-size:10px;">EP</span></span>
-                                    <div class="artist-name">${escapeHtml(ep.artist || 'Unknown Artist')}</div>
-                                    <span class="item-meta"><b style="color:#ff0000">${ep.track_count || 0} tracks</b></span>
-                                </div>
-                            </div>
-                        </a>
-                    `;
-                }
-                
-                // Single DOM update - atomic injection
-                container.innerHTML = htmlString;
-                
-            } catch (error) {
-                console.error('Error loading EPs:', error);
-                container.innerHTML = '<div class="error-message">EPs unavailable</div>';
-            }
-        }
-        
-        async function loadArtists() {
-            const container = document.getElementById('artists-container');
-            if (!container) return;
-            
-            try {
-                const response = await fetch(`${API_BASE}/artists`);
-                const artists = await response.json();
-                
-                if (!artists || artists.length === 0) {
-                    container.innerHTML = '<div class="error-message">No artists found</div>';
-                    return;
-                }
-                
-                // Build HTML string in memory
-                let htmlString = '';
-                for (const artist of artists.slice(0, 6)) {
-                    htmlString += `
-                        <a href="/artist/${artist.slug}" class="music-item">
-                            <div class="item-container">
-                                <div class="item-thumb">
-                                    <img src="${getArtistImage()}" 
-                                         width="80" height="80" 
-                                         class="roundthumb" 
-                                         alt="${escapeHtml(artist.name)}"
-                                         data-type="artist"
-                                         onerror="handleImageError(this)">
-                                </div>
-                                <div class="item-data">
-                                    <span class="track-title"><b>${escapeHtml(artist.name)}</b> <span style="background:#e91e63; color:#fff; padding:2px 6px; border-radius:3px; font-size:10px;">Artist</span></span>
-                                    <div class="artist-name">${artist.track_count || 0} tracks</div>
-                                    <span class="item-meta"><b style="color:#ff0000">${artist.genres?.[0] || 'Artist'}</b></span>
-                                </div>
-                            </div>
-                        </a>
-                    `;
-                }
-                
-                // Single DOM update - atomic injection
-                container.innerHTML = htmlString;
-                
-            } catch (error) {
-                console.error('Error loading artists:', error);
-                container.innerHTML = '<div class="error-message">Artists unavailable</div>';
-            }
-        }
-        
-        async function loadGenres() {
-            const container = document.getElementById('genres-container');
-            if (!container) return;
-            
-            try {
-                const response = await fetch(`${API_BASE}/albums`);
-                const albums = await response.json();
-                
-                const genreMap = new Map();
-                albums.forEach(album => {
-                    if (album.genre && album.genre !== 'null') {
-                        const count = genreMap.get(album.genre) || 0;
-                        genreMap.set(album.genre, count + 1);
-                    }
-                });
-                
-                const genres = Array.from(genreMap.entries()).map(([name, count]) => ({ name, count }));
-                
-                if (!genres || genres.length === 0) {
-                    container.innerHTML = '<div class="error-message">No genres found</div>';
-                    return;
-                }
-                
-                // Build HTML string in memory
-                let htmlString = '';
-                for (const genre of genres) {
-                    htmlString += `
-                        <a class="music-item" href="#" onclick="searchByGenre('${genre.name.toLowerCase()}'); return false;">
-                            <div class="item-container" style="display:flex;align-items:center;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#007bff" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
-                                </svg>
-                                <strong style="font-size:15px;color:#000;margin-left:6px;">${escapeHtml(genre.name)}</strong>
-                                <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(${genre.count})</span>
-                            </div>
-                        </a>
-                    `;
-                }
-                
-                // Single DOM update - atomic injection
-                container.innerHTML = htmlString;
-                
-            } catch (error) {
-                console.error('Error loading genres:', error);
-                container.innerHTML = '<div class="error-message">Genres unavailable</div>';
-            }
-        }
-        
-        async function loadAllContent() {
-            console.log('Loading content with atomic injection...');
-            
-            await Promise.all([
-                loadTrending(),
-                loadLatestReleases(),
-                loadPlaylists(),
-                loadAlbums(),
-                loadEPs(),
-                loadArtists(),
-                loadGenres()
-            ]);
-        }
-        
-        // ===== SIDEBAR FUNCTIONS =====
-        function initializeSidebar() {
-            const hamburger = document.getElementById('hamburgerBtn');
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            const closeBtn = document.getElementById('closeSidebarBtn');
-        
-            if (hamburger && sidebar && overlay && closeBtn) {
-                hamburger.addEventListener('click', openSidebar);
-                closeBtn.addEventListener('click', closeSidebar);
-                overlay.addEventListener('click', closeSidebar);
-                
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-                        closeSidebar();
-                    }
-                });
-            }
-        }
-        
-        function openSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            if (sidebar && overlay) {
-                sidebar.classList.add('open');
-                overlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-        
-        function closeSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            if (sidebar && overlay) {
-                sidebar.classList.remove('open');
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        }
-        
-        // ===== SCROLL BUTTON =====
-        function initializeScrollButton() {
-            const scrollButton = document.getElementById('scrollBtn');
-            if (!scrollButton) return;
-        
-            const handleScroll = () => {
-                const scrollTop = window.scrollY || document.documentElement.scrollTop;
-                if (scrollTop < 50) {
-                    scrollButton.classList.add('scroll-at-top');
-                    scrollButton.innerHTML = '⬇️';
-                } else {
-                    scrollButton.classList.remove('scroll-at-top');
-                    scrollButton.innerHTML = '⬆️';
-                }
-            };
-        
-            const handleClick = () => {
-                const isAtTop = scrollButton.classList.contains('scroll-at-top');
-                window.scrollTo({
-                    top: isAtTop ? document.body.scrollHeight : 0,
-                    behavior: 'smooth'
-                });
-            };
-        
-            window.addEventListener('scroll', handleScroll, { passive: true });
-            scrollButton.addEventListener('click', handleClick);
-            handleScroll();
-        }
-        
-        // ===== LIVE SEARCH =====
-        function initializeLiveSearch() {
-            const searchInput = document.getElementById('searchInput');
-            if (!searchInput) return;
-            
-            const resultsDiv = document.getElementById('liveSearchResults');
-            if (!resultsDiv) return;
-            
-            let debounceTimer;
-            
-            searchInput.addEventListener('input', async function(e) {
-                clearTimeout(debounceTimer);
-                const term = e.target.value.trim();
-                
-                if (term.length < 2) {
-                    resultsDiv.innerHTML = '';
-                    return;
-                }
-                
-                debounceTimer = setTimeout(async () => {
-                    resultsDiv.innerHTML = '<div style="padding: 0.5rem; color: #666;">Searching...</div>';
-                    
-                    try {
-                        const albumsRes = await fetch(`${API_BASE}/albums`);
-                        const albums = await albumsRes.json();
-                        
-                        const results = albums.filter(album => 
-                            album.title.toLowerCase().includes(term.toLowerCase()) ||
-                            (album.artist && album.artist.toLowerCase().includes(term.toLowerCase()))
-                        ).slice(0, 5);
-                        
-                        if (results.length > 0) {
-                            let htmlString = '<ul style="list-style: none; margin: 0; padding: 0;">';
-                            for (const item of results) {
-                                htmlString += `
-                                    <li style="padding: 0.5rem; border-bottom: 1px solid #eee;">
-                                        <a href="/album/${item.slug}" style="text-decoration: none; color: #333;">
-                                            ${escapeHtml(item.title)} - ${escapeHtml(item.artist || '')}
-                                        </a>
-                                    </li>
-                                `;
-                            }
-                            htmlString += '</ul>';
-                            resultsDiv.innerHTML = htmlString;
-                        } else {
-                            resultsDiv.innerHTML = '<div style="padding: 0.5rem; color: #666;">No results found</div>';
-                        }
-                    } catch (error) {
-                        console.error('Search error:', error);
-                        resultsDiv.innerHTML = '<div style="padding: 0.5rem; color: #666;">Search failed</div>';
-                    }
-                }, 300);
-            });
-            
-            document.addEventListener('click', function(e) {
-                if (!searchInput.contains(e.target) && !resultsDiv.contains(e.target)) {
-                    resultsDiv.innerHTML = '';
-                }
-            });
-        }
-        
-        // ===== GLOBAL FUNCTIONS =====
-        function searchByGenre(genre) {
-            window.location.href = `/genre/${genre}`;
-            closeSidebar();
-            return false;
-        }
-        
-        function loadMore(page) {
-            window.location.href = `/albums?page=${page}`;
-            return false;
-        }
-        
-        // Make functions globally available
-        window.handleImageError = handleImageError;
-        window.searchByGenre = searchByGenre;
-        window.loadMore = loadMore;
-        window.closeSidebar = closeSidebar;
-        
-        // ===== INITIALIZATION =====
-        document.addEventListener('DOMContentLoaded', async function() {
-            console.log('DOM ready - skeletons visible, loading real content...');
-            initializeSidebar();
-            initializeScrollButton();
-            initializeLiveSearch();
-            await loadAllContent();
-            console.log('Content loaded - skeletons replaced');
-        });
+        // Auto-updating year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
