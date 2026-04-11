@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Compilations</title>
 
+  <!-- 🚀 LCP BOOST -->
+  <link rel="preconnect" href="https://zedtopvibes.com">
+  <link rel="dns-prefetch" href="https://zedtopvibes.com">
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -79,38 +83,11 @@
       color: #ccc;
     }
 
-    /* Skeleton */
-    .skeleton {
-      animation: pulse 1.2s infinite ease-in-out;
-      background: #2a2a2a;
+    .loading {
+      padding: 20px;
+      color: #aaa;
+      text-align: center;
     }
-
-    @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.4; }
-      100% { opacity: 1; }
-    }
-
-    .skeleton-card {
-      background: #1e1e1e;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .skeleton-img {
-      width: 100%;
-      height: 150px;
-    }
-
-    .skeleton-line {
-      height: 12px;
-      margin: 8px 10px;
-      border-radius: 4px;
-    }
-
-    .w-80 { width: 80%; }
-    .w-60 { width: 60%; }
-    .w-40 { width: 40%; }
   </style>
 </head>
 
@@ -137,31 +114,76 @@
   const API_URL = "https://zedtopvibes.com/api/compilations";
   const BASE_URL = "https://zedtopvibes.com";
 
-  // SHOW SKELETON
-  function showSkeleton(count = 8) {
+  function getImg(url) {
+    if (!url) return "https://via.placeholder.com/300";
+    return url.startsWith("http") ? url : BASE_URL + url;
+  }
+
+  // ⚡ FAST FIRST PAINT (LCP OPTIMIZED)
+  function renderFirstCard(item) {
     const content = document.getElementById("content");
+
+    const imgSrc = getImg(item.cover_url);
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <img 
+        src="${imgSrc}" 
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+        onerror="this.src='https://via.placeholder.com/300'"
+      />
+      <div class="card-content">
+        <div class="title">${item.title || "No Title"}</div>
+        <div class="meta">
+          ${item.type || "N/A"} • ${item.views || 0} views • ${item.item_count || 0} items
+        </div>
+        <div class="desc">${item.description || ""}</div>
+      </div>
+    `;
+
     content.innerHTML = "";
+    content.appendChild(card);
+  }
 
-    for (let i = 0; i < count; i++) {
-      const div = document.createElement("div");
-      div.className = "skeleton-card";
+  // ⚡ REST ITEMS (lazy load)
+  function renderRest(data) {
+    const content = document.getElementById("content");
 
-      div.innerHTML = `
-        <div class="skeleton-img skeleton"></div>
-        <div class="skeleton-line skeleton w-80"></div>
-        <div class="skeleton-line skeleton w-60"></div>
-        <div class="skeleton-line skeleton w-40"></div>
+    data.slice(1).forEach(item => {
+      const imgSrc = getImg(item.cover_url);
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img 
+          src="${imgSrc}" 
+          loading="lazy"
+          decoding="async"
+          onerror="this.src='https://via.placeholder.com/300'"
+        />
+        <div class="card-content">
+          <div class="title">${item.title || "No Title"}</div>
+          <div class="meta">
+            ${item.type || "N/A"} • ${item.views || 0} views • ${item.item_count || 0} items
+          </div>
+          <div class="desc">${item.description || ""}</div>
+        </div>
       `;
 
-      content.appendChild(div);
-    }
+      content.appendChild(card);
+    });
   }
 
   async function loadData() {
     const type = document.getElementById("type").value;
     const content = document.getElementById("content");
 
-    showSkeleton();
+    content.innerHTML = "<div class='loading'>Loading...</div>";
 
     try {
       let url = API_URL + "?limit=12";
@@ -170,42 +192,26 @@
       const res = await fetch(url);
       const data = await res.json();
 
-      content.innerHTML = "";
-
-      if (!Array.isArray(data)) {
-        content.innerHTML = "<p style='padding:20px'>No data found</p>";
+      if (!Array.isArray(data) || data.length === 0) {
+        content.innerHTML = "<div class='loading'>No data found</div>";
         return;
       }
 
-      data.forEach(item => {
+      // ⚡ LCP OPTIMIZATION: render FIRST ITEM immediately
+      renderFirstCard(data[0]);
 
-        // FIX IMAGE (handles /uploads/...)
-        const imgSrc = item.cover_url
-          ? (item.cover_url.startsWith("http")
-              ? item.cover_url
-              : BASE_URL + item.cover_url)
-          : "https://via.placeholder.com/300";
+      // preload LCP image
+      const img = new Image();
+      img.src = getImg(data[0].cover_url);
 
-        const card = document.createElement("div");
-        card.className = "card";
-
-        card.innerHTML = `
-          <img src="${imgSrc}" onerror="this.src='https://via.placeholder.com/300'" />
-          <div class="card-content">
-            <div class="title">${item.title || "No Title"}</div>
-            <div class="meta">
-              ${item.type || "N/A"} • ${item.views || 0} views • ${item.item_count || 0} items
-            </div>
-            <div class="desc">${item.description || ""}</div>
-          </div>
-        `;
-
-        content.appendChild(card);
+      // render rest after paint
+      requestAnimationFrame(() => {
+        renderRest(data);
       });
 
     } catch (err) {
       console.error(err);
-      content.innerHTML = "<p style='padding:20px'>Failed to load data</p>";
+      content.innerHTML = "<div class='loading'>Failed to load</div>";
     }
   }
 
