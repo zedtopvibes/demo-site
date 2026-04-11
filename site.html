@@ -12,11 +12,10 @@
             --accent: #38bdf8;
             --text: #f8fafc;
             --text-dim: #94a3b8;
+            --skeleton: #334155;
             --header-height: 64px;
-            --footer-height: 80px;
         }
 
-        /* Essential for Zero Layout Shift */
         * { box-sizing: border-box; }
 
         body {
@@ -26,10 +25,9 @@
             margin: 0;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* Keeps footer at bottom during load */
+            min-height: 100vh;
         }
 
-        /* Sticky Header: Reserves space at top */
         header {
             height: var(--header-height);
             background: var(--header-bg);
@@ -42,16 +40,7 @@
             border-bottom: 1px solid #334155;
         }
 
-        header h1 {
-            font-size: 1.25rem;
-            margin: 0;
-            color: var(--accent);
-        }
-
-        main {
-            flex: 1; /* Pushes footer down */
-            padding: 24px;
-        }
+        main { flex: 1; padding: 24px; }
 
         .album-grid {
             display: grid;
@@ -61,7 +50,8 @@
             margin: 0 auto;
         }
 
-        .album-card {
+        /* Shared Card Styles */
+        .album-card, .skeleton-card {
             background: var(--card);
             border-radius: 12px;
             overflow: hidden;
@@ -69,51 +59,51 @@
             flex-direction: column;
         }
 
-        /* Image Aspect Ratio: The heart of No Layout Shift */
         .img-box {
             width: 100%;
             aspect-ratio: 1 / 1;
-            background-color: #334155;
+            background-color: var(--skeleton);
         }
 
         .img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
+            width: 100%; height: 100%; object-fit: cover; display: block;
         }
 
-        /* Fixed text area: Prevents vertical jumps */
-        .info {
-            padding: 12px;
-            height: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+        .info { padding: 12px; height: 60px; display: flex; flex-direction: column; justify-content: center; }
 
-        .title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            margin: 0;
-            white-space: nowrap;
+        .title { font-size: 0.9rem; font-weight: 700; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        .artist { font-size: 0.8rem; color: var(--text-dim); margin-top: 4px; }
+
+        /* Skeleton Specific Styles */
+        .skeleton-text {
+            height: 12px;
+            background: var(--skeleton);
+            border-radius: 4px;
+            position: relative;
             overflow: hidden;
-            text-overflow: ellipsis;
         }
 
-        .artist {
-            font-size: 0.8rem;
-            color: var(--text-dim);
-            margin-top: 4px;
+        .skeleton-text.short { width: 60%; margin-top: 8px; }
+
+        /* Shimmer Animation */
+        .shimmer::after {
+            content: "";
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            animation: shimmer 1.5s infinite;
         }
 
-        /* Fixed Footer */
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
         footer {
             background: var(--header-bg);
-            height: var(--footer-height);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 20px;
+            text-align: center;
             border-top: 1px solid #334155;
             color: var(--text-dim);
             font-size: 0.85rem;
@@ -122,18 +112,22 @@
 </head>
 <body>
 
-    <header>
-        <h1>ZedTopVibes</h1>
-    </header>
+    <header><h1>ZedTopVibes</h1></header>
 
     <main>
         <div class="album-grid" id="album-grid">
-            </div>
+            <div class="skeleton-card"><div class="img-box shimmer"></div><div class="info"><div class="skeleton-text shimmer"></div><div class="skeleton-text short shimmer"></div></div></div>
+            <div class="skeleton-card"><div class="img-box shimmer"></div><div class="info"><div class="skeleton-text shimmer"></div><div class="skeleton-text short shimmer"></div></div></div>
+            <div class="skeleton-card"><div class="img-box shimmer"></div><div class="info"><div class="skeleton-text shimmer"></div><div class="skeleton-text short shimmer"></div></div></div>
+            <div class="skeleton-card"><div class="img-box shimmer"></div><div class="info"><div class="skeleton-text shimmer"></div><div class="skeleton-text short shimmer"></div></div></div>
+            <div class="skeleton-card"><div class="img-box shimmer"></div><div class="info"><div class="skeleton-text shimmer"></div><div class="skeleton-text short shimmer"></div></div></div>
+            <div class="skeleton-card"><div class="img-box shimmer"></div><div class="info"><div class="skeleton-text shimmer"></div><div class="skeleton-text short shimmer"></div></div></div>
+            <div class="skeleton-card"><div class="img-box shimmer"></div><div class="info"><div class="skeleton-text shimmer"></div><div class="skeleton-text short shimmer"></div></div></div>
+            <div class="skeleton-card"><div class="img-box shimmer"></div><div class="info"><div class="skeleton-text shimmer"></div><div class="skeleton-text short shimmer"></div></div></div>
+        </div>
     </main>
 
-    <footer>
-        <p>&copy; 2026 ZedTopVibes. All rights reserved.</p>
-    </footer>
+    <footer>&copy; 2026 ZedTopVibes</footer>
 
     <script>
         const API_URL = 'https://zedtopvibes.com/api/albums';
@@ -149,10 +143,7 @@
                     html += `
                     <div class="album-card">
                         <div class="img-box">
-                            <img src="${album.cover_url}" 
-                                 alt="${album.title}" 
-                                 width="300" height="300" 
-                                 loading="lazy">
+                            <img src="${album.cover_url}" alt="${album.title}" width="300" height="300" loading="lazy">
                         </div>
                         <div class="info">
                             <div class="title">${album.title}</div>
@@ -161,6 +152,7 @@
                     </div>`;
                 });
                 
+                // Clear skeletons and inject real data
                 grid.innerHTML = html;
             } catch (e) { 
                 console.error(e); 
