@@ -20,13 +20,12 @@ body {
     color: var(--text-main);
     margin: 0;
 
-    /* Layout structure */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-/* ✅ Header & Footer */
+/* Header & Footer */
 header, footer {
     text-align: center;
     padding: 1rem;
@@ -41,17 +40,20 @@ footer {
     border-top: 1px solid #1e293b;
 }
 
-/* ✅ Main content area centers your list */
+/* ✅ FIXED main layout */
 main {
     flex: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center;   /* center horizontally only */
+    align-items: flex-start;   /* 🔥 critical fix */
     padding: 1rem;
 }
 
-/* Your original layout (unchanged) */
-.container { max-width: 600px; width: 100%; }
+/* Your original layout */
+.container {
+    max-width: 600px;
+    width: 100%;
+}
 
 .album-list {
     display: flex;
@@ -129,7 +131,7 @@ main {
 <main>
     <div class="container">
         <div id="album-grid" class="album-list">
-            <!-- Skeleton (unchanged) -->
+            <!-- Skeleton -->
             <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:70%"></div><div class="artist skeleton-pulse" style="width:40%"></div></div></div>
             <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:70%"></div><div class="artist skeleton-pulse" style="width:40%"></div></div></div>
             <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:70%"></div><div class="artist skeleton-pulse" style="width:40%"></div></div></div>
