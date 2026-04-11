@@ -1,9 +1,10 @@
+The new code breaks this functionality 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZedTopVibes | Fully Locked 80x80 No Shift 🔒</title>
+    <title>ZedTopVibes | 80x80 No Shift</title>
     <style>
         :root {
             --bg: #0f172a;
@@ -13,68 +14,23 @@
             --skeleton: #334155;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: system-ui, -apple-system, sans-serif;
             background-color: var(--bg);
             color: var(--text-main);
+            margin: 0;
+            padding: 1rem;
         }
 
-        /* 🔒 FULLY LOCKED LAYOUT SYSTEM - Nothing can shift the album list 🔒 */
-        
-        /* Main wrapper uses flex to keep header/footer separate from content */
-        .app-wrapper {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+        .container { max-width: 600px; margin: 0 auto; }
 
-        /* 🔒 HEADER - Can be anything, won't affect album rows */
-        .header {
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid #334155;
-            flex-shrink: 0;
-        }
-        
-        .header h1 {
-            font-size: 1.8rem;
-            letter-spacing: -0.5px;
-        }
-        
-        .header p {
-            color: var(--text-dim);
-            margin-top: 8px;
-        }
-
-        /* 🔒 MAIN CONTENT - Scrollable, but album cards NEVER change size */
-        .main-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px 16px;
-        }
-
-        .container {
-            max-width: 640px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        /* 🔒 CRITICAL: Album list uses FIXED row heights - absolute lock */
+        /* KEY: Define the exact height of the row container */
         .album-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            width: 100%;
         }
 
-        /* Each card is PERMANENTLY locked to 96px - NO EXCEPTIONS */
         .album-card {
             display: flex;
             align-items: center;
@@ -82,23 +38,15 @@
             border-radius: 8px;
             padding: 8px;
             gap: 12px;
-            height: 96px;           /* 🔒 LOCKED - Will never change */
-            min-height: 96px;       /* 🔒 Double lock */
-            max-height: 96px;       /* 🔒 Triple lock */
+            /* This locks the height so it never moves */
+            height: 96px; 
             box-sizing: border-box;
             overflow: hidden;
-            width: 100%;
-            flex-shrink: 0;
         }
 
-        /* Image box: EXACT 80x80 - never ever changes */
         .img-box {
-            width: 80px;            /* 🔒 LOCKED */
-            min-width: 80px;        /* 🔒 LOCKED */
-            max-width: 80px;        /* 🔒 LOCKED */
-            height: 80px;           /* 🔒 LOCKED */
-            min-height: 80px;       /* 🔒 LOCKED */
-            max-height: 80px;       /* 🔒 LOCKED */
+            width: 80px;
+            height: 80px;
             flex-shrink: 0;
             background-color: var(--skeleton);
             border-radius: 4px;
@@ -112,36 +60,27 @@
             display: block;
         }
 
-        /* Info area - flexible but text won't cause height changes */
         .info {
             flex-grow: 1;
-            min-width: 0;
-            overflow: hidden;
+            min-width: 0; /* Keeps text from pushing the box wider */
         }
 
-        /* Text lines have FIXED heights - no line-height surprises */
         .title {
             font-weight: 700;
             margin: 0 0 4px 0;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            line-height: 1.4;
-            height: 20px;           /* 🔒 Locked line height */
+            height: 1.2em; /* Lock text height */
         }
 
         .artist {
             color: var(--text-dim);
             font-size: 0.9rem;
             margin: 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            line-height: 1.4;
-            height: 20px;           /* 🔒 Locked line height */
+            height: 1.2em; /* Lock text height */
         }
 
-        /* Skeleton animations */
         .skeleton-pulse {
             animation: pulse 1.5s infinite ease-in-out;
             background-color: var(--skeleton);
@@ -151,79 +90,15 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
-
-        /* 🔒 FOOTER - Can be anything, won't affect album rows */
-        .footer {
-            background: #0a0f1a;
-            padding: 16px;
-            text-align: center;
-            border-top: 1px solid #334155;
-            font-size: 0.8rem;
-            color: var(--text-dim);
-            flex-shrink: 0;
-        }
-        
-        .footer a {
-            color: #60a5fa;
-            text-decoration: none;
-        }
-
-        /* Scrollbar styling (optional) */
-        .main-content::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        .main-content::-webkit-scrollbar-track {
-            background: #1e293b;
-        }
-        
-        .main-content::-webkit-scrollbar-thumb {
-            background: #475569;
-            border-radius: 3px;
-        }
     </style>
 </head>
 <body>
-<div class="app-wrapper">
-    <!-- 🔒 HEADER - Does NOT affect album lock -->
-    <div class="header">
-        <h1>🎵 ZedTopVibes</h1>
-        <p>80x80 • Zero Shift • Fully Locked 🔒</p>
-    </div>
-    
-    <!-- 🔒 MAIN CONTENT - Album list is completely isolated -->
-    <div class="main-content">
-        <div class="container">
-            <div id="album-grid" class="album-list">
-                <!-- Pre-loaded skeletons - same locked dimensions as real content -->
-                <div class="album-card">
-                    <div class="img-box skeleton-pulse"></div>
-                    <div class="info">
-                        <div class="title skeleton-pulse" style="width:70%"></div>
-                        <div class="artist skeleton-pulse" style="width:40%"></div>
-                    </div>
-                </div>
-                <div class="album-card">
-                    <div class="img-box skeleton-pulse"></div>
-                    <div class="info">
-                        <div class="title skeleton-pulse" style="width:70%"></div>
-                        <div class="artist skeleton-pulse" style="width:40%"></div>
-                    </div>
-                </div>
-                <div class="album-card">
-                    <div class="img-box skeleton-pulse"></div>
-                    <div class="info">
-                        <div class="title skeleton-pulse" style="width:70%"></div>
-                        <div class="artist skeleton-pulse" style="width:40%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- 🔒 FOOTER - Does NOT affect album lock -->
-    <div class="footer">
-        <p>© 2026 ZedTopVibes | <a href="#">Privacy</a> | <a href="#">Terms</a></p>
+
+<div class="container">
+    <div id="album-grid" class="album-list">
+        <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:70%"></div><div class="artist skeleton-pulse" style="width:40%"></div></div></div>
+        <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:70%"></div><div class="artist skeleton-pulse" style="width:40%"></div></div></div>
+        <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:70%"></div><div class="artist skeleton-pulse" style="width:40%"></div></div></div>
     </div>
 </div>
 
@@ -236,6 +111,8 @@
             const res = await fetch(API_URL);
             const data = await res.json();
             
+            // Optimization: Build the string first, then swap once.
+            // This reduces the time the screen is "blank" to zero.
             let html = '';
             data.forEach(album => {
                 html += `
@@ -244,28 +121,15 @@
                         <img src="${album.cover_url}" alt="${album.title}" loading="lazy">
                     </div>
                     <div class="info">
-                        <div class="title">${escapeHtml(album.title)}</div>
-                        <div class="artist">${escapeHtml(album.artist || 'Unknown')}</div>
+                        <div class="title">${album.title}</div>
+                        <div class="artist">${album.artist || 'Unknown'}</div>
                     </div>
                 </div>`;
             });
             
             grid.innerHTML = html;
-        } catch (e) { 
-            console.error(e);
-        }
+        } catch (e) { console.error(e); }
     }
-    
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
-    
     load();
 </script>
 </body>
