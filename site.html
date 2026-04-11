@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Compilations</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -29,7 +30,6 @@
       padding: 10px;
       border-radius: 6px;
       border: none;
-      outline: none;
     }
 
     button {
@@ -49,11 +49,6 @@
       background: #1e1e1e;
       border-radius: 10px;
       overflow: hidden;
-      transition: transform 0.2s;
-    }
-
-    .card:hover {
-      transform: scale(1.03);
     }
 
     .card img {
@@ -83,12 +78,47 @@
       color: #ccc;
     }
 
-    .loading {
-      text-align: center;
-      padding: 20px;
+    /* =========================
+       SKELETON LOADING STYLE
+    ========================== */
+
+    .skeleton {
+      animation: pulse 1.2s infinite ease-in-out;
+      background: #2a2a2a;
     }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.4; }
+      100% { opacity: 1; }
+    }
+
+    .skeleton-card {
+      background: #1e1e1e;
+      border-radius: 10px;
+      overflow: hidden;
+      padding-bottom: 10px;
+    }
+
+    .skeleton-img {
+      width: 100%;
+      height: 150px;
+      background: #2a2a2a;
+    }
+
+    .skeleton-line {
+      height: 12px;
+      margin: 8px 10px;
+      border-radius: 4px;
+    }
+
+    .w-60 { width: 60%; }
+    .w-80 { width: 80%; }
+    .w-40 { width: 40%; }
+
   </style>
 </head>
+
 <body>
 
 <header>
@@ -111,11 +141,31 @@
 <script>
   const API_URL = "https://zedtopvibes.com/api/compilations";
 
+  function showSkeleton(count = 8) {
+    const content = document.getElementById("content");
+    content.innerHTML = "";
+
+    for (let i = 0; i < count; i++) {
+      const skeleton = document.createElement("div");
+      skeleton.className = "skeleton-card";
+
+      skeleton.innerHTML = `
+        <div class="skeleton-img skeleton"></div>
+        <div class="skeleton-line skeleton w-80"></div>
+        <div class="skeleton-line skeleton w-60"></div>
+        <div class="skeleton-line skeleton w-40"></div>
+      `;
+
+      content.appendChild(skeleton);
+    }
+  }
+
   async function loadData() {
     const type = document.getElementById("type").value;
     const content = document.getElementById("content");
 
-    content.innerHTML = "<div class='loading'>Loading...</div>";
+    // SHOW HARD-CODED SKELETON FIRST
+    showSkeleton();
 
     try {
       let url = API_URL + "?limit=12";
@@ -124,11 +174,6 @@
       const res = await fetch(url);
       const data = await res.json();
 
-      if (!Array.isArray(data)) {
-        content.innerHTML = "<div class='loading'>No data found</div>";
-        return;
-      }
-
       content.innerHTML = "";
 
       data.forEach(item => {
@@ -136,11 +181,11 @@
         card.className = "card";
 
         card.innerHTML = `
-          <img src="${item.cover_url || 'https://via.placeholder.com/300'}" alt="">
+          <img src="${item.cover_url || 'https://via.placeholder.com/300'}" />
           <div class="card-content">
             <div class="title">${item.title || "No Title"}</div>
             <div class="meta">
-              Type: ${item.type || "N/A"} • Views: ${item.views || 0} • Items: ${item.item_count || 0}
+              ${item.type || "N/A"} • ${item.views || 0} views • ${item.item_count || 0} items
             </div>
             <div class="desc">${item.description || ""}</div>
           </div>
@@ -150,8 +195,7 @@
       });
 
     } catch (err) {
-      console.error(err);
-      content.innerHTML = "<div class='loading'>Error loading data</div>";
+      content.innerHTML = "<p style='padding:20px'>Failed to load data</p>";
     }
   }
 
