@@ -3,502 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZedTopVibes - Albums</title>
+    <title>ZedTopVibes | Latest Albums</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --accent: #38bdf8;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
             padding: 20px;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 40px;
-            padding: 40px 20px;
-        }
-
-        .header h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        .stats {
-            background: rgba(255,255,255,0.2);
-            border-radius: 20px;
-            padding: 10px 20px;
-            display: inline-block;
-            margin-top: 15px;
-            backdrop-filter: blur(10px);
-        }
-
-        .last-updated {
-            font-size: 0.8rem;
-            margin-top: 10px;
-            opacity: 0.8;
-        }
-
-        .loading {
-            text-align: center;
-            color: white;
-            padding: 60px;
-        }
-
-        .spinner {
-            border: 4px solid rgba(255,255,255,0.3);
-            border-top: 4px solid white;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .albums-grid {
+        /* Fixed Grid Layout to prevent jumping */
+        .album-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 20px 0;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
         }
 
+        /* Skeleton & Card Sizing */
         .album-card {
-            background: white;
-            border-radius: 15px;
+            background: var(--card);
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
+            transition: transform 0.2s ease;
+            text-decoration: none;
+            color: inherit;
         }
 
-        .album-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        .album-cover {
+        /* CRITICAL: Aspect ratio reserves 1:1 square space for the cover */
+        .cover-box {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #2d3748;
             position: relative;
-            padding-bottom: 100%;
-            background: #f0f0f0;
-            overflow: hidden;
         }
 
-        .album-cover img {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .cover-box img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            display: block;
         }
 
-        .album-card:hover .album-cover img {
-            transform: scale(1.05);
+        .details {
+            padding: 12px;
+            min-height: 60px; /* Reserves space for text */
         }
 
-        .album-info {
-            padding: 20px;
+        .details h3 {
+            margin: 0;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .album-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #333;
-            line-height: 1.3;
-        }
-
-        .album-artist {
-            color: #667eea;
-            font-weight: 600;
-            margin-bottom: 12px;
-            font-size: 0.9rem;
-        }
-
-        .album-meta {
-            display: flex;
-            gap: 15px;
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 15px;
-        }
-
-        .album-stats {
-            display: flex;
-            gap: 15px;
-            padding-top: 12px;
-            border-top: 1px solid #eee;
+        .details p {
+            margin: 4px 0 0;
             font-size: 0.8rem;
-            color: #888;
+            color: var(--muted);
         }
 
-        .featured-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            z-index: 1;
+        /* Skeleton Pulse Animation */
+        .skeleton {
+            animation: pulse 1.5s infinite ease-in-out;
         }
 
-        .error {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            text-align: center;
-            color: #e74c3c;
-            margin: 40px auto;
-            max-width: 500px;
-        }
-
-        .error button, .retry-btn {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .refresh-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            transition: transform 0.2s;
-        }
-
-        .refresh-btn:hover {
-            transform: scale(1.05);
-            background: rgba(0,0,0,0.9);
-        }
-
-        @media (max-width: 768px) {
-            .header h1 { font-size: 2rem; }
-            .albums-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0.6; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🎵 ZedTopVibes</h1>
-            <p>Discover the best albums from Zambia's finest artists</p>
-            <div class="stats" id="stats">Loading albums...</div>
-            <div class="last-updated" id="lastUpdated"></div>
-        </div>
 
-        <div id="content">
-            <div class="loading">
-                <div class="spinner"></div>
-                <p>Loading amazing albums...</p>
-            </div>
-        </div>
+<div class="container">
+    <header style="margin-bottom: 30px;">
+        <h1 style="color: var(--accent)">ZedTopVibes</h1>
+    </header>
+
+    <div id="grid" class="album-grid">
+        <div class="album-card skeleton"><div class="cover-box"></div><div class="details"></div></div>
+        <div class="album-card skeleton"><div class="cover-box"></div><div class="details"></div></div>
+        <div class="album-card skeleton"><div class="cover-box"></div><div class="details"></div></div>
+        <div class="album-card skeleton"><div class="cover-box"></div><div class="details"></div></div>
     </div>
+</div>
 
-    <button class="refresh-btn" onclick="app.manualRefresh()">
-        🔄 Refresh Data
-    </button>
+<script>
+    const API_URL = 'https://zedtopvibes.com/api/albums';
+    const grid = document.getElementById('grid');
 
-    <script>
-        // Simple cache without KV - just localStorage
-        const CACHE_KEY = 'zedtopvibes_albums_v1';
-        
-        class AlbumApp {
-            constructor() {
-                this.albums = [];
-                this.isLoading = false;
-                this.init();
-            }
-
-            async init() {
-                // Try localStorage first (instant)
-                const cached = this.getCachedData();
-                
-                if (cached) {
-                    this.albums = cached;
-                    this.renderAlbums();
-                    this.updateLastUpdated();
-                    // Fetch fresh in background
-                    this.fetchFreshData();
-                } else {
-                    // First time visit - fetch from API
-                    await this.fetchFreshData(true);
-                }
-            }
-
-            getCachedData() {
-                try {
-                    const cached = localStorage.getItem(CACHE_KEY);
-                    if (cached) {
-                        const { data, timestamp } = JSON.parse(cached);
-                        // Cache valid for 1 hour (you can adjust)
-                        const age = Date.now() - timestamp;
-                        console.log(`Cache age: ${Math.round(age / 60000)} minutes`);
-                        
-                        if (data && data.length > 0) {
-                            return data;
-                        }
-                    }
-                } catch (e) {
-                    console.error('Cache read error:', e);
-                }
-                return null;
-            }
-
-            saveToCache(data) {
-                try {
-                    const cacheData = {
-                        data: data,
-                        timestamp: Date.now()
-                    };
-                    localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
-                    console.log('✅ Data cached in browser');
-                } catch (e) {
-                    console.error('Cache save error:', e);
-                }
-            }
-
-            async fetchFreshData(showLoading = false) {
-                if (this.isLoading) return;
-                
-                this.isLoading = true;
-                
-                if (showLoading) {
-                    this.showLoading();
-                }
-
-                try {
-                    // Bypass any CDN cache with timestamp
-                    const url = `https://zedtopvibes.com/api/albums?_=${Date.now()}`;
-                    console.log('Fetching from:', url);
-                    
-                    const response = await fetch(url);
-                    
-                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                    
-                    const data = await response.json();
-                    
-                    if (Array.isArray(data) && data.length > 0) {
-                        this.albums = data;
-                        this.saveToCache(data);
-                        this.renderAlbums();
-                        this.updateLastUpdated();
-                        console.log(`Loaded ${data.length} albums`);
-                    }
-                    
-                } catch (error) {
-                    console.error('Fetch error:', error);
-                    
-                    // Try cache one more time if fetch fails
-                    const fallbackCache = this.getCachedData();
-                    if (fallbackCache && fallbackCache.length > 0) {
-                        this.albums = fallbackCache;
-                        this.renderAlbums();
-                        this.showError(`Using cached data (${error.message})`, false);
-                    } else {
-                        this.showError('Unable to load albums. Please check your connection.', true);
-                    }
-                } finally {
-                    this.isLoading = false;
-                }
-            }
-
-            async manualRefresh() {
-                if (this.isLoading) {
-                    alert('Already loading...');
-                    return;
-                }
-                
-                // Clear cache first
-                localStorage.removeItem(CACHE_KEY);
-                
-                // Show refresh indicator
-                const btn = document.querySelector('.refresh-btn');
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '🔄 Loading...';
-                btn.disabled = true;
-                
-                await this.fetchFreshData(true);
-                
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                
-                // Show success message
-                this.showToast('✅ Data refreshed!');
-            }
-
-            showLoading() {
-                const content = document.getElementById('content');
-                content.innerHTML = `
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        <p>Loading fresh data...</p>
+    async function loadAlbums() {
+        try {
+            const response = await fetch(API_URL);
+            const data = await response.json();
+            
+            // Generate HTML using your API structure
+            const html = data.map(album => `
+                <div class="album-card">
+                    <div class="cover-box">
+                        <img src="${album.cover_url}" 
+                             alt="${album.title}" 
+                             loading="lazy" 
+                             width="300" height="300">
                     </div>
-                `;
-            }
-
-            updateLastUpdated() {
-                const cached = localStorage.getItem(CACHE_KEY);
-                if (cached) {
-                    const { timestamp } = JSON.parse(cached);
-                    const date = new Date(timestamp);
-                    const formatted = date.toLocaleString();
-                    document.getElementById('lastUpdated').innerHTML = `Last updated: ${formatted}`;
-                }
-            }
-
-            showError(message, showRetry = true) {
-                const content = document.getElementById('content');
-                content.innerHTML = `
-                    <div class="error">
-                        <h3>⚠️ ${message}</h3>
-                        ${showRetry ? '<button onclick="app.manualRefresh()">Try Again</button>' : ''}
+                    <div class="details">
+                        <h3>${album.title}</h3>
+                        <p>${album.artist}</p>
                     </div>
-                `;
-            }
+                </div>
+            `).join('');
 
-            showToast(message) {
-                const toast = document.createElement('div');
-                toast.textContent = message;
-                toast.style.cssText = `
-                    position: fixed;
-                    bottom: 80px;
-                    right: 20px;
-                    background: rgba(0,0,0,0.9);
-                    color: white;
-                    padding: 10px 20px;
-                    border-radius: 10px;
-                    font-size: 0.9rem;
-                    z-index: 1001;
-                    animation: fadeInOut 2s ease;
-                `;
-                document.body.appendChild(toast);
-                setTimeout(() => toast.remove(), 2000);
-            }
-
-            formatNumber(num) {
-                if (!num) return '0';
-                if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-                if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
-                return num.toString();
-            }
-
-            getCoverUrl(path) {
-                if (!path) return 'https://via.placeholder.com/400x400?text=No+Cover';
-                if (path.startsWith('http')) return path;
-                return `https://zedtopvibes.com${path}`;
-            }
-
-            renderAlbums() {
-                const content = document.getElementById('content');
-                const stats = document.getElementById('stats');
-                
-                const featuredCount = this.albums.filter(a => a.is_featured === 1).length;
-                stats.innerHTML = `📀 ${this.albums.length} Albums | ⭐ ${featuredCount} Featured`;
-                
-                if (this.albums.length === 0) {
-                    content.innerHTML = `<div class="error"><h3>No albums found</h3></div>`;
-                    return;
-                }
-                
-                const html = `
-                    <div class="albums-grid">
-                        ${this.albums.map(album => `
-                            <div class="album-card" onclick="window.open('https://zedtopvibes.com/album/${album.slug}', '_blank')">
-                                <div class="album-cover">
-                                    ${album.is_featured === 1 ? '<div class="featured-badge">⭐ Featured</div>' : ''}
-                                    <img 
-                                        src="${this.getCoverUrl(album.cover_url)}" 
-                                        alt="${this.escapeHtml(album.title)}"
-                                        loading="lazy"
-                                        onerror="this.src='https://via.placeholder.com/400x400?text=No+Cover'"
-                                    >
-                                </div>
-                                <div class="album-info">
-                                    <div class="album-title">${this.escapeHtml(album.title)}</div>
-                                    <div class="album-artist">${this.escapeHtml(album.artist || album.artist_name)}</div>
-                                    <div class="album-meta">
-                                        ${album.release_date ? `<span>📅 ${album.release_date.split('-')[0]}</span>` : ''}
-                                        ${album.genre ? `<span>🎸 ${this.escapeHtml(album.genre)}</span>` : ''}
-                                    </div>
-                                    <div class="album-stats">
-                                        <span>👁️ ${this.formatNumber(album.views)}</span>
-                                        <span>▶️ ${this.formatNumber(album.plays)}</span>
-                                        <span>⬇️ ${this.formatNumber(album.downloads)}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-                
-                content.innerHTML = html;
-            }
-
-            escapeHtml(text) {
-                if (!text) return '';
-                const div = document.createElement('div');
-                div.textContent = text;
-                return div.innerHTML;
-            }
+            grid.innerHTML = html;
+        } catch (error) {
+            grid.innerHTML = `<p>Error loading albums from zedtopvibes.com</p>`;
+            console.error('Fetch error:', error);
         }
+    }
 
-        // Initialize and auto-refresh every 10 minutes
-        const app = new AlbumApp();
-        setInterval(() => {
-            console.log('Auto-refresh check...');
-            const cached = localStorage.getItem(CACHE_KEY);
-            if (cached) {
-                const { timestamp } = JSON.parse(cached);
-                const age = Date.now() - timestamp;
-                // Refresh if cache is older than 10 minutes
-                if (age > 10 * 60 * 1000) {
-                    console.log('Cache stale, refreshing...');
-                    app.fetchFreshData();
-                }
-            }
-        }, 60 * 1000); // Check every minute
-    </script>
-</head>
+    loadAlbums();
+</script>
+
+</body>
 </html>
