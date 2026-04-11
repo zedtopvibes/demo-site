@@ -19,11 +19,16 @@
             color: var(--text-main);
             margin: 0;
             padding: 1rem;
+
+            /* ✅ Added for vertical centering */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100vh;
         }
 
         .container { max-width: 600px; margin: 0 auto; }
 
-        /* KEY: Define the exact height of the row container */
         .album-list {
             display: flex;
             flex-direction: column;
@@ -37,7 +42,6 @@
             border-radius: 8px;
             padding: 8px;
             gap: 12px;
-            /* This locks the height so it never moves */
             height: 96px; 
             box-sizing: border-box;
             overflow: hidden;
@@ -61,7 +65,7 @@
 
         .info {
             flex-grow: 1;
-            min-width: 0; /* Keeps text from pushing the box wider */
+            min-width: 0;
         }
 
         .title {
@@ -70,14 +74,14 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            height: 1.2em; /* Lock text height */
+            height: 1.2em;
         }
 
         .artist {
             color: var(--text-dim);
             font-size: 0.9rem;
             margin: 0;
-            height: 1.2em; /* Lock text height */
+            height: 1.2em;
         }
 
         .skeleton-pulse {
@@ -110,8 +114,6 @@
             const res = await fetch(API_URL);
             const data = await res.json();
             
-            // Optimization: Build the string first, then swap once.
-            // This reduces the time the screen is "blank" to zero.
             let html = '';
             data.forEach(album => {
                 html += `
