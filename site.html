@@ -22,7 +22,6 @@ body {
     padding: 1rem;
 }
 
-/* ✅ Simple header/footer (no flex tricks) */
 header, footer {
     text-align: center;
     color: var(--text-dim);
@@ -93,14 +92,33 @@ footer {
     height: 1.2em;
 }
 
-.skeleton-pulse {
-    animation: pulse 1.5s infinite ease-in-out;
+/* ⭐ NEW SHIMMER LOADING (replaces pulse) */
+.skeleton {
+    position: relative;
+    overflow: hidden;
     background-color: var(--skeleton);
+    border-radius: 4px;
 }
 
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+.skeleton::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    height: 100%;
+    width: 150%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.08),
+        transparent
+    );
+    animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -150%; }
+    100% { left: 150%; }
 }
 </style>
 </head>
@@ -113,9 +131,32 @@ footer {
 
 <div class="container">
     <div id="album-grid" class="album-list">
-        <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:70%"></div><div class="artist skeleton-pulse" style="width:40%"></div></div></div>
-        <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:70%"></div><div class="artist skeleton-pulse" style="width:40%"></div></div></div>
-        <div class="album-card"><div class="img-box skeleton-pulse"></div><div class="info"><div class="title skeleton-pulse" style="width:70%"></div><div class="artist skeleton-pulse" style="width:40%"></div></div></div>
+
+        <!-- Skeleton UI (NEW STYLE) -->
+        <div class="album-card">
+            <div class="img-box skeleton"></div>
+            <div class="info">
+                <div class="title skeleton" style="width:70%"></div>
+                <div class="artist skeleton" style="width:40%"></div>
+            </div>
+        </div>
+
+        <div class="album-card">
+            <div class="img-box skeleton"></div>
+            <div class="info">
+                <div class="title skeleton" style="width:70%"></div>
+                <div class="artist skeleton" style="width:40%"></div>
+            </div>
+        </div>
+
+        <div class="album-card">
+            <div class="img-box skeleton"></div>
+            <div class="info">
+                <div class="title skeleton" style="width:70%"></div>
+                <div class="artist skeleton" style="width:40%"></div>
+            </div>
+        </div>
+
     </div>
 </div>
 
