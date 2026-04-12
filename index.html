@@ -1,18 +1,18 @@
 <!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Zed Top Vibes | Follow the Vibes</title><!-- SEO --><meta name="description" content="Zed Top Vibes is a Zambian music curation brand featuring Top 10s, Songs You Forgot About, throwback hits, latest Zambian music, discovery moments, and VS comparisons.">
-<meta name="keywords" content="Zed Top Vibes, Zambian music, top 10 songs, songs you forgot about, throwback hits Zambia, latest Zambian music, VS music comparison">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Zed Top Vibes | Follow the Vibes</title><!-- SEO --><meta name="description" content="Zed Top Vibes is a Zambian music curator featuring Top 10s, Songs You Forgot About, throwback hits, latest Zambian music, discovery moments, and VS comparisons.">
+<meta name="keywords" content="Zed Top Vibes, Zambian music curator, top 10 songs, songs you forgot about, throwback hits Zambia, latest Zambian music, VS music comparison">
 <meta name="robots" content="index, follow">
 <meta name="author" content="Zed Top Vibes">
 <meta name="contact" content="hello@zedtopvibes.com">
 <meta name="theme-color" content="#000000"><!-- Canonical --><link rel="canonical" href="https://zedtopvibes.com/"><!-- Open Graph --><meta property="og:title" content="Zed Top Vibes | Follow the Vibes">
-<meta property="og:description" content="Top 10s, Songs You Forgot About, throwbacks, latest music & VS comparisons.">
+<meta property="og:description" content="Top 10s, Songs You Forgot About, throwbacks, latest Zambian music & VS comparisons.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://zedtopvibes.com">
 <meta property="og:image" content="https://zedtopvibes.com/preview.jpg"><!-- Twitter --><meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Zed Top Vibes">
-<meta name="twitter:description" content="Zambian music curation brand: Top 10s, throwbacks & VS content.">
+<meta name="twitter:description" content="Zambian music curation content: Top 10s, throwbacks & VS comparisons.">
 <meta name="twitter:image" content="https://zedtopvibes.com/preview.jpg"><!-- Structured Data --><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -20,6 +20,7 @@
   "name": "Zed Top Vibes",
   "url": "https://zedtopvibes.com",
   "email": "hello@zedtopvibes.com",
+  "description": "Zambian music curator focused on Top 10s, Songs You Forgot About, throwback hits, latest music, discovery moments, and VS comparisons.",
   "sameAs": [
     "https://www.youtube.com/@zedtopvibes",
     "https://www.tiktok.com/@zedtopvibes"
@@ -80,7 +81,6 @@ body {
     text-transform: uppercase;
     opacity: 0.6;
     margin-bottom: 2rem;
-    animation: fadeIn 0.6s ease forwards;
 }
 
 /* Message */
@@ -90,8 +90,6 @@ body {
     letter-spacing: -0.015em;
     line-height: 1.25;
     margin-bottom: 3rem;
-    animation: fadeIn 0.6s ease forwards;
-    animation-delay: 0.1s;
 }
 
 .message span {
@@ -110,7 +108,6 @@ body {
     margin-bottom: 3rem;
 }
 
-/* Social Link */
 .social-link {
     display: flex;
     justify-content: space-between;
@@ -123,19 +120,12 @@ body {
     color: #fff;
     font-size: 0.9rem;
     font-weight: 500;
-    letter-spacing: -0.01em;
     transition: all 0.25s ease;
 }
 
 .social-link:hover {
     border-color: #00ffc8;
     transform: translate3d(5px,0,0);
-}
-
-.social-left {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
 }
 
 /* Footer */
@@ -171,7 +161,6 @@ body {
     }
 }
 
-/* Mobile */
 @media (max-width: 640px) {
     .container {
         padding: 1.5rem;
@@ -179,9 +168,9 @@ body {
 }
 </style></head><body><div class="bg"></div><div class="container"><div class="logo">ZED TOP VIBES</div>
 
-<h1 class="message">
+<div class="message">
     Follow <span>the Vibes</span>
-</h1>
+</div>
 
 <div class="social-links">
 
@@ -189,43 +178,35 @@ body {
        target="_blank"
        rel="noopener noreferrer"
        class="social-link"
-       aria-label="Visit Zed Top Vibes YouTube Channel">
-
-        <div class="social-left">
-            <span>YouTube</span>
-        </div>
-        <div aria-hidden="true">→</div>
+       aria-label="YouTube Channel">
+        <span>YouTube</span>
+        <div>→</div>
     </a>
 
     <a href="https://tiktok.com/@zedtopvibes"
        target="_blank"
        rel="noopener noreferrer"
        class="social-link"
-       aria-label="Visit Zed Top Vibes TikTok Profile">
-
-        <div class="social-left">
-            <span>TikTok</span>
-        </div>
-        <div aria-hidden="true">→</div>
+       aria-label="TikTok Profile">
+        <span>TikTok</span>
+        <div>→</div>
     </a>
 
     <a href="mailto:hello@zedtopvibes.com"
        class="social-link"
-       aria-label="Email Zed Top Vibes">
-
-        <div class="social-left">
-            <span>Email</span>
-        </div>
-        <div aria-hidden="true">→</div>
+       aria-label="Email Contact">
+        <span>Email</span>
+        <div>→</div>
     </a>
 
 </div>
 
 <div class="footer">
-    <div class="footer-domain">ZEDTOPVIBES.COM © <span id="year"></span></div>
-    <div class="footer-tagline">ALL VIBES RESERVED</div>
-    <div style="font-size:0.65rem;color:#666;margin-top:6px;">
-        hello@zedtopvibes.com
+    <div class="footer-domain">
+        ZEDTOPVIBES.COM © <span id="year"></span>
+    </div>
+    <div class="footer-tagline">
+        ALL VIBES RESERVED
     </div>
 </div>
 
