@@ -417,18 +417,8 @@ async function loadGenres() {
     container.innerHTML = '<div class="loading">Loading genres...</div>';
     
     try {
-        const response = await fetch(`${API_BASE}/albums`);
-        const albums = await response.json();
-        
-        const genreMap = new Map();
-        albums.forEach(album => {
-            if (album.genre && album.genre !== 'null') {
-                const count = genreMap.get(album.genre) || 0;
-                genreMap.set(album.genre, count + 1);
-            }
-        });
-        
-        const genres = Array.from(genreMap.entries()).map(([name, count]) => ({ name, count }));
+        const response = await fetch(`${API_BASE}/genres`);
+        const genres = await response.json();
         
         if (!genres || genres.length === 0) {
             container.innerHTML = '<div class="error-message">No genres found</div>';
@@ -529,7 +519,7 @@ function closeSidebar() {
     const overlay = document.getElementById('sidebarOverlay');
     if (sidebar && overlay) {
         sidebar.classList.remove('open');
-        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
         document.body.style.overflow = '';
     }
 }
