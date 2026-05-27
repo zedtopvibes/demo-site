@@ -1,216 +1,56 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en-US">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Zed Top Vibes | Follow the Vibes</title><!-- SEO --><meta name="description" content="Zed Top Vibes is a Zambian music curator featuring Top 10s, Songs You Forgot About, throwback hits, latest Zambian music and discovery moments">
-<meta name="keywords" content="Zed Top Vibes, Zambian music curator, top 10 songs, songs you forgot about, throwback hits Zambia, latest Zambian music, VS music comparison">
-<meta name="robots" content="index, follow">
-<meta name="author" content="Zed Top Vibes">
-<meta name="contact" content="hello@zedtopvibes.com">
-<meta name="theme-color" content="#000000"><!-- Canonical --><link rel="canonical" href="https://zedtopvibes.com/"><!-- Open Graph --><meta property="og:title" content="Zed Top Vibes | Follow the Vibes">
-<meta property="og:description" content="Top 10s, Songs You Forgot About, throwbacks, latest Zambian music & VS comparisons.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://zedtopvibes.com">
-<meta property="og:image" content="https://zedtopvibes.com/preview.jpg"><!-- Twitter --><meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Zed Top Vibes">
-<meta name="twitter:description" content="Zambian music curation content: Top 10s, throwbacks & VS comparisons.">
-<meta name="twitter:image" content="https://zedtopvibes.com/preview.jpg"><!-- Structured Data --><script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Zed Top Vibes",
-  "url": "https://zedtopvibes.com",
-  "email": "hello@zedtopvibes.com",
-  "description": "Zambian music curator focused on Top 10s, Songs You Forgot About, throwback hits, latest music, discovery moments, and VS comparisons.",
-  "sameAs": [
-    "https://www.youtube.com/@zedtopvibes",
-    "https://www.tiktok.com/@zedtopvibes"
-  ]
-}
-</script><style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- ===== SEO META TAGS ===== -->
+    <title>Zedtopvibes · Discover New Music, Playlists & Artists</title>
+    <meta name="description" content="Zedtopvibes - Your ultimate destination for discovering new music, artists, playlists, albums, compilations and EPs. Stream and explore the best music from around the world.">
+    <meta name="keywords" content="music, playlists, albums, artists, EPs, compilations, streaming, discover music, new releases, trending songs, best of">
+    <meta name="author" content="Zedtopvibes">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zedtopvibes.com">
+    <meta property="og:title" content="Zedtopvibes - Music Discovery">
+    <meta property="og:description" content="Discover new music, artists, compilations and playlists from around the world">
+    <meta property="og:image" content="https://zedtopvibes.com/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://zedtopvibes.com">
+    <meta property="twitter:title" content="Zedtopvibes - Music Discovery">
+    <meta property="twitter:description" content="Discover new music, artists, compilations and playlists from around the world">
+    <meta property="twitter:image" content="https://zedtopvibes.com/og-image.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://zedtopvibes.com">
+    
+    <!-- Language -->
+    <meta http-equiv="content-language" content="en-us">
+    
+    <!-- Favicon (add these later) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Header loads here -->
+    <div id="header-placeholder"></div>
 
-html, body {
-    height: 100%;
-    overflow: hidden;
-}
-
-body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont,
-                 "Segoe UI", Roboto, Arial, sans-serif;
-
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-
-    background: #000;
-    color: #fff;
-
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Background */
-.bg {
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(circle at 30% 50%, rgba(255,59,48,0.08), transparent 60%),
-                radial-gradient(circle at 80% 80%, rgba(0,255,200,0.06), transparent 60%);
-    z-index: 0;
-    pointer-events: none;
-}
-
-/* Container */
-.container {
-    position: relative;
-    z-index: 10;
-    text-align: center;
-    padding: 2rem;
-    max-width: 400px;
-}
-
-/* Logo */
-.logo {
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    opacity: 0.6;
-    margin-bottom: 2rem;
-}
-
-/* Message */
-.message {
-    font-size: clamp(1.8rem, 5vw, 2.4rem);
-    font-weight: 500;
-    letter-spacing: -0.015em;
-    line-height: 1.25;
-    margin-bottom: 3rem;
-}
-
-.message span {
-    font-weight: 700;
-    background: linear-gradient(135deg, #fff, #00ffc8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-/* Social Links */
-.social-links {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.7rem;
-    margin-bottom: 3rem;
-}
-
-.social-link {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 260px;
-    padding: 0.85rem 1.4rem;
-    border: 1px solid rgba(255,255,255,0.15);
-    text-decoration: none;
-    color: #fff;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: all 0.25s ease;
-}
-
-.social-link:hover {
-    border-color: #00ffc8;
-    transform: translate3d(5px,0,0);
-}
-
-/* Footer */
-.footer {
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
-}
-
-.footer-domain {
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    color: #888;
-    text-transform: uppercase;
-    margin-bottom: 0.3rem;
-}
-
-.footer-tagline {
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    color: #888;
-    text-transform: uppercase;
-}
-
-/* Animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translate3d(0, 10px, 0);
-    }
-    to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
-}
-
-@media (max-width: 640px) {
-    .container {
-        padding: 1.5rem;
-    }
-}
-</style></head><body><div class="bg"></div><div class="container"><div class="logo">ZED TOP VIBES</div>
-
-<div class="message">
-    Follow <span>the Vibes</span>
-</div>
-
-<div class="social-links">
-
-    <a href="https://youtube.com/@zedtopvibes"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="social-link"
-       aria-label="YouTube Channel">
-        <span>YouTube</span>
-        <div>→</div>
-    </a>
-
-    <a href="https://tiktok.com/@zedtopvibes"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="social-link"
-       aria-label="TikTok Profile">
-        <span>TikTok</span>
-        <div>→</div>
-    </a>
-
-    <a href="mailto:hello@zedtopvibes.com"
-       class="social-link"
-       aria-label="Email Contact">
-        <span>Email</span>
-        <div>→</div>
-    </a>
-
-</div>
-
-<div class="footer">
-    <div class="footer-domain">
-        ZEDTOPVIBES.COM © <span id="year"></span>
+    <!-- ===== DYNAMIC HOMEPAGE SECTIONS ===== -->
+    <!-- All sections will be loaded dynamically from the homepage sections API -->
+    <div id="homepage-sections-container">
+        <div class="loading">Loading...</div>
     </div>
-    <div class="footer-tagline">
-        ALL VIBES RESERVED
-    </div>
-</div>
 
-</div><script>
-document.getElementById('year').textContent = new Date().getFullYear();
-</script></body>
+    <!-- Footer loads here -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Only ONE script tag -->
+    <script src="/js/main.js"></script>
+</body>
 </html>
