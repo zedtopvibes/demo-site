@@ -432,7 +432,7 @@ async function loadGenres() {
                         <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm1.5-7.5a.5.5 0 0 1-.5.5H6.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L6.707 7.5H9a.5.5 0 0 1 .5.5z"></path>
                     </svg>
                     <strong style="font-size:15px;color:#000;margin-left:6px;">${escapeHtml(genre.name)}</strong>
-                    <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(${genre.count})</span>
+                    <span style="margin-left:4px; color:#ff4b2b; font-weight:600;">(${genre.total})</span>
                 </div>
             </a>
         `).join('');
