@@ -308,7 +308,7 @@ async function loadCompilations() {
                              onerror="handleImageError(this)">
                     </div>
                     <div class="item-data">
-                        <span class="track-title"><b>${escapeHtml(compilation.title)}</b> <span class="compilation-badge">Compilation</span></span>
+                        <span class="track-title"><b>${escapeHtml(compilation.title)}</b></span>
                         <div class="artist-name">Various Artists</div>
                         <span class="item-meta"><b style="color:#ff0000">${compilation.item_count || 0} items</b></span>
                     </div>
