@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direct Download - PDFs</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f1f5f9;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+      padding: 32px 28px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h2 {
+      color: #1e293b;
+      margin-bottom: 28px;
+      font-weight: 600;
+      font-size: 1.6rem;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .btn-group a {
+      text-decoration: none;
+      width: 100%;
+    }
+
+    button {
+      width: 100%;
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      padding: 14px 20px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: inherit;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    a:first-of-type button {
+      border-color: #3b82f6;
+      background: #eff6ff;
+      color: #1e40af;
+    }
+
+    a:last-of-type button {
+      border-color: #f59e0b;
+      background: #fffbeb;
+      color: #b45309;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .icon {
+      font-size: 1.3rem;
+    }
+
+    .note {
+      margin-top: 28px;
+      font-size: 0.75rem;
+      color: #64748b;
+      background: #f8fafc;
+      padding: 8px 12px;
+      border-radius: 40px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>⬇️ Direct Download</h2>
+  <div class="btn-group">
+    <a href="https://files.zedtopvibes.com/Personal%20Backups/Saviour%20Kendridge%20Chanda%20Reg.pdf" download target="_blank">
+      <button>
+        <span class="icon">📑</span> Button one (Download)
+      </button>
+    </a>
+    <a href="https://files.zedtopvibes.com/Personal%20Backups/Saviour%20Chanda%20Farm%20Map.pdf" download target="_blank">
+      <button>
+        <span class="icon">🗺️</span> Farm map (Download)
+      </button>
+    </a>
+  </div>
+  <div class="note">
+    💾 Click = direct download (Save As dialog). If preview opens, right-click → "Save link as"
+  </div>
+</div>
+</body>
+</html>
