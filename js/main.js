@@ -1,4 +1,3 @@
-
 // ===== Zedtopvibes.com - Main JavaScript with Live API Integration =====
 // Uses relative paths - works on any domain (custom domain or pages.dev)
 
