@@ -988,4 +988,42 @@ html {
             .page-numbers, a.page-numbers {
                 padding: 6px 10px;
                 font-size: 13px;
-            }         
+            }      
+
+
+
+   /* ===== SOCIAL ICONS ===== */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    padding: 10px 0 6px 0;
+}
+
+.social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    background: #ff4b2b;
+    transform: translateY(-3px);
+    color: #fff;
+}
+
+.social-handle {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    padding: 2px 0 10px 0;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
