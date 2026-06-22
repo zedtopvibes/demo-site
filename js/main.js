@@ -1,3 +1,4 @@
+Where should i place the js
 // ===== Zedtopvibes.com - Main JavaScript with Live API Integration =====
 // Uses relative paths - works on any domain (custom domain or pages.dev)
 
@@ -668,3 +669,17 @@ window.searchMusic = searchMusic;
 window.searchByGenre = searchByGenre;
 window.loadMore = loadMore;
 window.closeSidebar = closeSidebar;
+
+// ===== AUTO-UPDATE COPYRIGHT YEAR =====
+document.addEventListener('DOMContentLoaded', function() {
+    const yearSpan = document.getElementById('copyright-year');
+    if (yearSpan) {
+        const startYear = 2024;
+        const currentYear = new Date().getFullYear();
+        if (currentYear === startYear) {
+            yearSpan.textContent = startYear;
+        } else {
+            yearSpan.textContent = startYear + ' - ' + currentYear;
+        }
+    }
+});
