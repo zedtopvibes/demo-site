@@ -477,7 +477,18 @@ async function loadHeaderAndFooter() {
         
         if (headerPlaceholder) headerPlaceholder.innerHTML = headerData;
         if (footerPlaceholder) footerPlaceholder.innerHTML = footerData;
-        
+       // ===== ADD COPYRIGHT YEAR HERE =====
+        const yearSpan = document.getElementById('copyright-year');
+        if (yearSpan) {
+            const startYear = 2024;
+            const currentYear = new Date().getFullYear();
+            if (currentYear === startYear) {
+                yearSpan.textContent = startYear;
+            } else {
+                yearSpan.textContent = startYear + ' - ' + currentYear;
+            }
+        }
+ 
         setTimeout(initializeSidebar, 100);
     } catch (error) {
         console.log('Header/footer files not found:', error);
