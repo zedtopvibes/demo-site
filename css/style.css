@@ -162,13 +162,13 @@ body {
 
 /* Layout */
 .section-spacing {
-    margin-top: 5px;  /* Consistent spacing for all sections */
+    margin-top: 5px;
 }
 .corner {
     width: 100%;
     max-width: 100%;
     padding: 0;
-    margin: 0 0 20px 0;
+    margin: 0 0 5px 0;
     box-sizing: border-box;
     overflow: hidden;
     border: 1px solid #555;
