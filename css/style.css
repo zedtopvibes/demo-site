@@ -162,7 +162,7 @@ body {
 
 /* Layout */
 .section-spacing {
-    margin-top: 25px;
+    margin-top: 5px;  /* Consistent spacing for all sections */
 }
 .corner {
     width: 100%;
