@@ -172,7 +172,7 @@ body {
     box-sizing: border-box;
     overflow: hidden;
     border: 1px solid #555;
-    border-radius: 8px;
+    border-radius: 6px;
     background: #fff;
 }
 .music-grid {
@@ -291,9 +291,8 @@ input[type=search]:focus {
     justify-content: space-between;
     align-items: center;
     background: #424242;
-    border: 1px solid #555;
     border-bottom: 1px solid #ff2121;
-    border-radius: 8px 8px 0 0;
+    border-radius: 6px 6px 0 0;
     margin: 0;
     width: 100%;
     box-sizing: border-box;
@@ -303,7 +302,7 @@ input[type=search]:focus {
 .section-title {
     color: #fff;
     display: inline-block;
-    padding: 8px 14px;
+    padding: 6px 12px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -312,22 +311,22 @@ input[type=search]:focus {
     box-shadow: none;
     margin: 0;
     font-weight: 600;
-    font-size: 15px;
 }
 .see-all-btn {
     color: #ff9800;
-    padding: 8px 16px;
+    padding: 6px 15px;
     font-size: 13px;
     font-weight: 600;
     text-decoration: none;
     transition: all 0.3s ease;
     white-space: nowrap;
     background: transparent;
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
 }
 .see-all-btn:hover {
     color: #ff4b2b;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.1);
 }
 .see-all-btn svg {
     fill: currentColor;
@@ -905,7 +904,7 @@ html {
             border-bottom: 1px solid #ff2121;
             border-radius: 6px;
             padding: 8px 12px;
-            margin: 0 0 0 0;  /* Removed bottom margin */
+            margin: 0 0 0 0;
             color: #fff;
             font-size: 14px;
             box-shadow: inset 0 -1px red;
@@ -968,11 +967,11 @@ html {
 
         /* Section headers - reduced spacing */
         .section-header {
-            margin: 0;  /* Remove default margins */
+            margin: 0;
         }
         
         .section-header.section-spacing {
-            margin-top: 0;  /* Remove top margin */
+            margin-top: 0;
         }
         
         /* Bottom description card - reduced margin */
@@ -984,7 +983,7 @@ html {
             padding: 20px;
             width: 100%;
             box-sizing: border-box;
-            margin: 0;  /* Removed margin */
+            margin: 0;
         }
         
         /* Tracklist section - remove top spacing */
@@ -995,7 +994,7 @@ html {
             .page-numbers, a.page-numbers {
                 padding: 6px 10px;
                 font-size: 13px;
-            }      
+            }
 
 
 
