@@ -180,9 +180,8 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-size: 0;
-    line-height: 0;
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 /* Typography */
@@ -334,12 +333,11 @@ input[type=search]:focus {
     vertical-align: middle;
 }
 
-/* Music Items Grid - adjusted for corner borders */
+/* Music Items Grid - 2 columns desktop, 1 column mobile */
 .music-item {
     position: relative;
     background-color: #fff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-    display: inline-block;
     padding: 6px 8px;
     margin: 0;
     border: 1px solid #ddd;
@@ -350,14 +348,10 @@ input[type=search]:focus {
     width: 50%;
     max-width: 50%;
     box-sizing: border-box;
-    vertical-align: top;
-    font-size: 14px;
-    line-height: normal;
-    float: left;
+    flex: 0 0 50%;
 }
 .music-item:nth-child(odd) {
     border-right: none;
-    clear: left;
 }
 .music-item:nth-child(even) {
     border-left: none;
@@ -762,20 +756,20 @@ button:hover {
 
 /* Media Queries */
 @media screen and (min-width: 720px) {
+    /* Desktop: 2 columns */
     .music-item {
+        flex: 0 0 50%;
         width: 50%;
-        margin: 0;
-        float: left;
+        max-width: 50%;
     }
 }
 @media screen and (max-width: 719px) {
+    /* Mobile: 1 column */
     .music-item {
-        display: block;
+        flex: 0 0 100%;
         width: 100%;
-        margin: 0;
         max-width: 100%;
         border: 1px solid #ddd;
-        float: none;
     }
     .music-item:nth-child(odd),
     .music-item:nth-child(even) {
